@@ -1,0 +1,299 @@
+/*
+* {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+}*/
+
+body, html{height:100%;}
+
+
+.navbar-collapse ul {
+  padding-top: 10px;
+  padding-right: 30px;
+}
+
+.blocblanc {
+    background: none repeat scroll 0 0 #fff;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #d9dbde;
+}
+
+.blocblancContent {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    font-size: 1.1em;
+}
+.blocblanc h2 {
+    border-left: 7px solid #002878;
+    color: #3a719c;
+    display: block;
+    font-size: 1.8em;
+    font-weight: 300;
+    margin: 0;
+    padding: 6px 15px 3px 9px;
+    text-transform: none;
+}
+.blocblanc h3 {
+    border-left: 7px solid #008472;
+    color: #537900;
+    font-size: 1.4em;
+    font-weight: 400;
+    line-height: 1.1em;
+    margin: 10px 0 15px 10px;
+    padding-left: 9px;
+}
+
+.blocblanc h4 {
+    border-left: 7px solid #a90050;
+    color: #5d245a;
+    font-size: 1.2em;
+    font-weight: 400;
+    line-height: 1.1em;
+    margin: 10px 0 15px 20px;
+    padding-left: 9px;
+}
+
+.form_login {
+    background: none repeat scroll 0 0 #8699BA; /*#ea6060;*/
+    margin: 0px 50px 0px 50px;
+    padding: 15px;
+    position: relative;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+}
+
+.header_titre {
+    color: #fff;
+    padding: 10px 120px 10px 10px;
+    font-size: 35px;
+    float: right ;
+}
+
+.header_logo {
+   padding: 5px 10px 5px 10px;
+    float: left;
+}
+
+.text-footer-right {
+    color: #777;
+    text-align: right;
+    vertical-align: middle;
+}
+.text-footer-left {
+    color: #777;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.bloc_connected {
+    color: #fff;
+    font-size: 16px;
+    background-color: #8699BA;
+    float: right ;
+    min-width: 300px;
+    border-left: 3px solid #777;
+    border-right: 3px solid #777;
+    padding: 0px 5px 0px 5px;
+    min-height: 70px;
+    margin-right: 40px
+}
+
+.step_txt_blanc {
+    color: #ffffff;
+}
+
+.divInvisible{
+    visibility: hidden;
+}
+
+
+.divCache {
+    display: none;
+    /*visibility: hidden;*/
+}
+
+.boiteOutil {
+    border-left: 7px solid #6D7B86;
+    color: #E17012;
+    font-size: 1.4em;
+    font-weight: 400;
+    line-height: 1.1em;
+    margin: 10px 0 15px 10px;
+    padding-left: 9px;
+}
+
+.texteCentre {
+    text-align: center;
+}
+
+.table > caption {
+    color: #953b39;
+    font-weight: bold;
+    font-size: 20px;
+    border-left: 7px solid #953b39;
+}
+
+.obligatoire {
+    color: red;
+}
+
+/*input:required {
+    border: 1px solid #b94a48;
+}*/
+
+/* Barre de phase = tableau */
+.tableProgress {
+	width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+    text-align: center;  
+    border-top-left-radius: 20px 20px;
+    border-bottom-left-radius: 20px 20px;
+    border-top-right-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;    
+    border-collapse: collapse;
+}
+
+.celluleNonOk {    
+    background-color: #fff;
+    color: #000;
+}
+
+.celluleDroiteNonOk {    
+    background-color: #fff;
+    color: #000;
+    border-top-right-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;
+}
+.celluleGaucheNonOk {    
+    background-color: #fff;
+    color: #000;
+    border-top-left-radius: 20px 20px;
+    border-bottom-left-radius: 20px 20px;
+}
+
+.celluleOk {    
+    background-color: #008472;
+    color: #fff;
+}
+
+.celluleDroiteOk {    
+    background-color: #008472;
+    color: #fff;
+    border-top-right-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;
+}
+.celluleGaucheOk {    
+    background-color: #008472;
+    color: #fff;
+    border-top-left-radius: 20px 20px;
+    border-bottom-left-radius: 20px 20px;
+}
+
+.celluleEnCours {
+      background-color: #f0ad4e;
+}
+
+.celluleDroiteEnCours {
+      background-color: #f0ad4e;
+    border-top-right-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;
+}
+
+.celluleGaucheEnCours {
+    background-color: #f0ad4e;
+    border-top-left-radius: 20px 20px;
+    border-bottom-left-radius: 20px 20px;
+}
+
+.sousCelluleNonOk {    
+    background-color: #fff;
+    color: #000;
+}
+
+.sousCelluleDroiteNonOk {    
+    background-color: #fff;
+    color: #000;
+    border-top-right-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;
+}
+.sousCelluleGaucheNonOk {    
+    background-color: #fff;
+    color: #000;
+    border-top-left-radius: 20px 20px;
+    border-bottom-left-radius: 20px 20px;
+}
+
+.sousCelluleOk {    
+    background-color: #a90050;
+    color: #fff;
+}
+
+.sousCelluleDroiteOk {    
+    background-color: #a90050;
+    color: #fff;
+    border-top-right-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;
+}
+.sousCelluleGaucheOk {    
+    background-color: #a90050;
+    color: #fff;
+    border-top-left-radius: 20px 20px;
+    border-bottom-left-radius: 20px 20px;
+}
+
+.sousCelluleEnCours {
+      background-color: #3a719c;
+    color: #fff;
+}
+
+.sousCelluleDroiteEnCours {
+      background-color: #3a719c;
+    color: #fff;
+    border-top-right-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;
+}
+
+.sousCelluleGaucheEnCours {
+    background-color: #3a719c;
+    color: #fff;
+    border-top-left-radius: 20px 20px;
+    border-bottom-left-radius: 20px 20px;
+}
+
+.arrow_box {
+	position: relative;
+	background: #000000;
+    margin-top: 7px;
+}
+.arrow_box:after, .arrow_box:before {
+	bottom: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(0, 0, 0, 0);
+	border-bottom-color: #000000;
+	border-width: 7px;
+	margin-left: -7px;
+}
+.arrow_box:before {
+	border-color: rgba(0, 0, 0, 0);
+	border-bottom-color: #000000;
+	border-width: 7px;
+	margin-left: -7px;
+}
