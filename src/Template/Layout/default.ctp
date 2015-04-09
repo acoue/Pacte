@@ -1,16 +1,8 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ * @copyright     Copyright (c) Haute Autorité de Santé. (http://www.has-sante.fr)
+ * @link          http://www.has-sante.fr
+ * @since         1.0
  */
 
 $cakeDescription = 'Pacte ';
@@ -19,41 +11,89 @@ $cakeDescription = 'Pacte ';
 <html>
 <head>
     <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Programme d'Amélioration Continue du Travail en Equipe">
+    <meta name="author" content="Haute Autorité de Santé">
     <title>
         <?= $cakeDescription ?>:
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
-
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
+    
+    <!-- Bootstrap core CSS -->
+    <?= $this->Html->css('bootstrap.css') ?>
+    <?= $this->Html->css('style.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
 </head>
 <body>
-    <header>
-        <div class="header-title">
-            <span><?= $this->fetch('title') ?></span>
-        </div>
-        <div class="header-help">
-            <span><a target="_blank" href="http://book.cakephp.org/3.0/">Documentation</a></span>
-            <span><a target="_blank" href="http://api.cakephp.org/3.0/">API</a></span>
-        </div>
-    </header>
-    <div id="container">
-
-        <div id="content">
-            <?= $this->Flash->render() ?>
-
-            <div class="row">
-                <?= $this->fetch('content') ?>
+    <div id="main">
+        <!-- navbar -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle collapsed" aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" type="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    
+                    <span class="header_logo">
+                    <?=	$this->Html->image('logo.jpg', ['height' => '60px', 'alt' => 'Programme Pacte']); ?>
+                    </span>
+                    <span class="header_titre">Pacte</span>
+                </div>
+                <!-- Menu -->
+                <?= $this->element('menu'); ?>    
+                <!-- /.menu-->                
             </div>
+        </nav>
+        <!-- /.navbar -->
+        
+        <!-- Barre de progression des phases et sous-phases -->
+        <?= $this->element('progress', ['menu' => '1', 'sous_menu' => '1']); ?>
+        <!-- /.Barre de progression des phases et sous-phases -->
+        
+        
+        <!-- Contenu -->     
+        <div class="container">
+            <!-- Div pour les message -->
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                  <?= $this->Flash->render() ?>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                	<?= $this->element('outil', ['menu' => '1', 'sous_menu' => '1']); ?>
+                </div>
+                <div class="col-md-9"><?= $this->fetch('content') ?> </div>
+                <div class="col-md-1"></div>                      
+            </div>
+            <br /><br />
         </div>
-        <footer>
-        </footer>
+        <!-- /.contenu -->
+                
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-footer-left">&copy; Haute Autorité de Sante</div>
+                    <div class="col-md-5 text-footer-right">Version 1.0</div>
+                    <div class="col-md-1 text-footer-right"><a href="#">A propos</a></div>
+                </div>
+            </div>
+        </footer><!-- /.footer -->
     </div>
+    <?= $this->Html->script('jquery.js') ?>
+    <?= $this->Html->script('bootstrap.min.js') ?>
+    <?= $this->Html->script('script.js') ?>    
+    <?= $this->fetch('script') ?>
 </body>
 </html>

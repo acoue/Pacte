@@ -17,6 +17,7 @@ namespace App\Controller;
 use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
+use Cake\Event\Event;
 
 /**
  * Static content controller
@@ -27,7 +28,23 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class PagesController extends AppController
 {
-
+    
+// 	public function beforeFilter(Event $event)
+// 	{	
+// 		$this->Auth->allow(['display']);
+// 	}
+	
+    public function isAuthorized($user)
+    {
+    	// Admin peuvent acceder a chaque action
+    	if (isset($user['role'])) {
+    		return true;
+    	}
+    
+    	parent::isAuthorized($user);
+    }
+	
+	
     /**
      * Displays a view
      *
@@ -37,9 +54,10 @@ class PagesController extends AppController
      */
     public function display()
     {
+            
         $path = func_get_args();
 
-        $count = count($path);
+       /* $count = count($path);
         if (!$count) {
             return $this->redirect('/');
         }
@@ -51,7 +69,7 @@ class PagesController extends AppController
         if (!empty($path[1])) {
             $subpage = $path[1];
         }
-        $this->set(compact('page', 'subpage'));
+        $this->set(compact('page', 'subpage'));*/
 
         try {
             $this->render(implode('/', $path));
@@ -62,4 +80,5 @@ class PagesController extends AppController
             throw new NotFoundException();
         }
     }
+    
 }

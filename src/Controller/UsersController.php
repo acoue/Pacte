@@ -10,11 +10,24 @@ use Cake\Network\Exception\NotFoundException;
 class UsersController extends AppController
 {
 
-	public function beforeFilter(Event $event)
+	public function isAuthorized($user)
 	{
+				
+		// Tous les utilisateurs peuvent se deconnecter
+		if ($this->request->action === 'logout') {			
+			return true;
+		} 
+	
+		
+		
+		
+		return parent::isAuthorized($user);
+	}
+	
+	public function beforeFilter(Event $event)
+	{		
 		parent::beforeFilter($event);
-		// Permet aux utilisateurs de s'enregistrer et de se déconnecter.
-		$this->Auth->allow(['add', 'logout']);
+		
 	}
 	
 	public function login()
@@ -23,14 +36,21 @@ class UsersController extends AppController
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
+				//Mise en session des element ID et ROLE
+				$session = $this->request->session();
+				$session->write('User.Id', $user['id']);
+				$session->write('User.Role', $user['role']);
 				return $this->redirect($this->Auth->redirectUrl());
 			}
-			$this->Flash->error(__("Nom d'utilisateur ou mot de passe incorrect, essayez à nouveau."));
+			$this->Flash->error(__("Nom d'utilisateur ou mot de passe incorrect, essayez Ã  nouveau."));
 		}
 	}
 	
 	public function logout()
-	{
+	{	
+		$session = $this->request->session();
+		$session->destroy();
+		$this->Flash->success('Vous Ãªtes maintenant dÃ©connectÃ©.');
 		return $this->redirect($this->Auth->logout());
 	}
 	
@@ -55,7 +75,7 @@ class UsersController extends AppController
 		if ($this->request->is('post')) {
 			$user = $this->Users->patchEntity($user, $this->request->data);
 			if ($this->Users->save($user)) {
-				$this->Flash->success(__("L'utilisateur a été sauvegardé."));
+				$this->Flash->success(__("L'utilisateur a &eacute;t&eacute; sauvegard&eacute;."));
 				return $this->redirect(['action' => 'index']);
 			}
 			$this->Flash->error(__("Impossible d'ajouter l'utilisateur."));

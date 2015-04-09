@@ -37,22 +37,35 @@ class AppController extends Controller
      */
 	public function initialize()
     {
+    	parent::initialize();
     	$this->loadComponent('Flash');
     	$this->loadComponent('Auth', [
     			'loginRedirect' => [
-    					'controller' => 'Phases',
-    					'action' => 'index'
-    			],
-    			'logoutRedirect' => [
     					'controller' => 'Pages',
     					'action' => 'display',
     					'home'
+    			],
+    			'logoutRedirect' => [
+    					'controller' => 'Users',
+    					'action' => 'login'
     			]
     	]);
     }
     
     public function beforeFilter(Event $event)
     {
-    	$this->Auth->allow(['index']);
+    	$this->Auth->config('authorize', ['Controller']);
+    	$this->Auth->config('unauthorizedRedirect', $this->referer());
+    }
+
+    public function isAuthorized($user)
+    {
+    	// Admin peuvent acceder a chaque action
+    	if (isset($user['role']) && $user['role'] === 'admin') {
+    		return true;
+    	}
+    
+    	// Par defaut refuser
+    	return false;
     }
 }

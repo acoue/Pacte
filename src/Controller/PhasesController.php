@@ -11,6 +11,32 @@ use App\Controller\AppController;
 class PhasesController extends AppController
 {
 
+	
+	public function isAuthorized($user)
+	{
+	
+		// Tous les role has peuvent voir les phases
+		if ($this->request->action === 'view') {
+			if (isset($user['role']) && $user['role'] === 'admin') return true;
+		}
+		if ($this->request->action === 'add') {
+			if (isset($user['role']) && $user['role'] === 'admin') return true;
+			else return false;
+		}
+		if ($this->request->action === 'delete') {
+			if (isset($user['role']) && $user['role'] === 'admin') return true;
+		}
+		if ($this->request->action === 'edit') {
+			if (isset($user['role']) && $user['role'] === 'admin') return true;
+		}
+		if ($this->request->action === 'index') {
+			if (isset($user['role']) && $user['role'] === 'has') return true;
+		}
+	
+		return parent::isAuthorized($user);
+	}
+	
+	
     /**
      * Index method
      *
@@ -18,6 +44,9 @@ class PhasesController extends AppController
      */
     public function index()
     {
+    	//debug($this->request);
+    	//die();
+    	
         $this->set('phases', $this->paginate($this->Phases));
         $this->set('_serialize', ['phases']);
     }
@@ -52,7 +81,7 @@ class PhasesController extends AppController
                 $this->Flash->success('The phase has been saved.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The phase could not be saved. Please, try again.');
+                $this->Flash->error('La phase ne peut pas être sauvegardée.');
             }
         }
         $this->set(compact('phase'));
@@ -74,10 +103,10 @@ class PhasesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $phase = $this->Phases->patchEntity($phase, $this->request->data);
             if ($this->Phases->save($phase)) {
-                $this->Flash->success('The phase has been saved.');
+                $this->Flash->success('La phase a été sauvegardée.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The phase could not be saved. Please, try again.');
+                $this->Flash->error('La phase ne peut pas être sauvegardée.');
             }
         }
         $this->set(compact('phase'));
@@ -96,9 +125,9 @@ class PhasesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $phase = $this->Phases->get($id);
         if ($this->Phases->delete($phase)) {
-            $this->Flash->success('The phase has been deleted.');
+            $this->Flash->success('La phase a été supprimée.');
         } else {
-            $this->Flash->error('The phase could not be deleted. Please, try again.');
+            $this->Flash->error('La phase ne peut pas être supprimée.');
         }
         return $this->redirect(['action' => 'index']);
     }

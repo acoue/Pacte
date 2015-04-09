@@ -1,13 +1,20 @@
 <!-- src/Template/Users/login.ctp -->
-
-<div class="users form">
 <?= $this->Flash->render('auth') ?>
-<?= $this->Form->create() ?>
-    <fieldset>
-        <legend><?= __("Merci de rentrer vos nom d'utilisateur et mot de passe") ?></legend>
-        <?= $this->Form->input('username') ?>
-        <?= $this->Form->input('password') ?>
-    </fieldset>
-<?= $this->Form->button(__('Se Connecter')); ?>
-<?= $this->Form->end() ?>
+<div class="users form_login">
+<!-- Formulaire de connexion -->
+	<?= $this->Form->create() ?>
+	<legend>Connectez-vous</legend>
+	<?= $this->Form->input('username', array('label' => false,'div' => false,'class' => 'form-control', 'size' => '70px', 'placeholder' => 'Identifiant', 'required' =>'required','autofocus'=>'autofocus')); ?><br />
+	<?= $this->Form->input('password', array('label' => false,'div' => false, 'class' => 'form-control','size' => '70px', 'type'=>'password','placeholder' => 'Mot de passe', 'required' =>'required')); ?><br />
+	<p align="center"><?= $this->Form->button('Se connecter', ['class' => 'btn btn-default']) ?></p>
+	<?= $this->Form->end() ?>
+
+
+<p align="center"><a href="#">Mot de passe oublié ?</a></p>
+
+<legend>Engagez-vous</legend>
+<p align="center"><a class="btn btn-default" title="Démarrez la procédure d'inscription" href="inscription.html">Pas encore inscrit</a></p>
+
 </div>
+
+
