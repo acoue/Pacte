@@ -97,35 +97,38 @@ class InscriptionsController extends AppController
     	$session->write('Progress.SousMenu','1');
     	
     	//Validation
-    	if ($this->request->is(['post', 'put'])) {
+    if ($this->request->is(['post', 'put'])) {
+    		   		
+     		$boolOk = true;
+    		
+     		//Creation du User    			
+     		$length = 8;    		
+     		$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+    		
+     		$username = "test";
+    		
+     		//Stockage en base de donnees
+     		$usersTable = TableRegistry::get('Users');  		 
+    		$user = $usersTable->newEntity();    		
+    		// Atribution des valeurs
+			$user->id = null;
+    		$user->username = $username;    
+    		$user->password = $password;    	
+    		$user->role = "equipe";    			
+    		//Enregistrement
+    		if($usersTable->save($user)) $id_User = $user->id;
+    		else $boolOk = false;
+    	
+    		//Enregistrement de l'ID en session en cas de retour
+    		$link = ['controller'=>'users', 'action' => 'activate', $user->id."-".$user->password]
     		
    			$email = new Email('gmail');
-            $email->template('default')
+            $email->template('inscription')
                 ->emailFormat('html')
                 ->to('a.coue@has-sante.fr')
                 ->from('refex@has-sante.fr')
-                ->send();
-    		
-//     		$boolOK = true;
-    		
-//     		//Creation du User    			
-//     		$length = 8;    		
-//     		$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
-    		
-//     		$username = "";
-    		
-//     		//Stockage en base de donnees
-//     		$usersTable = TableRegistry::get('Users');  		 
-//     		$user = $usersTable->newEntity();    		
-//     		// Atribution des valeurs
-//			$user->id = null;
-//     		$user->username = $username;    
-//     		$user->password = $password;    	
-//     		$user->role = "equipe";    			
-//     		//Enregistrement
-//     		$usersTable->save($user);    		 
-//     		//Enregistrement de l'ID en session en cas de retour
-//     		$id_User = $user->id;
+                ->viewVars(['link'=>$link])
+                ->send('My message'.$link);
     		
     		
     		
