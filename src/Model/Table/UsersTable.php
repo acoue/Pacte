@@ -10,15 +10,22 @@ class UsersTable extends Table
 
 	public function initialize(array $config)
 	{
+		
+		$this->table('users');
+		$this->displayField('id');
+		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
+		$this->hasMany('Equipes', [
+				'foreignKey' => 'user_id'
+		]);
 	}
 	
 	public function validationDefault(Validator $validator)
 	{
 		return $validator
-		->notEmpty('username', "Un nom d'utilisateur est n�cessaire")
-		->notEmpty('password', 'Un mot de passe est n�cessaire')
-		->notEmpty('role', 'Un role est n�cessaire')
+		->notEmpty('username', "Un nom d'utilisateur est nécessaire")
+		->notEmpty('password', 'Un mot de passe est nécessaire')
+		->notEmpty('role', 'Un role est nécessaire')
 		->add('role', 'inList', [
 				'rule' => ['inList', ['admin', 'equipe','has','expert']],
 				'message' => 'Merci de rentrer un role valide'

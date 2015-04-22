@@ -1338,7 +1338,7 @@
             badDomain : 'Incorrect domain value',
             badUrl : 'The input value is not a correct URL',
             badCustomVal : 'The input value is incorrect',
-            badInt : 'The input value was not a correct number',
+            badInt : 'La valeur saisie n\'est pas un nombre',
             badSecurityNumber : 'Your social security number was incorrect',
             badUKVatAnswer : 'Incorrect UK VAT Number',
             badStrength : 'The password isn\'t strong enough',

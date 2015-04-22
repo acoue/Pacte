@@ -24,14 +24,19 @@ class UsersController extends AppController
 		return parent::isAuthorized($user);
 	}
 	
-	public function beforeFilter(Event $event)
-	{		
-		parent::beforeFilter($event);
+// 	public function beforeFilter(Event $event)
+// 	{		
+// 		parent::beforeFilter($event);
 		
-	}
+// 	}
 	
 	public function login()
-	{
+	{	
+		//Destruction de la session
+		$session = $this->request->session();
+		$session->destroy();
+		
+		
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 			if ($user) {

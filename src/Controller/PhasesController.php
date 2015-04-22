@@ -44,8 +44,15 @@ class PhasesController extends AppController
      */
     public function index()
     {
+    	
+    	
+    	
     	//debug($this->request);
     	//die();
+
+    	$session = $this->request->session();
+    	$session->write('Progress.Menu','1');
+    	$session->write('Progress.SousMenu','2');
     	
         $this->set('phases', $this->paginate($this->Phases));
         $this->set('_serialize', ['phases']);

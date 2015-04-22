@@ -25,6 +25,7 @@ $cakeDescription = 'Pacte ';
     <!-- Bootstrap core CSS -->
     <?= $this->Html->css('bootstrap.css') ?>
     <?= $this->Html->css('style.css') ?>
+    <?= $this->Html->css('jquery-ui.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -55,7 +56,7 @@ $cakeDescription = 'Pacte ';
         <!-- /.navbar -->
         
         <!-- Barre de progression des phases et sous-phases -->
-        <?= $this->element('progress', ['menu' => '1', 'sous_menu' => '1']); ?>
+        <?= $this->element('progress'); ?>
         <!-- /.Barre de progression des phases et sous-phases -->
         
         
@@ -65,7 +66,8 @@ $cakeDescription = 'Pacte ';
             <div class="row">
               <div class="col-md-3"></div>
               <div class="col-md-6">
-                  <?= $this->Flash->render() ?>
+					<?= $this->Flash->render('auth') ?>
+                  	<?= $this->Flash->render() ?>
               </div>
               <div class="col-md-3"></div>
             </div>
@@ -73,8 +75,8 @@ $cakeDescription = 'Pacte ';
                 <div class="col-md-2">
                 	<?= $this->element('outil', ['menu' => '1', 'sous_menu' => '1']); ?>
                 </div>
-                <div class="col-md-9"><?= $this->fetch('content') ?> </div>
-                <div class="col-md-1"></div>                      
+                <div class="col-md-8"><?= $this->fetch('content') ?> </div>
+                <div class="col-md-2"></div>                      
             </div>
             <br /><br />
         </div>
@@ -92,8 +94,16 @@ $cakeDescription = 'Pacte ';
         </footer><!-- /.footer -->
     </div>
     <?= $this->Html->script('jquery.js') ?>
+    <?= $this->Html->script('validatr.js') ?>
+    
+    <?= $this->Html->script('form-validator/jquery.form-validator.js') ?>
+ 	<?= $this->Html->script('form-validator/messages_fr.js') ?>
+      
+    <?= $this->Html->script('jquery-ui.js') ?>
     <?= $this->Html->script('bootstrap.min.js') ?>
-    <?= $this->Html->script('script.js') ?>    
+    <?= $this->Html->script('userScript.js') ?>  
+    
+    
     <?= $this->fetch('script') ?>
 </body>
 </html>
