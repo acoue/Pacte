@@ -34,7 +34,10 @@ $(document).ready(function(){
     $.validate({
         form : '#password_form'
     });
-    
+    //Formulaire de contact
+	$.validate({
+	    form : '#contact_form'
+	});
     
 	/* Bouton aide */
     $(".BoutonAide a").popover({

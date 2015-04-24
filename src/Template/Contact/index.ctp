@@ -19,7 +19,7 @@
 															'required' =>'required',
                     										'data-location' => 'bottom',
                     										'data-validation'=>'length',
-                    										'data-validation-length'=>'min5']); ?>
+                    										'data-validation-length'=>'min10']); ?>
                     </div>                          
 				</div><br /> 
 		 		<div class="row">
@@ -43,7 +43,7 @@
                     										'type' => 'text', 
 															'required' =>'required']); ?>
                     </div>
-				</div>                            
+				</div>                    
 			</div>
 		  <div class="col-md-2"></div>
 	  </div><br /><br />
