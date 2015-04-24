@@ -17,7 +17,7 @@ class InscriptionsController extends AppController
 	{
 		$this->Auth->allow(['index','add','create', 'validate', 'validate_refus']);
 	}
-
+	
     /**
      * Index method
      *
@@ -28,8 +28,8 @@ class InscriptionsController extends AppController
     	//debug($this->request->data); die();
     	//Menu et sous-menu
     	$session = $this->request->session();
-    	$session->write('Progress.Menu','1');
-    	$session->write('Progress.SousMenu','1');
+    	$session->write('Progress.Menu','0');
+    	$session->write('Progress.SousMenu','0');
 
     	//Validation du formulaire pour rechercher les etablissements
     	if ($this->request->is('post')){
@@ -65,8 +65,8 @@ class InscriptionsController extends AppController
     {
     	//Menu et sous-menu
 	    $session = $this->request->session();
-	    $session->write('Progress.Menu','1');
-	    $session->write('Progress.SousMenu','1');
+	    $session->write('Progress.Menu','0');
+	    $session->write('Progress.SousMenu','0');
 	    	
     	if ($this->request->is('post')) {
     		//On retrouve les infos etablissement
@@ -93,19 +93,26 @@ class InscriptionsController extends AppController
 		//debug($etat);die();
     	//Menu et sous-menu
     	$session = $this->request->session();
-    	$session->write('Progress.Menu','1');
-    	$session->write('Progress.SousMenu','1');
+    	$session->write('Progress.Menu','0');
+    	$session->write('Progress.SousMenu','0');
     	
     	//Validation
-    if ($this->request->is(['post', 'put'])) {
+    	if ($this->request->is(['post', 'put'])) {
     		   		
      		$boolOk = true;
     		
      		//Creation du User    			
      		$length = 8;    		
      		$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
-    		
-     		$username = "test";
+    		$token = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length*4);
+     		
+     		/* A FAIRE 
+     		 * 
+     		 * ANNEE_NUMDEMARCHE_INCREMEMENT
+     		 * 
+     		 * */
+     		$increment = 1;
+     		$username = date('Y')."_".$session->read('Engagement.Numero_Demarche')."_".$increment;
     		
      		//Stockage en base de donnees
      		$usersTable = TableRegistry::get('Users');  		 
@@ -113,44 +120,41 @@ class InscriptionsController extends AppController
     		// Atribution des valeurs
 			$user->id = null;
     		$user->username = $username;    
-    		$user->password = $password;    	
+    		$user->password = $password;     
+    		$user->token = $token;   	
     		$user->role = "equipe";    			
     		//Enregistrement
     		if($usersTable->save($user)) $id_User = $user->id;
     		else $boolOk = false;
-    	
-    		//Enregistrement de l'ID en session en cas de retour
-    		$link = ['controller'=>'users', 'action' => 'activate', $user->id."-".$user->password]
-    		
-   			$email = new Email('gmail');
-            $email->template('inscription')
-                ->emailFormat('html')
-                ->to('a.coue@has-sante.fr')
-                ->from('refex@has-sante.fr')
-                ->viewVars(['link'=>$link])
-                ->send('My message'.$link);
-    		
-    		
-    		
-    		
-//     		//Creation Equipe
-    	
-//     		//Creation de la démarche
-    	
-//     		//Creation reponses
-    	
-//     		//Envoi du mail recap
-    	
-//     		//Redirection
-//     		if($boolOk) {
-//     			$message = "Inscription validée";
-//     			$this->set(compact('message'));
-//     			$this->render('validate_accept');
-//     		} else {
-//     			$message = "une erreur s'est produite";
-//     			$this->set(compact('message'));
-//     			$this->render('validate_refus');
-//     		}
+
+    		if($boolOk) {
+	    		//Enregistrement de l'ID en session en cas de retour
+	    		$link = ['controller'=>'users', 'action' => 'activate', $user->id."-".$user->token, '_full' => true];
+	    		
+	   			$email = new Email('default');
+	            $email->template('inscription')
+	                ->emailFormat('html')
+	                ->to($this->request->data('mail'))
+	                ->from('refex@has-sante.fr')
+	                ->subject('[Pacte] Validation de votre inscription')
+	                ->viewVars(['login'=>$username,'mdp'=>$password,'link'=>$link])
+	                ->send();
+	            
+	     		//Creation Equipe
+	   	
+	     		//Creation de la démarche
+	    	
+	     		//Creation reponses   	
+	  	
+	    		//Redirection
+    			$message = "Inscription terminée, un mail va vous être envoyé pour terminer la validation.";
+    			$this->set(compact('message'));
+    			$this->render('validate_accept');
+    		} else {
+    			$message = "une erreur s'est produite lors de l'inscription.";
+    			$this->set(compact('message'));
+    			$this->render('validate_refus');
+    		}
     	
     	}
     	
@@ -195,8 +199,8 @@ class InscriptionsController extends AppController
     	//debug($this->request->data); die();
     	//Menu et sous-menu
 	    $session = $this->request->session();
-	    $session->write('Progress.Menu','1');
-	    $session->write('Progress.SousMenu','1');
+	    $session->write('Progress.Menu','0');
+	    $session->write('Progress.SousMenu','0');
 		
 
 	    if ($this->request->is(['post', 'put'])) {

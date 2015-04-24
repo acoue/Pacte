@@ -48,6 +48,11 @@ class AppController extends Controller
     			'logoutRedirect' => [
     					'controller' => 'Users',
     					'action' => 'login'
+    			],
+    			'authenticate' => [
+    					'Form' => [
+    							'scope' => ['Users.active' => 1]
+    					]
     			]
     	]);
     }

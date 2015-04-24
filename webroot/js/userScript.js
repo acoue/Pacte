@@ -21,10 +21,18 @@ $(document).ready(function(){
         form : '#add_inscription_form'
     });
     $.validate({
-        form : 'create_form'
+        form : '#create_form'
     });
     $.validate({
-        form : 'validate_inscription_form'
+        form : '#validate_inscription_form'
+    });
+    //Formulaire changement de mot de passe
+    $.validate({
+        form : '#compte_form'
+    });
+    //Formulaire du mot de passe oublié
+    $.validate({
+        form : '#password_form'
     });
     
     

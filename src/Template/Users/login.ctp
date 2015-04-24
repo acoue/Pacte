@@ -14,7 +14,7 @@
 			<?= $this->Form->end() ?>
 		
 		
-		<p align="center"><a href="#">Mot de passe oublié ?</a></p>
+		<p align="center"><?= $this->Html->link('Mot de passe oublié ?','/users/password') ?></p>
 		
 		<legend>Engagez-vous</legend>
 		<p align="center">
@@ -25,3 +25,4 @@
 	</div>
 	<div class="col-md-2"></div>
 </div>
+		

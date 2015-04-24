@@ -2,12 +2,14 @@
 $session = $this->request->session();
 if ($session->check('Progress.Menu')) {
     $menu = $session->read('Progress.Menu');
-} else $menu=1;
+} else $menu = 0;
 
 if ($session->check('Progress.SousMenu')) {
     $sous_menu = $session->read('Progress.SousMenu');
-} else $sous_menu=1;
+} else $sous_menu = 0;
   
+
+if($menu > 0 ){
 ?>
 <div class="container">
     <div>
@@ -73,3 +75,4 @@ switch ($menu) {
       </table>    
     </div>
 </div><br />
+<?php } ?>

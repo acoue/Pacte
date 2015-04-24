@@ -28,7 +28,7 @@ if($session->check('User.Role')) {
 	echo "        <table width='100%' cellspacing='5px' cellpadding='5px'>";
 	echo "            <tr height='35px' align='center'>";
 	echo "                <td width='70%'>Libelle ES</td>";
-	echo "                <td width='30%'><a class='btn btn-default btn-sm' title='Valider' href='#'>Mon compte</a></td>";
+	echo "				  <td width='30%'>".$this->Html->link('Mon compte','/users/compte',['class' => 'btn btn-default btn-sm'])."</td>";
 	echo "            </tr>";
 	echo "            <tr height='34px'  align='center'>";
 	echo "                <td>Libelle Equipe</td>";
@@ -40,8 +40,8 @@ if($session->check('User.Role')) {
 } else { 
 	echo "<div id='navbar' class='navbar-collapse collapse'>";
 	echo "    <ul class='nav navbar-nav'>";
-	echo "        <li>".$this->Html->link('S\'identifier','/users/login')."</li>";	
-	echo "        <li><a href='#contact'>Contact</a></li>";
+	echo "        <li>".$this->Html->link('S\'identifier','/users/login')."</li>";		
+	echo "        <li>".$this->Html->link('Contact','/contact/index')."</li>";
 	echo "    </ul>";
 	echo "</div>";
 }
