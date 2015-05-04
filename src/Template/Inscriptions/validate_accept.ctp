@@ -15,3 +15,6 @@
 	</p>
 	</div>
 </div>
+<!-- Un lien pour choisir un nouveau mot de passe vous a été envoyé par email à l'adresse anthony.coue@gmail.com.
+Si vous ne recevez pas cet email, veuillez vérifier qu'il n'a pas été rejeté par un filtre anti-spam ou classé dans les courriers indésirables 
+par votre logiciel de messagerie. Sinon, veuillez contacter notre assistance technique.  -->

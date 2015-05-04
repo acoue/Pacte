@@ -1,18 +1,37 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('List Parametres'), ['action' => 'index']) ?></li>
-    </ul>
-</div>
-<div class="parametres form large-10 medium-9 columns">
-    <?= $this->Form->create($parametre); ?>
-    <fieldset>
-        <legend><?= __('Add Parametre') ?></legend>
-        <?php
-            echo $this->Form->input('name');
-            echo $this->Form->input('valeur');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<div class="blocblanc">
+	<h2>Administration - Ajout Paramètres </h2>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-2">
+			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
+			</div>
+    		<?= $this->Form->create($parametre, ['id'=>'add_parametre_form']); ?>
+			<div class="col-md-8">     
+				<div class="row">
+                	<label class="col-md-4 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'required' =>'required']); ?>
+                    </div>                          
+				</div><br />  
+				<div class="row">
+                	<label class="col-md-4 control-label" for="valeur">Valeur <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('valeur', ['label' => false,'id'=>'valeur',
+														   	'div' => false,'type' => 'textarea', 'escape' => false,
+															'class' => 'form-control', 'rows' => '5', 'cols' => '80',
+                    										'required' =>'required']); ?>
+                    </div>                          
+				</div><br />
+			</div>						
+			<div class="col-md-1"></div>			
+		</div><br /><br />
+	<p align="center">
+		<?= $this->Form->button('Ajouter', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
+    	<?= $this->Form->end() ?>
+	</p>
+	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
+	</div>
 </div>

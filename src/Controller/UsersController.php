@@ -14,7 +14,14 @@ class UsersController extends AppController
 {
 	public function beforeFilter(Event $event)
 	{
-		$this->Auth->allow(['activate', 'login', 'logout','password']);
+		//Si pas connecté
+		//if (!isset($user['role'])) 
+			$this->Auth->allow(['activate', 'login', 'logout','password','compte']);
+		//else $this->Auth->deny(['activate', 'login', 'logout','password']);
+		
+		//Si connecte
+		//if (isset($user['role'])) $this->Auth->allow(['compte']);
+		
 	}
 	
 	public function isAuthorized($user)
@@ -26,6 +33,12 @@ class UsersController extends AppController
 		} 
 		
 		return parent::isAuthorized($user);
+	}
+
+	public function initialize()
+	{
+		parent::initialize();
+		$this->loadComponent('Securite');
 	}
 	
 	public function activate($token =null) {
@@ -47,8 +60,7 @@ class UsersController extends AppController
 				$modif_user = $usersTable->get($user->id); 			
 				$modif_user->active = 1;	
 				//Mise à jour du token pour eviter une 2eme validation
-				$length = 8;
-				$token = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length*4);
+				$token = $this->Securite->getToken();
 				$modif_user->token = $token;
 				$usersTable->save($modif_user);
 				//Login du User
@@ -70,11 +82,11 @@ class UsersController extends AppController
 	
 	public function login()
 	{	
-    	//Menu et sous-menu
-    	$session = $this->request->session();
-    	$session->write('Progress.Menu','0');
-    	$session->write('Progress.SousMenu','0');
-		
+
+			//Destruction de la session
+			$session = $this->request->session();
+			$session->destroy();
+			
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 			if ($user) {						
@@ -90,12 +102,9 @@ class UsersController extends AppController
 				$session = $this->request->session();
 				$session->write('User.Id', $user['id']);
 				$session->write('User.Role', $user['role']);
+				
 				return $this->redirect($this->Auth->redirectUrl());
 			}
-
-			//Destruction de la session
-			$session = $this->request->session();
-			$session->destroy();
 			$this->Flash->error(__("Nom d'utilisateur ou mot de passe incorrect, essayez à nouveau."));
 		}
 	}
@@ -108,34 +117,59 @@ class UsersController extends AppController
 		return $this->redirect($this->Auth->logout());
 	}
 	
-// 	public function index()
-// 	{
-// 		$this->set('users', $this->Users->find('all'));
-// 	}
+ 	public function index()
+ 	{
+        $this->set('users', $this->paginate($this->Users));
+        $this->set('_serialize', ['users']);
+ 	}
 
-// 	public function view($id)
-// 	{
-// 		if (!$id) {
-// 			throw new NotFoundException(__('utilisateur non valide'));
-// 		}
+ 	public function view($id)
+ 	{
+ 		$user = $this->Users->get($id, [
+ 				'contain' => []
+ 				]);
+ 		$this->set('user', $user);
+ 		$this->set('_serialize', ['user']);
+ 	}
 
-// 		$user = $this->Users->get($id);
-// 		$this->set(compact('user'));
-// 	}
-
-// 	public function add()
-// 	{
-// 		$user = $this->Users->newEntity();
-// 		if ($this->request->is('post')) {
-// 			$user = $this->Users->patchEntity($user, $this->request->data);
-// 			if ($this->Users->save($user)) {
-// 				$this->Flash->success(__("L'utilisateur a &eacute;t&eacute; sauvegard&eacute;."));
-// 				return $this->redirect(['action' => 'index']);
-// 			}
-// 			$this->Flash->error(__("Impossible d'ajouter l'utilisateur."));
-// 		}
-// 		$this->set('user', $user);
-// 	}
+ 	/**
+ 	 * Edit method
+ 	 *
+ 	 * @param string|null $id User id.
+ 	 * @return void Redirects on successful edit, renders view otherwise.
+ 	 * @throws \Cake\Network\Exception\NotFoundException When record not found.
+ 	 */
+ 	public function edit($id = null)
+ 	{
+ 		$user = $this->Users->get($id, [
+ 				'contain' => []
+ 				]);
+ 		if ($this->request->is(['patch', 'post', 'put'])) {
+ 			$user = $this->Users->patchEntity($user, $this->request->data);
+ 			if ($this->Users->save($user)) {
+ 				$this->Flash->success('L\'utilisateur a bien été sauvegardé.');
+ 				return $this->redirect(['action' => 'index']);
+ 			} else {
+ 				$this->Flash->error('Erreur lors de la sauvegarde de l\'utilisateur.');
+ 			}
+ 		}
+ 		$this->set(compact('user'));
+ 		$this->set('_serialize', ['user']);
+ 	}
+ 	
+ 	public function add()
+ 	{
+ 		$user = $this->Users->newEntity();
+ 		if ($this->request->is('post')) {
+ 			$user = $this->Users->patchEntity($user, $this->request->data);
+ 			if ($this->Users->save($user)) {
+ 				$this->Flash->success(__("L'utilisateur a &eacute;t&eacute; sauvegard&eacute;."));
+ 				return $this->redirect(['action' => 'index']);
+ 			}
+ 			$this->Flash->error(__("Impossible d'ajouter l'utilisateur."));
+ 		}
+ 		$this->set('user', $user);
+ 	}
 
 	public function compte() {
     	//Menu et sous-menu
@@ -187,9 +221,8 @@ class UsersController extends AppController
 				$usersTable = TableRegistry::get('Users');
 				$modif_user = $usersTable->get($user->id); 
 				//Mise à jour du token pour eviter une 2eme validation
-				$length = 8;
-				$token = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length*4);
-				$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+     			$password = $this->Securite->getPassword();
+    			$token = $this->Securite->getToken();
 				$modif_user->token = $token;
 				$modif_user->password = $password;
 				$usersTable->save($modif_user);				
@@ -221,9 +254,5 @@ class UsersController extends AppController
 	    		$this->Flash->success('Un message vient de vous être envoyé pour regénérer votre mot de passe.');
 	    	}
 	    }
-	    
-	    
-		
 	}
-	
 }

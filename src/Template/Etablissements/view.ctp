@@ -46,7 +46,7 @@
             <th><?= __('Score') ?></th>
             <th><?= __('Reponse') ?></th>
             <th><?= __('Situation Crise') ?></th>
-            <th><?= __('Restucturation') ?></th>
+            <th><?= __('Restructuration') ?></th>
             <th><?= __('User Id') ?></th>
             <th><?= __('Etablissement Id') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
@@ -59,7 +59,7 @@
             <td><?= h($equipes->score) ?></td>
             <td><?= h($equipes->reponse) ?></td>
             <td><?= h($equipes->situation_crise) ?></td>
-            <td><?= h($equipes->restucturation) ?></td>
+            <td><?= h($equipes->restructuration) ?></td>
             <td><?= h($equipes->user_id) ?></td>
             <td><?= h($equipes->etablissement_id) ?></td>
 

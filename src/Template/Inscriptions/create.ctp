@@ -15,7 +15,6 @@ if($session->check('Engagement.Raison_Sociale')) $raison_sociale = $session->rea
 else $raison_sociale = "";
 
 ?>
-
 <div class="blocblanc">
 	<h2>Fiche d'engagement de la direction - Etape n°1</h2>
     <h3>Votre établissement est-il prêt pour P.A.C.T.E ?</h3>

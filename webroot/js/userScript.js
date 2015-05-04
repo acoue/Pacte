@@ -38,7 +38,35 @@ $(document).ready(function(){
 	$.validate({
 	    form : '#contact_form'
 	});
-    
+    //Formulaire edition question
+	$.validate({
+	    form : '#edit_question_form'
+    });
+    //Formulaire ajout question
+	$.validate({
+	    form : '#add_question_form'
+    });
+    //Formulaire edition parametre
+	$.validate({
+	    form : '#edit_parametre_form'
+    });
+    //Formulaire ajout parametre
+	$.validate({
+	    form : '#add_parametre_form'
+    });
+    //Formulaire edition utilisateur
+	$.validate({
+	    form : '#edit_utilisateur_form'
+    });
+    //Formulaire ajout utilisater
+	$.validate({
+	    form : '#add_utilisateur_form'
+    });
+    //Formulaire ajout outils
+	$.validate({
+	    form : '#add_outil_form'
+    });
+	
 	/* Bouton aide */
     $(".BoutonAide a").popover({
         placement : 'top'

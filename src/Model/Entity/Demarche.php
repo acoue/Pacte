@@ -6,7 +6,7 @@ use Cake\ORM\Entity;
 /**
  * Demarch Entity.
  */
-class Demarch extends Entity
+class Demarche extends Entity
 {
 
     /**
@@ -20,6 +20,7 @@ class Demarch extends Entity
         'reponse' => true,
         'situation_crise' => true,
         'restructuration' => true,
+        'statut' => true,
         'equipe_id' => true,
         'equipe' => true,
     ];

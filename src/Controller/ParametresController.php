@@ -10,6 +10,10 @@ use App\Controller\AppController;
  */
 class ParametresController extends AppController
 {
+	public function isAuthorized($user)
+	{	
+		return parent::isAuthorized($user);
+	}
 
     /**
      * Index method
@@ -49,10 +53,10 @@ class ParametresController extends AppController
         if ($this->request->is('post')) {
             $parametre = $this->Parametres->patchEntity($parametre, $this->request->data);
             if ($this->Parametres->save($parametre)) {
-                $this->Flash->success('The parametre has been saved.');
+                $this->Flash->success('Le paramètre a bien été sauvegardé.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The parametre could not be saved. Please, try again.');
+                $this->Flash->error('Erreur lors de la sauvegarde du parametre.');
             }
         }
         $this->set(compact('parametre'));
@@ -74,10 +78,10 @@ class ParametresController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $parametre = $this->Parametres->patchEntity($parametre, $this->request->data);
             if ($this->Parametres->save($parametre)) {
-                $this->Flash->success('The parametre has been saved.');
+                $this->Flash->success('Le paramètre a bien été sauvegardé.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The parametre could not be saved. Please, try again.');
+                $this->Flash->error('Erreur lors de la sauvegarde du parametre.');
             }
         }
         $this->set(compact('parametre'));
@@ -96,9 +100,9 @@ class ParametresController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $parametre = $this->Parametres->get($id);
         if ($this->Parametres->delete($parametre)) {
-            $this->Flash->success('The parametre has been deleted.');
+            $this->Flash->success('Le paramètre a bien été supprimé.');
         } else {
-            $this->Flash->error('The parametre could not be deleted. Please, try again.');
+            $this->Flash->error('Erreur lors de la suppression du parametre.');
         }
         return $this->redirect(['action' => 'index']);
     }

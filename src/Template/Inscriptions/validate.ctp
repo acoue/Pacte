@@ -26,7 +26,7 @@
 				</div><br />
 				<div  class="row">		
 					<div class="col-md-1"></div>
-					<label class="col-md-4 control-label" for="mail">Email de contact </label>
+					<label class="col-md-4 control-label" for="mail">Email de contact <span class="obligatoire"><sup> *</sup></span></label>
 					<div class="col-md-6">
 						<?= $this->Form->input('mail', ['label' => false,'id'=>'mail',
 														   	'div' => false,
@@ -56,9 +56,10 @@
 		</div><br />
 	<p align="center">
 		<?= $this->Form->button('Vous souhaitez poursuivre', ['type' => 'submit','class' => 'btn btn-info']) ?><br /><br />
+		<?= $this->Form->end() ?>
 		<?= $this->Html->link('Vous ne souhaitez pas poursuivre', '/Inscriptions/validate/0', ['class' => 'btn btn-danger']);?><br /><br />
 		<?= $this->Html->link('Retour', '/Inscriptions/create', ['class' => 'btn btn-default']);?>
 	</p>
+	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
 	</div>
-	<?= $this->Form->end() ?>
 </div>

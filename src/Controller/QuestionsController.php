@@ -11,9 +11,9 @@ use Cake\Event\Event;
  */
 class QuestionsController extends AppController
 {
-	public function beforeFilter(Event $event)
-	{
-		$this->Auth->allow(['index','add']);
+	public function isAuthorized($user)
+	{	
+		return parent::isAuthorized($user);
 	}
 
     /**
@@ -57,7 +57,7 @@ class QuestionsController extends AppController
                 $this->Flash->success('The question has been saved.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The question could not be saved. Please, try again.');
+                $this->Flash->error('Erreur dans la sauvegarde de la question.');
             }
         }
         $this->set(compact('question'));
@@ -79,10 +79,10 @@ class QuestionsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $question = $this->Questions->patchEntity($question, $this->request->data);
             if ($this->Questions->save($question)) {
-                $this->Flash->success('The question has been saved.');
+                $this->Flash->success('La question a été sauvegardée.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The question could not be saved. Please, try again.');
+                $this->Flash->error('Erreur dans la sauvegarde de la question.');
             }
         }
         $this->set(compact('question'));
@@ -101,9 +101,9 @@ class QuestionsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $question = $this->Questions->get($id);
         if ($this->Questions->delete($question)) {
-            $this->Flash->success('The question has been deleted.');
+            $this->Flash->success('La question a été supprimée.');
         } else {
-            $this->Flash->error('The question could not be deleted. Please, try again.');
+            $this->Flash->error('Erreur dans la suppression de la question.');
         }
         return $this->redirect(['action' => 'index']);
     }

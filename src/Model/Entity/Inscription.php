@@ -23,6 +23,6 @@ class Inscription extends Entity
         'situation_crise' => true,
         'restucturation' => true,
         'reponses' => true,
-        'ceated' => true,
+        'created' => true,
     ];
 }

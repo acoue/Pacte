@@ -1,6 +1,6 @@
 <div class="blocblanc">
 	<h2>Administration</h2>
-    <h3>Paramètres</h3>
+    <h3>Utilisateur</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -9,21 +9,23 @@
 				    <thead>
 				        <tr align='center'>
 				            <th width='20%'><?= $this->Paginator->sort('identifiant') ?></th>
-				            <th width='50%'><?= $this->Paginator->sort('Libellé') ?></th>
+				            <th width='30%'><?= $this->Paginator->sort('Login') ?></th>
+				            <th width='20%'><?= $this->Paginator->sort('Rôle') ?></th>
 				            <th  width='30%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
 				    <tbody>
-    				<?php foreach ($parametres as $parametre): ?>
+    				<?php foreach ($users as $user): ?>
 				        <tr>
-				            <td><?= $this->Number->format($parametre->id) ?></td>
-				            <td><?= h($parametre->name) ?></td>
+				            <td><?= $this->Number->format($user->id) ?></td>
+				            <td><?= h($user->username) ?></td>
+				            <td><?= h($user->role) ?></td>
 				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $parametre->id], array('escape' => false)); ?>&nbsp;&nbsp;
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $parametre->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $user->id], array('escape' => false)); ?>&nbsp;&nbsp;
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $user->id], array('escape' => false)); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
-				                ['action' => 'delete', $parametre->id],
+				                ['action' => 'delete', $user->id],
 				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer {0} ?']);?>
 				          </td>
 				        </tr>
@@ -43,7 +45,7 @@
 			<div class="col-md-1"></div>
 		</div>
 		<p align="center">
-			<?= $this->Html->link(__('Créer un paramètre'), ['action' => 'add'], ['class'=>'btn btn-default']) ?>
+			<?= $this->Html->link(__('Créer un Utilisateur'), ['action' => 'add'], ['class'=>'btn btn-default']) ?>
 		</p>
 	</div>
 </div>

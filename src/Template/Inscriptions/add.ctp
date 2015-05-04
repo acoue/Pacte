@@ -33,7 +33,7 @@ else $id_etablissement = "";
 				</div><br /> 	
 				<div class="row">			
 					<div class="form-group">
-						<label class="col-md-4 control-label" >Sélectionner l'établissement</label>
+						<label class="col-md-4 control-label" >Sélectionner l'établissement <span class="obligatoire"><sup> *</sup></span></label>
 					  	<div class="col-md-8">
 					    <?php foreach ($etablissements as $etab): ?>	  	
 					  		<div class="radio">
@@ -58,7 +58,7 @@ else $id_etablissement = "";
                     </div>                          
 				</div><br />
 		 		<div class="row">
-                	<label class="col-md-4 control-label" for="libelle_equipe">Libellé de l'équipe<br /> 
+                	<label class="col-md-4 control-label" for="libelle_equipe">Libellé de l'équipe  <span class="obligatoire"><sup> *</sup></span><br /> 
                     <span class="text-muted">Ce libellé n'est que purement informatif</span>                	
                 	</label> 
                     <div class="col-md-8"><?= $this->Form->input('libelle_equipe', ['label' => false,
@@ -75,8 +75,9 @@ else $id_etablissement = "";
 	  </div><br /><br />
 	<p align="center">
 		<?= $this->Form->button('Poursuivre', ['type' => 'submit','class' => 'btn btn-default']) ?>
+		<?= $this->Form->end() ?>
 		<?= $this->Html->link('Retour', '/Inscriptions/index', ['class' => 'btn btn-info']);?>
 	</p>
-	<?= $this->Form->end() ?>
+	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
 	</div>
 </div>

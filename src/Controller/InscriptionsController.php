@@ -9,13 +9,19 @@ use Cake\Network\Email\Email;
 /**
  * Inscriptions Controller
  *
- * @property \App\Model\Table\EquipesTable $Equipes
+ * @property \App\Model\Table\InscriptionsTable $Inscriptions
  */
 class InscriptionsController extends AppController
 {
 	public function beforeFilter(Event $event)
 	{
 		$this->Auth->allow(['index','add','create', 'validate', 'validate_refus']);
+	}
+	
+	public function initialize()
+	{
+		parent::initialize();
+		$this->loadComponent('Securite');
 	}
 	
     /**
@@ -99,12 +105,16 @@ class InscriptionsController extends AppController
     	//Validation
     	if ($this->request->is(['post', 'put'])) {
     		   		
+    		// On retrouve lesinfos de l'inscription 
+    		$this->loadModel('Inscriptions');
+    		$inscription = $this->Inscriptions->find('all')->where(['id' => $session->read('Engagement.id_Inscription')])->first(); 		
+    		
      		$boolOk = true;
     		
      		//Creation du User    			
-     		$length = 8;    		
-     		$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
-    		$token = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length*4);
+     		   		
+     		$password = $this->Securite->getPassword();
+    		$token = $this->Securite->getToken();
      		
      		/* A FAIRE 
      		 * 
@@ -128,24 +138,78 @@ class InscriptionsController extends AppController
     		else $boolOk = false;
 
     		if($boolOk) {
-	    		//Enregistrement de l'ID en session en cas de retour
-	    		$link = ['controller'=>'users', 'action' => 'activate', $user->id."-".$user->token, '_full' => true];
-	    		
-	   			$email = new Email('default');
-	            $email->template('inscription')
-	                ->emailFormat('html')
-	                ->to($this->request->data('mail'))
-	                ->from('refex@has-sante.fr')
-	                ->subject('[Pacte] Validation de votre inscription')
-	                ->viewVars(['login'=>$username,'mdp'=>$password,'link'=>$link])
-	                ->send();
-	            
-	     		//Creation Equipe
-	   	
-	     		//Creation de la démarche
-	    	
-	     		//Creation reponses   	
-	  	
+    			//Creation Equipe
+    			$equipesTable = TableRegistry::get('Equipes');
+    			$equipe = $equipesTable->newEntity();
+    			// Atribution des valeurs
+    			$equipe->name = $inscription->name;
+    			$equipe->user_id = $id_User;
+    			$equipe->etablissement_id = $session->read('Engagement.Id_Etablissement');
+    			//Enregistrement
+    			if($equipesTable->save($equipe)) $id_equipe = $equipe->id;
+    			else $boolOk = false;
+    		}
+    		
+    		if($boolOk) {
+	            //Creation de la démarche
+    			$demarchesTable = TableRegistry::get('Demarches');
+    			$demarche = $demarchesTable->newEntity();
+    			// Atribution des valeurs
+    			$demarche->name = $session->read('Engagement.Libelle_Equipe');
+    			$demarche->date_engagement = $inscription->date_engagement;
+    			$demarche->score = $inscription->score;
+    			$demarche->situation_crise = $inscription->situation_crise;
+    			$demarche->restructuration = $inscription->restructuration;
+    			$demarche->equipe_id = $id_equipe;
+    			//Enregistrement
+    			if($demarchesTable->save($demarche)) $id_demarche = $demarche->id;
+    			else $boolOk = false;
+    		}
+    		
+    		if($boolOk) {
+    			//Recuperation reponses
+    			$reponse_resultat = $inscription->reponses;
+    			//Creation reponses
+    			$reponsesTable = TableRegistry::get('Reponses');
+    			$tab_reponse = explode('#', $reponse_resultat);
+    			//debug($reponse_resultat);
+    			//die();
+    			
+    			foreach ($tab_reponse as $value){
+    				if(strlen($value) >0){
+	    				$reponse = $reponsesTable->newEntity();
+	    				$tab_tmp = explode('-', $value);
+	    				$reponse->libelle = $tab_tmp[1];
+	    				$reponse->question_id = $tab_tmp[0];
+	    				$reponse->demarche_id = $id_demarche;
+	    				unset($tab_tmp);
+	    				if($reponsesTable->save($reponse)) $boolOk = true;
+    					else $boolOk = false;
+    				}
+    			}
+    		}
+    		
+    		if($boolOk) {
+    			//Suppression de la table inscription
+    			$entity = $this->Inscriptions->get($inscription->id);
+    			if($this->Inscriptions->delete($entity)) $boolOk = true;
+    			else $boolOk = false;
+    		}
+    		
+    		if($boolOk) {
+	            //Envoi du mail
+    			//Enregistrement de l'ID en session en cas de retour
+    			$link = ['controller'=>'users', 'action' => 'activate', $user->id."-".$user->token, '_full' => true];
+    			 
+    			$email = new Email('default');
+    			$email->template('inscription')
+    			->emailFormat('html')
+    			->to($this->request->data('mail'))
+    			->from('refex@has-sante.fr')
+    			->subject('[Pacte] Validation de votre inscription')
+    			->viewVars(['login'=>$username,'mdp'=>$password,'link'=>$link])
+    			->send();
+    			
 	    		//Redirection
     			$message = "Inscription terminée, un mail va vous être envoyé pour terminer la validation.";
     			$this->set(compact('message'));
@@ -209,73 +273,32 @@ class InscriptionsController extends AppController
 	    	$boolInscription = true;
 	    	// Calculer le score
 	    	$score = 0;
-	    	$situation_crise = 0;
-	    	$restucturation = 0;
+	    	$situation_crise = 1;
+	    	$restructuration = 1;
 	    	$reponses = "";
-	    	$resultat = $this->request->data;	    	
+	    	$resultat = $this->request->data;
 	    	
 	    	//Explode des reponses
-	    	//Situation de crise
-	    	if($resultat['q_9'] == 'N') {
-	    		$situation_crise = 1; 
-	    		$reponses .= "1-N#";
-	    	} else $reponses .= "1-O#";
-	    	
-	    	// Restructuration
-	    	if($resultat['q_10'] == 'N') {
-	    		$restucturation = 1; 
-	    		$reponses .= "2-N#";
-	    	} else $reponses .= "2-O#";
-	    	
-	    	//Question 1	    	
-	    	if($resultat['q_1'] == 'O') {
-	    		$score = $score + 1;
-	    		$reponses .= "3-O#";
-	    	} else $reponses .= "3-N#";
-	    	
-	    	//Question 2
-	    	if($resultat['q_2'] == 'O') {
-	    		$score = $score + 1;
-	    		$reponses .= "4-O#";
-	    	} else $reponses .= "4-N#";
-	    	
-	    	//Question 3
-	    	if($resultat['q_3'] == 'O')  {
-	    		$score = $score + 1;
-	    		$reponses .= "5-O#";
-	    	} else $reponses .= "5-N#";
-	    	
-	    	//Question 4
-	    	if($resultat['q_4'] == 'O') {
-	    		$score = $score + 1;
-	    		$reponses .= "4-O#";
-	    	} else $reponses .= "4-N#";
-	    	
-	    	//Question 5
-	    	if($resultat['q_5'] == 'O')  {
-	    		$score = $score + 1;
-	    		$reponses .= "5-O#";
-	    	} else $reponses .= "5-N#";
-	    	
-	    	//Question 6
-	    	if($resultat['q_6'] == 'O')  {
-	    		$score = $score + 1;
-	    		$reponses .= "6-O#";
-	    	} else $reponses .= "6-N#";
-	    	
-	    	//Question 7
-	    	if($resultat['q_7'] == 'O') {
-	    		$score = $score + 1;
-	    		$reponses .= "9-O#";
-	    	} else $reponses .= "9-N#";
-	    	
-	    	//Question 8
-	    	if($resultat['q_8'] == 'O')  {
-	    		$score = $score + 1;
-	    		$reponses .= "10-O";
-	    	} else $reponses .= "10-N";	    	
-	    	
-	    	$score = $score + $restucturation + $situation_crise;	    	    	
+	    	foreach ($resultat as $key => $value) {
+	    		if($key != "etablissement_id") {
+	    			$num = substr($key, 2);
+	    			
+	    			if($num == 9) { //Situation de crise -> question id : 9
+	    				if($value === 'N') {
+	    					$situation_crise = 0; 
+	    					$score = $score + 1;
+	    				}
+	    			} else if($num == 10) { // Restructuration -> question id : 10
+	    				if($value === 'N') {
+	    					$restructuration = 0; 
+	    					$score = $score + 1;
+	    				}
+	    			}
+					else if($value === 'O') $score = $score + 1;					
+	    			$reponses .= $num."-".$value."#";
+	    		}
+	    		
+	    	}
 	    	
 	    	//Recuperation des valeurs en session
     		$session = $this->request->session();
@@ -312,10 +335,14 @@ class InscriptionsController extends AppController
 				$inscription->score = $score;
 				$inscription->etablissement = $etablissement;
 				$inscription->situation_crise = $situation_crise;
-				$inscription->restucturation = $restucturation;
+				$inscription->restructuration = $restructuration;
 				$inscription->reponses = $reponses;
+				
+				//debug($inscription);die();
+				
 		    	//Enregistrement
 		    	$inscriptionsTable->save($inscription);
+
 		    	
 		    	//Enregistrement de l'ID en session en cas de retour
 		    	if(! $session->check('Engagement.id_Inscription')) $session->write('Engagement.id_Inscription',$inscription->id);
