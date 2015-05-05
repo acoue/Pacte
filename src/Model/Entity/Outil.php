@@ -17,6 +17,7 @@ class Outil extends Entity
     protected $_accessible = [
         'name' => true,
         'texte' => true,
+        'type' => true,
         'phase_id' => true,
         'phase' => true,
     ];

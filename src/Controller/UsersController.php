@@ -22,7 +22,7 @@ class UsersController extends AppController
 	public function isAuthorized($user)
 	{	
 			
-		// Droits de tous les utilisateurs sur les actions
+		// Droits de tous les utilisateurs connectes sur les actions
 		if(in_array($this->request->action, ['logout','compte'])){
 			return true;
 		} 

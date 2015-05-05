@@ -16,6 +16,7 @@ class InscriptionsController extends AppController
 	// Actions publiques 
 	public function beforeFilter(Event $event)
 	{
+  		parent::beforeFilter($event);
 		$this->Auth->allow(['index','add','create', 'validate', 'validate_refus']);
 	}
 	

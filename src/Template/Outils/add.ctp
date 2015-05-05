@@ -12,17 +12,17 @@
 					<label class="col-md-4 control-label" for="fichier">Fichier <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('fichier', ['label' => false,'id'=>'fichier',
 														   	'div' => false,
-															'class' => 'form-control', 
+															'class' => 'form-control', 'required' =>'required',
                     										'type' => 'file']); ?>
                     </div>
 				</div><br /> 			    
 				<div class="row">
-                	<label class="col-md-4 control-label" for="texte">Description</label>
+                	<label class="col-md-4 control-label" for="texte">Description <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('texte', ['label' => false,'id'=>'texte',
 														   	'div' => false,
-															'class' => 'form-control', 
+															'class' => 'form-control', 'required' =>'required',
                     										'type' => 'textarea', 'escape' => false,
-															'class' => 'form-control', 'rows' => '5', 'cols' => '80']); ?>
+															'rows' => '5', 'cols' => '80']); ?>
                     </div>                          
 				</div><br />  		    
 				<div class="row">
@@ -33,7 +33,16 @@
                     										['options' => $phases],
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br /> 
+				</div><br />  
+				<div class="row">
+                	<label class="col-md-4 control-label" for="type">Type <span class="obligatoire"> *</span></label>
+                	<div class="col-md-8"><?= $this->Form->input('type', ['label' => false,
+                											'options' => ['' => 'Sélectionner', 'pedagogiques' => 'Outils pédagogiques', 'cle' => 'Outils clé en main'],
+                											'div' => false,
+															'class' => 'form-control', 
+                    										'required' =>'required']) ?>    
+                	</div>                 
+				</div>
 			</div>						
 			<div class="col-md-1"></div>			
 		</div><br /><br />

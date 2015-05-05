@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Outils Controller
@@ -56,18 +57,31 @@ class OutilsController extends AppController
     {    	
         $outil = $this->Outils->newEntity();
         if ($this->request->is('post')) {
-			
+			//debug($this->request->data); die();
+        	//déplacement du fichier
+        	$d = $this->request->data;
+			$nomFichier = $d['fichier']['name'];
+        	$destination = DATA.'outil'.DS.$nomFichier;
+        	move_uploaded_file($d['fichier']['tmp_name'], $destination);
         	
-        	debug($this->request->data); die();
-        	
-        	
-        	$outil = $this->Outils->patchEntity($outil, $this->request->data);
-            if ($this->Outils->save($outil)) {
-                $this->Flash->success('The outil has been saved.');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error('The outil could not be saved. Please, try again.');
-            }
+        	//insertion en base
+        	$outils = TableRegistry::get('Outils');
+        	$query = $outils->query();
+        	$result = $query->insert(['name', 'texte', 'type','phase_id'])
+				        	->values([
+				        			'name' => $nomFichier,
+				        			'texte' => $d['texte'],
+				        			'type' => $d['type'],
+				        			'phase_id' => $d['phase_id' ] 
+				        	])
+				        	->execute();
+        	//debug($result); die();
+        	if($result) {
+        		$this->Flash->success('L\'outil a bien été créé.');
+        		return $this->redirect(['action' => 'index']);        		
+        	} else {
+                $this->Flash->error('Erreur dans la création de l\'outil.');        		
+        	}        	
         }
         $phases = $this->Outils->Phases->find('list', ['limit' => 200]);
         $this->set(compact('outil', 'phases'));
@@ -111,10 +125,16 @@ class OutilsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $outil = $this->Outils->get($id);
+        
+		//suppression du dossier 
+        $destination = DATA.'outil'.DS.$outil->name;
+		unlink($destination);
+        
+		//suppresion de la base 
         if ($this->Outils->delete($outil)) {
-            $this->Flash->success('The outil has been deleted.');
+            $this->Flash->success('L\'outil a bien été supprimé.');
         } else {
-            $this->Flash->error('The outil could not be deleted. Please, try again.');
+            $this->Flash->error('Erreur dans la suppression de l\'outil.');
         }
         return $this->redirect(['action' => 'index']);
     }

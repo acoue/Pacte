@@ -51,6 +51,11 @@ define('CONFIG', ROOT . DS . 'config' . DS);
 define('WWW_ROOT', ROOT . DS . 'webroot' . DS);
 
 /**
+ * File path to the data directory.
+ */
+define('DATA', WWW_ROOT . DS . 'data' . DS);
+
+/**
  * Path to the tests directory.
  */
 define('TESTS', ROOT . DS . 'tests' . DS);

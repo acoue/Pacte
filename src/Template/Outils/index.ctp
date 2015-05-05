@@ -1,6 +1,6 @@
 <div class="blocblanc">
 	<h2>Administration</h2>
-    <h3>Paramètres</h3>
+    <h3>Outils</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -8,10 +8,11 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
-				            <th width='20%'><?= $this->Paginator->sort('identifiant') ?></th>
-				            <th width='50%'><?= $this->Paginator->sort('Libellé') ?></th>
-				            <th width='50%'><?= $this->Paginator->sort('Phase') ?></th>
-				            <th  width='30%' class="actions"><?= __('Actions') ?></th>
+				            <th width='10%'><?= $this->Paginator->sort('identifiant') ?></th>
+				            <th width='25%'><?= $this->Paginator->sort('Libellé') ?></th>
+				            <th width='25%'><?= $this->Paginator->sort('Phase') ?></th>
+				            <th width='20%'><?= $this->Paginator->sort('Type') ?></th>
+				            <th  width='20%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
 				    <tbody>
@@ -20,13 +21,15 @@
 				            <td><?= $this->Number->format($outil->id) ?></td>
 				            <td><?= h($outil->name) ?></td>
 				            <td><?= h($outil->phase->name) ?></td>
+				            <td><?php if(h($outil->type) == "cle") echo "Outils clé en main";
+				            		 else echo "Outils pédagogiques"; ?></td>
 				            <td class="actions">
 				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $outil->id], array('escape' => false)); ?>&nbsp;&nbsp;
 				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $outil->id], array('escape' => false)); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $outil->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer {0} ?']);?>
+				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer l\'outil ?']);?>
 				          </td>
 				        </tr>
 				
@@ -50,42 +53,3 @@
 	</div>
 </div>
 
-
-
-<div class="outils index large-10 medium-9 columns">
-    <table cellpadding="0" cellspacing="0">
-    <thead>
-        <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('name') ?></th>
-            <th><?= $this->Paginator->sort('phase_id') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($outils as $outil): ?>
-        <tr>
-            <td><?= $this->Number->format($outil->id) ?></td>
-            <td><?= h($outil->name) ?></td>
-            <td>
-                <?= $outil->has('phase') ? $this->Html->link($outil->phase->name, ['controller' => 'Phases', 'action' => 'view', $outil->phase->id]) : '' ?>
-            </td>
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $outil->id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $outil->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $outil->id], ['confirm' => __('Are you sure you want to delete # {0}?', $outil->id)]) ?>
-            </td>
-        </tr>
-
-    <?php endforeach; ?>
-    </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-        </ul>
-        <p><?= $this->Paginator->counter() ?></p>
-    </div>
-</div>
