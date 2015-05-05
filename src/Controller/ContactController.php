@@ -19,9 +19,11 @@ class ContactController extends AppController
 	
 	public function beforeFilter(Event $event)
 	{
+		//Actions publiques
 		$this->Auth->allow(['index','setErrors']);
 	}
 	
+
 	public function index()
 	{
 		$contact = new ContactForm();

@@ -2,9 +2,9 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Network\Email\Email;
+use Cake\Event\Event;
 
 /**
  * Inscriptions Controller
@@ -13,10 +13,16 @@ use Cake\Network\Email\Email;
  */
 class InscriptionsController extends AppController
 {
+	// Actions publiques 
 	public function beforeFilter(Event $event)
 	{
 		$this->Auth->allow(['index','add','create', 'validate', 'validate_refus']);
 	}
+	
+//     public function isAuthorized($user)
+//     {
+// 		return parent::isAuthorized($user);
+//     }​
 	
 	public function initialize()
 	{

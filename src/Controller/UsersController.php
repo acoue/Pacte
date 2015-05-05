@@ -4,33 +4,34 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Network\Request;
 use Cake\Network\Email\Email;
+use Cake\Event\Event;
 
 class UsersController extends AppController
 {
-	public function beforeFilter(Event $event)
-	{
-		//Si pas connecté
-		//if (!isset($user['role'])) 
-			$this->Auth->allow(['activate', 'login', 'logout','password','compte']);
-		//else $this->Auth->deny(['activate', 'login', 'logout','password']);
-		
-		//Si connecte
-		//if (isset($user['role'])) $this->Auth->allow(['compte']);
-		
-	}
+	//Actions publiques
+  	public function beforeFilter(Event $event)
+  	{
+  		parent::beforeFilter($event);
+  		$this->Auth->allow(['activate', 'login', 'password']);  		
+  	}
 	
 	public function isAuthorized($user)
-	{
-		
-		// Tous les utilisateurs peuvent se deconnecter
-		if ($this->request->action === 'logout') {			
+	{	
+			
+		// Droits de tous les utilisateurs sur les actions
+		if(in_array($this->request->action, ['logout','compte'])){
 			return true;
 		} 
+		
+		if(in_array($this->request->action, ['index'])){
+			if (isset($user['role']) && $user['role'] === 'has') {
+				return true;
+			}
+		}
 		
 		return parent::isAuthorized($user);
 	}
@@ -70,12 +71,12 @@ class UsersController extends AppController
 				$session->write('User.Id', $user['id']);
 				$session->write('User.Role', $user['role']);
 				$this->Flash->success(__("Votre compte a bien été validé."));
-				$this->redirect("/");
+				$this->redirect($this->Auth->redirectUrl());
 				
 			} else {
 				//debug($this->request->data); die();
 				$this->Flash->error(__("Ce lien d'activation ne semble pas valide."));
-				$this->redirect("/users/login");
+				$this->redirect($this->Auth->logout());
 			}
 		}
 	}
@@ -177,29 +178,31 @@ class UsersController extends AppController
 	    $session->write('Progress.Menu','0');
 	    $session->write('Progress.SousMenu','0');
 	    
-		$user_id = $this->Auth->user('id');
+		//$user_id = $this->Auth->user('id');
+		$user_id = $session->read('User.Id');
 		if(!$user_id) {
 			$this->redirect('/');
 			die();
-		}
-		$d = $this->request->data;
-		//debug($d);die();
-		$usersTable = TableRegistry::get('Users');
-		$modif_user = $usersTable->get($user_id);
-		if ($this->request->is(['post', 'put'])) {			
-			if(!empty($d['pass1'])) {
-				if($d['pass1'] == $d['pass2']) {
-					$modif_user->password = $d['pass1'];
-					if($usersTable->save($modif_user)){
-						$this->Flash->success('Modification du profil effectuée.');
+		} else {
+			$d = $this->request->data;
+			//debug($d);die();
+			$usersTable = TableRegistry::get('Users');
+			$modif_user = $usersTable->get($user_id);
+			if ($this->request->is(['post', 'put'])) {			
+				if(!empty($d['pass1'])) {
+					if($d['pass1'] == $d['pass2']) {
+						$modif_user->password = $d['pass1'];
+						if($usersTable->save($modif_user)){
+							$this->Flash->success('Modification du profil effectuée.');
+						} else {
+							$this->Flash->error('Impossible de sauvegarder.');
+						}
 					} else {
-						$this->Flash->error('Impossible de sauvegarder.');
+						$this->Flash->error('Les mots de passe ne correspondent pas');
 					}
-				} else {
-					$this->Flash->error('Les mots de passe ne correspondent pas');
-				}
-			} else $this->Flash->error('Merci de renseigner un mot de passe');
-		}		
+				} else $this->Flash->error('Merci de renseigner un mot de passe');
+			}		
+		}
 	}
 	
 	public function password() {

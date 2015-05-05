@@ -58,7 +58,11 @@ class AppController extends Controller
     
     public function beforeFilter(Event $event)
     {
+    	$this->Auth->deny();
     	$this->Auth->config('authorize', ['Controller']);
+    	//$this->Auth->config('authorize', ['Actions','Controller']);
+    	
+    	
     	$this->Auth->config('authError', 'Vous ne disposez pas des droits nécessaires.');
     	$this->Auth->config('unauthorizedRedirect', $this->referer(['controller' => 'pages','action' => 'permission']));
     }
