@@ -75,8 +75,7 @@ $cakeDescription = 'Pacte ';
                 <div class="col-md-2">
                 	<?= $this->element('outil', ['menu' => '1', 'sous_menu' => '1']); ?>
                 </div>
-                <div class="col-md-8"><?= $this->fetch('content') ?> </div>
-                <div class="col-md-2"></div>                      
+                <div class="col-md-10"><?= $this->fetch('content') ?> </div>
             </div>
             <br /><br />
         </div>

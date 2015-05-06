@@ -66,6 +66,25 @@ $(document).ready(function(){
 	$.validate({
 	    form : '#add_outil_form'
     });
+    //Formulaire edition outils
+	$.validate({
+	    form : '#edit_outil_form'
+    });
+    //Formulaire ajout de membres
+	$.validate({
+	    form : '#add_membre_form'
+    });
+    //Formulaire edition de membres
+	$.validate({
+	    form : '#edit_membre_form'
+    });
+	
+	
+	
+	
+	
+	
+	
 	
 	/* Bouton aide */
     $(".BoutonAide a").popover({

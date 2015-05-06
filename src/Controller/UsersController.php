@@ -66,10 +66,6 @@ class UsersController extends AppController
 				$usersTable->save($modif_user);
 				//Login du User
 				$this->Auth->setUser($user);
-				//Mise en session des element ID et ROLE
-				$session = $this->request->session();
-				$session->write('User.Id', $user['id']);
-				$session->write('User.Role', $user['role']);
 				$this->Flash->success(__("Votre compte a bien été validé."));
 				$this->redirect($this->Auth->redirectUrl());
 				
@@ -84,25 +80,41 @@ class UsersController extends AppController
 	public function login()
 	{	
 
-			//Destruction de la session
-			$session = $this->request->session();
-			$session->destroy();
+		//Destruction de la session
+		$session = $this->request->session();
+		$session->destroy();
 			
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
-			if ($user) {						
+			if ($user) {	
+				//debug($user->role); die();
+				
+				if($user['role'] == 'equipe') {
+					
+					//Recuperation libelle etab + equipe => session
+					$this->loadModel('Equipes');
+					$equipe = $this->Equipes->find('all')
+					->contain(['Etablissements'])
+					->where(['Equipes.user_id' => $user['id']])
+					->first();
+					
+					$session->write('Equipe.Libelle',$equipe->name);
+					$session->write('Equipe.Libelle_Etablissement',$equipe->etablissement->libelle);
+					
+					//recuperation de la demarche en cours pour l'equipe => session
+					$this->loadModel('Demarches');
+					$demarche = $this->Demarches->find('all')				
+					->where(['equipe_id' => $equipe->id])
+					->first();
+					$session->write('Equipe.Demarche',$demarche->id);
+				}						
+					
 				//Mise a jour de la date de last login 
 				$usersTable = TableRegistry::get('Users');
 				$modif_user = $usersTable->get($user['id']);
 				$modif_user->lastlogin = date('Y-m-d H:i:s');
-				$usersTable->save($modif_user);
-				
+				$usersTable->save($modif_user);				
 				$this->Auth->setUser($user);
-				
-				//Mise en session des element ID et ROLE
-				$session = $this->request->session();
-				$session->write('User.Id', $user['id']);
-				$session->write('User.Role', $user['role']);
 				
 				return $this->redirect($this->Auth->redirectUrl());
 			}
@@ -179,7 +191,7 @@ class UsersController extends AppController
 	    $session->write('Progress.SousMenu','0');
 	    
 		//$user_id = $this->Auth->user('id');
-		$user_id = $session->read('User.Id');
+		$user_id = $session->read('Auth.User.id');
 		if(!$user_id) {
 			$this->redirect('/');
 			die();

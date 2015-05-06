@@ -1,33 +1,52 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('Edit Outil'), ['action' => 'edit', $outil->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Outil'), ['action' => 'delete', $outil->id], ['confirm' => __('Are you sure you want to delete # {0}?', $outil->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Outils'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Outil'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Phases'), ['controller' => 'Phases', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Phase'), ['controller' => 'Phases', 'action' => 'add']) ?> </li>
-    </ul>
-</div>
-<div class="outils view large-10 medium-9 columns">
-    <h2><?= h($outil->name) ?></h2>
-    <div class="row">
-        <div class="large-5 columns strings">
-            <h6 class="subheader"><?= __('Name') ?></h6>
-            <p><?= h($outil->name) ?></p>
-            <h6 class="subheader"><?= __('Phase') ?></h6>
-            <p><?= $outil->has('phase') ? $this->Html->link($outil->phase->name, ['controller' => 'Phases', 'action' => 'view', $outil->phase->id]) : '' ?></p>
-        </div>
-        <div class="large-2 columns numbers end">
-            <h6 class="subheader"><?= __('Id') ?></h6>
-            <p><?= $this->Number->format($outil->id) ?></p>
-        </div>
-    </div>
-    <div class="row texts">
-        <div class="columns large-9">
-            <h6 class="subheader"><?= __('Texte') ?></h6>
-            <?= $this->Text->autoParagraph(h($outil->texte)); ?>
-
-        </div>
-    </div>
-</div>
+<div class="blocblanc">
+	<h2>Administration - Visualisation Outil</h2>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-2">
+			<?= $this->Html->link(__('Edition'), ['action' => 'edit', $outil->id],['class' => 'btn btn-default']) ?><br /><br />
+			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $outil->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer {0}?', $outil->id)]) ?><br /><br/>			
+			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
+			</div>
+			<div class="col-md-8">
+				<div class="row">
+					<label class="col-md-4 control-label" for="fichier">Fichier</label>
+                    <div class="col-md-7"><?= $this->Form->input('fichier', ['label' => false,'id'=>'fichier',
+														   	'div' => false, 'value' => h($outil->name),
+															'class' => 'form-control',
+                    										'type' => 'text', 'disabled' =>'disabled']); ?>
+                    </div> 
+                    <div class="col-md-1">
+                    <?= $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/'.h($outil->name), ['class' => 'titre','target' => '_blank','escape' => false]);?>
+                    </div> 
+				</div><br /> 			    
+				<div class="row">
+                	<label class="col-md-4 control-label" for="texte">Description</label>
+                    <div class="col-md-8"><?= $this->Form->input('texte', ['label' => false,
+														   	'div' => false, 'value' => h($outil->texte),
+															'class' => 'form-control', 'disabled' =>'disabled',
+                    										'type' => 'textarea', 'escape' => false,
+															'rows' => '5', 'cols' => '80']); ?>
+                    </div>                        
+				</div><br />  		    
+				<div class="row">
+                	<label class="col-md-4 control-label" for="phase">Phase</label>
+                    <div class="col-md-8"><?= $this->Form->input('phase', ['label' => false,
+														   	'div' => false, 'value'=> $outil->phase->name,
+															'class' => 'form-control',                     										
+                    										'disabled' =>'disabled']); ?>
+                    </div>                          
+				</div><br />  
+				<div class="row">
+                	<label class="col-md-4 control-label" for="type">Type</label>
+                	<div class="col-md-8"><?= $this->Form->input('type', ['label' => false,
+                												'div' => false, 'value'=> h($outil->type),
+																'class' => 'form-control', 
+                    											'disabled' =>'disabled']) ?>    
+                	</div>                 
+				</div>
+			</div>						
+			<div class="col-md-1"></div>			
+		</div><br /><br />
+	</div>
+</div>   

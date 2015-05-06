@@ -53,7 +53,7 @@ define('WWW_ROOT', ROOT . DS . 'webroot' . DS);
 /**
  * File path to the data directory.
  */
-define('DATA', WWW_ROOT . DS . 'data' . DS);
+define('DATA', WWW_ROOT . DS . 'files' . DS);
 
 /**
  * Path to the tests directory.

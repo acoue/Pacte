@@ -29,6 +29,7 @@ class InscriptionsController extends AppController
 	{
 		parent::initialize();
 		$this->loadComponent('Securite');
+		$this->loadComponent('Parametre');
 	}
 	
     /**
@@ -118,17 +119,21 @@ class InscriptionsController extends AppController
     		
      		$boolOk = true;
     		
-     		//Creation du User    			
-     		   		
+     		//Creation du User 
      		$password = $this->Securite->getPassword();
     		$token = $this->Securite->getToken();
      		
-     		/* A FAIRE 
-     		 * 
-     		 * ANNEE_NUMDEMARCHE_INCREMEMENT
+     		/* On retrouve le nombre d'equipe enregistrés avec ce numero de démarche
+     		 * Rappel : identifiant = ANNEE_NUMDEMARCHE_INCREMEMENT
      		 * 
      		 * */
-     		$increment = 1;
+    		$this->loadModel('Equipes');
+    		$nb = $this->Equipes->find('all')
+    							->contain(['Etablissements'])
+    							->where(['Etablissements.numero_demarche' => $session->read('Engagement.Numero_Demarche')])
+    							->count();
+    		
+     		$increment = $nb+1;
      		$username = date('Y')."_".$session->read('Engagement.Numero_Demarche')."_".$increment;
     		
      		//Stockage en base de donnees
@@ -204,21 +209,52 @@ class InscriptionsController extends AppController
     		}
     		
     		if($boolOk) {
+    			//Inscription de l'etape dans la table 	
+    			$demPhasesTable = TableRegistry::get('DemarchePhases');
+    			$demPhase = $demPhasesTable->newEntity();
+    			// Atribution des valeurs
+    			$demPhase->demarche_id = $id_demarche;
+    			$demPhase->phase_id = 1; //Entree dans la premiere phase
+    			$demPhase->date_entree = date('Y-m-d');
+    			//Enregistrement
+    			if($demPhasesTable->save($demPhase)) $boolOk = true;
+    			else $boolOk = false;
+    		}
+    		
+    		if($boolOk) {
 	            //Envoi du mail
     			//Enregistrement de l'ID en session en cas de retour
     			$link = ['controller'=>'users', 'action' => 'activate', $user->id."-".$user->token, '_full' => true];
-    			 
+
+    			//Recuperation des parametres
+    			$this->loadModel('Parametres');
+    			$from = $this->Parametres->find()->where(['name' => 'EmailContact'])->first();
+    			if(empty($from)) $from = "refex@has-sante.fr";
+    			else  $from = $from['valeur'];
+    			$sujet = $this->Parametres->find()->where(['name' => 'SujetEmailContact'])->first();
+    			if(empty($sujet)) $sujet = "[PACTE] ";
+    			else  $sujet = $sujet['valeur'];
+    			
+    			
+    			//$from = $this->Parametre->getValeur('EmailContact','refex@has-sante.fr');
+    			//$sujet = $this->Parametre->getValeur('SujetEmailContact', '[PACTE]');
+    			//debug($from.'-'.$sujet);die();
+    			
     			$email = new Email('default');
     			$email->template('inscription')
     			->emailFormat('html')
     			->to($this->request->data('mail'))
-    			->from('refex@has-sante.fr')
-    			->subject('[Pacte] Validation de votre inscription')
+    			->from($from)
+    			->subject($sujet)
     			->viewVars(['login'=>$username,'mdp'=>$password,'link'=>$link])
     			->send();
     			
-	    		//Redirection
-    			$message = "Inscription terminée, un mail va vous être envoyé pour terminer la validation.";
+	    		//Recuperation du message en base (parametres)
+    			$this->loadModel('Parametres');
+    			$message = $this->Parametres->find()->where(['name' => 'MessageValidationInscription'])->first();
+    			if(empty($message)) $message = "Erreur";
+    			else  $message = $message['valeur'];
+    			//Redirection
     			$this->set(compact('message'));
     			$this->render('validate_accept');
     		} else {
