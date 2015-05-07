@@ -5,32 +5,32 @@ if($session->check('Auth.User.role')) {
 
 	$role = $session->read('Auth.User.role');
 	$username = $session->read('Auth.User.username');
+	$etat_engagement = $session->read('Equipe.Engagement');
 	
 	echo "<div id='navbar' class='navbar-collapse collapse'>";
 	echo "    <ul class='nav navbar-nav'>";
-if($role === 'admin' || $role === 'equipe')	echo "        <li class='dropdown'>";
-if($role === 'admin' || $role === 'equipe')	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Gestion <span class='caret'></span></a>";
-if($role === 'admin' || $role === 'equipe')	echo "            <ul class='dropdown-menu' role='menu'>";
+if($role === 'admin' || ($role === 'equipe' && $etat_engagement == 1 ))	echo "        <li class='dropdown'>";
+if($role === 'admin' || ($role === 'equipe' && $etat_engagement == 1 ))	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Gestion <span class='caret'></span></a>";
+if($role === 'admin' || ($role === 'equipe' && $etat_engagement == 1 ))	echo "            <ul class='dropdown-menu' role='menu'>";
 //Gestion > Admin
 if($role === 'admin')	echo " <li>".$this->Html->link('Utilisateur','/users/index')."</li>";
 if($role === 'admin')	echo " <li>".$this->Html->link('Paramètres','/parametres/index')."</li>";
 if($role === 'admin')	echo " <li>".$this->Html->link('Outils','/outils/index')."</li>";
 if($role === 'admin')	echo " <li>".$this->Html->link('Questions','/questions/index')."</li>";
 if($role === 'admin')	echo " <li>".$this->Html->link('Fonctions','/fonctions/index')."</li>";
-if($role === 'admin')	echo " <li>".$this->Html->link('Services','/services/index')."</li>";
 //Gestion > Equipe
-if($role === 'equipe')	echo " <li>".$this->Html->link('Membres','/membres/index/0')."</li>";
-if($role === 'equipe')	echo " <li>".$this->Html->link('Comité de pilotage','/membres/index/1')."</li>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo " <li>".$this->Html->link('Membres','/membres/index/0')."</li>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo " <li>".$this->Html->link('Comité de pilotage','/membres/index/1')."</li>";
 if($role === 'admin' || $role === 'equipe')	echo "            </ul>";
 if($role === 'admin' || $role === 'equipe')	echo "        </li>";
-	echo "        <li class='dropdown'>";
-	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Suivi <span class='caret'></span></a>";
-	echo "            <ul class='dropdown-menu' role='menu'>";
-	echo "                <li><a href='#'>Engagement</a></li>";
-	echo "                <li><a href='#'>Démarches</a></li>";
-	echo "            </ul>";
-	echo "        </li>";
-	echo "    </ul>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo "        <li class='dropdown'>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Suivi <span class='caret'></span></a>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo "            <ul class='dropdown-menu' role='menu'>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo "                <li>".$this->Html->link('Engagement','/projets/index')."</li>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo "                <li><a href='#'>Démarches</a></li>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo "            </ul>";
+if($role === 'admin' || $role === 'equipe')	echo "        </li>";
+if($role === 'admin' || $role === 'equipe')	echo "    </ul>";
 	echo "    <div class='bloc_connected'>";
 	echo "        <table width='100%' cellspacing='5px' cellpadding='5px'>";
 	echo "            <tr height='35px' align='center'>";

@@ -201,6 +201,22 @@ class InscriptionsController extends AppController
     			}
     		}
     		
+    		//Creation du projet
+    		if($boolOk) {
+	    		
+    			$projetTable = TableRegistry::get('Projets');
+    			$projet = $projetTable->newEntity();
+    			// Atribution des valeurs
+    			$projet->demarche_id = $id_demarche;
+    			//Enregistrement
+    			if($demPhasesTable->save($demPhase)) $boolOk = true;
+    			else $boolOk = false;
+    		}
+    		
+    		
+    		
+    		
+    		
     		if($boolOk) {
     			//Suppression de la table inscription
     			$entity = $this->Inscriptions->get($inscription->id);

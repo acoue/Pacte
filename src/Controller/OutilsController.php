@@ -17,7 +17,7 @@ class OutilsController extends AppController
 	{
 		return parent::isAuthorized($user);
 	}
-
+	
     /**
      * Index method
      *

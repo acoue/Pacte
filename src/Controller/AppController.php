@@ -54,6 +54,16 @@ class AppController extends Controller
     					]
     			]
     	]);
+    	
+
+    	$session = $this->request->session();
+		$this->loadModel('Outils');
+    	$phase = $session->read('Progress.Menu');
+    	$outilsPeda = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'pedagogiques']);
+    	$outilsCle = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'cle']);
+    	
+    	
+    	$this->set(['listeOutilsPeda' => $outilsPeda,'listeOutilsCle' => $outilsCle]);
     }
     
     public function beforeFilter(Event $event)

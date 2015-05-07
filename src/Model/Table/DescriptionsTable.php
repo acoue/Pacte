@@ -1,16 +1,16 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Membre;
+use App\Model\Entity\Description;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Membres Model
+ * Descriptions Model
  */
-class MembresTable extends Table
+class DescriptionsTable extends Table
 {
 
     /**
@@ -21,15 +21,16 @@ class MembresTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('membres');
+        $this->table('descriptions');
         $this->displayField('id');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
-        $this->belongsTo('Demarches', [
-            'foreignKey' => 'demarche_id'
+        $this->belongsTo('Fonctions', [
+            'foreignKey' => 'fonction_id',
+            'joinType' => 'INNER'
         ]);
-        $this->belongsTo('Responsabilites', [
-            'foreignKey' => 'responsabilite_id'
+        $this->belongsTo('Projets', [
+            'foreignKey' => 'projet_id',
+            'joinType' => 'INNER'
         ]);
     }
 
@@ -43,16 +44,16 @@ class MembresTable extends Table
     {
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create')
-            ->allowEmpty('nom')
-            ->allowEmpty('prenom')
-            ->add('email', 'valid', ['rule' => 'email'])
-            ->allowEmpty('email')
-            ->allowEmpty('telephone')
-            ->allowEmpty('fonction')
-            ->allowEmpty('service')
-            ->add('comite', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('comite');
+            ->allowEmpty('id', 'create');
+            
+        $validator
+            ->add('nb_etp', 'valid', ['rule' => 'numeric'])
+            ->requirePresence('nb_etp', 'create')
+            ->notEmpty('nb_etp');
+            
+        $validator
+            ->requirePresence('service', 'create')
+            ->notEmpty('service');
 
         return $validator;
     }
@@ -66,8 +67,8 @@ class MembresTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['demarche_id'], 'Demarches'));
-        $rules->add($rules->existsIn(['responsabilite_id'], 'Responsabilites'));
+        $rules->add($rules->existsIn(['fonction_id'], 'Fonctions'));
+        $rules->add($rules->existsIn(['projet_id'], 'Projets'));
         return $rules;
     }
 }

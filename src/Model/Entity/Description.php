@@ -4,9 +4,9 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Service Entity.
+ * Description Entity.
  */
-class Service extends Entity
+class Description extends Entity
 {
 
     /**
@@ -15,7 +15,11 @@ class Service extends Entity
      * @var array
      */
     protected $_accessible = [
-        'name' => true,
-        'membres' => true,
+        'nb_etp' => true,
+        'service' => true,
+        'fonction_id' => true,
+        'projet_id' => true,
+        'fonction' => true,
+        'projet' => true,
     ];
 }

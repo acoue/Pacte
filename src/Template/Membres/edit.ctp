@@ -1,5 +1,3 @@
-
-<?= $this->Form->hidden('id',['value' => $membre->id]);?>		    
 <div class="blocblanc">
 	<h2>Administration - Membres </h2>
     <h3><?= h($membre->prenom)." ".h($membre->nom) ?></h3>
@@ -41,20 +39,20 @@
                     </div>                          
 				</div><br />  		    
 				<div class="row">
-                	<label class="col-md-4 control-label" for="fonction_id">Fonction <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('fonction_id', ['label' => false,'id'=>'fonction_id',
+                	<label class="col-md-4 control-label" for="fonction">Fonction <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('fonction', ['label' => false,'id'=>'fonction',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										['options' => $fonctions],
+                    										'type'=>'text',
                     										'required' =>'required']); ?>
                     </div>                          
 				</div><br />  		    
 				<div class="row">
-                	<label class="col-md-4 control-label" for="service_id">Service <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('service_id', ['label' => false,'id'=>'service_id',
+                	<label class="col-md-4 control-label" for="service">Service <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('service', ['label' => false,'id'=>'service',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										['options' => $services],
+                    										'type'=>'text',
                     										'required' =>'required']); ?>
                     </div>                          
 				</div><br />      

@@ -38,18 +38,20 @@ class MembresController extends AppController
      *
      * @return void
      */
-    public function index($comite = 0)
+    public function index($comite = 0, $type=0)
     {
+    	
+    	//TYPE : 1 = membres referent, 0 = membres 
+    	//COMITE : 1 = selection des membres du comité, 0 = selection des membres de l'equipe
+    	
 		//Liste des membres
         $session = $this->request->session();
     	$membres = $this->Membres->find('all')
-    	->contain(['Demarches', 'Responsabilites', 'Fonctions', 'Services'])
+    	->contain(['Demarches', 'Responsabilites'])
     	->where(['comite'=>$comite,'demarche_id'=>$session->read('Equipe.Demarche')]);    	
     	
-    	$responsabilites = $this->Membres->Responsabilites->find('list', ['limit' => 200]);
-    	$fonctions = $this->Membres->Fonctions->find('list', ['limit' => 200]);
-    	$services = $this->Membres->Services->find('list', ['limit' => 200]);
-    	$this->set(compact('demarches', 'responsabilites', 'fonctions', 'services','comite'));    	
+    	$responsabilites = $this->Membres->Responsabilites->find('list', ['limit' => 200])->where(['online'=>1]);
+    	$this->set(compact('demarches', 'responsabilites', 'comite', 'type'));    	
         $this->set('membres', $membres);
         $this->set('_serialize', ['membres']);
     }
@@ -64,7 +66,7 @@ class MembresController extends AppController
     public function view($id = null)
     {
         $membre = $this->Membres->get($id, [
-            'contain' => ['Demarches', 'Responsabilites', 'Fonctions', 'Services']
+            'contain' => ['Demarches', 'Responsabilites']
         ]);
         $this->set('membre', $membre);
         $this->set('_serialize', ['membre']);
@@ -80,26 +82,29 @@ class MembresController extends AppController
         //$membre = $this->Membres->newEntity();
         if ($this->request->is('post')) {  
         	//Recuperation des données du formulaire      
-        	$donnees = $this->request->data;
+        	$donnees = $this->request->data;        	
+	        $session = $this->request->session();
         	
-        	$membreUnique = $this->Membres->find()->where(['nom'=>$donnees['nom'],'prenom'=>$donnees['prenom']])->count();
+        	$membreUnique = $this->Membres->find()->where(['nom'=>$donnees['nom'],
+        													'prenom'=>$donnees['prenom'],
+        													'demarche_id' => $session->read('Equipe.Demarche'), 
+        													'comite' => $donnees['comite']])->count();
         	if($membreUnique >0) {
         		$this->Flash->error('Ajout IMPOSSIBLE. Le membre est déjà présent dans cette équipe pour cette démarche');        		
         		return $this->redirect(['action' => 'index']);
         	} else {
 	        	$membresTable = TableRegistry::get('Membres');
-				$membre = $membresTable->newEntity();	        	
-	        	$session = $this->request->session();
+				$membre = $membresTable->newEntity();	
 	        	
 	        	$membre->nom = $donnees['nom']; 
 	        	$membre->prenom = $donnees['prenom']; 
 	        	$membre->email = $donnees['email']; 
 	        	$membre->telephone = $donnees['telephone']; 
-	        	$membre->comite = $donnees['comite'];; //Ajout d'un membre ou membre du comite de pilotage
+	        	$membre->comite = $donnees['comite']; //Ajout d'un membre ou membre du comite de pilotage
 	        	$membre->demarche_id = $session->read('Equipe.Demarche'); 
 	        	$membre->responsabilite_id = $donnees['responsabilite_id']; 
-	        	$membre->fonction_id = $donnees['fonction_id']; 
-	        	$membre->service_id = $donnees['service_id'];
+	        	$membre->fonction = $donnees['fonction']; 
+	        	$membre->service = $donnees['service'];
 	        	        	
 	        	if ($this->Membres->save($membre)) {
 	                $this->Flash->success('Le membre de l\'équipe a bien été ajouté.');
@@ -139,10 +144,8 @@ class MembresController extends AppController
             }
         }
         $demarches = $this->Membres->Demarches->find('list', ['limit' => 200]);
-        $responsabilites = $this->Membres->Responsabilites->find('list', ['limit' => 200]);
-        $fonctions = $this->Membres->Fonctions->find('list', ['limit' => 200]);
-        $services = $this->Membres->Services->find('list', ['limit' => 200]);
-        $this->set(compact('membre', 'demarches', 'responsabilites', 'fonctions', 'services'));
+        $responsabilites = $this->Membres->Responsabilites->find('list', ['limit' => 200])->where(['online'=>1]);
+        $this->set(compact('membre', 'demarches', 'responsabilites'));
         $this->set('_serialize', ['membre']);
     }
 

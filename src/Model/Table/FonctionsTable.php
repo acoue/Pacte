@@ -24,9 +24,9 @@ class FonctionsTable extends Table
         $this->table('fonctions');
         $this->displayField('name');
         $this->primaryKey('id');
-        $this->hasMany('Membres', [
-            'foreignKey' => 'fonction_id'
-        ]);
+//         $this->hasMany('Membres', [
+//             'foreignKey' => 'fonction_id'
+//         ]);
     }
 
     /**

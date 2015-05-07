@@ -11,7 +11,10 @@ if($session->check('Auth.User.role')) {
 	} else if($role === 'expert') {
 		echo "Bienvenue Expert Visiteur";
 	} else if($role === 'equipe') {
-		echo "Bienvenue Equipe";
+		if($session->read('Equipe.Engagement') == 0 ){
+			echo $this->Html->link('Poursuivre l\'engagement', ['controller'=>'membres', 'action' => 'index/0/1'],['class' => 'btn btn-info']);
+			
+		} else echo "Bienvenue Equipe";
 		
 		
 		

@@ -78,7 +78,18 @@ $(document).ready(function(){
 	$.validate({
 	    form : '#edit_membre_form'
     });
-	
+    //Formulaire edition du projet
+	$.validate({
+	    form : '#edit_projet_form'
+    });
+	//Formulaire ajout d'une desription d'equipe
+	$.validate({
+	    form : '#add_description_form'
+    });
+	//Formulaire de modification d'une desription d'equipe
+	$.validate({
+	    form : '#edit_description_form'
+    });
 	
 	
 	

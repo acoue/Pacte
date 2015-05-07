@@ -96,8 +96,7 @@ class UsersController extends AppController
 					$equipe = $this->Equipes->find('all')
 					->contain(['Etablissements'])
 					->where(['Equipes.user_id' => $user['id']])
-					->first();
-					
+					->first();					
 					$session->write('Equipe.Libelle',$equipe->name);
 					$session->write('Equipe.Libelle_Etablissement',$equipe->etablissement->libelle);
 					
@@ -107,6 +106,14 @@ class UsersController extends AppController
 					->where(['equipe_id' => $equipe->id])
 					->first();
 					$session->write('Equipe.Demarche',$demarche->id);
+
+					//Récupération de l'état de l'engagement de l'équipe
+					$this->loadModel('DemarchePhases');
+					$etat = $this->DemarchePhases->find('all')
+					->where(['demarche_id' => $demarche->id])
+					->first();
+					if(empty($etat->date_validation)) $session->write('Equipe.Engagement',0);
+					else $session->write('Equipe.Engagement',1);
 				}						
 					
 				//Mise a jour de la date de last login 

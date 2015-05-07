@@ -22,7 +22,7 @@ switch ($menu) {
         echo "<tr>";
         echo "<td width='25%' class='celluleGaucheEnCours'>Phase d'engagement</td>";
         echo "<td width='25%' class='celluleNonOk'>Phase de diagnostic</td>";
-        echo "<td width='25%' class='celluleNonOk'>Phase d'engagement</td>";
+        echo "<td width='25%' class='celluleNonOk'>Phase de mise en oeuvre et de suivi</td>";
         echo "<td width='25%' class='celluleDroiteNonOk'>Phase d'évaluation</td>";
         echo "</tr>";
         break;
@@ -30,7 +30,7 @@ switch ($menu) {
         echo "<tr>";
         echo "<td width='25%' class='celluleGaucheOk'>Phase d'engagement</td>";
         echo "<td width='25%' class='celluleEnCours'>Phase de diagnostic</td>";
-        echo "<td width='25%' class='celluleGaucheNonOk'>Phase d'engagement</td>";
+        echo "<td width='25%' class='celluleGaucheNonOk'>Phase de mise en oeuvre et de suivi</td>";
         echo "<td width='25%' class='celluleDroiteNonOk'>Phase d'évaluation</td>";
         echo "</tr><tr>";
     
@@ -56,7 +56,7 @@ switch ($menu) {
         echo "<tr>";
         echo "<td width='25%' class='celluleGaucheOk'>Phase d'engagement</td>";
         echo "<td width='25%' class='celluleOk'>Phase de diagnostic</td>";
-        echo "<td width='25%' class='celluleEnCours'>Phase d'engagement</td>";
+        echo "<td width='25%' class='celluleEnCours'>Phase de mise en oeuvre et de suivi</td>";
         echo "<td width='25%' class='celluleDroiteNonOk'>Phase d'évaluation</td>";
         echo "</tr>";
         break;
@@ -64,7 +64,7 @@ switch ($menu) {
         echo "<tr>";
         echo "<td width='25%' class='celluleGaucheOk'>Phase d'engagement</td>";
         echo "<td width='25%' class='celluleOk'>Phase de diagnostic</td>";
-        echo "<td width='25%' class='celluleOk'>Phase d'engagement</td>";
+        echo "<td width='25%' class='celluleOk'>Phase de mise en oeuvre et de suivi</td>";
         echo "<td width='25%' class='celluleDroiteEnCours'>Phase d'évaluation</td>";
         echo "</tr>";
         break;

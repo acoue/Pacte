@@ -66,7 +66,7 @@
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 
-                    										'value' => h($membre->fonction->name),
+                    										'value' => h($membre->fonction),
                     										'disabled' => 'disabled']); ?>
                     </div>                          
 				</div><br />  
@@ -76,7 +76,7 @@
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 
-                    										'value' => h($membre->service->name),
+                    										'value' => h($membre->service),
                     										'disabled' => 'disabled']); ?>
                     </div>                          
 				</div><br />   

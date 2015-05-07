@@ -1,16 +1,16 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Membre;
+use App\Model\Entity\Projet;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Membres Model
+ * Projets Model
  */
-class MembresTable extends Table
+class ProjetsTable extends Table
 {
 
     /**
@@ -21,15 +21,11 @@ class MembresTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('membres');
+        $this->table('projets');
         $this->displayField('id');
         $this->primaryKey('id');
-        $this->addBehavior('Timestamp');
         $this->belongsTo('Demarches', [
             'foreignKey' => 'demarche_id'
-        ]);
-        $this->belongsTo('Responsabilites', [
-            'foreignKey' => 'responsabilite_id'
         ]);
     }
 
@@ -44,15 +40,10 @@ class MembresTable extends Table
         $validator
             ->add('id', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('id', 'create')
-            ->allowEmpty('nom')
-            ->allowEmpty('prenom')
-            ->add('email', 'valid', ['rule' => 'email'])
-            ->allowEmpty('email')
-            ->allowEmpty('telephone')
-            ->allowEmpty('fonction')
-            ->allowEmpty('service')
-            ->add('comite', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('comite');
+            ->allowEmpty('mission')
+            ->allowEmpty('secteur_activite')
+            ->allowEmpty('definition')
+            ->allowEmpty('communication');
 
         return $validator;
     }
@@ -67,7 +58,6 @@ class MembresTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['demarche_id'], 'Demarches'));
-        $rules->add($rules->existsIn(['responsabilite_id'], 'Responsabilites'));
         return $rules;
     }
 }
