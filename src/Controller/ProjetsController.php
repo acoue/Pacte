@@ -76,6 +76,18 @@ class ProjetsController extends AppController
     
     public function validate()
     {
+		//On recupere l'identifiant de démarche
+    	$session = $this->request->session();
+    	$id_demarche = $session->read('Equipe.Demarche');
+    	
+    	//On recupere les info de l'inscription 
+    	
+    	//On retrouve les réponses
+    	
+    	
+    	
+    	
+    	
     	
     }
 }
