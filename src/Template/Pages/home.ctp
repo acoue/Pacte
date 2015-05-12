@@ -14,6 +14,9 @@ if($session->check('Auth.User.role')) {
 		if($session->read('Equipe.Engagement') == 0 ){
 			echo $this->Html->link('Poursuivre l\'engagement', ['controller'=>'membres', 'action' => 'index/0/1'],['class' => 'btn btn-info']);
 			
+		}else if($session->read('Equipe.Diagnostic') == 0 ){
+			echo $this->Html->link('Poursuivre dans la phase de diagnostic', ['controller'=>'projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info']);
+			
 		} else echo "Bienvenue Equipe";
 		
 		

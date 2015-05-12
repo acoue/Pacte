@@ -95,7 +95,7 @@ else echo "<h4 class='modal-title'>Ajout d'un membre</h4>";
 			<div class="modal-body">
 			<?= $this->Form->create('membre', ['id'=>'add_membre_form','action' => 'add']); ?>  
 			<?= $this->Form->hidden('comite',['value' => $comite]);?>		    
-<?php if($comite == 0 && $type == 1) { ?>
+<?php if($comite == 0 && $type == 1) { //Ajout d'un membre referent?>
 				<div class="row">
                 	<label class="col-md-4 control-label" for="responsabilite_id">Type de membres <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('responsabilite_id', ['label' => false,'id'=>'responsabilite_id',
@@ -105,7 +105,9 @@ else echo "<h4 class='modal-title'>Ajout d'un membre</h4>";
                     										'required' =>'required']); ?>
                     </div>                          
 				</div><br />   
-<?php } else echo $this->Form->hidden('responsabilite_id',['value' => '5']);?>   
+<?php } else if($comite == 1) { echo $this->Form->hidden('responsabilite_id',['value' => '5']); //Ajout d'un membre du comite?>   
+
+<?php } else echo $this->Form->hidden('responsabilite_id',['value' => '1']); //Ajout d'un membre ?> 
 				<div class="row">
                 	<label class="col-md-4 control-label" for="nom">Nom <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('nom', ['label' => false,'id'=>'nom',

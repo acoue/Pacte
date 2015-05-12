@@ -39,12 +39,41 @@ switch ($menu) {
         echo "<td colspan='3'><div class='arrow_box'></div></td>";
         echo "<td></td>";
         echo "</tr>";
-        echo "<tr>";
-        echo "<td width='25%' class='sousCelluleGaucheOk'>Projet d\'équipe</td>";
-        echo "<td width='25%' class='sousCelluleOk'>Phase de diagnostic</td>";
-        echo "<td width='25%' class='sousCelluleEnCours'>Objectifs d\'amélioration</td>";
-        echo "<td width='25%' class='sousCelluleDroiteNonOk'>Evaluation à T0</td>";
-        echo "</tr>";  
+        
+        switch ($sous_menu) {
+        	case 1:
+		        echo "<tr>";
+		        echo "<td width='25%' class='sousCelluleGaucheEnCours'>Projet d'équipe</td>";
+		        echo "<td width='25%' class='sousCelluleNonOk'>Phase de diagnostic</td>";
+		        echo "<td width='25%' class='sousCelluleNonOk'>Objectifs d'amélioration</td>";
+		        echo "<td width='25%' class='sousCelluleDroiteNonOk'>Evaluation à T0</td>";
+		        echo "</tr>";  
+		        break;
+	        case 2:
+	        	echo "<tr>";
+	        	echo "<td width='25%' class='sousCelluleGaucheOk'>Projet d'équipe</td>";
+	        	echo "<td width='25%' class='sousCelluleEnCours'>Phase de diagnostic</td>";
+	        	echo "<td width='25%' class='sousCelluleNonOk'>Objectifs d'amélioration</td>";
+	        	echo "<td width='25%' class='sousCelluleDroiteNonOk'>Evaluation à T0</td>";
+	        	echo "</tr>";
+	        	break;
+	        case 3:
+	        	echo "<tr>";
+	        	echo "<td width='25%' class='sousCelluleGaucheOk'>Projet d'équipe</td>";
+	        	echo "<td width='25%' class='sousCelluleOk'>Phase de diagnostic</td>";
+	        	echo "<td width='25%' class='sousCelluleEnCours'>Objectifs d'amélioration</td>";
+	        	echo "<td width='25%' class='sousCelluleDroiteNonOk'>Evaluation à T0</td>";
+	        	echo "</tr>";
+	        	break;
+	        case 4:
+	        	echo "<tr>";
+	        	echo "<td width='25%' class='sousCelluleGaucheOk'>Projet d'équipe</td>";
+	        	echo "<td width='25%' class='sousCelluleOk'>Phase de diagnostic</td>";
+	        	echo "<td width='25%' class='sousCelluleOk'>Objectifs d'amélioration</td>";
+	        	echo "<td width='25%' class='sousCelluleDroiteEnCours'>Evaluation à T0</td>";
+	        	echo "</tr>";
+	        	break;
+        }
     //FIN A MODIFIER
     
     
@@ -60,7 +89,7 @@ switch ($menu) {
         echo "<td width='25%' class='celluleDroiteNonOk'>Phase d'évaluation</td>";
         echo "</tr>";
         break;
-    case 2:
+    case 4:
         echo "<tr>";
         echo "<td width='25%' class='celluleGaucheOk'>Phase d'engagement</td>";
         echo "<td width='25%' class='celluleOk'>Phase de diagnostic</td>";

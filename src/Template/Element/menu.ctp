@@ -5,32 +5,41 @@ if($session->check('Auth.User.role')) {
 
 	$role = $session->read('Auth.User.role');
 	$username = $session->read('Auth.User.username');
-	$etat_engagement = $session->read('Equipe.Engagement');
+	if($session->check('Equipe.Engagement')) $etat_engagement = $session->read('Equipe.Engagement');
+	if($session->check('Equipe.Diagnostic')) $etat_diagnostic = $session->read('Equipe.Diagnostic');
 	
 	echo "<div id='navbar' class='navbar-collapse collapse'>";
 	echo "    <ul class='nav navbar-nav'>";
-if($role === 'admin' || ($role === 'equipe' && $etat_engagement == 1 ))	echo "        <li class='dropdown'>";
-if($role === 'admin' || ($role === 'equipe' && $etat_engagement == 1 ))	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Gestion <span class='caret'></span></a>";
-if($role === 'admin' || ($role === 'equipe' && $etat_engagement == 1 ))	echo "            <ul class='dropdown-menu' role='menu'>";
+if($role === 'admin')	echo "        <li class='dropdown'>";
+if($role === 'admin')	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Gestion <span class='caret'></span></a>";
+if($role === 'admin')	echo "            <ul class='dropdown-menu' role='menu'>";
 //Gestion > Admin
 if($role === 'admin')	echo " <li>".$this->Html->link('Utilisateur','/users/index')."</li>";
 if($role === 'admin')	echo " <li>".$this->Html->link('Paramètres','/parametres/index')."</li>";
 if($role === 'admin')	echo " <li>".$this->Html->link('Outils','/outils/index')."</li>";
 if($role === 'admin')	echo " <li>".$this->Html->link('Questions','/questions/index')."</li>";
 if($role === 'admin')	echo " <li>".$this->Html->link('Fonctions','/fonctions/index')."</li>";
+
+if($role === 'admin')	echo "            </ul>";
+if($role === 'admin')	echo "        </li>";
 //Gestion > Equipe
-if($role === 'equipe' && $etat_engagement == 1 )	echo " <li>".$this->Html->link('Membres','/membres/index/0')."</li>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo " <li>".$this->Html->link('Comité de pilotage','/membres/index/1')."</li>";
-if($role === 'admin' || $role === 'equipe')	echo "            </ul>";
-if($role === 'admin' || $role === 'equipe')	echo "        </li>";
 if($role === 'equipe' && $etat_engagement == 1 )	echo "        <li class='dropdown'>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Suivi <span class='caret'></span></a>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Engagement <span class='caret'></span></a>";
 if($role === 'equipe' && $etat_engagement == 1 )	echo "            <ul class='dropdown-menu' role='menu'>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo "                <li>".$this->Html->link('Engagement','/projets/index')."</li>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo "                <li><a href='#'>Démarches</a></li>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo "                <li>".$this->Html->link('Projet','/projets/index')."</li>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo " 				  <li>".$this->Html->link('Membres Référent','/membres/index/0/1')."</li>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo " 				  <li>".$this->Html->link('Membres','/membres/index/0/0')."</li>";
+if($role === 'equipe' && $etat_engagement == 1 )	echo "   			  <li>".$this->Html->link('Comité de pilotage','/membres/index/1/0')."</li>";
 if($role === 'equipe' && $etat_engagement == 1 )	echo "            </ul>";
 if($role === 'admin' || $role === 'equipe')	echo "        </li>";
+
+if($role === 'equipe' && $etat_diagnostic == 0 )	echo "        <li>".$this->Html->link('Diagnostic','/projets/diagnostic_index')."</li>";
 if($role === 'admin' || $role === 'equipe')	echo "    </ul>";
+
+
+
+
+
 	echo "    <div class='bloc_connected'>";
 	echo "        <table width='100%' cellspacing='5px' cellpadding='5px'>";
 	echo "            <tr height='35px' align='center'>";

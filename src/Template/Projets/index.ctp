@@ -15,12 +15,12 @@
 					<h4>Mission / Vision / Valeurs de l'équipe</h4>
 					<p>Quelle est votre raison d’être (mission) ? Qu’est-ce qui est important pour votre équipe (valeurs) ?<br/>
 					Quelles sont vos perspectives (vision) ?</p>
-                	<div class="col-md-8"><?= $this->Form->input('mission', ['label' => false,'id'=>'mission',
+                	<div class="col-md-12"><?= $this->Form->input('mission', ['label' => false,'id'=>'mission',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'textarea', 'escape' => false,
                 											'value'=> $projet->mission,
-                											'rows' => '5', 'cols' => '100']); ?>
+                											'rows' => '5']); ?>
                     </div>                          
 				</div><br /> 		    
 				<div class="row">
@@ -51,8 +51,6 @@
 							    	</tr> 							
 								</tbody>							
 							</table>
-						    
-						
 						</div>
 						<div class="col-md-1"></div>
 					</div>					                             
@@ -132,34 +130,34 @@
 				</div><br /> 		    
 				<div class="row">
 					<h4>Lister le ou les secteur(s) d'activité(s) participant au projet Pacte <span class="obligatoire"><sup> *</sup></span></h4>
-                	<div class="col-md-8"><?= $this->Form->input('secteur_activite', ['label' => false,'id'=>'secteur_activite',
+                	<div class="col-md-12"><?= $this->Form->input('secteur_activite', ['label' => false,'id'=>'secteur_activite',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'textarea', 'escape' => false,
                 											'value'=> $projet->secteur_activite,
-                											'rows' => '5', 'cols' => '100',
+                											'rows' => '5', 
                     										'required' =>'required']); ?>
                     </div>                          
 				</div><br /> 		    
 				<div class="row">
 					<h4>Définir le projet d'équipe <span class="obligatoire"><sup> *</sup></span></h4>
-                	<div class="col-md-8"><?= $this->Form->input('definition', ['label' => false,'id'=>'definition',
+                	<div class="col-md-12"><?= $this->Form->input('definition', ['label' => false,'id'=>'definition',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'textarea', 'escape' => false,
                 											'value'=> $projet->definition,
-                											'rows' => '5', 'cols' => '100',
+                											'rows' => '5', 
                     										'required' =>'required']); ?>
                     </div>                          
 				</div><br />  		    
 				<div class="row">
 					<h4>Modalités de communication sur le projet Pacte</h4>
-                	<div class="col-md-8"><?= $this->Form->input('communication', ['label' => false,'id'=>'communication',
+                	<div class="col-md-12"><?= $this->Form->input('communication', ['label' => false,'id'=>'communication',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'textarea', 'escape' => false,
                 											'value'=> $projet->communication,
-                											'rows' => '5', 'cols' => '100']); ?>
+                											'rows' => '5']); ?>
                     </div>                          
 				</div>
 			</div>						

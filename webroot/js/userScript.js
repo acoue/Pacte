@@ -90,7 +90,10 @@ $(document).ready(function(){
 	$.validate({
 	    form : '#edit_description_form'
     });
-	
+	//Formulaire de modification d'une desription d'equipe
+	$.validate({
+	    form : '#add_calendrierProjet_form'
+    });
 	
 	
 	

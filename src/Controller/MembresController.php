@@ -46,9 +46,18 @@ class MembresController extends AppController
     	
 		//Liste des membres
         $session = $this->request->session();
-    	$membres = $this->Membres->find('all')
-    	->contain(['Demarches', 'Responsabilites'])
-    	->where(['comite'=>$comite,'demarche_id'=>$session->read('Equipe.Demarche')]);    	
+    	
+        if($type == 1 ) { //Membre referents
+	    	$membres = $this->Membres->find('all')
+	    	->contain(['Demarches', 'Responsabilites'])
+	    	->where(['comite'=>$comite,'demarche_id'=>$session->read('Equipe.Demarche'), 'responsabilite_id > ' => 1]);
+        	
+        } else {
+	    	$membres = $this->Membres->find('all')
+	    	->contain(['Demarches', 'Responsabilites'])
+	    	->where(['comite'=>$comite,'demarche_id'=>$session->read('Equipe.Demarche')]);        	
+        }
+    	    	
     	
     	$responsabilites = $this->Membres->Responsabilites->find('list', ['limit' => 200])->where(['online'=>1]);
     	$this->set(compact('demarches', 'responsabilites', 'comite', 'type'));    	
@@ -107,8 +116,15 @@ class MembresController extends AppController
 	        	$membre->service = $donnees['service'];
 	        	        	
 	        	if ($this->Membres->save($membre)) {
-	                $this->Flash->success('Le membre de l\'équipe a bien été ajouté.');
-	                return $this->redirect(['action' => 'index']);
+	        		
+	        		//Retour vers ajout du membre du comite
+	        		if($donnees['responsabilite_id'] == 5) {
+	        			$this->Flash->success('Le membre du comité de pilotage a bien été ajouté.');
+	        			return $this->redirect(['action' => 'index/1/0']);
+	        		} else {
+	        			$this->Flash->success('Le membre de l\'équipe a bien été ajouté.');
+	                	return $this->redirect(['action' => 'index/0/0']);
+	        		}
 	            } else {
 	                $this->Flash->error('Erreur dans l\'ajout du membre');
 	            }

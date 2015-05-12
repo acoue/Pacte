@@ -110,12 +110,31 @@ class UsersController extends AppController
 					//Récupération de l'état de l'engagement de l'équipe
 					$this->loadModel('DemarchePhases');
 					$etat = $this->DemarchePhases->find('all')
-					->where(['demarche_id' => $demarche->id])
-					->first();
-					if(empty($etat->date_validation)) $session->write('Equipe.Engagement',0);
-					else $session->write('Equipe.Engagement',1);
-				}						
+					->where(['demarche_id' => $demarche->id]);
 					
+					foreach ($etat as $e) {
+						//Mise à jour de la session
+						switch ($e->phase_id) {
+							case 1:
+								if(empty($e->date_validation)) $session->write('Equipe.Engagement',0);
+								else $session->write('Equipe.Engagement',1);
+							break;
+							case 2:
+								if(empty($e->date_validation)) $session->write('Equipe.Diagnostic',0);
+								else $session->write('Equipe.Diagnostic',1);
+							
+							break;						
+							case 3:
+								if(empty($e->date_validation)) $session->write('Equipe.Diagnostic',0);
+								else $session->write('Equipe.Diagnostic',1);
+							break;						
+							case 4:
+								if(empty($e->date_validation)) $session->write('Equipe.MiseEnOeuvre',0);
+								else $session->write('Equipe.MiseEnOeuvre',1);
+							break;						
+						}					
+					}						
+				}	
 				//Mise a jour de la date de last login 
 				$usersTable = TableRegistry::get('Users');
 				$modif_user = $usersTable->get($user['id']);
@@ -124,8 +143,8 @@ class UsersController extends AppController
 				$this->Auth->setUser($user);
 				
 				return $this->redirect($this->Auth->redirectUrl());
-			}
-			$this->Flash->error(__("Nom d'utilisateur ou mot de passe incorrect, essayez à nouveau."));
+								
+			} else $this->Flash->error(__("Nom d'utilisateur ou mot de passe incorrect, essayez à nouveau."));
 		}
 	}
 	
