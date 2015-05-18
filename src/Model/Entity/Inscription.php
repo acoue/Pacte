@@ -21,7 +21,7 @@ class Inscription extends Entity
         'score' => true,
         'etablissement' => true,
         'situation_crise' => true,
-        'restucturation' => true,
+        'restructuration' => true,
         'reponses' => true,
         'created' => true,
     ];

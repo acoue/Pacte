@@ -9,6 +9,25 @@ function ChangeVisibility(id){
     }
 }
 
+function ChangeVisibilityAndTextInChamp(id, idText, valueText){
+    var elem = document.getElementById(id);
+    
+    if(elem.style.display == ""){
+        document.getElementById(id).style.display='block';
+        document.getElementById(idText).value=valueText;
+    } else if(elem.style.display == "none"){
+        document.getElementById(id).style.display='block';  
+        document.getElementById(idText).value=valueText;     
+    } else {
+        document.getElementById(id).style.display='none';
+        document.getElementById(idText).value='';
+    }
+    
+    
+    
+    
+}
+
 $(document).ready(function(){
 	
 	/* Formulaire Engagement */
@@ -90,11 +109,38 @@ $(document).ready(function(){
 	$.validate({
 	    form : '#edit_description_form'
     });
-	//Formulaire de modification d'une desription d'equipe
+	//Formulaire d'ajout d'une etape du calendrier
 	$.validate({
 	    form : '#add_calendrierProjet_form'
     });
-	
+	//Formulaire de modification d'une etape du calendrier
+	$.validate({
+	    form : '#edit_calendrierProjet_form'
+    });
+	//Formulaire d'ajout d'une evaluation
+	$.validate({
+	    form : '#add_evaluation_form'
+    });
+	//Formulaire de modification d'une evaluation
+	$.validate({
+	    form : '#edit_evaluation_form'
+    });
+	//Formulaire d'ajout d'un plan d'action
+	$.validate({
+	    form : '#add_plan_form'
+    });
+	//Formulaire d'edition d'un plan d'action
+	$.validate({
+	    form : '#edit_plan_form'
+    });
+	//Formulaire d'ajout d'une etape du plan d'action
+	$.validate({
+	    form : '#add_etape_form'
+    });
+	//Formulaire d'edition d'un plan d'action
+	$.validate({
+	    form : '#edit_etape_form'
+    });
 	
 	
 	

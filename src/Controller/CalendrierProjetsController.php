@@ -30,25 +30,29 @@ class CalendrierProjetsController extends AppController
     	//Menu et sous-menu
     	$session = $this->request->session();
     	$session->write('Progress.Menu','2');
-    	$session->write('Progress.SousMenu','1');
-    	
-    	//On retrouve les infos du projet
-    	$this->loadModel('Projets');
-    	$projet = $this->Projets->find('all')
-    	->where(['projets.id'=>$projet])->first();
-    	
+    	$session->write('Progress.SousMenu','1');    	
     	
         $calendrierProjet = $this->CalendrierProjets->newEntity();
         if ($this->request->is('post')) {
+    	//debug($this->request->data);die();
             $calendrierProjet = $this->CalendrierProjets->patchEntity($calendrierProjet, $this->request->data);
+            
+            //debug($calendrierProjet);die();
+            
             if ($this->CalendrierProjets->save($calendrierProjet)) {
+            	$projet = $calendrierProjet->projet_id;
                 $this->Flash->success('L\'étape a bien été sauvegardée');
                 return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
             } else {
-                $this->Flash->error('L\'étape ne peut être sauvegardée');
+                $this->Flash->error('Erreur lors de la sauvegarde de l\'étape');
             }
         }
 
+		
+        //On retrouve les infos du projet
+        $this->loadModel('Projets');
+        $projet = $this->Projets->find('all')
+        ->where(['projets.id'=>$projet])->first();
         $this->set(compact('projet'));
     }
 
@@ -61,20 +65,23 @@ class CalendrierProjetsController extends AppController
      */
     public function edit($id = null)
     {
-        $calendrierProjet = $this->CalendrierProjets->get($id, [
-            'contain' => []
-        ]);
+    	//Menu et sous-menu
+    	$session = $this->request->session();
+    	$session->write('Progress.Menu','2');
+    	$session->write('Progress.SousMenu','1'); 
+    	
+        $calendrierProjet = $this->CalendrierProjets->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $calendrierProjet = $this->CalendrierProjets->patchEntity($calendrierProjet, $this->request->data);
             if ($this->CalendrierProjets->save($calendrierProjet)) {
-                $this->Flash->success('The calendrier projet has been saved.');
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success('L\'étape a bien été sauvegardée.');
+                return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
             } else {
-                $this->Flash->error('The calendrier projet could not be saved. Please, try again.');
+                $this->Flash->error('Erreur lors de la sauvegarde de l\'étape');
             }
         }
-        $projets = $this->CalendrierProjets->Projets->find('list', ['limit' => 200]);
-        $this->set(compact('calendrierProjet', 'projets'));
+        
+        $this->set(compact('calendrierProjet'));
         $this->set('_serialize', ['calendrierProjet']);
     }
 
@@ -90,10 +97,10 @@ class CalendrierProjetsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $calendrierProjet = $this->CalendrierProjets->get($id);
         if ($this->CalendrierProjets->delete($calendrierProjet)) {
-            $this->Flash->success('The calendrier projet has been deleted.');
+            $this->Flash->success('L\'étape a bien été supprimée.');
         } else {
-            $this->Flash->error('The calendrier projet could not be deleted. Please, try again.');
+            $this->Flash->error('Erreur lors de la suppression de l\'étape.');
         }
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
     }
 }

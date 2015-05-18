@@ -1,20 +1,28 @@
-
+<!-- src/Template/CalendrierProjets/add.ctp -->
+<div class="blocblanc">
+	<h2>Administration - Ajout d'une étape dans le calendrier</h2>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-2">
+			<?= $this->Html->link(__('Retour'), ['controller'=>'Projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info']) ?> 
+			</div>
+			<div class="col-md-8">
 			<?= $this->Form->create('calendrierProjet', ['id'=>'add_calendrierProjet_form','action' => 'add']); ?>  
-			<?= $this->Form->hidden('projet',['value' => $projet->id]);?>
+			<?= $this->Form->hidden('projet_id',['value' => $projet->id]);?>
 				<div class="row">
-					<label class="col-md-4 control-label" for="intitule">Intitulé <span class="obligatoire"><sup> *</sup></span></label>
-                	<div class="col-md-8"><?= $this->Form->input('intitule', ['label' => false,'id'=>'intitule',
+					<label class="col-md-4 control-label" for="libelle">Intitulé <span class="obligatoire"><sup> *</sup></span></label>
+                	<div class="col-md-8"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'textarea', 'escape' => false,
                 											'rows' => '5', 
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br /> 	
-
+				</div><br />			
 				<div class="row">
                 	<label class="col-md-4 control-label" for="mois">Mois <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('email', ['label' => false,'id'=>'mois',
+                    <div class="col-md-8"><?= $this->Form->input('mois', ['label' => false,'id'=>'mois',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 
@@ -32,29 +40,14 @@
                     										'data-validation-length'=>'min4' ,
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br />	
-			  	<p align='left'><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>    		
-			</div>
-			<div class="modal-footer">
-				<?= $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
-		    	<?= $this->Form->end() ?>
-		  		<button data-dismiss="modal" class="btn btn-info" type="button">Fermer</button>
-			</div>
-
-
-
-
-<div class="calendrierProjets form large-10 medium-9 columns">
-    <?= $this->Form->create($calendrierProjet); ?>
-    <fieldset>
-        <legend><?= __('Add Calendrier Projet') ?></legend>
-        <?php
-            echo $this->Form->input('libelle');
-            echo $this->Form->input('mois');
-            echo $this->Form->input('annee');
-            echo $this->Form->input('projet_id', ['options' => $projets, 'empty' => true]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+				</div><br />
+			</div>			
+			<div class="col-md-1"></div>			
+		</div><br /><br />
+	<p align="center">
+		<?= $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
+    	<?= $this->Form->end() ?>
+	</p>
+	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
+	</div>
+</div>	

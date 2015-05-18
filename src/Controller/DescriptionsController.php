@@ -54,9 +54,10 @@ class DescriptionsController extends AppController
         $description = $this->Descriptions->newEntity();
         if ($this->request->is('post')) {
         	
-			//Verification que il n'existe qu'une ligne fonction / service        	
+			//Verification que il n'existe qu'une ligne fonction / service pour le projet        	
         	$ligneUnique = $this->Descriptions->find()
         									  ->where(['fonction_id'=>$this->request->data['fonction_id'],
+        									  			'projet_id' => $id_projet,
         												'service'=>$this->request->data['service']])
         									  ->count();
         	if($ligneUnique >0) {

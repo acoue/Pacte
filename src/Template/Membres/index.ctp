@@ -73,12 +73,16 @@ else echo "<h3>Membres de l'équipe</h3>";
 		</div>
 		<p align="center">
 			<?php
-			if($type == 1) echo $this->Html->link(__('Suite'),['controller'=>'projets', 'action'=>'index'],['class'=>'btn btn-default']);
-			else echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'index'],['class'=>'btn btn-info']);
-			 ?>
+			$session = $this->request->session();
+			if($session->read('Equipe.Engagement') == '0') {
+				if($type == 1) echo $this->Html->link(__('Suite'),['controller'=>'projets', 'action'=>'index'],['class'=>'btn btn-default']);
+				else echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'index'],['class'=>'btn btn-info']);
+			} ?>
 		</p>
 	</div>
 </div>
+
+
 
 <!-- Fenetre Modal -->
 <div class="modal fade" id="fenetreModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

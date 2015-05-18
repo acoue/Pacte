@@ -19,6 +19,7 @@ if($role === 'admin')	echo " <li>".$this->Html->link('Paramètres','/parametres/
 if($role === 'admin')	echo " <li>".$this->Html->link('Outils','/outils/index')."</li>";
 if($role === 'admin')	echo " <li>".$this->Html->link('Questions','/questions/index')."</li>";
 if($role === 'admin')	echo " <li>".$this->Html->link('Fonctions','/fonctions/index')."</li>";
+if($role === 'admin')	echo " <li>".$this->Html->link('Indicateurs','/indicateurs/index')."</li>";
 
 if($role === 'admin')	echo "            </ul>";
 if($role === 'admin')	echo "        </li>";
@@ -34,6 +35,19 @@ if($role === 'equipe' && $etat_engagement == 1 )	echo "            </ul>";
 if($role === 'admin' || $role === 'equipe')	echo "        </li>";
 
 if($role === 'equipe' && $etat_diagnostic == 0 )	echo "        <li>".$this->Html->link('Diagnostic','/projets/diagnostic_index')."</li>";
+if($role === 'equipe' && $etat_diagnostic == 1 )	echo "        <li class='dropdown'>";
+if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Diagnostic <span class='caret'></span></a>";
+if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            <ul class='dropdown-menu' role='menu'>";
+if($role === 'equipe' && $etat_diagnostic == 1 )	echo "                <li>".$this->Html->link('Projet','/projets/diagnostic_index')."</li>";
+if($role === 'equipe' && $etat_diagnostic == 1 )	echo " 				  <li>".$this->Html->link('Evaluation','/Evaluations/index')."</li>";
+if($role === 'equipe' && $etat_diagnostic == 1 )	echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','#')."</li>";
+if($role === 'equipe' && $etat_diagnostic == 1 )	echo "   			  <li>".$this->Html->link('Evaluation à T0','#')."</li>";
+if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            </ul>";
+if($role === 'admin' || $role === 'equipe')	echo "        </li>";
+
+
+
+
 if($role === 'admin' || $role === 'equipe')	echo "    </ul>";
 
 

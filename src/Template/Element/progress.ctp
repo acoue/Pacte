@@ -44,7 +44,7 @@ switch ($menu) {
         	case 1:
 		        echo "<tr>";
 		        echo "<td width='25%' class='sousCelluleGaucheEnCours'>Projet d'équipe</td>";
-		        echo "<td width='25%' class='sousCelluleNonOk'>Phase de diagnostic</td>";
+		        echo "<td width='25%' class='sousCelluleNonOk'>Evaluation</td>";
 		        echo "<td width='25%' class='sousCelluleNonOk'>Objectifs d'amélioration</td>";
 		        echo "<td width='25%' class='sousCelluleDroiteNonOk'>Evaluation à T0</td>";
 		        echo "</tr>";  
@@ -52,7 +52,7 @@ switch ($menu) {
 	        case 2:
 	        	echo "<tr>";
 	        	echo "<td width='25%' class='sousCelluleGaucheOk'>Projet d'équipe</td>";
-	        	echo "<td width='25%' class='sousCelluleEnCours'>Phase de diagnostic</td>";
+	        	echo "<td width='25%' class='sousCelluleEnCours'>Evaluation</td>";
 	        	echo "<td width='25%' class='sousCelluleNonOk'>Objectifs d'amélioration</td>";
 	        	echo "<td width='25%' class='sousCelluleDroiteNonOk'>Evaluation à T0</td>";
 	        	echo "</tr>";
@@ -60,7 +60,7 @@ switch ($menu) {
 	        case 3:
 	        	echo "<tr>";
 	        	echo "<td width='25%' class='sousCelluleGaucheOk'>Projet d'équipe</td>";
-	        	echo "<td width='25%' class='sousCelluleOk'>Phase de diagnostic</td>";
+	        	echo "<td width='25%' class='sousCelluleOk'>Evaluation</td>";
 	        	echo "<td width='25%' class='sousCelluleEnCours'>Objectifs d'amélioration</td>";
 	        	echo "<td width='25%' class='sousCelluleDroiteNonOk'>Evaluation à T0</td>";
 	        	echo "</tr>";
@@ -68,7 +68,7 @@ switch ($menu) {
 	        case 4:
 	        	echo "<tr>";
 	        	echo "<td width='25%' class='sousCelluleGaucheOk'>Projet d'équipe</td>";
-	        	echo "<td width='25%' class='sousCelluleOk'>Phase de diagnostic</td>";
+	        	echo "<td width='25%' class='sousCelluleOk'>Evaluation</td>";
 	        	echo "<td width='25%' class='sousCelluleOk'>Objectifs d'amélioration</td>";
 	        	echo "<td width='25%' class='sousCelluleDroiteEnCours'>Evaluation à T0</td>";
 	        	echo "</tr>";

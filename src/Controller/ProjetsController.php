@@ -162,6 +162,25 @@ class ProjetsController extends AppController
 	    		//Enregistrement
 	    		if($demarchesPhasesTable->save($demarchesPhase)) $boolOk = true;
 	    		else $boolOk = false;
+	    		
+	    		//Creation des 2 evaluations obligatoire CRM Sante et Culture Securite
+	    		$evaluationsTable = TableRegistry::get('Evaluations');
+	    		$eval = $evaluationsTable->newEntity();
+	    		// Atribution des valeurs => CRM Sante
+	    		$eval->id = null;
+	    		$eval->name = "CRM Santé";
+	    		$eval->demarche_id = $id_demarche;
+	    		//Enregistrement
+	    		$evaluationsTable->save($eval);
+	    		
+	    		$eval = $evaluationsTable->newEntity();
+	    		// Atribution des valeurs => Culture Securite
+	    		$eval->id = null;
+	    		$eval->name = "Culture Sécurité";
+	    		$eval->demarche_id = $id_demarche;
+	    		//Enregistrement
+	    		$evaluationsTable->save($eval);
+	    				
     		} else {
     			$message = "une erreur s'est produite lors de la validation de l\'engagement.";
     			$this->set(compact('message'));
@@ -278,30 +297,33 @@ class ProjetsController extends AppController
 	    $session = $this->request->session();
 	    $session->write('Progress.Menu','2');
 	    $session->write('Progress.SousMenu','1');
-	    
-	    $session = $this->request->session();
 	    $id_demarche = $session->read('Equipe.Demarche');
-	    //On retrouve les infos du projet
-	    $projet = $this->Projets->find('all')
-	    ->where(['projets.demarche_id'=>$id_demarche])->first();
-	     
-
-	    //Recuperation des etape calendrier du projet
-	    $this->loadModel('CalendrierProjets');
-	    $calendriers = $this->CalendrierProjets->find('all')
-	    ->where(['projet_id' => $projet->id]);
-	    
-	    
+	   	    
 	    if ($this->request->is(['patch', 'post', 'put'])) {
-	    	$projet = $this->Projets->patchEntity($projet, $this->request->data);
-	    	if ($this->Projets->save($projet)) {
+		   	$d = $this->request->data;
+		    $projetTable = TableRegistry::get('Projets');
+		    $projet_edit = $projetTable->get($d['id']);	    
+		    // Atribution des valeurs
+		    $projet_edit->intitule = $d['intitule'];
+		    $projet_edit->deploiement = $d['deploiement'];
+		    //Enregistrement
+		   	if ($projetTable->save($projet_edit)) {
 	    		$this->Flash->success('Le projet a bien été sauvegardé.');
-	    		return $this->redirect(['action' => 'index']);
+	    		return $this->redirect(['action' => 'diagnostic_index']);
 	    	} else {
 	    		$this->Flash->error('Erreur dans la sauvegarde du projet.');
 	    	}
 	    }
 
+	    //On retrouve les infos du projet
+	    $projet = $this->Projets->find('all')
+	    ->where(['projets.demarche_id'=>$id_demarche])->first();
+	     
+	    //Recuperation des etape calendrier du projet
+	    $this->loadModel('CalendrierProjets');
+	    $calendriers = $this->CalendrierProjets->find('all')
+	    ->where(['projet_id' => $projet->id]);
+	    
 	    $this->set(compact('projet','calendriers'));
 	    $this->set('_serialize', ['projet']);
     }
