@@ -125,12 +125,12 @@ class UsersController extends AppController
 							
 							break;						
 							case 3:
-								if(empty($e->date_validation)) $session->write('Equipe.Diagnostic',0);
-								else $session->write('Equipe.Diagnostic',1);
-							break;						
-							case 4:
 								if(empty($e->date_validation)) $session->write('Equipe.MiseEnOeuvre',0);
 								else $session->write('Equipe.MiseEnOeuvre',1);
+							break;						
+							case 4:
+								if(empty($e->date_validation)) $session->write('Equipe.Evaluation',0);
+								else $session->write('Equipe.Evaluation',1);
 							break;						
 						}					
 					}						

@@ -7,6 +7,7 @@ if($session->check('Auth.User.role')) {
 	$username = $session->read('Auth.User.username');
 	if($session->check('Equipe.Engagement')) $etat_engagement = $session->read('Equipe.Engagement');
 	if($session->check('Equipe.Diagnostic')) $etat_diagnostic = $session->read('Equipe.Diagnostic');
+	else $etat_diagnostic = 0;
 	
 	echo "<div id='navbar' class='navbar-collapse collapse'>";
 	echo "    <ul class='nav navbar-nav'>";
@@ -34,15 +35,17 @@ if($role === 'equipe' && $etat_engagement == 1 )	echo "   			  <li>".$this->Html
 if($role === 'equipe' && $etat_engagement == 1 )	echo "            </ul>";
 if($role === 'admin' || $role === 'equipe')	echo "        </li>";
 
-if($role === 'equipe' && $etat_diagnostic == 0 )	echo "        <li>".$this->Html->link('Diagnostic','/projets/diagnostic_index')."</li>";
+if($role === 'equipe' && $etat_engagement == 1 && $etat_diagnostic == 0 )	echo "        <li>".$this->Html->link('Diagnostic','/projets/diagnostic_index')."</li>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "        <li class='dropdown'>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Diagnostic <span class='caret'></span></a>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            <ul class='dropdown-menu' role='menu'>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "                <li>".$this->Html->link('Projet','/projets/diagnostic_index')."</li>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo " 				  <li>".$this->Html->link('Evaluation','/Evaluations/index')."</li>";
-if($role === 'equipe' && $etat_diagnostic == 1 )	echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','#')."</li>";
+if($role === 'equipe' && $etat_diagnostic == 1 )	echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','PlanActions/index')."</li>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "   			  <li>".$this->Html->link('Evaluation à T0','#')."</li>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            </ul>";
+
+
 if($role === 'admin' || $role === 'equipe')	echo "        </li>";
 
 

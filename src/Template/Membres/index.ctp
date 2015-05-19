@@ -99,6 +99,7 @@ else echo "<h4 class='modal-title'>Ajout d'un membre</h4>";
 			<div class="modal-body">
 			<?= $this->Form->create('membre', ['id'=>'add_membre_form','action' => 'add']); ?>  
 			<?= $this->Form->hidden('comite',['value' => $comite]);?>		    
+			<?= $this->Form->hidden('type',['value' => $type]);?>		    
 <?php if($comite == 0 && $type == 1) { //Ajout d'un membre referent?>
 				<div class="row">
                 	<label class="col-md-4 control-label" for="responsabilite_id">Type de membres <span class="obligatoire"><sup> *</sup></span></label>

@@ -66,7 +66,8 @@
 					    </table>
 					</div>
 					<div class="col-md-2">
-						<?= $this->Html->link(__('Ajouter'),['controller'=>'CalendrierProjets', 'action'=>'add/'.$projet->id],['class'=>'btn btn-info']);?>
+						<?= $this->Html->link(__('Ajouter'),['controller'=>'CalendrierProjets', 'action'=>'add/'.$projet->id],
+												['class'=>'btn btn-info']);?>
 					</div>
 				</div>
 			</div>						
@@ -78,12 +79,11 @@
     	$session = $this->request->session();
     	if($session->read('Equipe.Diagnostic') == '0') {
     		echo "<br /><br />";
-    		echo $this->Html->link(__('Suite'),['controller'=>'Evaluations', 'action'=>'index'],['class'=>'btn btn-info']);
+    		echo $this->Html->link(__('Suite'),['controller'=>'Evaluations', 'action'=>'index'],['confirm' => 'Avez-vous bien pensez à enregistrer les informations avant de poursuivre ?','class'=>'btn btn-info']);
     	} 
     	?>			
 	</p>
 	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
 	</div>
 </div>	
-
 

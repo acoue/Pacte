@@ -34,11 +34,25 @@ class EvaluationsController extends AppController
     public function index()
     {
     	//Recuperation de la demarche
-		$session = $this->request->session();
+    	$session = $this->request->session();
     	$id_demarche = $session->read('Equipe.Demarche');
     	
-    	$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche])->order('name ASC');
+    	//Vérification des éléments obigatoires du projet
+    	$this->loadModel('Projets');
+    	$projet = $this->Projets->find('all')
+        ->where(['projets.demarche_id'=>$id_demarche])->first();
+    	//intitulé du projet
+    	if(strlen($projet->intitule) < 1 ) {
+			$this->Flash->error('Merci de compléter le champ "Intitulé du projet" et d\'enregistrer les données');
+            return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);    		
+    	}
+    	//Modalite de deploiement
+    	if(strlen($projet->intitule) < 1 ) {
+    		$this->Flash->error('Merci de compléter le champ "Modalité de déploiement" et d\'enregistrer les données');
+    		return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
+    	}
     	
+    	$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche])->order('name ASC');    	
         $this->set('evaluations', $evaluations);
         $this->set('_serialize', ['evaluations']);
     }
@@ -90,12 +104,21 @@ class EvaluationsController extends AppController
         $evaluation = $this->Evaluations->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
         	$d = $this->request->data;
+        	//debug($d);die();
+        	
+        	if($d['file'] === 'Modification' && $d['file_new']['name'] === '') {
+        		$this->Flash->error('Merci d\'ajouter un fichier.');
+        		return $this->redirect(['action' => 'edit/'.$id]);
+        	}
         	
         	if($d['file_new']['name'] === '') {
         		$evaluation = $this->Evaluations->patchEntity($evaluation, $this->request->data);        		
-        	} else { // Nouveau fichier	
+        	} else { // Nouveau fichier	       		
+        		
 	        	//Suppression de l'ancien
-	        	if(file_exists(DATA.'userDocument'.DS.$evaluation->file))unlink(DATA.'userDocument'.DS.$evaluation->file);
+	        	if(file_exists(DATA.'userDocument'.DS.$evaluation->file) && strlen($evaluation->file)>0) {
+	        		unlink(DATA.'userDocument'.DS.$evaluation->file);
+	        	}
 	        	//Deplacement du nouveau 
 	        	$nomFichier = $d['file_new']['name'];
 	        	$destination = DATA.'userDocument'.DS.$nomFichier;

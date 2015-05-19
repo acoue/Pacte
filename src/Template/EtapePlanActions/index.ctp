@@ -25,14 +25,14 @@
 				        <tr>
 				            <td><?= $this->Number->format($etapePlanAction->numero) ?></td>
             				<td><?= $etapePlanAction->name ?></td>
-           					 <td><?= h($etapePlanAction->pilote) ?></td>
-           					 <td><?= h($etapePlanAction->mois)." ".$this->Number->format($etapePlanAction->annee) ?></td>
+           					<td><?= h($etapePlanAction->pilote) ?></td>
+           					<td><?= h($etapePlanAction->mois)." ".$this->Number->format($etapePlanAction->annee) ?></td>
             				<td><?= h($etapePlanAction->etat) ?></td>
             				<td><?= h($etapePlanAction->indicateur) ?></td>
 				            <td>
 				            <?php
-				            echo $etapePlanAction->has('TypeIndicateur');
-				            //echo $etapePlanAction->has('typeIndicateur') ? $this->Html->link($etapePlanAction->typeIndicateur->name, ['controller' => 'TypeIndicateurs', 'action' => 'view', $etapePlanAction->typeIndicateur->id]) : '' 
+				            //echo $etapePlanAction->has('TypeIndicateur');
+				            echo h($etapePlanAction->type_indicateur['name']);
 				            ?>
             
 				            </td>

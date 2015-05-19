@@ -46,7 +46,9 @@
 						    		<?php endforeach; ?>								  
 							    	<tr>
 							    		<td colspan='3' align='center'>
-							    		<?= $this->Html->link(__('Gestion de la description de l\'équipe'), ['controller'=>'descriptions', 'action' => 'index/'.$projet->id],['class' => 'btn btn-warning']) ?>
+							    		<?= $this->Html->link(__('Gestion de la description de l\'équipe'), 
+							    								['controller'=>'descriptions', 'action' => 'index/'.$projet->id],
+							    								['class' => 'btn btn-warning']) ?>
 										</td>
 							    	</tr> 							
 								</tbody>							
@@ -86,7 +88,9 @@
 			    <?php endforeach; ?>  
 			    	<tr>
 			    		<td colspan='5' align='center'>
-			    		<?= $this->Html->link(__('Gestion des membres de l\'équipe'), ['controller'=>'membres', 'action' => 'index/0/0'],['class' => 'btn btn-warning']) ?>
+			    		<?= $this->Html->link(__('Gestion des membres de l\'équipe'), 
+			    								['controller'=>'membres', 'action' => 'index/0/0'],
+			    								['class' => 'btn btn-warning']) ?>
 						</td>
 			    	</tr>      
 		        </tbody>
@@ -172,11 +176,13 @@
     	$session = $this->request->session();
     	if($session->read('Equipe.Engagement') == '0') {
     		echo "<br /><br />";
-    		echo $this->Html->link(__('Suite de la démarche'),['controller'=>'projets', 'action'=>'validate'],['class'=>'btn btn-info']);
+    		echo $this->Html->link(__('Suite de la démarche'),
+    								['controller'=>'projets', 'action'=>'validate'],
+    								['confirm' => 'Avez-vous bien pensez à enregistrer les informations avant de poursuivre ?','class'=>'btn btn-info']);
+    		
     	} 
     	?>			
 	</p>
 	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
 	</div>
-</div>
-				
+</div>		

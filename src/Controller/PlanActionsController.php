@@ -35,7 +35,50 @@ class PlanActionsController extends AppController
     public function index()
     {
     	$session = $this->request->session();
-    	$id_demarche = $session->read('Equipe.Demarche');
+    	$id_demarche = $session->read('Equipe.Demarche');    	
+    	
+    	//Vérification des éléments obigatoires de la phase Diagnostic > Evaluation
+    	$boolOk = true;
+    	$message= "";
+    	$this->loadModel('Evaluations');
+    	$evaluations = $this->Evaluations->find('all')
+    	->where(['Evaluations.demarche_id'=>$id_demarche]);
+    	//Obligatoire synthese et file pour CRM Sante et Culture Securite
+    	foreach ($evaluations as $eval){    		
+    		if($eval->name == 'CRM Santé') {
+    			if(strlen($eval->synthese) <1) {
+    				$boolOk = false;
+    				$message = "La synthèse du CRM Santé doit être complétée.";
+    				break;
+    			}
+    			if(strlen($eval->file) <1) {
+    				$boolOk = false;
+    				$message = "Merci d'associer un fichier au CRM Santé.";
+    				break;
+    			}    			
+    		} else if($eval->name == 'Culture Sécurité') {
+    			if(strlen($eval->synthese) <1) {
+    				$boolOk = false;
+    				$message = "La synthèse de la Culture Sécurité doit être complétée.";
+    				break;
+    			}
+    			if(strlen($eval->file) <1) {
+    				$boolOk = false;
+    				$message = "Merci d'associer un fichier à la Culture Sécurité.";
+    				break;
+    			}
+    		} else break;
+    	}
+    	
+    	if(!$boolOk) {
+        	$this->Flash->error($message);
+        	return $this->redirect(['controller'=>'evaluations', 'action' => 'index']);    		
+    	}
+    	
+    	
+    	
+    	
+    	
     	//On retrouve les infos du projet
     	$planAction = $this->PlanActions->find('all')
     	->where(['demarche_id'=>$id_demarche])->first();  	

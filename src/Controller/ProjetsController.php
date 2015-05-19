@@ -43,6 +43,7 @@ class ProjetsController extends AppController
     {
     	$session = $this->request->session();
     	$id_demarche = $session->read('Equipe.Demarche');
+   	
     	//On retrouve les infos du projet
         $projet = $this->Projets->find('all')
         ->where(['projets.demarche_id'=>$id_demarche])->first();
@@ -62,6 +63,19 @@ class ProjetsController extends AppController
         $membres = $this->Membres->find('all')
         ->contain(['Responsabilites'])
         ->where(['demarche_id' => $id_demarche,'comite'=>0]);
+        //Controle du bon nombre de referents sur le projet
+        // 2 membres referent (->id = 2 ) mini + 1 facilitateur (id = 3)
+        $nbReferent = $this->Membres->find()->where(['responsabilite_id' => '2','demarche_id' => $id_demarche,'comite'=>0])->count();
+        $nbFacilitateur = $this->Membres->find()->where(['responsabilite_id' => '3','demarche_id' => $id_demarche,'comite'=>0])->count();
+        
+        if($nbReferent < 2) {
+        	$this->Flash->error('Vous pouvez poursuivre, le nombre de membres référent doit être supérieur ou égal à 2');        	
+        	return $this->redirect(['controller'=>'membres', 'action' => 'index/0/1']);        	
+        } 
+        if($nbFacilitateur < 1) {
+        	$this->Flash->error('Vous pouvez poursuivre, merci d\'intégrer un facilitateur à l\'équipe');        	
+        	return $this->redirect(['controller'=>'membres', 'action' => 'index/0/1']);        	
+        }
         
 		//Recuperation des membres du ciomite de pilotage
         $membres_comites = $this->Membres->find('all')->where(['demarche_id' => $id_demarche,'comite'=>1]);
@@ -77,11 +91,27 @@ class ProjetsController extends AppController
     }
     
     public function validate()
-    {
-    	
+    {    	
 		//On recupere l'identifiant de démarche
     	$session = $this->request->session();
-    	$id_demarche = $session->read('Equipe.Demarche');
+    	$id_demarche = $session->read('Equipe.Demarche'); 	    	
+    	
+    	//Vérification des éléments obigatoires du projet
+    	$this->loadModel('Projets');
+    	$projet = $this->Projets->find('all')
+    	->where(['projets.demarche_id'=>$id_demarche])->first();
+    	//intitulé du projet
+    	if(strlen($projet->secteur_activite) < 1 ) {
+    		$this->Flash->error('Merci de compléter le champ "Lister le ou les secteur(s) d\'activité(s) participant au projet Pacte" et d\'enregistrer les données');
+    		return $this->redirect(['controller'=>'Projets', 'action' => 'index']);
+    	}
+    	//Modalite de deploiement
+    	if(strlen($projet->intitule) < 1 ) {
+    		$this->Flash->error('Merci de compléter le champ "Définir le projet d\'équipe" et d\'enregistrer les données');
+    		return $this->redirect(['controller'=>'Projets', 'action' => 'index']);
+    	}
+    	
+    	
     	
     	//Recuperation des infos de la demarche
     	$this->loadModel('Demarches');
@@ -157,7 +187,7 @@ class ProjetsController extends AppController
 	    		
 				//Mise à jour de la session : 
 	    		$session->write('Equipe.Engagement',1);
-	    		$session->write('Equipe.Dignostic',0);
+	    		$session->write('Equipe.Diagnostic',0);
 	    		
 	    		//Enregistrement
 	    		if($demarchesPhasesTable->save($demarchesPhase)) $boolOk = true;
@@ -283,7 +313,7 @@ class ProjetsController extends AppController
     	->subject('[Pacte] Récapitulatif de l\'engagement')
     	->viewVars(['content' => $content])
     	->attachments(DATA . 'pdf' . DS . $filename)
-    	->send();;
+    	->send();
     
     	//Suppression de la pj
     	unlink(DATA . 'pdf' . DS . $filename);

@@ -45,11 +45,20 @@ class EtapePlanActionsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['TypeIndicateurs'], 'order' => [
-            'numero' => 'asc' ]
-        ];
-        $this->set('etapePlanActions', $this->paginate($this->EtapePlanActions));
+
+    	$session = $this->request->session();
+    	$id_demarche = $session->read('Equipe.Demarche');
+
+
+    	$this->paginate = ['order' => ['numero' => 'asc' ]];
+    	
+    	$query = $this->EtapePlanActions->find('all')
+    	->contain(['PlanActions','TypeIndicateurs'])
+    	->where(['PlanActions.demarche_id' => $id_demarche]);    	
+    	$this->set('etapePlanActions', $this->paginate($query));
+    	$this->set('_serialize', ['etapePlanActions']);
+    	    	
+        $this->set('etapePlanActions', $this->paginate($query));
         $this->set('_serialize', ['etapePlanActions']);
     }
 
@@ -87,11 +96,11 @@ class EtapePlanActionsController extends AppController
         	$etapePlanAction->modalite_suivi = $d['modalite_suivi'];
         	$etapePlanAction->resultat = $d['resultat'];
         	$etapePlanAction->indicateur = $d['indicateur'];
-        	$etapePlanAction->type_indicateur_idname = $d['type_indicateur_id'];        	
+        	$etapePlanAction->type_indicateur_id = $d['type_indicateur_id'];        	
         	$etapePlanAction->plan_action_id = $planAction->id;
         	 
             if ($this->EtapePlanActions->save($etapePlanAction)) {
-                $this->Flash->success('l\'étape du plan d\'action a bien été sauvegardée.');
+                $this->Flash->success('L\'étape du plan d\'action a bien été sauvegardée.');
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error('Erreur dans la sauvegarde de l\'étape du plan d\action.');
@@ -116,7 +125,7 @@ class EtapePlanActionsController extends AppController
         	
             $etapePlanAction = $this->EtapePlanActions->patchEntity($etapePlanAction, $this->request->data);
             if ($this->EtapePlanActions->save($etapePlanAction)) {
-                $this->Flash->success('L\'étape du plan d\'actionsaufegardée.');
+                $this->Flash->success('L\'étape du plan d\'action a bien, été sauvegardée.');
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error('Erreur lors de la sauvegarde de l\'étape du plan d\'action.');

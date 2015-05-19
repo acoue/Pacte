@@ -58,8 +58,10 @@ class MembresController extends AppController
 	    	->where(['comite'=>$comite,'demarche_id'=>$session->read('Equipe.Demarche')]);        	
         }
     	    	
+    	if($type=1) $responsabilites = $this->Membres->Responsabilites->find('list')->where(['online'=>1,' id >'=>'1']);
+    	else $responsabilites = $this->Membres->Responsabilites->find('list')->where(['online'=>1]);
     	
-    	$responsabilites = $this->Membres->Responsabilites->find('list', ['limit' => 200])->where(['online'=>1]);
+    	
     	$this->set(compact('demarches', 'responsabilites', 'comite', 'type'));    	
         $this->set('membres', $membres);
         $this->set('_serialize', ['membres']);
@@ -88,10 +90,14 @@ class MembresController extends AppController
      */
     public function add()
     {
+    	
+    	
         //$membre = $this->Membres->newEntity();
         if ($this->request->is('post')) {  
         	//Recuperation des données du formulaire      
-        	$donnees = $this->request->data;        	
+        	$donnees = $this->request->data; 
+        	//TYPE : 1 = membres referent, 0 = membres
+        	$type = $donnees['type'];
 	        $session = $this->request->session();
         	
         	$membreUnique = $this->Membres->find()->where(['nom'=>$donnees['nom'],
@@ -115,12 +121,16 @@ class MembresController extends AppController
 	        	$membre->fonction = $donnees['fonction']; 
 	        	$membre->service = $donnees['service'];
 	        	        	
+	        	
 	        	if ($this->Membres->save($membre)) {
 	        		
 	        		//Retour vers ajout du membre du comite
 	        		if($donnees['responsabilite_id'] == 5) {
 	        			$this->Flash->success('Le membre du comité de pilotage a bien été ajouté.');
 	        			return $this->redirect(['action' => 'index/1/0']);
+	        		} else if($type == 1 ){
+	        			$this->Flash->success('Le membre référent de l\'équipe a bien été ajouté.');
+	                	return $this->redirect(['action' => 'index/0/1']);
 	        		} else {
 	        			$this->Flash->success('Le membre de l\'équipe a bien été ajouté.');
 	                	return $this->redirect(['action' => 'index/0/0']);
