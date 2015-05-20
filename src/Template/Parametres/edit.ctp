@@ -18,7 +18,16 @@
                     										'value' => h($parametre->name),
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br />  
+				</div><br />   
+				<div class="row">
+                	<label class="col-md-4 control-label" for="description">Description</label>
+                    <div class="col-md-8"><?= $this->Form->input('description', ['label' => false,'id'=>'description',
+														   	'div' => false,'type' => 'textarea', 'escape' => false,
+															'class' => 'form-control', 'rows' => '5', 
+                    										'value'=> h($parametre->description),
+                    										'required' =>'required']); ?>
+                    </div>                          
+				</div><br /> 
 				<div class="row">
                 	<label class="col-md-4 control-label" for="valeur">Valeur <span class="obligatoire"> *</span></label>
                     <div class="col-md-8"><?= $this->Form->input('valeur', ['label' => false,'id'=>'valeur',

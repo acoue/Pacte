@@ -141,6 +141,14 @@ $(document).ready(function(){
 	$.validate({
 	    form : '#edit_etape_form'
     });
+	//Formulaire d'ajout d'une mesure a T0
+	$.validate({
+	    form : '#add_mesure_form'
+    });
+	//Formulaire d'edition d'une mesure a T0
+	$.validate({
+	    form : '#edit_mesure_form'
+    });
 	
 	
 	

@@ -22,22 +22,7 @@ class TypeIndicateursController extends AppController
         $this->set('_serialize', ['typeIndicateurs']);
     }
 
-    /**
-     * View method
-     *
-     * @param string|null $id Indicateur id.
-     * @return void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $typeIndicateur = $this->TypeIndicateurs->get($id, [
-            'contain' => ['EtapePlanActions']
-        ]);
-        $this->set('typeIndicateur', $typeIndicateur);
-        $this->set('_serialize', ['typeIndicateur']);
-    }
-
+    
     /**
      * Add method
      *

@@ -8,8 +8,7 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
-				            <th width='10%'><?= $this->Paginator->sort('identifiant') ?></th>
-				            <th width='25%'><?= $this->Paginator->sort('Libellé') ?></th>
+				            <th width='40%'><?= $this->Paginator->sort('Libellé') ?></th>
 				            <th width='25%'><?= $this->Paginator->sort('Phase') ?></th>
 				            <th width='20%'><?= $this->Paginator->sort('Type') ?></th>
 				            <th  width='20%' class="actions"><?= __('Actions') ?></th>
@@ -18,7 +17,6 @@
 				    <tbody>
     				<?php foreach ($outils as $outil): ?>
 				        <tr>
-				            <td><?= $this->Number->format($outil->id) ?></td>
 				            <td><?= h($outil->name) ?></td>
 				            <td><?= h($outil->phase->name) ?></td>
 				            <td><?php if(h($outil->type) == "cle") echo "Outils clé en main";

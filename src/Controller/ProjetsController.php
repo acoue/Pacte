@@ -23,10 +23,13 @@ class ProjetsController extends AppController
 
 	
 	public function isAuthorized($user)
-	{			
-		// Droits de tous les utilisateurs connectes sur les actions
-		if(in_array($this->request->action, ['index','validate','createPdf', 'diagnostic_index'])){
-			return true;
+	{	
+		$session = $this->request->session();
+		if( $session->read('Auth.User.role') === 'equipe') {		
+			// Droits de tous les utilisateurs connectes sur les actions
+			if(in_array($this->request->action, ['index','validate','createPdf', 'diagnostic_index'])){
+				return true;
+			}
 		}		
 		return parent::isAuthorized($user);
 	}
@@ -163,7 +166,7 @@ class ProjetsController extends AppController
 	    	//Flag dans table demarche_phases => date_validation = now()
     		$this->loadModel('DemarchePhases');
     		$dp = $this->DemarchePhases->find('all')
-    		->where(['DemarchePhases.demarche_id' => $id_demarche])
+    		->where(['DemarchePhases.demarche_id' => $id_demarche,'phase_id'=>'1'])
     		->first();
     		
     		$idDemarchePhase = $dp->id;    		
@@ -210,6 +213,17 @@ class ProjetsController extends AppController
 	    		$eval->demarche_id = $id_demarche;
 	    		//Enregistrement
 	    		$evaluationsTable->save($eval);
+	    		
+	    		
+	    		//Creation de la mesure obligatoire Matrice de Maturite
+	    		$mesuresTable = TableRegistry::get('Mesures');
+	    		$mesure = $mesuresTable->newEntity();
+	    		// Atribution des valeurs => CRM Sante
+	    		$mesure->id = null;
+	    		$mesure->name = "Matrice de Maturité";
+	    		$mesure->demarche_id = $id_demarche;
+	    		//Enregistrement
+	    		$mesuresTable->save($mesure);
 	    				
     		} else {
     			$message = "une erreur s'est produite lors de la validation de l\'engagement.";

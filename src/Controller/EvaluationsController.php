@@ -138,8 +138,7 @@ class EvaluationsController extends AppController
                 $this->Flash->error('Erreur dans la sauvegarde de l\'évaluation.');
             }
         }
-        $demarches = $this->Evaluations->Demarches->find('list', ['limit' => 200]);
-        $this->set(compact('evaluation', 'demarches'));
+        $this->set(compact('evaluation'));
         $this->set('_serialize', ['evaluation']);
     }
 
@@ -154,7 +153,18 @@ class EvaluationsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $evaluation = $this->Evaluations->get($id);
+        
+        //Si Matrice de Maturité -> pas de suppression
+        if( in_array($evaluation->name, ["CRM Santé","Culture Sécurité"])   ) {
+        	$this->Flash->error('Vous ne pouvez pas supprimer les éléments "CRM Santé" ou "Culture Sécurité".');
+        	return $this->redirect(['action' => 'index']);
+        }
+        $fichier = $evaluation->file;
         if ($this->Evaluations->delete($evaluation)) {
+        	//Suppression du fichier
+        	if(file_exists(DATA.'userDocument'.DS.$fichier) && strlen($fichier)>0) {
+        		unlink(DATA.'userDocument'.DS.$fichier);
+        	}
             $this->Flash->success('L\'évaluation a bien été supprimée.');
         } else {
             $this->Flash->error('Erreur dans la suppression de l\'évaluation.');

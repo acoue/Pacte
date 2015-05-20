@@ -4,9 +4,9 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Parametre Entity.
+ * Mesure Entity.
  */
-class Parametre extends Entity
+class Mesure extends Entity
 {
 
     /**
@@ -16,7 +16,9 @@ class Parametre extends Entity
      */
     protected $_accessible = [
         'name' => true,
-        'valeur' => true,
-        'description' => true,
+        'resultat' => true,
+        'file' => true,
+        'demarche_id' => true,
+        'demarch' => true,
     ];
 }

@@ -60,7 +60,7 @@
 	<?php
 	$session = $this->request->session();
 	if($session->read('Equipe.Diagnostic') == '0') {
-		echo $this->Html->link(__('Suite'),['controller'=>'', 'action'=>''],['class'=>'btn btn-default']);
+		echo $this->Html->link(__('Suite'),['controller'=>'Mesures', 'action'=>'index'],['class'=>'btn btn-default']);
 		echo "&nbsp;&nbsp;";
 		echo $this->Html->link(__('Retour'),['controller'=>'PlanActions', 'action'=>'index'],['class'=>'btn btn-info']);
 	}

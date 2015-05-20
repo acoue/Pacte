@@ -9,6 +9,13 @@ if ($session->check('Progress.SousMenu')) {
 } else $sous_menu = 0;
   
 
+//fin des 2 premieres phases
+if($session->read('Equipe.Engagement') && $session->read('Equipe.Diagnostic')) {
+	$menu = 3;
+	$sous_menu = 0;
+}
+
+
 if($menu > 0 ){
 ?>
 <div class="container">

@@ -11,15 +11,6 @@ use App\Controller\AppController;
 class EtapePlanActionsController extends AppController
 {
 	
-	/*
-	 * 
-    	$session = $this->request->session();
-    	$id_demarche = $session->read('Equipe.Demarche');
-    	//On retrouve les infos du projet
-    	$this->loadModel('PlanActions');
-    	$planAction = $this->PlanActions->find('all')
-    	->where(['demarche_id'=>$id_demarche])->first(); 
-    	*/
 	public function initialize() {
 		parent::initialize();
 		//Menu et sous-menu
@@ -31,9 +22,12 @@ class EtapePlanActionsController extends AppController
 	
 	public function isAuthorized($user)
 	{
-		// Droits de tous les utilisateurs connectes sur les actions
-		if(in_array($this->request->action, ['index','add','edit', 'delete'])){
-			return true;
+		$session = $this->request->session();
+		if( $session->read('Auth.User.role') === 'equipe') {
+			// Droits de tous les utilisateurs connectes sur les actions
+			if(in_array($this->request->action, ['index','add','edit', 'delete'])){
+				return true;
+			}
 		}
 		return parent::isAuthorized($user);
 	}

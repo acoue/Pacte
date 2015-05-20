@@ -8,18 +8,19 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
-				            <th width='20%'><?= $this->Paginator->sort('identifiant') ?></th>
-				            <th width='50%'><?= $this->Paginator->sort('Libellé') ?></th>
-				            <th  width='30%' class="actions"><?= __('Actions') ?></th>
+				            <th width='20%'><?= $this->Paginator->sort('Libellé') ?></th>
+				            <th width='40%'><?= $this->Paginator->sort('description') ?></th>
+				            <th width='25%'><?= $this->Paginator->sort('valeur') ?></th>
+				            <th  width='15%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
 				    <tbody>
     				<?php foreach ($parametres as $parametre): ?>
 				        <tr>
-				            <td><?= $this->Number->format($parametre->id) ?></td>
 				            <td><?= h($parametre->name) ?></td>
+				            <td><?= h($parametre->description) ?></td>
+				            <td><?= h($parametre->valeur) ?></td>
 				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $parametre->id], array('escape' => false)); ?>&nbsp;&nbsp;
 				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $parametre->id], array('escape' => false)); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
