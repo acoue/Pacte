@@ -1,19 +1,30 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('List Indicateurs'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Etape Plan Actions'), ['controller' => 'EtapePlanActions', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Etape Plan Action'), ['controller' => 'EtapePlanActions', 'action' => 'add']) ?> </li>
-    </ul>
-</div>
-<div class="indicateurs form large-10 medium-9 columns">
-    <?= $this->Form->create($typeIndicateur); ?>
-    <fieldset>
-        <legend><?= __('Add Indicateur') ?></legend>
-        <?php
-            echo $this->Form->input('name');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<div class="blocblanc">
+	<h2>Administration</h2>
+	<h3>Ajout d'un Type d'indicateur</h3>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-2">
+			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
+			</div>
+    		<?= $this->Form->create($typeIndicateur, ['id'=>'add_type_indicateur_form']); ?>
+			<div class="col-md-8">
+				<div class="row">
+                	<label class="col-md-4 control-label" for="name">Libellé <span class="obligatoire"> *</span></label>
+                	<div class="col-md-8"><?= $this->Form->input('name', ['label' => false,
+                											'div' => false,
+															'class' => 'form-control', 
+                    										'required' =>'required']) ?>    
+                	</div>                 
+				</div>
+			</div>						
+			<div class="col-md-1"></div>			
+		</div><br /><br />
+	<p align="center">
+		<?= $this->Form->button('Ajouter', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
+    	<?= $this->Form->end() ?>
+	</p>
+	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
+	</div>
+</div>   
+

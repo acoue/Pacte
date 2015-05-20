@@ -1,5 +1,6 @@
 <div class="blocblanc">
-	<h2>Administration - Ajout Outil</h2>
+	<h2>Administration</h2>
+	<h3>Edition d'outil</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -51,5 +52,10 @@
 			</div>						
 			<div class="col-md-1"></div>			
 		</div><br /><br />
+		<p align="center">
+			<?= $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
+    		<?= $this->Form->end() ?>
+		</p>
+		<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
 	</div>
-</div>  
+</div> 

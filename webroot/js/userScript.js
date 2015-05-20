@@ -149,6 +149,14 @@ $(document).ready(function(){
 	$.validate({
 	    form : '#edit_mesure_form'
     });
+	//Formulaire d'ajout d'un type d'indicateur
+	$.validate({
+	    form : '#add_type_indicateur_form'
+    });
+	//Formulaire d'edition d'un type d'indicateur
+	$.validate({
+	    form : '#edit_type_indicateur_form'
+    });
 	
 	
 	

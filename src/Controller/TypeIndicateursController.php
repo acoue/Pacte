@@ -34,10 +34,10 @@ class TypeIndicateursController extends AppController
         if ($this->request->is('post')) {
             $typeIndicateur = $this->TypeIndicateurs->patchEntity($typeIndicateur, $this->request->data);
             if ($this->TypeIndicateurs->save($typeIndicateur)) {
-                $this->Flash->success('The indicateur has been saved.');
+                $this->Flash->success('Le type d\'indicateur a été sauvegardé.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The indicateur could not be saved. Please, try again.');
+                $this->Flash->error('Erreur dans la sauvegarde du type d\'indicateur.');
             }
         }
         $this->set(compact('typeIndicateur'));
@@ -59,10 +59,10 @@ class TypeIndicateursController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $typeIndicateur = $this->TypeIndicateurs->patchEntity($typeIndicateur, $this->request->data);
             if ($this->TypeIndicateurs->save($typeIndicateur)) {
-                $this->Flash->success('The indicateur has been saved.');
+                $this->Flash->success('Le type d\'indicateur a été sauvegardé.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The indicateur could not be saved. Please, try again.');
+                $this->Flash->error('Erreur dans la sauvegarde du type d\'indicateur.');
             }
         }
         $this->set(compact('typeIndicateur'));
@@ -81,9 +81,9 @@ class TypeIndicateursController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $typeIndicateur = $this->TypeIndicateurs->get($id);
         if ($this->TypeIndicateurs->delete($typeIndicateur)) {
-            $this->Flash->success('The indicateur has been deleted.');
+            $this->Flash->success('Suppression du type d\'indicateur.');
         } else {
-            $this->Flash->error('The indicateur could not be deleted. Please, try again.');
+            $this->Flash->error('Erreur dans la suppression du type d\'indicateur.');
         }
         return $this->redirect(['action' => 'index']);
     }
