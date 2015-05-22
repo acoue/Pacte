@@ -128,6 +128,7 @@ class PlanActionsController extends AppController
      */
     public function edit($id = null)
     {
+		$session = $this->request->session();
         $planAction = $this->PlanActions->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
         	$d = $this->request->data;
@@ -137,7 +138,7 @@ class PlanActionsController extends AppController
         		if(is_array($d['file'])) {
         			//Cas nouveau
         			$nomFichier = $d['file']['name'];
-        			$destination = DATA.'userDocument'.DS.$nomFichier;
+        			$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
         			move_uploaded_file($d['file']['tmp_name'], $destination);
         		} else {
         			//Cas non modification
@@ -148,10 +149,10 @@ class PlanActionsController extends AppController
         		$planAction->file = $nomFichier;        		
         	} else {
         		//Suppression de l'ancien
-        		if(file_exists(DATA.'userDocument'.DS.$planAction->file))unlink(DATA.'userDocument'.$planAction->file);
+        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file))unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').$planAction->file);
 				//Nouveau fichier
         		$nomFichier = $d['file_new']['name'];
-        		$destination = DATA.'userDocument'.DS.$nomFichier;
+        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
         		move_uploaded_file($d['file_new']['tmp_name'], $destination);
         		$planAction->name = $d['name'];
         		$planAction->file = $nomFichier;
@@ -177,12 +178,13 @@ class PlanActionsController extends AppController
      */
     public function delete($id = null)
     {
+		$session = $this->request->session();
         $this->request->allowMethod(['post', 'delete']);
         $planAction = $this->PlanActions->get($id);
 
         //suppression du fichier
         if($planAction->is_has == 0) {
-        	if(file_exists(DATA.'userDocument'.DS.$planAction->file)) unlink(DATA.'userDocument'.DS.$planAction->file);        	
+        	if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file)) unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file);        	
         }
         
         if ($this->PlanActions->delete($planAction)) {

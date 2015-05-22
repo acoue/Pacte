@@ -59,12 +59,25 @@ class AppController extends Controller
     	
 
     	$session = $this->request->session();
-		$this->loadModel('Outils');
+
+    	if($session->check('Equipe.Engagement') && $session->read('Equipe.Engagement') == 0 ) {
+    		$session->write('Progress.Menu','1');
+    		$session->write('Progress.SousMenu','0');
+    	} else if($session->check('Equipe.Diagnostic') && $session->read('Equipe.Diagnostic') == 0 ) {
+    		$session->write('Progress.Menu','2');
+    		$session->write('Progress.SousMenu','1');
+    	} else if($session->check('Equipe.MiseEnOeuvre') && $session->read('Equipe.MiseEnOeuvre') == 0 ) {
+    		$session->write('Progress.Menu','3');
+    		$session->write('Progress.SousMenu','0');
+    	} else if($session->check('Equipe.Evaluation') && $session->read('Equipe.Evaluation') == 0 ) {
+    		$session->write('Progress.Menu','4');
+    		$session->write('Progress.SousMenu','0');
+    	}
+    	
     	$phase = $session->read('Progress.Menu');
+		$this->loadModel('Outils');
     	$outilsPeda = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'pedagogiques']);
-    	$outilsCle = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'cle']);
-    	
-    	
+    	$outilsCle = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'cle']);   	
     	$this->set(['listeOutilsPeda' => $outilsPeda,'listeOutilsCle' => $outilsCle]);
     }
     

@@ -70,7 +70,7 @@ class MesuresController extends AppController
         	//debug($this->request->data);die();
         	$d = $this->request->data;
         	$nomFichier = $d['file']['name'];
-        	$destination = DATA.'userDocument'.DS.$nomFichier;
+        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
         	move_uploaded_file($d['file']['tmp_name'], $destination);
         	
         	$mesure->id = null;
@@ -99,6 +99,7 @@ class MesuresController extends AppController
      */
     public function edit($id = null)
     {
+		$session = $this->request->session();
         $mesure = $this->Mesures->get($id, [
             'contain' => []
         ]);
@@ -115,12 +116,12 @@ class MesuresController extends AppController
         	} else { // Nouveau fichier
         	
         		//Suppression de l'ancien
-        		if(file_exists(DATA.'userDocument'.DS.$mesure->file) && strlen($mesure->file)>0) {
-        			unlink(DATA.'userDocument'.DS.$mesure->file);
+        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$mesure->file) && strlen($mesure->file)>0) {
+        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$mesure->file);
         		}
         		//Deplacement du nouveau
         		$nomFichier = $d['file_new']['name'];
-        		$destination = DATA.'userDocument'.DS.$nomFichier;
+        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
         		move_uploaded_file($d['file_new']['tmp_name'], $destination);
         	
         		// mise a jour des donnees
@@ -150,6 +151,7 @@ class MesuresController extends AppController
      */
     public function delete($id = null)
     {
+		$session = $this->request->session();
         $this->request->allowMethod(['post', 'delete']);
         $mesure = $this->Mesures->get($id);
         
@@ -162,8 +164,8 @@ class MesuresController extends AppController
         $fichier = $mesure->file;
         if ($this->Mesures->delete($mesure)) {
         	//Suppression du fichier
-	        if(file_exists(DATA.'userDocument'.DS.$fichier) && strlen($fichier)>0) {
-	        	unlink(DATA.'userDocument'.DS.$fichier);
+	        if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$fichier) && strlen($fichier)>0) {
+	        	unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$fichier);
 	        }
             $this->Flash->success('La mesure a bien été sauvegardée.');
         } else {

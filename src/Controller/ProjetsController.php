@@ -17,8 +17,13 @@ class ProjetsController extends AppController
 		parent::initialize();
     	//Menu et sous-menu
 	    $session = $this->request->session();
-	    $session->write('Progress.Menu','1');
-	    $session->write('Progress.SousMenu','0');
+    	if($session->read('Equipe.Engagement') == 1 ) {		
+	    	$session->write('Progress.Menu','2');
+	   	 	$session->write('Progress.SousMenu','1');    		
+    	} else {		
+	    	$session->write('Progress.Menu','1');
+	   	 	$session->write('Progress.SousMenu','0');    		
+    	}
 	}
 
 	
@@ -212,8 +217,7 @@ class ProjetsController extends AppController
 	    		$eval->name = "Culture Sécurité";
 	    		$eval->demarche_id = $id_demarche;
 	    		//Enregistrement
-	    		$evaluationsTable->save($eval);
-	    		
+	    		$evaluationsTable->save($eval);	    		
 	    		
 	    		//Creation de la mesure obligatoire Matrice de Maturite
 	    		$mesuresTable = TableRegistry::get('Mesures');
@@ -224,6 +228,10 @@ class ProjetsController extends AppController
 	    		$mesure->demarche_id = $id_demarche;
 	    		//Enregistrement
 	    		$mesuresTable->save($mesure);
+	    		
+	    		//Creation du repertoire pour le depot des document de l'equipe
+	    		$structure = DATA.'userDocument'.DS.$session->read('Auth.User.username');
+	    		mkdir($structure, 0777, true);	    			 
 	    				
     		} else {
     			$message = "une erreur s'est produite lors de la validation de l\'engagement.";

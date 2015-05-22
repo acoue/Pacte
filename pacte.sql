@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 13 Mai 2015 à 16:38
+-- Généré le :  Jeu 21 Mai 2015 à 11:32
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -34,17 +34,7 @@ CREATE TABLE IF NOT EXISTS `calendrier_projets` (
   `projet_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `projet_celendrier_projet_fk_idx` (`projet_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
-
---
--- Contenu de la table `calendrier_projets`
---
-
-INSERT INTO `calendrier_projets` (`id`, `libelle`, `mois`, `annee`, `projet_id`) VALUES
-(1, '1ère étape', 'Juin', 2015, 2),
-(2, '2ème étape', 'Aout', 2015, 2),
-(3, '1ère étape', 'Juin', 2015, 1),
-(4, '1ère étape', 'Juin', 2015, 1);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -65,16 +55,7 @@ CREATE TABLE IF NOT EXISTS `demarches` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `date_engagement_UNIQUE` (`date_engagement`),
   KEY `demarche_equipe_idx` (`equipe_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
-
---
--- Contenu de la table `demarches`
---
-
-INSERT INTO `demarches` (`id`, `date_engagement`, `score`, `situation_crise`, `restructuration`, `statut`, `equipe_id`, `created`, `modified`) VALUES
-(9, '2015-05-23', 8, 0, NULL, 0, 9, '2015-05-06 11:47:19', '2015-05-06 11:47:19'),
-(10, '2015-05-05', 8, 0, NULL, 0, 10, '2015-05-06 12:10:07', '2015-05-06 12:10:07'),
-(11, '2015-05-07', 8, 0, NULL, 0, 11, '2015-05-07 07:52:44', '2015-05-07 07:52:44');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -92,17 +73,7 @@ CREATE TABLE IF NOT EXISTS `demarche_phases` (
   UNIQUE KEY `demarche_id` (`demarche_id`,`phase_id`,`date_entree`),
   KEY `demarches_demarche_phases_fk_idx` (`demarche_id`),
   KEY `phases_demarche_phases_fk_idx` (`phase_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
-
---
--- Contenu de la table `demarche_phases`
---
-
-INSERT INTO `demarche_phases` (`id`, `demarche_id`, `phase_id`, `date_entree`, `date_validation`) VALUES
-(1, 9, 1, '2015-05-06', NULL),
-(2, 10, 1, '2015-05-06', '2015-05-12'),
-(3, 11, 1, '2015-05-07', NULL),
-(7, 10, 2, '2015-05-12', NULL);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -120,17 +91,7 @@ CREATE TABLE IF NOT EXISTS `descriptions` (
   UNIQUE KEY `service` (`service`,`fonction_id`),
   KEY `fonction_description_fk_idx` (`fonction_id`),
   KEY `projet_description_fk_idx` (`projet_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
-
---
--- Contenu de la table `descriptions`
---
-
-INSERT INTO `descriptions` (`id`, `nb_etp`, `service`, `fonction_id`, `projet_id`) VALUES
-(1, 2, 'Urgence', 1, 2),
-(2, 3, 'Chirurgie', 2, 1),
-(4, 3, 'Gynécologie', 4, 2),
-(6, 2, 'Ophtalmologie Secteur 2', 8, 2);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -146,16 +107,7 @@ CREATE TABLE IF NOT EXISTS `equipes` (
   PRIMARY KEY (`id`),
   KEY `equipe_user_fk_idx` (`user_id`),
   KEY `equipe_etablissement_id_idx` (`etablissement_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
-
---
--- Contenu de la table `equipes`
---
-
-INSERT INTO `equipes` (`id`, `name`, `user_id`, `etablissement_id`) VALUES
-(9, 'Equipe Cardio', 23, 4),
-(10, 'Equipe Anesthésie', 24, 5),
-(11, 'Equipe test', 25, 5);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -201,12 +153,13 @@ CREATE TABLE IF NOT EXISTS `etape_plan_actions` (
   `etat` varchar(45) DEFAULT NULL,
   `modalite_suivi` text,
   `resultat` text,
-  `indicateur_id` int(11) DEFAULT NULL,
+  `indicateur` varchar(255) DEFAULT NULL,
+  `type_indicateur_id` int(11) DEFAULT NULL,
   `plan_action_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `plan_action_etape_fk_idx` (`plan_action_id`),
-  KEY `indicateur_etape_fk_idx` (`indicateur_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  KEY `indicateur_etape_fk_idx` (`type_indicateur_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -222,19 +175,7 @@ CREATE TABLE IF NOT EXISTS `evaluations` (
   `demarche_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `demarche_evaluation_fk_idx` (`demarche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
-
---
--- Contenu de la table `evaluations`
---
-
-INSERT INTO `evaluations` (`id`, `name`, `synthese`, `file`, `demarche_id`) VALUES
-(1, 'CRM Santé', NULL, NULL, 9),
-(2, 'Culture Sécurité', NULL, NULL, 9),
-(3, 'CRM Santé', NULL, NULL, 10),
-(4, 'Culture Sécurité', NULL, NULL, 10),
-(5, 'CRM Santé', NULL, NULL, 11),
-(6, 'Culture Sécurité', NULL, NULL, 11);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -278,19 +219,6 @@ INSERT INTO `fonctions` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `indicateurs`
---
-
-CREATE TABLE IF NOT EXISTS `indicateurs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `type` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `inscriptions`
 --
 
@@ -307,14 +235,7 @@ CREATE TABLE IF NOT EXISTS `inscriptions` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
-
---
--- Contenu de la table `inscriptions`
---
-
-INSERT INTO `inscriptions` (`id`, `name`, `date_engagement`, `numero_demarche`, `score`, `etablissement`, `situation_crise`, `restructuration`, `reponses`, `created`, `modified`) VALUES
-(18, 'Equipe Cardio', '2015-05-16', 3382, 10, 4, 0, 0, '9-N#10-N#1-O#2-O#3-O#4-O#5-O#6-O#7-O#8-O#', '2015-05-06 12:00:34', '2015-05-06 12:00:34');
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -339,20 +260,23 @@ CREATE TABLE IF NOT EXISTS `membres` (
   UNIQUE KEY `nom` (`nom`,`prenom`,`comite`,`demarche_id`),
   KEY `responsabilite_membres_fk_idx` (`responsabilite_id`),
   KEY `demarches_membres_fk_idx` (`demarche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 --
--- Contenu de la table `membres`
+-- Structure de la table `mesures`
 --
 
-INSERT INTO `membres` (`id`, `nom`, `prenom`, `email`, `telephone`, `fonction`, `service`, `comite`, `demarche_id`, `responsabilite_id`, `created`, `modified`) VALUES
-(1, 'COUE', 'Anthony', 'anthony.coue@gmail.com', '01 55 93 70 75', 'Médecin', 'Urgence', 0, 10, 2, '2015-05-07 09:29:07', '2015-05-07 09:33:34'),
-(2, 'BOIVERT', 'Jean-Pierre', 'ze@ee.fr', '01 55 93 70 76', 'IDE', 'Urgence', 0, 10, 3, '2015-05-07 09:34:05', '2015-05-07 09:34:05'),
-(3, 'FRESNEDA', 'Jean-Pierre', 'a.b@c.fr', '01 55 93 70 77', 'Chef de service', 'Rhumatologie', 1, 10, 5, '2015-05-07 09:37:41', '2015-05-07 09:37:41'),
-(4, 'FRES', 'Mickaêl', 'ml@lk.com', '01 55 93 70 74', 'DRH', 'Direction Ressources Huamines', 1, 10, 5, '2015-05-07 09:40:41', '2015-05-07 09:40:41'),
-(5, 'ROMMEL', 'Mickaêl', 'r.m@eerre.com', '01 55 93 70 73', 'Médecin', 'Gynécologie', 0, 10, 1, '2015-05-11 08:20:39', '2015-05-11 08:20:39'),
-(6, 'QUERE', 'Xavier', 'x.q@gfk.fr', '01 55 93 70 70', 'Kiné', 'Urgence', 0, 10, 1, '2015-05-11 08:26:42', '2015-05-11 08:26:42'),
-(7, 'NEDA', 'Jean-Paul', 'n.jp@jkjkd.org', '01 55 93 70 98', 'Directeur-Adjoint', 'Direction', 1, 10, 5, '2015-05-11 08:28:39', '2015-05-11 08:28:39');
+CREATE TABLE IF NOT EXISTS `mesures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `resultat` text,
+  `file` varchar(100) DEFAULT NULL,
+  `demarche_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `demarche_evaluation_fk_idx` (`demarche_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -368,14 +292,15 @@ CREATE TABLE IF NOT EXISTS `outils` (
   `phase_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `outils_phase_fk_idx` (`phase_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Contenu de la table `outils`
 --
 
 INSERT INTO `outils` (`id`, `name`, `texte`, `type`, `phase_id`) VALUES
-(1, 'MEYCLUB 2014.pdf', 'a', 'pedagogiques', 1);
+(2, '2015 01 25_ENGAGEMENT_DIRECTION_V1.docx', 'Fiche d''engagement de la direction ', 'pedagogiques', 4),
+(3, '2014 12 28_PLAN_ACTION.docx', 'Modèle électronique du Plan d''Action HAS', 'pedagogiques', 2);
 
 -- --------------------------------------------------------
 
@@ -386,6 +311,7 @@ INSERT INTO `outils` (`id`, `name`, `texte`, `type`, `phase_id`) VALUES
 CREATE TABLE IF NOT EXISTS `parametres` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
   `valeur` text NOT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -397,10 +323,10 @@ CREATE TABLE IF NOT EXISTS `parametres` (
 -- Contenu de la table `parametres`
 --
 
-INSERT INTO `parametres` (`id`, `name`, `valeur`, `created`, `modified`) VALUES
-(1, 'MessageValidationInscription', 'Inscription terminée, un mail va vous être envoyé pour terminer la validation.', '2015-04-24 12:46:46', '2015-04-24 12:46:46'),
-(2, 'EmailContact', 'refex@has-sante.fr', '2015-05-02 20:01:51', '2015-05-02 20:01:51'),
-(3, 'SujetEmailContact', '[Pacte] Message utilisateur provenant du site', '2015-05-02 20:04:27', '2015-05-02 20:04:27');
+INSERT INTO `parametres` (`id`, `name`, `description`, `valeur`, `created`, `modified`) VALUES
+(1, 'MessageValidationInscription', 'Message qui sera affiché à la fin de l''inscription d''une équipe', 'Inscription terminée, un mail va vous être envoyé pour terminer la validation.', '2015-04-24 12:46:46', '2015-05-20 15:07:22'),
+(2, 'EmailContact', '', 'refex@has-sante.fr', '2015-05-02 20:01:51', '2015-05-02 20:01:51'),
+(3, 'SujetEmailContact', '', '[Pacte] Message utilisateur provenant du site', '2015-05-02 20:04:27', '2015-05-02 20:04:27');
 
 -- --------------------------------------------------------
 
@@ -439,7 +365,8 @@ CREATE TABLE IF NOT EXISTS `plan_actions` (
   `demarche_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `demarche_plan_action_fk_idx` (`demarche_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 -- --------------------------------------------------------
 
@@ -458,16 +385,7 @@ CREATE TABLE IF NOT EXISTS `projets` (
   `demarche_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `demarches_projet_fk_idx` (`demarche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
---
--- Contenu de la table `projets`
---
-
-INSERT INTO `projets` (`id`, `mission`, `secteur_activite`, `definition`, `intitule`, `deploiement`, `communication`, `demarche_id`) VALUES
-(1, NULL, NULL, NULL, '', '', NULL, 9),
-(2, 'Mission', 'Secteur', 'beau projet', 'azaz', 'azazazmlkml,qfzer', 'Pour la comm', 10),
-(3, NULL, NULL, NULL, '', '', NULL, 11);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -514,43 +432,7 @@ CREATE TABLE IF NOT EXISTS `reponses` (
   PRIMARY KEY (`id`),
   KEY `demarche_reponse_fk_idx` (`demarche_id`),
   KEY `demarche_question_fk_idx` (`question_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=111 ;
-
---
--- Contenu de la table `reponses`
---
-
-INSERT INTO `reponses` (`id`, `libelle`, `question_id`, `demarche_id`) VALUES
-(81, 'N', 9, 9),
-(82, 'N', 10, 9),
-(83, 'O', 1, 9),
-(84, 'O', 2, 9),
-(85, 'O', 3, 9),
-(86, 'N', 4, 9),
-(87, 'N', 5, 9),
-(88, 'O', 6, 9),
-(89, 'O', 7, 9),
-(90, 'O', 8, 9),
-(91, 'N', 9, 10),
-(92, 'N', 10, 10),
-(93, 'O', 1, 10),
-(94, 'O', 2, 10),
-(95, 'O', 3, 10),
-(96, 'O', 4, 10),
-(97, 'N', 5, 10),
-(98, 'N', 6, 10),
-(99, 'O', 7, 10),
-(100, 'O', 8, 10),
-(101, 'N', 9, 11),
-(102, 'N', 10, 11),
-(103, 'O', 1, 11),
-(104, 'O', 2, 11),
-(105, 'O', 3, 11),
-(106, 'N', 4, 11),
-(107, 'O', 5, 11),
-(108, 'O', 6, 11),
-(109, 'O', 7, 11),
-(110, 'N', 8, 11);
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -570,11 +452,32 @@ CREATE TABLE IF NOT EXISTS `responsabilites` (
 --
 
 INSERT INTO `responsabilites` (`id`, `name`, `online`) VALUES
-(1, 'Membre', 0),
+(1, 'Membre', 1),
 (2, 'Référents', 1),
 (3, 'Facilitateurs', 1),
 (4, 'Animateur du CRM Santé', 1),
 (5, 'Membre du CP', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `type_indicateurs`
+--
+
+CREATE TABLE IF NOT EXISTS `type_indicateurs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Contenu de la table `type_indicateurs`
+--
+
+INSERT INTO `type_indicateurs` (`id`, `name`) VALUES
+(1, 'Efficacité clinique'),
+(2, 'Organisationnel'),
+(3, 'Patient');
 
 -- --------------------------------------------------------
 
@@ -594,19 +497,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   `token` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Contenu de la table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `created`, `modified`, `lastlogin`, `active`, `token`) VALUES
-(1, 'admin', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'admin', '2015-04-01 03:14:30', '2015-05-12 14:14:00', '2015-05-12 14:14:00', 1, ''),
-(2, 'has', '$2y$10$/XFcwUYHBr0YsVnxwLikSOmhxOi69ejBFlttN9EHEUaFyLiEq5E6u', 'has', '2015-04-02 03:14:30', '2015-05-05 14:40:27', '2015-05-05 14:40:27', 1, ''),
-(3, 'expert', '$2y$10$mNM0ii2D.1zry6PcB5UiDOB6x.AB17psN.NuP2s1.OrHDQ5rG.CG6', 'expert', '2015-04-08 14:42:50', '2015-05-05 11:11:40', '2015-05-05 11:11:40', 1, ''),
-(23, '2015_3382_1', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'equipe', '2015-05-06 11:47:19', '2015-05-07 11:54:49', '2015-05-07 11:54:49', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1'),
-(24, '2015_3383_1', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'equipe', '2015-05-06 12:10:06', '2015-05-13 12:40:55', '2015-05-13 12:40:55', 1, 'cPy3DdEmu1LrKpz680QhI2eXgRfMknNJ'),
-(25, '2015_3383_2', '$2y$10$Anw/LRb.QNAIDWoiPJSH0.49DDqN8gBVT69TFxhiAcrfP1XHE.L6q', 'equipe', '2015-05-07 07:52:44', '2015-05-07 07:54:51', '2015-05-07 07:54:35', 1, 'OHJdVr7XFELytZv5i1CkPnYgKlmW9M8D');
+(1, 'admin', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'admin', '2015-04-01 03:14:30', '2015-05-21 08:37:06', '2015-05-21 08:37:06', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1'),
+(2, 'has', '$2y$10$/XFcwUYHBr0YsVnxwLikSOmhxOi69ejBFlttN9EHEUaFyLiEq5E6u', 'has', '2015-04-02 03:14:30', '2015-05-05 14:40:27', '2015-05-05 14:40:27', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1'),
+(3, 'expert', '$2y$10$mNM0ii2D.1zry6PcB5UiDOB6x.AB17psN.NuP2s1.OrHDQ5rG.CG6', 'expert', '2015-04-08 14:42:50', '2015-05-05 11:11:40', '2015-05-05 11:11:40', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1');
 
 --
 -- Contraintes pour les tables exportées
@@ -649,8 +549,8 @@ ALTER TABLE `equipes`
 -- Contraintes pour la table `etape_plan_actions`
 --
 ALTER TABLE `etape_plan_actions`
-  ADD CONSTRAINT `plan_action_etape_fk` FOREIGN KEY (`plan_action_id`) REFERENCES `plan_actions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `indicateur_etape_fk` FOREIGN KEY (`indicateur_id`) REFERENCES `indicateurs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `indicateur_etape_fk` FOREIGN KEY (`type_indicateur_id`) REFERENCES `type_indicateurs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `plan_action_etape_fk` FOREIGN KEY (`plan_action_id`) REFERENCES `plan_actions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `evaluations`
@@ -664,6 +564,12 @@ ALTER TABLE `evaluations`
 ALTER TABLE `membres`
   ADD CONSTRAINT `demarches_membres_fk` FOREIGN KEY (`demarche_id`) REFERENCES `demarches` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `responsabilite_membres_fk` FOREIGN KEY (`responsabilite_id`) REFERENCES `responsabilites` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `mesures`
+--
+ALTER TABLE `mesures`
+  ADD CONSTRAINT `demarche_mesure_fk` FOREIGN KEY (`demarche_id`) REFERENCES `demarches` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `outils`

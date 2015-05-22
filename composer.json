@@ -8,7 +8,7 @@
 		"php" : ">=5.4.16",
 		"cakephp/cakephp" : "~3.0",
 		"mobiledetect/mobiledetectlib" : "2.*",
-		"friendsofcake/cakepdf": "3.0.x-dev",
+		"friendsofcake/cakepdf" : "3.0.x-dev",
 		"cakephp/migrations" : "~1.0",
 		"cakephp/plugin-installer" : "dev-master"
 	},
@@ -35,10 +35,10 @@
 	"scripts" : {
 		"post-install-cmd" : [
 			"App\\Console\\Installer::postInstall"
-		]
+		],
+		"post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
 	},
 	"minimum-stability" : "dev",
-	"prefer-stable" : true,	
-	"post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
+	"prefer-stable" : true,
+	"post-autoload-dump" : "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump"
 }
-

@@ -1,18 +1,12 @@
 <?php 
-$session = $this->request->session();
-if ($session->check('Progress.Menu')) {
-    $menu = $session->read('Progress.Menu');
-} else $menu=1;
 
-if ($session->check('Progress.SousMenu')) {
-    $sous_menu = $session->read('Progress.SousMenu');
-} else $sous_menu=1;
-  
-if($session->check('Auth.User.role')) { ?>
+$session = $this->request->session();
+if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) { ?>
 	<p class="boiteOutil">Outils pédagogiques</p>
 <?php 
 	foreach ($listeOutilsPeda as $outilP):
-	 echo "<a href='/files/outil/".$outilP->name."' target='_blank'>".$outilP->name."   <span><i class='glyphicon glyphicon-open'></i></span></a>";
+		echo h($outilP->name)."&nbsp;&nbsp;".$this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/'.h($outilP->name), ['class' => 'titre','target' => '_blank','escape' => false]);
+	                   
 	endforeach;
 ?>
 	<p class="boiteOutil">Outils clé en main</p>

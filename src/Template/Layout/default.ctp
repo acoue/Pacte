@@ -4,6 +4,9 @@
  * @link          http://www.has-sante.fr
  * @since         1.0
  */
+$session = $this->request->session();
+if($session->check('Auth.User.role')) $role = $session->read('Auth.User.role');
+else $role='equipe';
 
 $cakeDescription = 'Pacte ';
 ?>
@@ -71,12 +74,20 @@ $cakeDescription = 'Pacte ';
               </div>
               <div class="col-md-3"></div>
             </div>
+<?php if($role === 'admin') { //Affichage Admin ?>
+            <div class="row">                
+                <div class="col-md-12"><?= $this->fetch('content') ?> </div>
+            </div>
+<?php } else { //Affichage Equipe CP HAS et Expert => barre d'outils ?>
             <div class="row">
                 <div class="col-md-2">
                 	<?= $this->element('outil', ['menu' => '1', 'sous_menu' => '1']); ?>
                 </div>
                 <div class="col-md-10"><?= $this->fetch('content') ?> </div>
             </div>
+<?php }?>           
+            
+            
             <br /><br />
         </div>
         <!-- /.contenu -->
