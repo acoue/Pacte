@@ -42,6 +42,7 @@ class DescriptionsController extends AppController
     	->contain(['Fonctions', 'Projets'])
     	->where(['Descriptions.projet_id' => $id_projet]);
     	$this->set('descriptions', $this->paginate($query));
+    	$this->set(compact('id_projet'));
         $this->set('_serialize', ['descriptions']);
     }
 

@@ -52,7 +52,7 @@ class EvaluationsController extends AppController
     		return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
     	}
     	
-    	$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche])->order('name ASC');    	
+    	$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche])->order('ordre ASC');    	
         $this->set('evaluations', $evaluations);
         $this->set('_serialize', ['evaluations']);
     }

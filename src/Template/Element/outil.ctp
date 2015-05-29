@@ -12,7 +12,15 @@ if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) { ?
 	<p class="boiteOutil">Outils clé en main</p>
 <?php 
 	foreach ($listeOutilsCle as $outilC):
-	echo "Clé : ".$outilC->name."<br />";
+		echo h($outilC->name)."&nbsp;&nbsp;".$this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/'.h($outilC->name), ['class' => 'titre','target' => '_blank','escape' => false]);
 	endforeach;
-} 
+} else { 
+	if($session->check('Progress.Menu')) {
+		//Inscription
+		echo "<p class='boiteOutil'>Outils</p>";
+		echo "Volet d’engagement &nbsp;&nbsp;".$this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/2015 01 25_ENGAGEMENT_DIRECTION_V1.docx', ['class' => 'titre','target' => '_blank','escape' => false]);
+	}
+	
+
+}
 ?>        

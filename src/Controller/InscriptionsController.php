@@ -51,12 +51,19 @@ class InscriptionsController extends AppController
     		$term = '%'.$this->request->data['numero_demarche'].'%';
     		$this->loadModel('Etablissements');
     		$etablissements = $this->Etablissements->find('all')->where([' numero_demarche LIKE' => $term]);
-    		$this->set(compact('etablissements'));
-    		// On ecris en session les infos saisies	    	
-	    	$session->write('Engagement.Date',$this->request->data['date_engagement']);
-			$session->write('Engagement.Numero_Demarche',$this->request->data['numero_demarche']);
-			// On redirige
-    		$this->render('/Inscriptions/add');
+    		
+    		if($etablissements->count() > 0) {    		
+	    		$this->set(compact('etablissements'));
+	    		// On ecris en session les infos saisies	    	
+		    	$session->write('Engagement.Date',$this->request->data['date_engagement']);
+				$session->write('Engagement.Numero_Demarche',$this->request->data['numero_demarche']);
+				// On redirige
+	    		$this->render('/Inscriptions/add');
+    		} else {
+        		$this->Flash->error('Aucun établissement ne possède ce numéro de démarche.');    
+        		return $this->redirect(['action' => 'index']);
+    		}
+    		
     	} 
     	
     	if($this->request->is('get') && $session->check('Engagement.Id_Etablissement')) {
@@ -209,7 +216,7 @@ class InscriptionsController extends AppController
     			// Atribution des valeurs
     			$projet->demarche_id = $id_demarche;
     			//Enregistrement
-    			if($demPhasesTable->save($demPhase)) $boolOk = true;
+    			if($projetTable->save($projet)) $boolOk = true;
     			else $boolOk = false;
     		}
     		

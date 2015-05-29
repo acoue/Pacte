@@ -48,7 +48,7 @@ if($role === 'equipe' && $etat_diagnostic == 1 )	echo "        <li class='dropdo
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Diagnostic <span class='caret'></span></a>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            <ul class='dropdown-menu' role='menu'>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "                <li>".$this->Html->link('Projet','/projets/diagnostic_index')."</li>";
-if($role === 'equipe' && $etat_diagnostic == 1 )	echo " 				  <li>".$this->Html->link('Evaluation','/Evaluations/index')."</li>";
+if($role === 'equipe' && $etat_diagnostic == 1 )	echo " 				  <li>".$this->Html->link('Fonctionnement d\'équipe','/Evaluations/index')."</li>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','/PlanActions/index')."</li>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "   			  <li>".$this->Html->link('Evaluation à T0','/Mesures/index')."</li>";
 if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            </ul>";

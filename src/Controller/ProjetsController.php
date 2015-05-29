@@ -101,7 +101,7 @@ class ProjetsController extends AppController
     public function validate()
     {    	
 		//On recupere l'identifiant de démarche
-    	$session = $this->request->session();
+    	$session = $this->request->session(); 
     	$id_demarche = $session->read('Equipe.Demarche'); 	    	
     	
     	//Vérification des éléments obigatoires du projet
@@ -109,15 +109,18 @@ class ProjetsController extends AppController
     	$projet = $this->Projets->find('all')
     	->where(['projets.demarche_id'=>$id_demarche])->first();
     	//intitulé du projet
-    	if(strlen($projet->secteur_activite) < 1 ) {
-    		$this->Flash->error('Merci de compléter le champ "Lister le ou les secteur(s) d\'activité(s) participant au projet Pacte" et d\'enregistrer les données');
-    		return $this->redirect(['controller'=>'Projets', 'action' => 'index']);
-    	}
-    	//Modalite de deploiement
-    	if(strlen($projet->intitule) < 1 ) {
-    		$this->Flash->error('Merci de compléter le champ "Définir le projet d\'équipe" et d\'enregistrer les données');
-    		return $this->redirect(['controller'=>'Projets', 'action' => 'index']);
-    	}
+     	if($session->read('Equipe.Engagement') > 0) {
+	    	if(strlen($projet->secteur_activite) < 1 ) {
+	    		$this->Flash->error('Merci de compléter le champ "Lister le ou les secteur(s) d\'activité(s) participant au projet Pacte" et d\'enregistrer les données');
+	    		return $this->redirect(['controller'=>'Projets', 'action' => 'index']);
+	    	}
+	    	//Modalite de deploiement
+	    	if(strlen($projet->intitule) < 1 ) {
+	    		$this->Flash->error('Merci de compléter le champ "Définir le projet d\'équipe" et d\'enregistrer les données');
+	    		return $this->redirect(['controller'=>'Projets', 'action' => 'index']);
+	    	}	
+     	}
+    	
     	
     	
     	
@@ -207,6 +210,7 @@ class ProjetsController extends AppController
 	    		// Atribution des valeurs => CRM Sante
 	    		$eval->id = null;
 	    		$eval->name = "CRM Santé";
+	    		$eval->ordre = 2;
 	    		$eval->demarche_id = $id_demarche;
 	    		//Enregistrement
 	    		$evaluationsTable->save($eval);
@@ -215,6 +219,7 @@ class ProjetsController extends AppController
 	    		// Atribution des valeurs => Culture Securite
 	    		$eval->id = null;
 	    		$eval->name = "Culture Sécurité";
+	    		$eval->ordre = 1;
 	    		$eval->demarche_id = $id_demarche;
 	    		//Enregistrement
 	    		$evaluationsTable->save($eval);	    		
@@ -222,7 +227,7 @@ class ProjetsController extends AppController
 	    		//Creation de la mesure obligatoire Matrice de Maturite
 	    		$mesuresTable = TableRegistry::get('Mesures');
 	    		$mesure = $mesuresTable->newEntity();
-	    		// Atribution des valeurs => CRM Sante
+	    		// Atribution des valeurs => Matrice de Maturité
 	    		$mesure->id = null;
 	    		$mesure->name = "Matrice de Maturité";
 	    		$mesure->demarche_id = $id_demarche;

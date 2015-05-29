@@ -24,6 +24,7 @@ class ReponsesTable extends Table
         $this->table('reponses');
         $this->displayField('id');
         $this->primaryKey('id');
+		$this->addBehavior('Timestamp');
         $this->belongsTo('Questions', [
             'foreignKey' => 'question_id',
             'joinType' => 'INNER'

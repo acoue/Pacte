@@ -45,6 +45,7 @@ class UsersController extends AppController
 	public function activate($token =null) {
     	//Menu et sous-menu
 	    $session = $this->request->session();
+	    $session->write('Equipe.Engagement','0');
 	    $session->write('Progress.Menu','0');
 	    $session->write('Progress.SousMenu','0');
 		
@@ -63,7 +64,24 @@ class UsersController extends AppController
 				//Mise à jour du token pour eviter une 2eme validation
 				$token = $this->Securite->getToken();
 				$modif_user->token = $token;
-				$usersTable->save($modif_user);
+				$usersTable->save($modif_user);				
+
+				//Recuperation libelle etab + equipe => session
+				$this->loadModel('Equipes');
+				$equipe = $this->Equipes->find('all')
+				->contain(['Etablissements'])
+				->where(['Equipes.user_id' => $user['id']])
+				->first();
+				$session->write('Equipe.Libelle',$equipe->name);
+				$session->write('Equipe.Libelle_Etablissement',$equipe->etablissement->libelle);
+					
+				//recuperation de la demarche en cours pour l'equipe => session
+				$this->loadModel('Demarches');
+				$demarche = $this->Demarches->find('all')
+				->where(['equipe_id' => $equipe->id])
+				->first();
+				$session->write('Equipe.Demarche',$demarche->id);
+				
 				//Login du User
 				$this->Auth->setUser($user);
 				$this->Flash->success(__("Votre compte a bien été validé."));
@@ -202,7 +220,7 @@ class UsersController extends AppController
  		if ($this->request->is('post')) {
  			$user = $this->Users->patchEntity($user, $this->request->data);
  			if ($this->Users->save($user)) {
- 				$this->Flash->success(__("L'utilisateur a &eacute;t&eacute; sauvegard&eacute;."));
+ 				$this->Flash->success(__("L'utilisateur a été sauvegardé."));
  				return $this->redirect(['action' => 'index']);
  			}
  			$this->Flash->error(__("Impossible d'ajouter l'utilisateur."));

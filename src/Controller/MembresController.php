@@ -59,7 +59,7 @@ class MembresController extends AppController
 	    	->where(['comite'=>$comite,'demarche_id'=>$session->read('Equipe.Demarche')]);        	
         }
     	    	
-    	if($type=1) $responsabilites = $this->Membres->Responsabilites->find('list')->where(['online'=>1,' id >'=>'1']);
+    	if($type==1) $responsabilites = $this->Membres->Responsabilites->find('list')->where(['online'=>1,' id >'=>'1']);
     	else $responsabilites = $this->Membres->Responsabilites->find('list')->where(['online'=>1]);
     	
     	

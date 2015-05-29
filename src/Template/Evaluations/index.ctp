@@ -1,6 +1,6 @@
 <div class="blocblanc">
 	<h2>Phase de diagnostic</h2>
-    <h3>Evaluation</h3>
+    <h3>Fonctionnement d'équipe</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>

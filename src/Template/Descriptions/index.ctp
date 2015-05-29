@@ -35,7 +35,7 @@
 			<div class="col-md-1"></div>
 		</div>
 		<p align="center">
-			<?= $this->Html->link(__('Ajouter une fonction'), ['action' => 'add/'.$description->projet->id], ['class'=>'btn btn-default']) ?>
+			<?= $this->Html->link(__('Ajouter une fonction'), ['action' => 'add/'.$id_projet], ['class'=>'btn btn-default']) ?>
 			<br /><br />
 			<?= $this->Html->link(__('Retour'), ['controller'=>'projets', 'action' => 'index'], ['class'=>'btn btn-info']) ?>
 		</p>

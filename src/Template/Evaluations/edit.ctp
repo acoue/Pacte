@@ -1,6 +1,6 @@
 <div class="blocblanc">
 	<h2>Phase de diagnostic</h2>
-    <h3>Edition d'une évaluation</h3>
+    <h3>Bilan : <?= $evaluation->name ?></h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -21,7 +21,8 @@
                     </div>                          
 				</div><br />  
 				<div class="row">
-                	<label class="col-md-4 control-label" for="synthese">Synthèse <span class="obligatoire"><sup> *</sup></span></label>
+                	<label class="col-md-2 control-label" for="synthese">Synthèse <span class="obligatoire"><sup> *</sup></span></label>
+                	<div class="col-md-2">AIDE</div>
                     <div class="col-md-8"><?= $this->Form->input('synthese', ['label' => false,'id'=>'synthese',
 														   	'div' => false,'type' => 'textarea', 'escape' => false,
 															'class' => 'form-control', 'rows' => '5', 
