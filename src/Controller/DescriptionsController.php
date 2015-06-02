@@ -71,10 +71,10 @@ class DescriptionsController extends AppController
         		//Ajout        	
 	        	$description = $this->Descriptions->patchEntity($description, $this->request->data);
 	            if ($this->Descriptions->save($description)) {
-	                $this->Flash->success('La descriptin de l\'équipe a bien été sauvegardée.');
+	                $this->Flash->success('La description de l\'équipe a bien été sauvegardée.');
 	                return $this->redirect(['action' => 'index/'.$id_projet]);
 	            } else {
-	                $this->Flash->error('Erreur dans la sauvegarde de la descriptin de l\'équipe.');
+	                $this->Flash->error('Erreur dans la sauvegarde de la description de l\'équipe.');
 	            }
         	}
         }
@@ -98,10 +98,10 @@ class DescriptionsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $description = $this->Descriptions->patchEntity($description, $this->request->data);
             if ($this->Descriptions->save($description)) {
-                $this->Flash->success('La descriptin de l\'équipe a bien été sauvegardée.');
+                $this->Flash->success('La description de l\'équipe a bien été sauvegardée.');
                 return $this->redirect(['action' => 'index/'.$description->projet_id]);
             } else {
-                $this->Flash->error('Erreur dans la sauvegarde de la descriptin de l\'équipe .');
+                $this->Flash->error('Erreur dans la sauvegarde de la description de l\'équipe .');
             }
         }
         $fonctions = $this->Descriptions->Fonctions->find('list', ['limit' => 200]);
@@ -123,9 +123,9 @@ class DescriptionsController extends AppController
         $description = $this->Descriptions->get($id);
         $id_projet = $description->projet_id;
         if ($this->Descriptions->delete($description)) {
-            $this->Flash->success('La descriptin de l\'équipe a bioen été supprimée.');
+            $this->Flash->success('La description de l\'équipe a bioen été supprimée.');
         } else {
-            $this->Flash->error('Erreur dans la suppression de la descriptin de l\'équipe .');
+            $this->Flash->error('Erreur dans la suppression de la description de l\'équipe .');
         }
         return $this->redirect(['action' => 'index/'.$id_projet]);
     }

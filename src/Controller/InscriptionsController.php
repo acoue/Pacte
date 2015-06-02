@@ -17,7 +17,7 @@ class InscriptionsController extends AppController
 	public function beforeFilter(Event $event)
 	{
   		parent::beforeFilter($event);
-		$this->Auth->allow(['index','add','create', 'validate', 'validate_refus']);
+		$this->Auth->allow(['index','add','create', 'validate', 'validate_refus','verification']);
 	}
 	
 //     public function isAuthorized($user)
@@ -47,12 +47,13 @@ class InscriptionsController extends AppController
 
     	//Validation du formulaire pour rechercher les etablissements
     	if ($this->request->is('post')){
-    		    	
+    		    	 		
     		$term = '%'.$this->request->data['numero_demarche'].'%';
     		$this->loadModel('Etablissements');
     		$etablissements = $this->Etablissements->find('all')->where([' numero_demarche LIKE' => $term]);
     		
-    		if($etablissements->count() > 0) {    		
+    		if($etablissements->count() > 0) {     			
+    			
 	    		$this->set(compact('etablissements'));
 	    		// On ecris en session les infos saisies	    	
 		    	$session->write('Engagement.Date',$this->request->data['date_engagement']);
@@ -93,17 +94,67 @@ class InscriptionsController extends AppController
     		//On retrouve les infos etablissement
     		$this->loadModel('Etablissements');
     		$etablissement = $this->Etablissements->find('all')->where(['id' => $this->request->data['etablissement_id']])->first();
-			$this->set(compact('etablissement'));
+						
 	    	// On ecris en session les infos saisies	    	
 	    	$session->write('Engagement.Id_Etablissement',$etablissement->id);
 			$session->write('Engagement.Finess',$etablissement->finess);
 			$session->write('Engagement.Raison_Sociale',$etablissement->libelle);
 			$session->write('Engagement.Libelle_Equipe',$this->request->data['libelle_equipe']);
-		    $this->redirect(['controller' => 'Inscriptions', 'action' => 'Create']);
+			
+
+			$this->loadModel('Equipes');
+			$nbEquipes = $this->Equipes
+						->find('all')
+						->where(['etablissement_id' => $this->request->data['etablissement_id']])
+						->count();
+						
+			
+			if($nbEquipes >0) {
+   		//debug("==>".$nbEquipes);die();
+				$etablissement_id = $this->request->data['etablissement_id'];
+				$this->set(compact('etablissement_id'));  
+				// On redirige
+    			//$this->render('/Inscriptions/verification');
+    			$this->redirect(['controller' => 'Inscriptions', 'action' => 'verification']);
+				
+			} 
+
+			
+			$this->set(compact('etablissement'));
+			$this->redirect(['controller' => 'Inscriptions', 'action' => 'Create']);
+		
     	}
     }
     
+    /**
+     * Verification method
+     *
+     * @return void Si une ou plusieurs équipes existe on demande à l'utilisateur si nouvelkle équipe ou pas.
+     */
+    public function verification()
+    {
+    	$session = $this->request->session();  	
+	    $etablissement_id = $session->read('Engagement.Id_Etablissement');
+    	
+    	if ($this->request->is('post')) {
+    		//On retrouve les infos etablissement
+    		$this->loadModel('Etablissements');
+    		$etablissement = $this->Etablissements->find('all')->where(['id' => $etablissement_id])->first();
+    		$this->set(compact('etablissement'));
+			$this->redirect(['controller' => 'Inscriptions', 'action' => 'Create']);
+    		
+    	}
 
+    	$this->loadModel('Equipes');
+    	$equipes = $this->Equipes
+    	->find('all')
+    	->contain(['Etablissements'])
+    	->where(['etablissement_id' => $etablissement_id]);
+    	
+    	$this->set(compact('equipes'));
+    	 
+    }
+    
     /**
      * Validate method
      *
@@ -439,4 +490,32 @@ class InscriptionsController extends AppController
 	    }
 	    
     }
+    
+	public function find() {
+
+    	if ($this->request->is('ajax')) {
+
+	        $this->autoRender = false;   
+		    $this->loadModel('Equipes');         
+	        $equipe_name = $this->request->data['Inscription']['name'];            
+	        $results = $this->Equipes->find('all', array(
+	                                       'conditions' => array('Equipes.name LIKE ' => '%'. $equipe_name . '%'),
+	                                       'recursive'  => -1
+	                                       ));
+	
+	
+
+	        $resultArr = array();
+	        foreach($results as $result) {
+	        	$resultArr[] = array('label' =>$result['Equipe']['name'] , 'value' => $result['Equipe']['name'] );
+	        }
+	        
+	        echo json_encode($resultArr);
+	        exit(); // may not be necessary, just make sure the view is not rendered
+	        
+	        
+
+		} 
+
+	}
 }

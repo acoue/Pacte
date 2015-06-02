@@ -14,49 +14,63 @@ if($session->check('Auth.User.role')) {
 	echo "<div id='navbar' class='navbar-collapse collapse'>";
 	echo "    <ul class='nav navbar-nav'>";
 //Gestion > Admin
-if($role === 'admin')	echo "        <li class='dropdown'>";
-if($role === 'admin')	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Gestion <span class='caret'></span></a>";
-if($role === 'admin')	echo "            <ul class='dropdown-menu' role='menu'>";
-if($role === 'admin')	echo " 				 <li>".$this->Html->link('Utilisateur','/users/index')."</li>";
-if($role === 'admin')	echo " 				 <li>".$this->Html->link('Paramètres','/parametres/index')."</li>";
-if($role === 'admin')	echo " 				 <li>".$this->Html->link('Outils','/outils/index')."</li>";
-if($role === 'admin')	echo "				 <li>".$this->Html->link('Questions','/questions/index')."</li>";
-if($role === 'admin')	echo "				 <li>".$this->Html->link('Fonctions','/fonctions/index')."</li>";
-if($role === 'admin')	echo "				 <li>".$this->Html->link('Type Indicateurs','/typeIndicateurs/index')."</li>";
-if($role === 'admin')	echo "            </ul>";
-if($role === 'admin')	echo "        </li>";
-if($role === 'admin')	echo "        <li class='dropdown'>";
-if($role === 'admin')	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Suivi <span class='caret'></span></a>";
-if($role === 'admin')	echo "            <ul class='dropdown-menu' role='menu'>";
-if($role === 'admin')	echo " 				 <li>".$this->Html->link('Démarches','')."</li>";
-if($role === 'admin')	echo " 				 <li>".$this->Html->link('Test','')."</li>";
-if($role === 'admin')	echo "            </ul>";
-if($role === 'admin')	echo "        </li>";
+if($role === 'admin') {
+		echo "        <li class='dropdown'>";
+		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Gestion <span class='caret'></span></a>";
+		echo "            <ul class='dropdown-menu' role='menu'>";
+		echo " 				 <li>".$this->Html->link('Utilisateur','/users/index')."</li>";
+		echo " 				 <li>".$this->Html->link('Paramètres','/parametres/index')."</li>";
+		echo " 				 <li>".$this->Html->link('Outils','/outils/index')."</li>";
+		echo "				 <li>".$this->Html->link('Questions','/questions/index')."</li>";
+		echo "				 <li>".$this->Html->link('Enquête','/EnqueteQuestions/index')."</li>";
+		echo "				 <li>".$this->Html->link('Fonctions','/fonctions/index')."</li>";
+		echo "				 <li>".$this->Html->link('Type Indicateurs','/typeIndicateurs/index')."</li>";
+		echo "            </ul>";
+		echo "        </li>";
+		echo "        <li class='dropdown'>";
+		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Suivi <span class='caret'></span></a>";
+		echo "            <ul class='dropdown-menu' role='menu'>";
+		echo " 				 <li>".$this->Html->link('Démarches','')."</li>";
+		echo " 				 <li>".$this->Html->link('Test','')."</li>";
+		echo "            </ul>";
+		echo "        </li>";
+}
 //Gestion > Equipe
-if($role === 'equipe' && $etat_engagement == 1 )	echo "        <li class='dropdown'>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Engagement <span class='caret'></span></a>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo "            <ul class='dropdown-menu' role='menu'>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo "                <li>".$this->Html->link('Projet','/projets/index')."</li>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo " 				  <li>".$this->Html->link('Membres Référent','/membres/index/0/1')."</li>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo " 				  <li>".$this->Html->link('Membres','/membres/index/0/0')."</li>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo "   			  <li>".$this->Html->link('Comité de pilotage','/membres/index/1/0')."</li>";
-if($role === 'equipe' && $etat_engagement == 1 )	echo "            </ul>";
-if($role === 'admin' || $role === 'equipe')	echo "        </li>";
+if($role === 'equipe' && $etat_engagement == 1 ) {	
+		echo "        <li class='dropdown'>";
+		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Engagement <span class='caret'></span></a>";
+		echo "            <ul class='dropdown-menu' role='menu'>";
+		echo "                <li>".$this->Html->link('Projet','/projets/index')."</li>";
+		echo " 				  <li>".$this->Html->link('Membres Référent','/membres/index/0/1')."</li>";
+		echo " 				  <li>".$this->Html->link('Membres','/membres/index/0/0')."</li>";
+		echo "   			  <li>".$this->Html->link('Comité de pilotage','/membres/index/1/0')."</li>";
+		echo "            </ul>";
+		echo "		  </li>";
+}
+//if($role === 'admin' || $role === 'equipe')	echo "        </li>";
 
 if($role === 'equipe' && $etat_engagement == 1 && $etat_diagnostic == 0 )	echo "        <li>".$this->Html->link('Diagnostic','/projets/diagnostic_index')."</li>";
-if($role === 'equipe' && $etat_diagnostic == 1 )	echo "        <li class='dropdown'>";
-if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Diagnostic <span class='caret'></span></a>";
-if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            <ul class='dropdown-menu' role='menu'>";
-if($role === 'equipe' && $etat_diagnostic == 1 )	echo "                <li>".$this->Html->link('Projet','/projets/diagnostic_index')."</li>";
-if($role === 'equipe' && $etat_diagnostic == 1 )	echo " 				  <li>".$this->Html->link('Fonctionnement d\'équipe','/Evaluations/index')."</li>";
-if($role === 'equipe' && $etat_diagnostic == 1 )	echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','/PlanActions/index')."</li>";
-if($role === 'equipe' && $etat_diagnostic == 1 )	echo "   			  <li>".$this->Html->link('Evaluation à T0','/Mesures/index')."</li>";
-if($role === 'equipe' && $etat_diagnostic == 1 )	echo "            </ul>";
+if($role === 'equipe' && $etat_diagnostic == 1 ) {	
+		echo "        <li class='dropdown'>";
+		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Diagnostic <span class='caret'></span></a>";
+		echo "            <ul class='dropdown-menu' role='menu'>";
+		echo "                <li>".$this->Html->link('Projet','/projets/diagnostic_index')."</li>";
+		echo " 				  <li>".$this->Html->link('Fonctionnement d\'équipe','/Evaluations/index')."</li>";
+		echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','/PlanActions/index')."</li>";
+		echo "   			  <li>".$this->Html->link('Evaluation à T0','/Mesures/index')."</li>";
+		echo "            </ul>";
+		echo "        </li>";
+}
+if($role === 'equipe' && $etat_engagement == 1 && $etat_diagnostic == 1 && $etat_oeuvre == 0) {	
+		echo "        <li class='dropdown'>";
+		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Mise en Oeuvre <span class='caret'></span></a>";
+		echo "            <ul class='dropdown-menu' role='menu'>";
+		echo "                <li>".$this->Html->link('Enquête de satisfaction','/EnqueteQuestions/index')."</li>";
+		echo "            </ul>";
+		echo "        </li>";
+}
 
-if($role === 'equipe' && $etat_engagement == 1 && $etat_diagnostic == 1 && $etat_oeuvre == 0)	echo "        <li>".$this->Html->link('Mise en Oeuvre','/pages/home')."</li>";
-
-
-if($role === 'admin' || $role === 'equipe')	echo "        </li>";
+//if($role === 'admin' || $role === 'equipe')	echo "        </li>";
 
 
 

@@ -109,13 +109,13 @@ class ProjetsController extends AppController
     	$projet = $this->Projets->find('all')
     	->where(['projets.demarche_id'=>$id_demarche])->first();
     	//intitulé du projet
-     	if($session->read('Equipe.Engagement') > 0) {
+     	if($session->read('Equipe.Engagement') == 0) {
 	    	if(strlen($projet->secteur_activite) < 1 ) {
 	    		$this->Flash->error('Merci de compléter le champ "Lister le ou les secteur(s) d\'activité(s) participant au projet Pacte" et d\'enregistrer les données');
 	    		return $this->redirect(['controller'=>'Projets', 'action' => 'index']);
 	    	}
 	    	//Modalite de deploiement
-	    	if(strlen($projet->intitule) < 1 ) {
+	    	if(strlen($projet->definition) < 1 ) {
 	    		$this->Flash->error('Merci de compléter le champ "Définir le projet d\'équipe" et d\'enregistrer les données');
 	    		return $this->redirect(['controller'=>'Projets', 'action' => 'index']);
 	    	}	
@@ -301,7 +301,10 @@ class ProjetsController extends AppController
     	
     	//Recuperation des membres du ciomite de pilotage
     	//$this->loadModel('Membres');
-    	$membres_comites = $this->Membres->find('all')->where(['demarche_id' => $id_demarche,'comite'=>1]);
+    	$membres_comites = $this->Membres->find('all')
+    	->contain(['Responsabilites'])
+    	->where(['Membres.demarche_id' => $id_demarche,'comite'=> 1]); 
+    	
     	
     	//Recuperation des descriptions de l'equipe
     	$this->loadModel('Descriptions');

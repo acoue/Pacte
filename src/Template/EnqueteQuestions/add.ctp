@@ -1,0 +1,20 @@
+<div class="actions columns large-2 medium-3">
+    <h3><?= __('Actions') ?></h3>
+    <ul class="side-nav">
+        <li><?= $this->Html->link(__('List Enquete Questions'), ['action' => 'index']) ?></li>
+    </ul>
+</div>
+<div class="enqueteQuestions form large-10 medium-9 columns">
+    <?= $this->Form->create($enqueteQuestion); ?>
+    <fieldset>
+        <legend><?= __('Add Enquete Question') ?></legend>
+        <?php
+            echo $this->Form->input('name');
+            echo $this->Form->input('groupe');
+            echo $this->Form->input('ordre');
+            echo $this->Form->input('aide');
+        ?>
+    </fieldset>
+    <?= $this->Form->button(__('Submit')) ?>
+    <?= $this->Form->end() ?>
+</div>

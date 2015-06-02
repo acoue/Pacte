@@ -1,18 +1,17 @@
 <div class="blocblanc">
 	<h2>Fiche d'engagement de l'équipe</h2>
 <?php 
-$retour = "";
-if($comite == 0 && $type == 0) $retour = "Comite à 0 et Type à 0";
-else if($comite == 0 && $type == 1) $retour = "Comite à 0 et Type à 1"; 	
-else if($comite == 1 && $type == 0) $retour ="Comite à 1 et Type à 0"; 
-else if($comite == 1 && $type == 1) $retour = "Comite à 1 et Type à 1";
-
+// $retour = "";
+// if($comite == 0 && $type == 0) $retour = "Comite à 0 et Type à 0";
+// else if($comite == 0 && $type == 1) $retour = "Comite à 0 et Type à 1"; 	
+// else if($comite == 1 && $type == 0) $retour ="Comite à 1 et Type à 0"; 
+// else if($comite == 1 && $type == 1) $retour = "Comite à 1 et Type à 1";
 //debug($retour);die();
 
 
 if($comite == '1') echo "<h3>Membres du comité de pilotage</h3>";
-else if ($comite == '0') echo "<h3>Membres référents de l'équipe</h3>";
-else echo "<h3>Membres de l'équipe</h3>";
+else if ($comite == '0' && $type == 1) echo "<h3>Membres référents de l'équipe</h3>";
+else if ($comite == '0' && $type == 0) echo  "<h3>Membres de l'équipe</h3>";
 ?>	  
 	<div class="blocblancContent">
 		<div class="row"> 
