@@ -17,7 +17,12 @@ if($session->check('Auth.User.role')) {
 		}else if($session->read('Equipe.Diagnostic') == 0 ){
 			echo $this->Html->link('Poursuivre dans la phase de diagnostic', ['controller'=>'projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info']);
 			
-		} else echo "Bienvenue Equipe";
+		} else if($session->read('Equipe.MiseEnOeuvre') == 0 ){
+			echo "<p>Pensez bien à remplir l'enquête de satisfaction initiale</p>";	
+			echo $this->Html->link('Terminer la phase de mise en oeuvre', ['controller'=>'', 'action' => ''],['class' => 'btn btn-info']);
+			
+		} 
+		else echo "Bienvenue Equipe";
 		
 		
 		

@@ -49,8 +49,7 @@ class EnquetesController extends AppController
     	
     	$queryMax = $this->Enquetes->find('all')
     	->where(['Enquetes.demarche_id' => $id_demarche]);
-    	$dateMax = $queryMax->select(['service','max' => $query->func()->max('Enquetes.created')])
-    						->group('Enquetes.Service');
+    	$dateMax = $queryMax->select(['max' => $query->func()->max('Enquetes.created')]);
     	
     	$this->set('enquetes', $this->paginate($query));
         $this->set('dateMax', $dateMax);

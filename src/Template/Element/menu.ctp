@@ -10,6 +10,8 @@ if($session->check('Auth.User.role')) {
 	else $etat_diagnostic = 0;
 	if($session->check('Equipe.MiseEnOeuvre')) $etat_oeuvre = $session->read('Equipe.MiseEnOeuvre');
 	else $etat_oeuvre = 0;
+	if($session->check('Equipe.Evaluation')) $etat_evaluation = $session->read('Equipe.Evaluation');
+	else $etat_evaluation = 0;
 	
 	echo "<div id='navbar' class='navbar-collapse collapse'>";
 	echo "    <ul class='nav navbar-nav'>";
@@ -50,27 +52,48 @@ if($role === 'equipe' && $etat_engagement == 1 ) {
 }
 //if($role === 'admin' || $role === 'equipe')	echo "        </li>";
 
-if($role === 'equipe' && $etat_engagement == 1 && $etat_diagnostic == 0 )	echo "        <li>".$this->Html->link('Diagnostic','/projets/diagnostic_index')."</li>";
-if($role === 'equipe' && $etat_diagnostic == 1 ) {	
+if($role === 'equipe' && $etat_engagement == 1 && $etat_diagnostic == 0 ) {
+		echo "        <li>".$this->Html->link('Diagnostic','/projets/diagnostic_index')."</li>";
+}
+if($role === 'equipe' && $etat_engagement == 1 && $etat_diagnostic == 1 && $etat_oeuvre == 0) {	
 		echo "        <li class='dropdown'>";
 		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Diagnostic <span class='caret'></span></a>";
 		echo "            <ul class='dropdown-menu' role='menu'>";
 		echo "                <li>".$this->Html->link('Projet','/projets/diagnostic_index')."</li>";
 		echo " 				  <li>".$this->Html->link('Fonctionnement d\'équipe','/Evaluations/index')."</li>";
-		echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','/PlanActions/index')."</li>";
-		echo "   			  <li>".$this->Html->link('Evaluation à T0','/Mesures/index')."</li>";
 		echo "            </ul>";
 		echo "        </li>";
-}
-if($role === 'equipe' && $etat_engagement == 1 && $etat_diagnostic == 1 && $etat_oeuvre == 0) {	
 		echo "        <li class='dropdown'>";
 		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Mise en Oeuvre <span class='caret'></span></a>";
 		echo "            <ul class='dropdown-menu' role='menu'>";
+		echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','/PlanActions/index')."</li>";
+		echo "   			  <li>".$this->Html->link('Evaluation à T0','/Mesures/index')."</li>";
 		echo "                <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
 		echo "            </ul>";
 		echo "        </li>";
 }
 
+if($role === 'equipe' && $etat_engagement == 1 && $etat_diagnostic == 1 && $etat_oeuvre == 1 && $etat_evaluation == 0 ) {
+	echo "        <li class='dropdown'>";
+	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Diagnostic <span class='caret'></span></a>";
+	echo "            <ul class='dropdown-menu' role='menu'>";
+	echo "                <li>".$this->Html->link('Projet','/projets/diagnostic_index')."</li>";
+	echo " 				  <li>".$this->Html->link('Fonctionnement d\'équipe','/Evaluations/index')."</li>";
+	echo "            </ul>";
+	echo "        </li>";
+	echo "        <li class='dropdown'>";
+	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Mise en Oeuvre <span class='caret'></span></a>";
+	echo "            <ul class='dropdown-menu' role='menu'>";
+	echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','/PlanActions/index')."</li>";
+	echo "        </li>";
+	echo "        <li class='dropdown'>";
+	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Evaluation <span class='caret'></span></a>";
+	echo "            <ul class='dropdown-menu' role='menu'>";
+	echo "   			  <li>".$this->Html->link('Evaluation à T0','/Mesures/index')."</li>";
+	echo "                <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
+	echo "            </ul>";
+	echo "        </li>";
+}
 //if($role === 'admin' || $role === 'equipe')	echo "        </li>";
 
 
@@ -107,27 +130,4 @@ if($role === 'expert')			echo "                <td>".$username." (Expert Visiteu
 	echo "    </ul>";
 	echo "</div>";
 }
-
-/*
- * Menu Admin : 
- * ...
- * - Visualisation > Engagement 
- * - Repartition CP - Equipe
- * 
- * 
-/*
- * Menu Equipe :
- * - gestion > Membre
- * - gestion > Conseil
- * - Projet > Engagement
- * - Projet > diagnostic 
- *
- * * Menu HAS  
- * - Situation Equipe
- * - Repartition EV - Equipe
- * 
- * Menu Expert  
- * - Situation Equipe
- * - Evaluation
- * */
 ?>

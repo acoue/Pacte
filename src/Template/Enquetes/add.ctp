@@ -53,6 +53,8 @@
 			<?php  
 			foreach ($questions as $question): ?>
 				<div class="row">
+					<?php if( !empty($question->aide)) { ?>
+				
 					<label class="col-md-9 control-label fond-vert" for="q_<?= $question->id ?>" >
 						<?= $question->groupe." ".$question->name ?>
 					</label>
@@ -61,6 +63,12 @@
 	                 		data-content="<?= $question->aide ?>"
 	                        role="button">Aide</a>
 	                 </div> 
+	                 <?php } else { ?>
+	                 
+					<label class="col-md-12 control-label fond-vert" for="q_<?= $question->id ?>" >
+						<?= $question->groupe." ".$question->name ?>
+					</label>
+	                 <?php }?>
 				</div>
 				 <?php 
 				 if($question->type == 1 ) {?>	
