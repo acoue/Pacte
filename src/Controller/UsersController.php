@@ -314,4 +314,71 @@ class UsersController extends AppController
 	    	}
 	    }
 	}
+	
+	public function activeUser($id = null) {
+		
+		$user = $this->Users->get($id);
+		if ($this->request->is(['post'])) {
+			$user->active = 1;
+			if ($this->Users->save($user)) {
+				$this->Flash->success('L\'utilisateur a bien été activé.');
+				return $this->redirect(['action' => 'index']);
+			} else {
+				$this->Flash->error('Erreur lors de l\'activation de l\'utilisateur.');
+			}
+		}
+	}	
+	
+	public function desactiveUser($id = null) {
+		$user = $this->Users->get($id);
+		if ($this->request->is(['post'])) {
+			$user->active = 0;
+			if ($this->Users->save($user)) {
+				$this->Flash->success('L\'utilisateur a bien été désactivé.');
+				return $this->redirect(['action' => 'index']);
+			} else {
+				$this->Flash->error('Erreur lors de la désactivation de l\'utilisateur.');
+			}
+		}
+	}
+	
+	public function regeneratePassword($id = null) {
+		if($id) $user = $this->Users->get($id);
+		
+			
+		if ($this->request->is(['post'])) {
+			$user = $this->Users->get($this->request->data['id']);
+			$user->id = $this->request->data['id'];
+			$user->password = $this->request->data['password'];
+			if ($this->Users->save($user)) {
+				$this->Flash->success('Le mot de passe dl\'utilisateur a bien été modifié.');
+				return $this->redirect(['action' => 'index']);
+			} else {
+				$this->Flash->error('Erreur lors de la modification du mot de passe de l\'utilisateur.');
+			}
+		}
+
+		$this->set(compact('user'));
+		$this->set('_serialize', ['user']);
+	
+	}
+	
+	/**
+	 * Delete method
+	 *
+	 * @param string|null $id User id.
+	 * @return void Redirects to index.
+	 * @throws \Cake\Network\Exception\NotFoundException When record not found.
+	 */
+	public function delete($id = null)
+	{
+		$this->request->allowMethod(['post', 'delete']);
+		$user = $this->Users->get($id);
+		if ($this->Users->delete($user)) {
+			$this->Flash->success('Suppression l\'utilisateur.');
+		} else {
+			$this->Flash->error('Erreur dans la suppression de l\'utilisateur.');
+		}
+		return $this->redirect(['action' => 'index']);
+	}
 }

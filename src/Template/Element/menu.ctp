@@ -18,13 +18,14 @@ if($role === 'admin') {
 		echo "        <li class='dropdown'>";
 		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Gestion <span class='caret'></span></a>";
 		echo "            <ul class='dropdown-menu' role='menu'>";
-		echo " 				 <li>".$this->Html->link('Utilisateur','/users/index')."</li>";
-		echo " 				 <li>".$this->Html->link('Paramètres','/parametres/index')."</li>";
-		echo " 				 <li>".$this->Html->link('Outils','/outils/index')."</li>";
-		echo "				 <li>".$this->Html->link('Questions','/questions/index')."</li>";
-		echo "				 <li>".$this->Html->link('Enquête','/EnqueteQuestions/index')."</li>";
+		echo "				 <li>".$this->Html->link('Etablissements','/etablissements/index')."</li>";
 		echo "				 <li>".$this->Html->link('Fonctions','/fonctions/index')."</li>";
+		echo " 				 <li>".$this->Html->link('Outils','/outils/index')."</li>";
+		echo " 				 <li>".$this->Html->link('Paramètres','/parametres/index')."</li>";
+		echo "				 <li>".$this->Html->link('Questions','/questions/index')."</li>";
+		echo "				 <li>".$this->Html->link('Questions Enquête','/EnqueteQuestions/index')."</li>";
 		echo "				 <li>".$this->Html->link('Type Indicateurs','/typeIndicateurs/index')."</li>";
+		echo " 				 <li>".$this->Html->link('Utilisateur','/users/index')."</li>";
 		echo "            </ul>";
 		echo "        </li>";
 		echo "        <li class='dropdown'>";
@@ -65,7 +66,7 @@ if($role === 'equipe' && $etat_engagement == 1 && $etat_diagnostic == 1 && $etat
 		echo "        <li class='dropdown'>";
 		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Mise en Oeuvre <span class='caret'></span></a>";
 		echo "            <ul class='dropdown-menu' role='menu'>";
-		echo "                <li>".$this->Html->link('Enquête de satisfaction','/EnqueteQuestions/index')."</li>";
+		echo "                <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
 		echo "            </ul>";
 		echo "        </li>";
 }

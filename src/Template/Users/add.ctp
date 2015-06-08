@@ -8,6 +8,8 @@
 			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>			
     		<?= $this->Form->create($user, ['id'=>'add_utilisateur_form']); ?>
+    		<?= $this->Form->hidden('token',['value' => substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 32)]);?>		  
+			<?= $this->Form->hidden('active',['value' => '1']);?>		  
 			<div class="col-md-8">   
 				<div class="row">
                 	<label class="col-md-4 control-label" for="username">Username <span class="obligatoire"><sup> *</sup></span></label>
@@ -39,6 +41,13 @@
 			</div>						
 			<div class="col-md-1"></div>			
 		</div><br /><br />
+		
+		
+		
+		
+				
+		
+		
 	<p align="center">
 		<?= $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
     	<?= $this->Form->end() ?>

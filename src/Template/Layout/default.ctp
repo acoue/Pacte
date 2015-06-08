@@ -20,8 +20,9 @@ $cakeDescription = 'Pacte ';
     <meta name="description" content="Programme d'Amélioration Continue du Travail en Equipe">
     <meta name="author" content="Haute Autorité de Santé">
     <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
+        <?= $cakeDescription ?>
+        <?php //echo $this->fetch('title');
+?>
     </title>
     <?= $this->Html->meta('icon') ?>
     

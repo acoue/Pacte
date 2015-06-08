@@ -44,7 +44,7 @@ class EtablissementsTable extends Table
             ->allowEmpty('libelle')
             ->allowEmpty('finess')
             ->allowEmpty('numero_demarche')
-            ->allowEmpty('niveau_certif');
+            ->allowEmpty('niveau_certification');
 
         return $validator;
     }

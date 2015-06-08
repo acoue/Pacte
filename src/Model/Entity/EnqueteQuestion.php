@@ -19,5 +19,6 @@ class EnqueteQuestion extends Entity
         'groupe' => true,
         'ordre' => true,
         'aide' => true,
+        'type' => true,
     ];
 }

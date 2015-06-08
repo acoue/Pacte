@@ -37,7 +37,7 @@
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $question->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer {0} ?']);?>
+				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer la question ?']);?>
 				          </td>
 				        </tr>
 				

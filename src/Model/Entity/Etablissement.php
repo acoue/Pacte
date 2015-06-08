@@ -18,7 +18,7 @@ class Etablissement extends Entity
         'libelle' => true,
         'finess' => true,
         'numero_demarche' => true,
-        'niveau_certif' => true,
+        'niveau_certification' => true,
         'equipes' => true,
     ];
 }

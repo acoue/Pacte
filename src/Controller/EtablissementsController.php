@@ -49,10 +49,10 @@ class EtablissementsController extends AppController
         if ($this->request->is('post')) {
             $etablissement = $this->Etablissements->patchEntity($etablissement, $this->request->data);
             if ($this->Etablissements->save($etablissement)) {
-                $this->Flash->success('The etablissement has been saved.');
+                $this->Flash->success('L\'établissement a bien été sauvegardé.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The etablissement could not be saved. Please, try again.');
+                $this->Flash->error('Erreur dans la sauvegarde de l\'établissement.');
             }
         }
         $this->set(compact('etablissement'));
@@ -74,10 +74,10 @@ class EtablissementsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $etablissement = $this->Etablissements->patchEntity($etablissement, $this->request->data);
             if ($this->Etablissements->save($etablissement)) {
-                $this->Flash->success('The etablissement has been saved.');
+                $this->Flash->success('L\'établissement a bien été sauvegardé.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The etablissement could not be saved. Please, try again.');
+                $this->Flash->error('Erreur dans la sauvegarde de l\'établissement.');
             }
         }
         $this->set(compact('etablissement'));
@@ -96,9 +96,9 @@ class EtablissementsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $etablissement = $this->Etablissements->get($id);
         if ($this->Etablissements->delete($etablissement)) {
-            $this->Flash->success('The etablissement has been deleted.');
+            $this->Flash->success('L\'établissement a bien été supprimé.');
         } else {
-            $this->Flash->error('The etablissement could not be deleted. Please, try again.');
+            $this->Flash->error('Erreur dans la suppression de l\'établissement.');
         }
         return $this->redirect(['action' => 'index']);
     }

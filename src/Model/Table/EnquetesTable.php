@@ -1,19 +1,20 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\EnqueteReponse;
+use App\Model\Entity\Enquete;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * EnqueteReponses Model
+ * Enquetes Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Enquetes
- * @property \Cake\ORM\Association\BelongsTo $Questions
+ * @property \Cake\ORM\Association\BelongsTo $Demarches
+ * @property \Cake\ORM\Association\BelongsTo $Fonctions
+ * @property \Cake\ORM\Association\HasMany $EnqueteReponses
  */
-class EnqueteReponsesTable extends Table
+class EnquetesTable extends Table
 {
 
     /**
@@ -24,17 +25,20 @@ class EnqueteReponsesTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('enquete_reponses');
+        $this->table('enquetes');
         $this->displayField('id');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
-        $this->belongsTo('Enquetes', [
-            'foreignKey' => 'enquete_id',
+        $this->belongsTo('Demarches', [
+            'foreignKey' => 'demarche_id',
             'joinType' => 'INNER'
         ]);
-        $this->belongsTo('EnqueteQuestions', [
-            'foreignKey' => 'question_id',
+        $this->belongsTo('Fonctions', [
+            'foreignKey' => 'fonction_id',
             'joinType' => 'INNER'
+        ]);
+        $this->hasMany('EnqueteReponses', [
+            'foreignKey' => 'enquete_id'
         ]);
     }
 
@@ -51,8 +55,8 @@ class EnqueteReponsesTable extends Table
             ->allowEmpty('id', 'create');
             
         $validator
-            ->requirePresence('valeur', 'create')
-            ->notEmpty('valeur');
+            ->requirePresence('service', 'create')
+            ->notEmpty('service');
 
         return $validator;
     }
@@ -66,8 +70,8 @@ class EnqueteReponsesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['enquete_id'], 'Enquetes'));
-        $rules->add($rules->existsIn(['question_id'], 'EnqueteQuestions'));
+        $rules->add($rules->existsIn(['demarche_id'], 'Demarches'));
+        $rules->add($rules->existsIn(['fonction_id'], 'Fonctions'));
         return $rules;
     }
 }

@@ -26,8 +26,20 @@
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $user->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer {0} ?']);?>
-				          </td>
+				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);?>
+				  
+				<?php if($user->active == 1) echo $this->Form->postLink(
+				                '<span><i class="glyphicon glyphicon-minus-sign"></i></span>',
+				                ['action' => 'desactiveUser', $user->id],
+				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de desactiver l\'utilisateur ?']);
+					else echo $this->Form->postLink(
+				                '<span><i class="glyphicon glyphicon-plus-sign"></i></span>',
+				                ['action' => 'activeUser', $user->id],
+				                ['class' => 'tip', 'escape'   => false]);
+				
+				?>
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-retweet"></i></span>', ['action' => 'regeneratePassword', $user->id], array('escape' => false)); ?>
+							</td>
 				        </tr>
 				
 				    <?php endforeach; ?>

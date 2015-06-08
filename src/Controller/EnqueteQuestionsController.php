@@ -10,6 +10,10 @@ use App\Controller\AppController;
  */
 class EnqueteQuestionsController extends AppController
 {
+	public function isAuthorized($user)
+	{	
+		return parent::isAuthorized($user);
+	}
 
     /**
      * Index method
@@ -49,10 +53,10 @@ class EnqueteQuestionsController extends AppController
         if ($this->request->is('post')) {
             $enqueteQuestion = $this->EnqueteQuestions->patchEntity($enqueteQuestion, $this->request->data);
             if ($this->EnqueteQuestions->save($enqueteQuestion)) {
-                $this->Flash->success('The enquete question has been saved.');
+                $this->Flash->success('La question de l\'enquête a bien été sauvegardée.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The enquete question could not be saved. Please, try again.');
+                $this->Flash->error('Erreur dans la sauvegarde de la question de l\'enquête.');
             }
         }
         $this->set(compact('enqueteQuestion'));
@@ -74,10 +78,10 @@ class EnqueteQuestionsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $enqueteQuestion = $this->EnqueteQuestions->patchEntity($enqueteQuestion, $this->request->data);
             if ($this->EnqueteQuestions->save($enqueteQuestion)) {
-                $this->Flash->success('The enquete question has been saved.');
+                $this->Flash->success('La question de l\'enquête a bien été sauvegardée.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The enquete question could not be saved. Please, try again.');
+                $this->Flash->error('Erreur dans la sauvegarde de la question de l\'enquête.');
             }
         }
         $this->set(compact('enqueteQuestion'));
@@ -96,9 +100,9 @@ class EnqueteQuestionsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $enqueteQuestion = $this->EnqueteQuestions->get($id);
         if ($this->EnqueteQuestions->delete($enqueteQuestion)) {
-            $this->Flash->success('The enquete question has been deleted.');
+            $this->Flash->success('La question de l\'enquête a bien été supprimée.');
         } else {
-            $this->Flash->error('The enquete question could not be deleted. Please, try again.');
+            $this->Flash->error('Erreur dans la suppression de la question de l\'enquête.');
         }
         return $this->redirect(['action' => 'index']);
     }

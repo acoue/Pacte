@@ -1,14 +1,14 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\EnqueteReponsesTable;
+use App\Model\Table\EnquetesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\EnqueteReponsesTable Test Case
+ * App\Model\Table\EnquetesTable Test Case
  */
-class EnqueteReponsesTableTest extends TestCase
+class EnquetesTableTest extends TestCase
 {
 
     /**
@@ -17,13 +17,15 @@ class EnqueteReponsesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.enquete_reponses',
-        'app.enquete_questions',
+        'app.enquetes',
         'app.demarches',
         'app.equipes',
         'app.users',
         'app.etablissements',
-        'app.fonctions'
+        'app.fonctions',
+        'app.enquete_reponses',
+        'app.questions',
+        'app.reponses'
     ];
 
     /**
@@ -34,8 +36,8 @@ class EnqueteReponsesTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('EnqueteReponses') ? [] : ['className' => 'App\Model\Table\EnqueteReponsesTable'];
-        $this->EnqueteReponses = TableRegistry::get('EnqueteReponses', $config);
+        $config = TableRegistry::exists('Enquetes') ? [] : ['className' => 'App\Model\Table\EnquetesTable'];
+        $this->Enquetes = TableRegistry::get('Enquetes', $config);
     }
 
     /**
@@ -45,7 +47,7 @@ class EnqueteReponsesTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->EnqueteReponses);
+        unset($this->Enquetes);
 
         parent::tearDown();
     }

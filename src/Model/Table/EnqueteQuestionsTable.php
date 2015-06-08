@@ -53,6 +53,10 @@ class EnqueteQuestionsTable extends Table
         $validator
             ->allowEmpty('aide');
 
+        $validator
+        ->add('type', 'valid', ['rule' => 'numeric'])
+        ->allowEmpty('type');
+
         return $validator;
     }
 }

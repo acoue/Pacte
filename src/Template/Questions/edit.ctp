@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-2">
-			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $question->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer {0}?', $question->id)]) ?><br /><br/>
+			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $question->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer la question ?')]) ?><br /><br/>
 			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
     		<?= $this->Form->create($question, ['id'=>'edit_question_form']); ?>

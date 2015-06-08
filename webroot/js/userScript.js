@@ -157,6 +157,30 @@ $(document).ready(function(){
 	$.validate({
 	    form : '#edit_type_indicateur_form'
     });
+	//Formulaire d'ajout d'une question pour enquete de satisfaction
+	$.validate({
+	    form : '#add_enquete_form'
+    });
+	//Formulaire d'edition d'une question pour enquete de satisfaction
+	$.validate({
+	    form : '#edit_enquete_form'
+    });
+	//Formulaire d'ajout d'une reponse a enquete de satisfaction
+	$.validate({
+	    form : '#add_enquete_reponse_form'
+    });
+	//Formulaire d'edition d'une reponse a enquete de satisfaction
+	$.validate({
+	    form : '#edit_enquete_reponse_form'
+    });
+	//Formulaire d'ajout d'un etablissement
+	$.validate({
+	    form : '#add_etablissement_form'
+    });
+	//Formulaire d'edition d'un etablissement
+	$.validate({
+	    form : '#edit_etablissement_form'
+    });
 	
 	
 	
