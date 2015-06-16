@@ -29,6 +29,26 @@
                     										'value' => h($user->username),
                     										'disabled' => 'disabled']); ?>
                     </div>                          
+				</div><br />     
+				<div class="row">
+                	<label class="col-md-4 control-label" for="prenom">Prénom </label>
+                    <div class="col-md-8"><?= $this->Form->input('prenom', ['label' => false,'id'=>'prenom',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => h($user->prenom),
+                    										'disabled' => 'disabled']); ?>
+                    </div>                          
+				</div><br />     
+				<div class="row">
+                	<label class="col-md-4 control-label" for="nom">Nom </label>
+                    <div class="col-md-8"><?= $this->Form->input('nom', ['label' => false,'id'=>'nom',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => h($user->nom),
+                    										'disabled' => 'disabled']); ?>
+                    </div>                          
 				</div><br />  
 				<div class="row">
                 	<label class="col-md-4 control-label" for="role">Rôle </label>

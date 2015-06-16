@@ -52,8 +52,8 @@ class EtapePlanActionsController extends AppController
     	$this->set('etapePlanActions', $this->paginate($query));
     	$this->set('_serialize', ['etapePlanActions']);
     	    	
-        $this->set('etapePlanActions', $this->paginate($query));
-        $this->set('_serialize', ['etapePlanActions']);
+//         $this->set('etapePlanActions', $this->paginate($query));
+//         $this->set('_serialize', ['etapePlanActions']);
     }
 
 

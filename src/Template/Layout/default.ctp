@@ -75,7 +75,7 @@ $cakeDescription = 'Pacte ';
               </div>
               <div class="col-md-3"></div>
             </div>
-<?php if($role === 'admin') { //Affichage Admin ?>
+<?php if(in_array($role,['has','expert','admin'])) { //Affichage Admin ?>
             <div class="row">                
                 <div class="col-md-12"><?= $this->fetch('content') ?> </div>
             </div>
@@ -113,7 +113,7 @@ $cakeDescription = 'Pacte ';
     <?= $this->Html->script('jquery-ui.js') ?>
     <?= $this->Html->script('bootstrap.min.js') ?>
     <?= $this->Html->script('userScript.js') ?>  
-    
+    <?= $this->Html->script('ChartsJs/Chart.js') ?>    
     
     <?= $this->fetch('script') ?>
 </body>

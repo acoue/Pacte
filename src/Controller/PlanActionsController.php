@@ -82,7 +82,7 @@ class PlanActionsController extends AppController
     	
     	
     	
-    	//On retrouve les infos du projet
+    	//On retrouve les infos du plan d'action
     	$planAction = $this->PlanActions->find('all')
     	->where(['demarche_id'=>$id_demarche])->first();  	
     	
@@ -156,6 +156,7 @@ class PlanActionsController extends AppController
         		move_uploaded_file($d['file_new']['tmp_name'], $destination);
         		$planAction->name = $d['name'];
         		$planAction->file = $nomFichier;
+        		$planAction->is_has = 0;
         	}       	
         	 
         	if ($this->PlanActions->save($planAction)) {

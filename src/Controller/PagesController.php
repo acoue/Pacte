@@ -14,10 +14,12 @@
  */
 namespace App\Controller;
 
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\Event\Event;
+
 
 /**
  * Static content controller
@@ -28,11 +30,30 @@ use Cake\Event\Event;
  */
 class PagesController extends AppController
 {
-    
+
 // 	public function beforeFilter(Event $event)
 // 	{	
 // 		$this->Auth->allow(['display']);
 // 	}
+	public $helpers = [
+        'ChartJs.Chartjs' => [
+            'Chart' => [
+                'type' => 'bar',
+            ],
+            'Canvas' => [
+                'position' => 'relative',
+                'width' => 750,
+                'height' => 300,
+                'css' => ['padding' => '10px'],
+            ],
+            'Options' => [
+                'responsive' => true,
+                'Bar' => [
+                    'scaleShowGridLines' => false 
+                ]
+            ],
+        ]
+    ];
 	
     public function isAuthorized($user)
     {
@@ -54,7 +75,8 @@ class PagesController extends AppController
      */
     public function display()
     {
-            
+
+    	
         $path = func_get_args();
 
        /* $count = count($path);
@@ -72,6 +94,55 @@ class PagesController extends AppController
         $this->set(compact('page', 'subpage'));*/
 
         try {
+
+        	$session = $this->request->session();
+        	if($session->read('Auth.User.role') === 'admin'){
+        		$this->loadModel('Equipes');
+        		$equipes = $this->Equipes->find('All',['contain'=>'Etablissements']);  
+        		$this->set(compact('equipes'));      	
+        	} else {
+        		$idUser = $session->read('Auth.User.id');
+        		$this->loadModel('EquipesUsers');
+        		$equipeUsers = $this->EquipesUsers
+        		->find('all')
+        		->contain(['Equipes' => ['Etablissements']])
+        		->where(['EquipesUsers.user_id ='=>$idUser]);
+        		
+        		
+        		$this->set(compact('equipeUsers'));
+        	}
+        	
+        	
+        	
+        	//$this->loadModel('Graphiques');
+        	//$rounds = $this->Graphiques->find('all', ['fields' => ['name','valeur']]);
+        	
+        	//debug($rounds);die();
+        	//Setup data for chart
+        	
+// 			$dataChart = [
+// 			    'labels' => ["January", "February", "March", "April", "May", "June", "July"],
+// 			    'datasets' => [
+// 			            [ 
+// 			                'label' => "My First dataset",
+// 			                'data' => [65, 59, 80, 81, 56, 55, 40]
+// 			            ],
+// 			            [
+// 			                'label' => "My Second dataset",
+// 			                'data' => [28, 48, 40, 19, 86, 27, 90]
+// 			            ]
+// 			    ]
+// 			];
+//         	//Set the chart for your view
+//         	$this->set(compact('dataChart'));
+
+//         	foreach ($rounds as $r):
+        	
+        	
+//         	endforeach;
+        	       	
+        	
+        	
             $this->render(implode('/', $path));
         } catch (MissingTemplateException $e) {
             if (Configure::read('debug')) {

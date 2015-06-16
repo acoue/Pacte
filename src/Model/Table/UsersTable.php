@@ -12,7 +12,7 @@ class UsersTable extends Table
 	{
 		
 		$this->table('users');
-		$this->displayField('id');
+		$this->displayField('username');
 		$this->primaryKey('id');
 		$this->addBehavior('Timestamp');
 		$this->hasMany('Equipes', [

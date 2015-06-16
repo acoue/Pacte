@@ -45,9 +45,7 @@ class MesuresController extends AppController
     	 
     	$query = $this->Mesures->find('all')
     	->contain(['Demarches'])
-    	->where(['Mesures.demarche_id' => $id_demarche]);
-    	$this->set('_serialize', ['etapePlanActions']);
-    	
+    	->where(['Mesures.demarche_id' => $id_demarche]);    	
         $this->set('mesures', $this->paginate($query));
         $this->set('_serialize', ['mesures']);    	
     	

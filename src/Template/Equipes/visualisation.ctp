@@ -1,4 +1,47 @@
-<p align='center'><h1>Récapitulatif des informations de votre phase d'engagement</h1></p>
+<?php 
+// debug($etapePlanActions);
+// die();
+?>
+
+<p align="center">
+	<?= $this->Html->link('Générer un PDF', ['controller'=>'Equipes', 'action' => 'visualisation/1/'.$equipe->id],['class' => 'btn btn-default', 'target' => '_blank']) ?>
+	<?= $this->Html->link('Retour', '/pages/home', ['class' => 'btn btn-info']);?>
+</p>
+<p align='center'><h1>Récapitulatif des informations : </h1></p>
+<div class="blocblanc">
+<h1><?= $equipe->etablissement->libelle ?> - Equipe <?= $equipe->name?></h1>
+
+	<h2>Etat de la démarche Pache</h2>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<table cellpadding="0" cellspacing="0" class="table table-striped" width='80%'>
+					<thead>
+				        <tr align='center'>
+							<th width='40%'>Phase</th>
+				            <th width='30%'>Date d'entrée</th>
+				            <th width='30%'>Date de validation</th>
+				        </tr>
+				    </thead>
+				    <tbody>    
+				    <?php foreach ($phases as $phase): ?>
+				    	<tr>
+							<td><?=$phase->phase->name ?></td>
+				            <td><?= date_format($phase->date_entree, 'd/m/Y') ?></td>
+				            <td><?php echo (isset($phase->date_validation)) ? date_format($phase->date_validation, 'd/m/Y') : "En cours";  ?></td>
+				        </tr>
+				    <?php endforeach; ?>
+                 	</tbody>
+                 </table>			
+			</div>						
+			<div class="col-md-1"></div>
+		</div>		
+	</div>
+</div>
+
+
+
 <div class="blocblanc">
 	<h2>Dossier d'engagement d'une équipe Pacte</h2>
 	<div class="blocblancContent">
@@ -11,7 +54,7 @@
 															   	'div' => false,
 																'class' => 'form-control', 
 	                    										'type' => 'text',
-	                											'value'=> date_format($demarche->date_engagement, 'd/m/Y'),  
+	                											'value'=> date_format($demarche->date_engagement, 'd/m/Y'),
 	                											'disabled'=>'disabled']); ?>
 					</div>
 				</div><br />
@@ -160,8 +203,7 @@
 				<div class="row">
 					<h4>Description de l'équipe</h4>   
 					<div class="row">
-						<div class="col-md-1"></div>
-						<div class="col-md-10">
+						<div class="col-md-12">
 							<table cellpadding="0" cellspacing="0" class="table table-striped" >
 								<thead>
 									<tr>
@@ -181,7 +223,6 @@
 								</tbody>							
 							</table>
 						</div>
-						<div class="col-md-1"></div>
 					</div>
 					<div class="row">
 						<div class="col-md-12">
@@ -268,29 +309,172 @@
 				</div>
 			</div>						
 			<div class="col-md-1"></div>
-		</div><br /><br />
+		</div>
+	</div>
+</div>		
+<div class="blocblanc">
+	<h2>Diagnostic</h2>
+	<h3>Le projet d'équipe</h3>
+	<div class="blocblancContent">
 		<div class="row">
-        	<p align="center">La validation des renseignement ci-dessus, entrainement l'entrée dans votre démarche d'accréditation.<br/>
-                Suite à cette validation, vous recevrez un e-mail récapitulatif des informations.
-            </p>
-<?php 
-	$session = $this->request->session();
-    if($session->read('Equipe.Engagement') == '0') { 
-    	//Formulaire => numero de demarche
-    	echo $this->Form->create($projet,['action'=>'validate']);
-    	
-    	
-    	
-    	
-    	echo "<p align='center'>";
-    	echo $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']);
-		echo "&nbsp;&nbsp;&nbsp;";
-		echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'index'],['class'=>'btn btn-info']);
-		echo "</p>";
-		echo $this->Form->end(); 
- } ?>
-    	</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<div class="row">
+					<h4>Intitulé du projet</h4>
+                	<div class="col-md-12"><?= $this->Form->input('intitule', ['label' => false,'id'=>'communication',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'textarea', 'escape' => false,
+                											'value'=> $projet->intitule,'disabled'=>'disabled',
+                											'rows' => '5']); ?>
+                    </div>                          
+				</div><br />   		    
+				<div class="row">
+					<h4>Modalité de déploiement</h4>
+                	<div class="col-md-12"><?= $this->Form->input('deploiement', ['label' => false,'id'=>'communication',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'textarea', 'escape' => false,
+                											'value'=> $projet->deploiement,'disabled'=>'disabled',
+                											'rows' => '5']); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
+					<h4>Calendrier de mise en oeuvre</h4>
+                	<div class="col-md-12">
+                		<table cellpadding="0" cellspacing="0" class="table table-striped" > 
+                			<thead>
+						    	<tr>
+						        	<th width='60%'>Libellé</th>
+						        	<th width='40%'>Date</th>
+						        </tr>
+						   	<thead>
+						    <tbody>    
+							 <?php foreach ($calendriers as $calendrierProjet): ?>
+								<tr>
+							    	<td><?= $calendrierProjet->libelle ?></td>
+						            <td><?= $calendrierProjet->mois." ".$this->Number->format($calendrierProjet->annee) ?></td>			           
+							    </tr>
+							 <?php endforeach; ?>          
+							</tbody>
+						</table>
+                    </div>                          
+				</div><br />		
+			</div>						
+			<div class="col-md-1"></div>
+		</div>		
+	</div>	
+	<h3>Fonctionnement d'équipe</h3>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<table cellpadding="0" cellspacing="0" class="table table-striped">
+				    <thead>
+				        <tr align='center'>
+				            <th width='15%'>Outils</th>
+				            <th width='40%'>Votre Synthèse</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+    				<?php foreach ($evaluations as $evaluation): ?>
+				        <tr>
+				            <td><?= h($evaluation->name) ?></td>
+				            <td><?= h($evaluation->synthese) ?></td>
+				        </tr>
+				
+				    <?php endforeach; ?>
+				    </tbody>
+				</table>				
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div></div>		
+<div class="blocblanc">
+	<h2>Mise en Oeuvre</h2>	
+	<h3>Objectifs d'amélioration</h3>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<?php 
+				if($planAction) {
+					if($planAction->is_has == 1 ) {    ?> 
+						<table cellpadding="0" cellspacing="0" class="table table-striped">
+					    <thead>
+					        <tr align='center'>
+					            <th width='5%'>N°</th>
+					            <th width='10%'>Libellé</th>
+					            <th width='10%'>Pilote</th>
+					            <th width='10%'>Echéance</th>
+					            <th width='10%'>Etat</th>
+					            <th width='10%'>Indicateur</th>
+					            <th width='10%'>Type indicateur</th>
+					            <th width='10%'>Modalité de suivi</th>
+					            <th width='10%'>Résultat</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+	    				<?php foreach ($etapePlanActions as $etapePlanAction): ?>
+	    				
+					        <tr>
+					            <td><?= $this->Number->format($etapePlanAction->numero) ?></td>
+	            				<td><?= $etapePlanAction->name ?></td>
+	           					<td><?= h($etapePlanAction->pilote) ?></td>
+	           					<td><?= h($etapePlanAction->mois)." ".$this->Number->format($etapePlanAction->annee) ?></td>
+	            				<td><?= h($etapePlanAction->etat) ?></td>
+	            				<td><?= h($etapePlanAction->indicateur) ?></td>
+					            <td>
+					            <?php
+					            //echo $etapePlanAction->has('TypeIndicateur');
+					            echo h($etapePlanAction->type_indicateur['name']);
+					            ?>
+	            
+					            </td>
+	            				<td><?= h($etapePlanAction->modalite_suivi) ?></td>
+	            				<td><?= h($etapePlanAction->resultat) ?></td>				            
+					        </tr>
+					
+					    <?php endforeach; ?>
+					    </tbody>
+					</table>
+					<?php 
+					} else {
+						echo "<p>Le plan d'action est géré hors Modèle HAS</p>";
+					}
+				} else {
+					echo "<p>Aucun plan d'action n'est définis pour cette démarche</p>";
+				}
+				?>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+	<h3>Evaluation à T0</h3>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<table cellpadding="0" cellspacing="0" class="table table-striped">
+				    <thead>
+				        <tr align='center'>
+				            <th width='15%'>Outils</th>
+				            <th width='40%'>Evolutions des résultats intermédiares / Points forts et axes d'amélioration identifiés</th>
+				        </tr>
+				    </thead>
+				    <tbody>
+    				<?php foreach ($mesures as $mesure): ?>
+				        <tr>
+				            <td><?= h($mesure->name) ?></td>
+				            <td><?= h($mesure->resultat) ?></td>
+				        </tr>
+				
+				    <?php endforeach; ?>
+				    </tbody>
+				</table>				
+			</div>
+			<div class="col-md-1"></div>
+		</div>
 	</div>
 </div>
-				
 

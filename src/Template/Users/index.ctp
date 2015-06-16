@@ -8,16 +8,18 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
-				            <th width='20%'><?= $this->Paginator->sort('identifiant') ?></th>
-				            <th width='30%'><?= $this->Paginator->sort('Login') ?></th>
+				            <th width='10%'><?= $this->Paginator->sort('identifiant') ?></th>
+				            <th width='30%'><?= $this->Paginator->sort('prenom','Nom Prénom') ?></th>
+				            <th width='20%'><?= $this->Paginator->sort('Login') ?></th>
 				            <th width='20%'><?= $this->Paginator->sort('Rôle') ?></th>
-				            <th  width='30%' class="actions"><?= __('Actions') ?></th>
+				            <th  width='20%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
 				    <tbody>
     				<?php foreach ($users as $user): ?>
 				        <tr>
 				            <td><?= $this->Number->format($user->id) ?></td>
+				            <td><?= h($user->prenom)." ".h($user->nom) ?></td>
 				            <td><?= h($user->username) ?></td>
 				            <td><?= h($user->role) ?></td>
 				            <td class="actions">

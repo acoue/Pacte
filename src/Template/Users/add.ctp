@@ -28,6 +28,22 @@
                     										'type' => 'password', 
                     										'required' =>'required']); ?>
                     </div>                          
+				</div><br />     
+				<div class="row">
+                	<label class="col-md-4 control-label" for="prenom">Prénom </label>
+                    <div class="col-md-8"><?= $this->Form->input('prenom', ['label' => false,'id'=>'prenom',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text']); ?>
+                    </div>                          
+				</div><br />     
+				<div class="row">
+                	<label class="col-md-4 control-label" for="nom">Nom </label>
+                    <div class="col-md-8"><?= $this->Form->input('nom', ['label' => false,'id'=>'nom',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text']); ?>
+                    </div>                          
 				</div><br /> 
 				<div class="row">
                 	<label class="col-md-4 control-label" for="role">Rôle <span class="obligatoire"> *</span></label>

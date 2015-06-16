@@ -181,6 +181,7 @@ Request::addDetector('tablet', function ($request) {
 
 Plugin::load('Migrations');
 Plugin::load('CakePdf', array('bootstrap' => true, 'routes' => true));
+Plugin::load('ChartJs', ['bootstrap' => false, 'routes' => false]);
 
 Configure::write('CakePdf', [
 				 'engine' => ['className' => 'CakePdf.WkHtmlToPdf',
@@ -192,6 +193,8 @@ Configure::write('CakePdf', [
 				 'pagesize' => 'A4',
 				 'orientation' => 'portrait','encoding'=>'UTF-8',
 				 'download' => true ]);
+
+
 
 
 // Only try to load DebugKit in development mode
