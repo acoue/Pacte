@@ -32,7 +32,8 @@ $cakeDescription = 'Pacte ';
     <?= $this->Html->css('jquery-ui.css') ?>
 
     <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
+    <?= $this->fetch('css') ?>  
+    
 </head>
 <body>
     <div id="main">
@@ -56,7 +57,7 @@ $cakeDescription = 'Pacte ';
                 <?= $this->element('menu'); ?>    
                 <!-- /.menu-->                
             </div>
-        </nav>
+        </nav>    
         <!-- /.navbar -->
         
         <!-- Barre de progression des phases et sous-phases -->

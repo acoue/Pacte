@@ -49,13 +49,6 @@ if($session->check('Auth.User.role')) {
 			echo $this->Html->link('Poursuivre dans la phase de diagnostic', ['controller'=>'projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info']);
 			
 		} else if($session->read('Equipe.MiseEnOeuvre') == 0 ){
-			
-			
-//  			echo $this->Chartjs->createChart([
-//  					'Chart' => ['id' => 'myBarChart','type' => 'bar'],
-//  					'Data' => $dataChart,
-//  					'Options' => ['Bar' => ['scaleShowGridLines' => false],'responsive' => true]]);
-			
 			echo "<p>Pensez bien à remplir l'enquête de satisfaction initiale</p>";	
 			echo $this->Html->link('Terminer la phase de mise en oeuvre', ['controller'=>'', 'action' => ''],['class' => 'btn btn-info']);
 			
@@ -72,49 +65,43 @@ if($session->check('Auth.User.role')) {
 ?>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
-google.load('visualization', '1', {packages: ['corechart', 'bar']});
-google.setOnLoadCallback(drawBasic);
+	var GLOBALES_PHP = <?= isset($tab_globales)? json_encode($tab_globales) : 'undefined'; ?>;
+	google.load("visualization", "1.1", {packages:["bar"]});
+	google.setOnLoadCallback(drawStuff);
 
-function drawBasic() {
-
-      var data = new google.visualization.DataTable();
-      data.addColumn('timeofday', 'Time of Day');
-      data.addColumn('number', 'Motivation Level');
-
-      data.addRows([
-        [{v: [8, 0, 0], f: '8 am'}, 1],
-        [{v: [9, 0, 0], f: '9 am'}, 2],
-        [{v: [10, 0, 0], f:'10 am'}, 3],
-        [{v: [11, 0, 0], f: '11 am'}, 4],
-        [{v: [12, 0, 0], f: '12 pm'}, 5],
-        [{v: [13, 0, 0], f: '1 pm'}, 6],
-        [{v: [14, 0, 0], f: '2 pm'}, 7],
-        [{v: [15, 0, 0], f: '3 pm'}, 8],
-        [{v: [16, 0, 0], f: '4 pm'}, 9],
-        [{v: [17, 0, 0], f: '5 pm'}, 10],
-      ]);
-
-      var options = {
-        title: 'Titre du graphique',
-        hAxis: {
-          title: 'Time of Day',
-          format: 'h:mm a',
-          viewWindow: {
-            min: [7, 30, 0],
-            max: [17, 30, 0]
+	function drawStuff() {
+        var data = new google.visualization.arrayToDataTable(GLOBALES_PHP);
+        var options = {
+          width: 900,
+          chart: {
+            title: '<?= $titre ?>',
+            subtitle: '<?= $sousTitre ?>'
+          },
+          series: {
+            0: { axis: 'valeur1' }, // Bind series 0 to an axis named 'distance'.
+            1: { axis: 'valeur2' }, // Bind series 1 to an axis named 'brightness'.
+            2: { axis: 'valeur3' } // Bind series 1 to an axis named 'brightness'.
+          },
+          axes: {
+            y: {
+            	valeur1: {label: '<?= $labelYGauche ?>'}, // Left y-axis.
+            	valeur2: {side: 'right', label: '<?= $labelYDroit ?>'} // Right y-axis.
+            }
           }
-        },
-        vAxis: {
-          title: 'Rating (scale of 1-10)'
-        }
-      };
+        };
 
-      var chart = new google.visualization.ColumnChart(
-        document.getElementById('chart_div'));
-
+      var chart = new google.charts.Bar(document.getElementById('dual_y_div'));
       chart.draw(data, options);
-    }
+    };
 </script>
-<div id="chart_div" ></div>
+<br /><br />
+<div id="dual_y_div" style="width: 500px; height: 300px;"></div>
+
+
+
+
+
+
+
 
 

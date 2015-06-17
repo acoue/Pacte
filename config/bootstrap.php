@@ -181,7 +181,6 @@ Request::addDetector('tablet', function ($request) {
 
 Plugin::load('Migrations');
 Plugin::load('CakePdf', array('bootstrap' => true, 'routes' => true));
-Plugin::load('ChartJs', ['bootstrap' => false, 'routes' => false]);
 
 Configure::write('CakePdf', [
 				 'engine' => ['className' => 'CakePdf.WkHtmlToPdf',

@@ -35,26 +35,6 @@ class PagesController extends AppController
 // 	{	
 // 		$this->Auth->allow(['display']);
 // 	}
-	public $helpers = [
-        'ChartJs.Chartjs' => [
-            'Chart' => [
-                'type' => 'bar',
-            ],
-            'Canvas' => [
-                'position' => 'relative',
-                'width' => 750,
-                'height' => 300,
-                'css' => ['padding' => '10px'],
-            ],
-            'Options' => [
-                'responsive' => true,
-                'Bar' => [
-                    'scaleShowGridLines' => false 
-                ]
-            ],
-        ]
-    ];
-	
     public function isAuthorized($user)
     {
     	// Admin peuvent acceder a chaque action
@@ -111,36 +91,40 @@ class PagesController extends AppController
         		
         		$this->set(compact('equipeUsers'));
         	}
-        	
-        	
-        	
-        	//$this->loadModel('Graphiques');
-        	//$rounds = $this->Graphiques->find('all', ['fields' => ['name','valeur']]);
-        	
-        	//debug($rounds);die();
-        	//Setup data for chart
-        	
-// 			$dataChart = [
-// 			    'labels' => ["January", "February", "March", "April", "May", "June", "July"],
-// 			    'datasets' => [
-// 			            [ 
-// 			                'label' => "My First dataset",
-// 			                'data' => [65, 59, 80, 81, 56, 55, 40]
-// 			            ],
-// 			            [
-// 			                'label' => "My Second dataset",
-// 			                'data' => [28, 48, 40, 19, 86, 27, 90]
-// 			            ]
-// 			    ]
-// 			];
-//         	//Set the chart for your view
-//         	$this->set(compact('dataChart'));
+/*
+ * 
+'La sécurité de la prise en charge du patient en équipe a progressé'
+'Le fonctionnement de l'équipe est amélioré'
+'Le partenariat avec le patient et/ou de son entourage a progressé'
+'Ma contribution au sein de l'équipe est renforcée'
+'Ma pratique professionnelle, mon travail sont facilités'
+'Mon travail est reconnu'
+'Ma fonction est valorisée'
+'Pacte répond à mes attentes '
+'Vous recommanderiez ce projet à d’autres équipes'
+'Niveau de satisfaction global concernant le projet PACTE'
 
-//         	foreach ($rounds as $r):
+ */        	
+        	//Graphique
+        	$titre = "titre";
+        	$sousTitre = "Sous titre";
+        	$labelYDroit = "Label axe Y à droite";
+        	$labelYGauche = "Label axe Y à gauche";
+        	$labelX = "Label Axe X";
+        	$legende1 = "Légende bleue";
+        	$legende2 = "Légende rouge";
+        	$legende3 = "Légende 3";
         	
         	
-//         	endforeach;
-        	       	
+        	$tab_globales = [
+        			[$labelX, $legende1, $legende2,	$legende3],
+        			['Canis Major Dwarf', 8000, 23.3,10],
+        			['Sagittarius Dwarf', 24000, 4.5,20],
+        			['Ursa Major II Dwarf', 30000, 14.3,30],
+        			['Lg. Magellanic Cloud', 50000, 0.9,25],
+        			['Bootes I', 60000, 13.1,20]
+        	];
+        	$this->set(compact('titre','sousTitre','labelYDroit','labelYGauche','tab_globales'));
         	
         	
             $this->render(implode('/', $path));
