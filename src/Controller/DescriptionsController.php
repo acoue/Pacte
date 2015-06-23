@@ -61,24 +61,24 @@ class DescriptionsController extends AppController
 			//Verification que il n'existe qu'une ligne fonction / service pour le projet        	
         	$ligneUnique = $this->Descriptions->find()
         									  ->where(['fonction_id'=>$this->request->data['fonction_id'],
-        									  			'projet_id' => $id_projet,
-        												'service'=>$this->request->data['service']])
+        									  			'projet_id' => $id_projet])
         									  ->count();
         	if($ligneUnique >0) {
-        		$this->Flash->error('Ajout IMPOSSIBLE. Le couple Fonction / Service existe déjà');        		
-        		return $this->redirect(['action' => 'index/'.$id_projet]);
+        		$this->Flash->error('Erreur, l\'information pour cette fonction existe déjà pour ce projet');        		
+        		return $this->redirect(['controller'=>'projets','action' => 'index']);
         	} else {        		
         		//Ajout        	
 	        	$description = $this->Descriptions->patchEntity($description, $this->request->data);
 	            if ($this->Descriptions->save($description)) {
-	                $this->Flash->success('La description de l\'équipe a bien été sauvegardée.');
-	                return $this->redirect(['action' => 'index/'.$id_projet]);
+	                $this->Flash->success('La description de l\'équipe a bien été sauvegardée.');       		
+        			return $this->redirect(['controller'=>'projets','action' => 'index']);
 	            } else {
-	                $this->Flash->error('Erreur dans la sauvegarde de la description de l\'équipe.');
+	                $this->Flash->error('Erreur dans la sauvegarde de la présentation de l\'équipe.');       		
+        			return $this->redirect(['controller'=>'projets','action' => 'index']);
 	            }
         	}
         }
-        $fonctions = $this->Descriptions->Fonctions->find('list', ['limit' => 200]);
+        $fonctions = $this->Descriptions->Fonctions->find('list');
         $this->set(compact('description', 'fonctions','id_projet'));
         $this->set('_serialize', ['description']);
     }
@@ -92,16 +92,15 @@ class DescriptionsController extends AppController
      */
     public function edit($id = null)
     {
-        $description = $this->Descriptions->get($id, [
-            'contain' => []
-        ]);
+        $description = $this->Descriptions->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $description = $this->Descriptions->patchEntity($description, $this->request->data);
             if ($this->Descriptions->save($description)) {
                 $this->Flash->success('La description de l\'équipe a bien été sauvegardée.');
-                return $this->redirect(['action' => 'index/'.$description->projet_id]);
+                return $this->redirect(['controller'=>'projets','action' => 'index']);
             } else {
                 $this->Flash->error('Erreur dans la sauvegarde de la description de l\'équipe .');
+                return $this->redirect(['controller'=>'projets','action' => 'index']);
             }
         }
         $fonctions = $this->Descriptions->Fonctions->find('list', ['limit' => 200]);
@@ -123,10 +122,10 @@ class DescriptionsController extends AppController
         $description = $this->Descriptions->get($id);
         $id_projet = $description->projet_id;
         if ($this->Descriptions->delete($description)) {
-            $this->Flash->success('La description de l\'équipe a bioen été supprimée.');
+            $this->Flash->success('La description de l\'équipe a bien été supprimée.');
         } else {
             $this->Flash->error('Erreur dans la suppression de la description de l\'équipe .');
         }
-        return $this->redirect(['action' => 'index/'.$id_projet]);
+        return $this->redirect(['controller'=>'projets','action' => 'index']);
     }
 }

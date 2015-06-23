@@ -16,7 +16,6 @@ class Description extends Entity
      */
     protected $_accessible = [
         'nb_etp' => true,
-        'service' => true,
         'fonction_id' => true,
         'projet_id' => true,
         'fonction' => true,

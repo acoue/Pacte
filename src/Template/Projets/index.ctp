@@ -24,16 +24,16 @@
                     </div>                          
 				</div><br /> 		    
 				<div class="row">
-					<h4>Description de l'équipe</h4>   
+					<h4>Présentation de l'équipe</h4>   
 					<div class="row">
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
 							<table cellpadding="0" cellspacing="0" class="table table-striped" >
 								<thead>
 									<tr>
-					    	        	<th>Fonction</th>
-						            	<th>Nombre d'ETP</th>
-						            	<th>Service</th>
+					    	        	<th width='50%' >Fonction</th>
+						            	<th width='30%'>Nombre d'ETP</th>
+				           				<th width='20%' class="actions"><?= __('Actions') ?></th>
 						        	</tr>
 								</thead>
 								<tbody>	
@@ -41,96 +41,88 @@
 							    	<tr>
 							    		<td><?= h($description->fonction->name) ?></td>
 			            				<td><?= h($description->nb_etp) ?></td>
-			            				<td><?= h($description->service) ?></td>
+							            <td class="actions"><?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'descriptions','action' => 'edit', $description->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+											<?= $this->Form->postLink(
+								                '<span><i class="glyphicon glyphicon-trash"></i></span>',
+								                ['controller'=>'descriptions','action' => 'delete', $description->id],
+								                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer la description pour cette fonction?']);?>
+							          </td>
 							    	</tr>						    
 						    		<?php endforeach; ?>								  
 							    	<tr>
-							    		<td colspan='3' align='center'>
-							    		<?= $this->Html->link(__('Gestion de la description de l\'équipe'), 
-							    								['controller'=>'descriptions', 'action' => 'index/'.$projet->id],
-							    								['class' => 'btn btn-warning']) ?>
+							    		<td colspan='3' align='center'>							    		
+							    		<?= $this->Html->link(__('Ajouter une fonction'), ['controller'=>'descriptions','action' => 'add/'.$projet->id], ['class'=>'btn btn-default']) ?>			
 										</td>
 							    	</tr> 							
 								</tbody>							
 							</table>
 						</div>
 						<div class="col-md-1"></div>
-					</div>					                             
-                	<p align="center">
-                    	<a class="btn btn-info" title="Liste constitution équipe" onclick="ChangeVisibility('divEquipe')">Constitution équipe</a>
-                        <a class="btn btn-info" title="Liste Comité de pilotage" onclick="ChangeVisibility('divComitePilotage')">Comité de pilotage</a>
-                    </p>      
-
-<!-- BLOC CACHES DEBUT --> 
-<div id="divEquipe" class="divCache">
-	<div class="row">
-		<div class="col-md-12">
-		    <table cellpadding="0" cellspacing="0" class="table table-striped" >  
-		        <caption>Constitution de l'équipe</caption>
-		        <thead>
-		        	<tr>
-		        		<th width='15%'>Rôle</th>
-		            	<th>Prénom</th>
-		            	<th>Noms</th>
-		            	<th>Fonction</th>
-		            	<th>Service</th>
-		        	</tr>
-		        <thead>
-		        <tbody>    
-				<?php foreach ($membres as $membre): ?>
-					<tr>
-						<td><b><?= h($membre->responsabilite->name) ?></b></td>
-			            <td><?= h($membre->prenom) ?></td>
-			            <td><?= h($membre->nom) ?></td>
-			            <td><?= h($membre->fonction) ?></td>
-			            <td><?= h($membre->service) ?></td>			            
-			        </tr>
-			    <?php endforeach; ?>  
-			    	<tr>
-			    		<td colspan='5' align='center'>
-			    		<?= $this->Html->link(__('Gestion des membres de l\'équipe'), 
-			    								['controller'=>'membres', 'action' => 'index/0/0'],
-			    								['class' => 'btn btn-warning']) ?>
-						</td>
-			    	</tr>      
-		        </tbody>
-		        </table>
-		</div>
-	</div>
-</div>
-<div id="divComitePilotage" class="divCache">
-	<div class="row">
-		<div class="col-md-12">
-		    <table cellpadding="0" cellspacing="0" class="table table-striped" >  
-		        <caption>Constitution du comité de pilotage</caption>
-		        <thead>
-		        	<tr>
-		            	<th>Prénom</th>
-		            	<th>Noms</th>
-		            	<th>Fonction</th>
-		            	<th>Service</th>
-		        	</tr>
-		        <thead>
-		        <tbody>    
-				<?php foreach ($membres_comites as $comite): ?>
-					<tr>
-			            <td><?= h($comite->prenom) ?></td>
-			            <td><?= h($comite->nom) ?></td>
-			            <td><?= h($comite->fonction) ?></td>
-			            <td><?= h($comite->service) ?></td>			           
-			        </tr>
-			    <?php endforeach; ?>    
-			    	<tr>
-			    		<td colspan='4' align='center'>
-			    		<?= $this->Html->link(__('Gestion des membres du comité de pilotage'), ['controller'=>'membres', 'action' => 'index/1/0'],['class' => 'btn btn-warning']) ?>
-						</td>
-			    	</tr>        
-		        </tbody>
-		        </table>
-		</div>
-	</div>             
-</div>
-<!-- BLOC CACHES FIN -->            
+					</div>		
+					<div class="row">
+						<div class="col-md-12">
+						    <table cellpadding="0" cellspacing="0" class="table table-striped" >  
+						        <caption>Constitution de l'équipe</caption>
+						        <thead>
+						        	<tr>
+						        		<th width='15%'>Rôle</th>
+						            	<th>Prénom</th>
+						            	<th>Noms</th>
+						            	<th>Fonction</th>
+						            	<th>Service</th>
+						        	</tr>
+						        <thead>
+						        <tbody>    
+								<?php foreach ($membres as $membre): ?>
+									<tr>
+										<td><b><?= h($membre->responsabilite->name) ?></b></td>
+							            <td><?= h($membre->prenom) ?></td>
+							            <td><?= h($membre->nom) ?></td>
+							            <td><?= h($membre->fonction) ?></td>
+							            <td><?= h($membre->service) ?></td>			            
+							        </tr>
+							    <?php endforeach; ?>  
+							    	<tr>
+							    		<td colspan='5' align='center'>
+							    		<?= $this->Html->link(__('Gestion des membres de l\'équipe'), 
+							    								['controller'=>'membres', 'action' => 'index/0/0'],
+							    								['class' => 'btn btn-warning']) ?>
+										</td>
+							    	</tr>      
+						        </tbody>
+						        </table>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+						    <table cellpadding="0" cellspacing="0" class="table table-striped" >  
+						        <caption>Constitution du comité de pilotage</caption>
+						        <thead>
+						        	<tr>
+						            	<th>Prénom</th>
+						            	<th>Noms</th>
+						            	<th>Fonction</th>
+						            	<th>Service</th>
+						        	</tr>
+						        <thead>
+						        <tbody>    
+								<?php foreach ($membres_comites as $comite): ?>
+									<tr>
+							            <td><?= h($comite->prenom) ?></td>
+							            <td><?= h($comite->nom) ?></td>
+							            <td><?= h($comite->fonction) ?></td>
+							            <td><?= h($comite->service) ?></td>			           
+							        </tr>
+							    <?php endforeach; ?>    
+							    	<tr>
+							    		<td colspan='4' align='center'>
+							    		<?= $this->Html->link(__('Gestion des membres du comité de pilotage'), ['controller'=>'membres', 'action' => 'index/1/0'],['class' => 'btn btn-warning']) ?>
+										</td>
+							    	</tr>        
+						        </tbody>
+						        </table>
+						</div>
+					</div>
 				</div><br /> 		    
 				<div class="row">
 					<h4>Lister le ou les secteur(s) d'activité(s) participant au projet Pacte <span class="obligatoire"><sup> *</sup></span></h4>

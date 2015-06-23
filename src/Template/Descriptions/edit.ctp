@@ -5,8 +5,8 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-2">			
-			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $description->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]) ?><br /><br/>			
-			<?= $this->Html->link(__('Retour'), ['action' => 'index/'.$description->projet_id],['class' => 'btn btn-info']) ?>
+			<?= $this->Form->postLink(__('Supprimer'), ['controller'=>'descriptions','action' => 'delete', $description->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer la description pour cette fonction ?')]) ?><br /><br/>			
+			<?= $this->Html->link(__('Retour'), ['controller'=>'projets','action' => 'index'],['class' => 'btn btn-info']) ?>
 			</div>
     		<?= $this->Form->create($description, ['id'=>'edit_description_form']); ?> 
     		<?= $this->Form->hidden('projet_id',['value' => $description->projet_id]);?>		  
@@ -18,16 +18,7 @@
 															'class' => 'form-control', 
                     										'required' =>'required']) ?>    
                 	</div>                 
-				</div><br /> 
-				<div class="row">
-                	<label class="col-md-4 control-label" for="service">Service <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('service', ['label' => false,'id'=>'service',
-														   	'div' => false,
-															'class' => 'form-control', 
-                    										'type' => 'text', 
-															'required' =>'required']); ?>
-                    </div>                          
-				</div><br />   
+				</div><br />  
 				<div class="row">
                 	<label class="col-md-4 control-label" for="nb_etp">Nombre d'ETP <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('nb_etp', ['label' => false,'id'=>'nb_etp',

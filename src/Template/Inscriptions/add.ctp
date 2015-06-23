@@ -58,9 +58,7 @@ else $id_etablissement = "";
                     </div>                          
 				</div><br />
 		 		<div class="row">
-                	<label class="col-md-4 control-label" for="libelle_equipe">Libellé de l'équipe  <span class="obligatoire"><sup> *</sup></span><br /> 
-                    <span class="text-muted">Ce libellé n'est que purement informatif</span>                	
-                	</label> 
+                	<label class="col-md-4 control-label" for="libelle_equipe">Libellé de l'équipe  <span class="obligatoire"><sup> *</sup></span></label> 
                     <div class="col-md-8"><?= $this->Form->input('libelle_equipe', ['label' => false,
 														   	'div' => false,
 															'class' => 'form-control', 

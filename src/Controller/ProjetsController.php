@@ -77,11 +77,11 @@ class ProjetsController extends AppController
         $nbFacilitateur = $this->Membres->find()->where(['responsabilite_id' => '3','demarche_id' => $id_demarche,'comite'=>0])->count();
         
         if($nbReferent < 2) {
-        	$this->Flash->error('Vous pouvez poursuivre, le nombre de membres référent doit être supérieur ou égal à 2');        	
+        	$this->Flash->error('Erreur, pour poursuivre, le nombre de membres référent doit être supérieur ou égal à 2');        	
         	return $this->redirect(['controller'=>'membres', 'action' => 'index/0/1']);        	
         } 
         if($nbFacilitateur < 1) {
-        	$this->Flash->error('Vous pouvez poursuivre, merci d\'intégrer un facilitateur à l\'équipe');        	
+        	$this->Flash->error('Erreur, pour poursuivre, merci d\'intégrer un facilitateur à l\'équipe');        	
         	return $this->redirect(['controller'=>'membres', 'action' => 'index/0/1']);        	
         }
         

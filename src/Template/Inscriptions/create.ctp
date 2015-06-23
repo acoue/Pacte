@@ -17,7 +17,7 @@ else $raison_sociale = "";
 ?>
 <div class="blocblanc">
 	<h2>Fiche d'engagement de la direction - Etape n°1</h2>
-    <h3>Votre établissement est-il prêt pour P.A.C.T.E ?</h3>
+    <h3>Votre établissement est-il prêt pour Pacte ?</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>

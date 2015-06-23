@@ -113,8 +113,7 @@ $cakeDescription = 'Pacte ';
       
     <?= $this->Html->script('jquery-ui.js') ?>
     <?= $this->Html->script('bootstrap.min.js') ?>
-    <?= $this->Html->script('userScript.js') ?>  
-    <?= $this->Html->script('ChartsJs/Chart.js') ?>    
+    <?= $this->Html->script('userScript.js') ?>      
     
     <?= $this->fetch('script') ?>
 </body>

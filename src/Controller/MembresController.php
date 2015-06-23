@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Network\Session\DatabaseSession;
 use Cake\ORM\TableRegistry;
+use Cake\Network\Request;
 /**
  * Membres Controller
  *
@@ -75,12 +76,14 @@ class MembresController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id = null,$comite=0,$type=0)
     {
+    	//debug($this->request);die();
         $membre = $this->Membres->get($id, [
             'contain' => ['Demarches', 'Responsabilites']
         ]);
         $this->set('membre', $membre);
+        $this->set(compact('comite', 'type'));
         $this->set('_serialize', ['membre']);
     }
 
@@ -156,7 +159,7 @@ class MembresController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($id = null,$comite=0,$type=0)
     {
         $membre = $this->Membres->get($id, [
             'contain' => []
@@ -165,14 +168,15 @@ class MembresController extends AppController
             $membre = $this->Membres->patchEntity($membre, $this->request->data);
             if ($this->Membres->save($membre)) {
                 $this->Flash->success('Le membre a bien été sauvegardé.');
-                return $this->redirect(['action' => 'index']);
+                $this->set(compact('comite', 'type'));
+                return $this->redirect(['action' => 'index/'.$comite.'/'.$type]);
             } else {
                 $this->Flash->error('Erreur dans la sauvegarde du membre.');
             }
         }
         $demarches = $this->Membres->Demarches->find('list', ['limit' => 200]);
         $responsabilites = $this->Membres->Responsabilites->find('list', ['limit' => 200])->where(['online'=>1]);
-        $this->set(compact('membre', 'demarches', 'responsabilites'));
+        $this->set(compact('membre', 'demarches', 'responsabilites','comite', 'type'));
         $this->set('_serialize', ['membre']);
     }
 
@@ -183,7 +187,7 @@ class MembresController extends AppController
      * @return void Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($id = null,$comite=0,$type=0)
     {
         $this->request->allowMethod(['post', 'delete']);
         $membre = $this->Membres->get($id);
@@ -192,6 +196,6 @@ class MembresController extends AppController
         } else {
             $this->Flash->error('Erreur dans la suppression du membre.');
         }
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'index/'.$comite.'/'.$type]);
     }
 }

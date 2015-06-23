@@ -7,9 +7,7 @@
 			<?= $this->Form->create('Inscription', ['id'=>'validate_inscription_form', 'action' => 'validate']) ?>
 			<div class="col-md-10"> 
 				<div  class="row">
-					Cette fiche permet une évaluation institutionnelle à la fois de la compréhension du projet Pacte 
-					et de la capacité de votre institution pour mettre en œuvre une initiative de travail d'équipe. 
-					Un score final peut vous aider à prendre une décision d’engagement éclairée.
+					<?= $messageTitreValidation->valeur ?>
 				</div><br />
 				<div  class="row">		
 					<div class="col-md-1"></div>
@@ -23,7 +21,13 @@
                     										'disabled' => 'disabled']); ?>
                     </div>		
 					<div class="col-md-1"></div>
-				</div><br />
+				</div><br /><br />
+				<div  class="row">
+					<div class="alert alert-info">
+ 						<p align="justify"><?= $messageScore->valeur ?>
+						</p>
+					</div> 
+				</div>
 				<div  class="row">		
 					<div class="col-md-1"></div>
 					<label class="col-md-4 control-label" for="mail">Email de contact <span class="obligatoire"><sup> *</sup></span></label>
@@ -41,13 +45,7 @@
 				<div  class="row">
 					<div class="alert alert-info">
 						<p align="center"><span class="label label-warning">Avertissement</span></p>
- 						<p align="justify">
-							 une fois validée, les données saisies précédemment ne seront plus modifibale, mais uniquement consultables.
-							<br />
-							A cette étape, vous pouvez décider de poursuivre votre démarche, et ainsi ...
-							 Les données précédemment saisies seront stockée, ce qui vous permet d'interrompre votre saisie et de la reprendre ultérieurement.
-							<br />
-							Vous pouvez également décider de ne pas continuer, toutes les données saisies auparavant seront détruitent.
+ 						<p align="justify"><?= $messageAvertissement->valeur ?>
 						</p>
 					</div> 
 				</div>

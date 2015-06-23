@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-2">
-			<?= $this->Html->link(__('Retour'), ['action' => 'index/'.$id_projet],['class' => 'btn btn-info']) ?>
+			<?= $this->Html->link(__('Retour'), ['controller'=>'projets','action' => 'index'],['class' => 'btn btn-info']) ?>
 			</div>
     		<?= $this->Form->create($description, ['id'=>'add_description_form']); ?> 
     		<?= $this->Form->hidden('projet_id',['value' => $id_projet]);?>		  
@@ -18,15 +18,6 @@
                     										'required' =>'required']) ?>    
                 	</div>                 
 				</div><br /> 
-				<div class="row">
-                	<label class="col-md-4 control-label" for="service">Service <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('service', ['label' => false,'id'=>'service',
-														   	'div' => false,
-															'class' => 'form-control', 
-                    										'type' => 'text', 
-															'required' =>'required']); ?>
-                    </div>                          
-				</div><br />   
 				<div class="row">
                 	<label class="col-md-4 control-label" for="nb_etp">Nombre d'ETP <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('nb_etp', ['label' => false,'id'=>'nb_etp',

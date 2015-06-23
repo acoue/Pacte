@@ -5,8 +5,8 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-2">
-			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $membre->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer {0}?', $membre->id)]) ?><br /><br/>
-			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
+			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete/'.$membre->id.'/'.$comite.'/'.$type], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer {0}?', $membre->id)]) ?><br /><br/>
+			<?= $this->Html->link(__('Retour'), ['action' => 'index/'.$comite.'/'.$type],['class' => 'btn btn-info']) ?> 
 			</div>
     		<?= $this->Form->create($membre, ['id'=>'edit_membre_form']); ?>
     		<?= $this->Form->hidden('comite',['value' => $membre->comite]);?>

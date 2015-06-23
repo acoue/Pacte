@@ -50,10 +50,7 @@ class DescriptionsTable extends Table
             ->add('nb_etp', 'valid', ['rule' => 'numeric'])
             ->requirePresence('nb_etp', 'create')
             ->notEmpty('nb_etp');
-            
-        $validator
-            ->requirePresence('service', 'create')
-            ->notEmpty('service');
+                    
 
         return $validator;
     }

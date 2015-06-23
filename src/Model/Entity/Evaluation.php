@@ -20,5 +20,6 @@ class Evaluation extends Entity
         'file' => true,
         'demarche_id' => true,
         'demarch' => true,
+        'ordre' => true,
     ];
 }

@@ -50,6 +50,9 @@ class EvaluationsTable extends Table
             
         $validator
             ->allowEmpty('file');
+        
+        $validator
+            ->allowEmpty('ordre');
 
         return $validator;
     }

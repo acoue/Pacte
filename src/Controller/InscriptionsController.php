@@ -326,6 +326,7 @@ class InscriptionsController extends AppController
 	    		//Recuperation du message en base (parametres)
     			$this->loadModel('Parametres');
     			$message = $this->Parametres->find()->where(['name' => 'MessageValidationInscription'])->first();
+    			
     			if(empty($message)) $message = "Erreur";
     			else  $message = $message['valeur'];
     			//Redirection
@@ -394,6 +395,8 @@ class InscriptionsController extends AppController
 	    	$restructuration = 1;
 	    	$reponses = "";
 	    	$resultat = $this->request->data;
+	    	
+	    	//inscription des réponses en session
 	    	
 	    	//Explode des reponses
 	    	foreach ($resultat as $key => $value) {
@@ -464,8 +467,16 @@ class InscriptionsController extends AppController
 		    	//Enregistrement de l'ID en session en cas de retour
 		    	if(! $session->check('Engagement.id_Inscription')) $session->write('Engagement.id_Inscription',$inscription->id);
 		    			    	
+		    	//Recuperation de l'email de contact
+		    	$this->loadModel('Parametres');
+		    	$messageTitreValidation = $this->Parametres->find('all')->where(['name' => 'MessageTitreValidation'])->first();
+		    	$messageAvertissement = $this->Parametres->find('all')->where(['name' => 'MessageAvertissementInscription'])->first();
+		    	 
+		    	if($score < 5 ) $messageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreInferieur'])->first();
+		    	else $messageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreSupérieur'])->first();
+		    	
 		    	//Renvoi à la vue
-		    	$this->set(compact('score'));
+		    	$this->set(compact('score','messageAvertissement','messageScore','messageTitreValidation'));
     			$this->render('validate');
 	    	} else {
 	    		//redirection vers page d'erreur

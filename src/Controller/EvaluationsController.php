@@ -47,12 +47,13 @@ class EvaluationsController extends AppController
             return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);    		
     	}
     	//Modalite de deploiement
-    	if(strlen($projet->intitule) < 1 ) {
+    	if(strlen($projet->deploiement) < 1 ) {
     		$this->Flash->error('Merci de compléter le champ "Modalité de déploiement" et d\'enregistrer les données');
     		return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
     	}
     	
-    	$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche])->order('ordre ASC');    	
+    	//$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche])->order('ordre ASC');
+    	$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche]);
         $this->set('evaluations', $evaluations);
         $this->set('_serialize', ['evaluations']);
     }
