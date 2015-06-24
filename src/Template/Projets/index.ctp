@@ -1,30 +1,12 @@
-<?php 
-// debug($descriptions);
-// die();
-?>
 <div class="blocblanc">
 	<h2>Fiche d'engagement de l'équipe</h2>
     <h3>Le projet Pacte</h3>    
+	<h4>Présentation de l'équipe</h4>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
-			<div class="col-md-10"> 
-    		<?= $this->Form->create($projet,['id'=>'edit_projet_form']); ?>	
-    		<?= $this->Form->hidden('id',['value' => $projet->id]);?>		    
-				<div class="row">
-					<h4>Mission / Vision / Valeurs de l'équipe</h4>
-					<p>Quelle est votre raison d’être (mission) ? Qu’est-ce qui est important pour votre équipe (valeurs) ?<br/>
-					Quelles sont vos perspectives (vision) ?</p>
-                	<div class="col-md-12"><?= $this->Form->input('mission', ['label' => false,'id'=>'mission',
-														   	'div' => false,
-															'class' => 'form-control', 
-                    										'type' => 'textarea', 'escape' => false,
-                											'value'=> $projet->mission,
-                											'rows' => '5']); ?>
-                    </div>                          
-				</div><br /> 		    
-				<div class="row">
-					<h4>Présentation de l'équipe</h4>   
+			<div class="col-md-10">     		    
+				<div class="row">   
 					<div class="row">
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
@@ -66,10 +48,11 @@
 						        <thead>
 						        	<tr>
 						        		<th width='15%'>Rôle</th>
-						            	<th>Prénom</th>
-						            	<th>Noms</th>
-						            	<th>Fonction</th>
-						            	<th>Service</th>
+						            	<th width='20%'>Prénom</th>
+						            	<th width='20%'>Noms</th>
+						            	<th width='15%'>Fonction</th>
+						            	<th width='15%'>Service</th>
+				            			<th width='15%' class="actions"><?= __('Actions') ?></th>
 						        	</tr>
 						        <thead>
 						        <tbody>    
@@ -79,14 +62,20 @@
 							            <td><?= h($membre->prenom) ?></td>
 							            <td><?= h($membre->nom) ?></td>
 							            <td><?= h($membre->fonction) ?></td>
-							            <td><?= h($membre->service) ?></td>			            
+							            <td><?= h($membre->service) ?></td>	
+							            <td class="actions">
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view/'.$membre->id.'/0/0/projet'], array('escape' => false)); ?>&nbsp;&nbsp;
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'membres','action' => 'edit/'.$membre->id.'/0/0/projet'], array('escape' => false)); ?>&nbsp;&nbsp;     
+										<?= $this->Form->postLink(
+							                '<span><i class="glyphicon glyphicon-trash"></i></span>',
+							                ['controller'=>'membres','action' => 'delete/'.$membre->id.'/0/0/projet'],
+							                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer le membre ?']);?>
+							            </td>		            
 							        </tr>
 							    <?php endforeach; ?>  
 							    	<tr>
-							    		<td colspan='5' align='center'>
-							    		<?= $this->Html->link(__('Gestion des membres de l\'équipe'), 
-							    								['controller'=>'membres', 'action' => 'index/0/0'],
-							    								['class' => 'btn btn-warning']) ?>
+							    		<td colspan='6' align='center'>
+							    		<?= $this->Html->link(__('Ajouter un membre'), ['controller'=>'membres','action' => 'add/0/0'], ['class'=>'btn btn-default']) ?>			
 										</td>
 							    	</tr>      
 						        </tbody>
@@ -99,10 +88,11 @@
 						        <caption>Constitution du comité de pilotage</caption>
 						        <thead>
 						        	<tr>
-						            	<th>Prénom</th>
-						            	<th>Noms</th>
-						            	<th>Fonction</th>
-						            	<th>Service</th>
+						            	<th width='20%'>Prénom</th>
+						            	<th width='25%'>Noms</th>
+						            	<th width='20%'>Fonction</th>
+						            	<th width='20%'>Service</th>
+				            			<th width='15%' class="actions"><?= __('Actions') ?></th>
 						        	</tr>
 						        <thead>
 						        <tbody>    
@@ -111,21 +101,66 @@
 							            <td><?= h($comite->prenom) ?></td>
 							            <td><?= h($comite->nom) ?></td>
 							            <td><?= h($comite->fonction) ?></td>
-							            <td><?= h($comite->service) ?></td>			           
+							            <td><?= h($comite->service) ?></td>		
+							            <td class="actions">
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view/'.$membre->id.'/1/0/projet'], array('escape' => false)); ?>&nbsp;&nbsp;
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'membres','action' => 'edit/'.$membre->id.'/1/0/projet'], array('escape' => false)); ?>&nbsp;&nbsp;     
+										<?= $this->Form->postLink(
+							                '<span><i class="glyphicon glyphicon-trash"></i></span>',
+							                ['controller'=>'membres','action' => 'delete/'.$membre->id.'/1/0/projet'],
+							                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer le membre ?']);?>
+							            </td>		      		           
 							        </tr>
 							    <?php endforeach; ?>    
 							    	<tr>
-							    		<td colspan='4' align='center'>
-							    		<?= $this->Html->link(__('Gestion des membres du comité de pilotage'), ['controller'=>'membres', 'action' => 'index/1/0'],['class' => 'btn btn-warning']) ?>
+							    		<td colspan='5' align='center'>
+							    		<?= $this->Html->link(__('Ajouter un membre du comité de pilotage'), ['controller'=>'membres','action' => 'add/1/0'], ['class'=>'btn btn-default']) ?>			
 										</td>
 							    	</tr>        
 						        </tbody>
-						        </table>
+							</table>
 						</div>
 					</div>
-				</div><br /> 		    
+				</div>
+				<div class="col-md-1"></div>
+			</div> 
+		</div>
+	</div>
+	<h4>Mission / Vision / Valeurs de l'équipe</h4>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10"> 						
+			
+				<?php 
+		    		//Si toujours en phase d'engagement
+		    		$session = $this->request->session();
+		    		if($session->read('Equipe.Engagement') == '1') echo $this->Form->create($projet,['id'=>'edit_projet_form','action'=>'validate']);
+		    		else echo $this->Form->create($projet,['id'=>'edit_projet_form','action'=>'calendrier']);
+		    	?>
+    			<?= $this->Form->hidden('id',['value' => $projet->id]);?>		    
 				<div class="row">
-					<h4>Lister le ou les secteur(s) d'activité(s) participant au projet Pacte <span class="obligatoire"><sup> *</sup></span></h4>
+					
+					<p>Quelle est votre raison d’être (mission) ? Qu’est-ce qui est important pour votre équipe (valeurs) ?<br/>
+					Quelles sont vos perspectives (vision) ?</p>
+                	<div class="col-md-12"><?= $this->Form->input('mission', ['label' => false,'id'=>'mission',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'textarea', 'escape' => false,
+                											'value'=> $projet->mission,
+                											'rows' => '5']); ?>
+                    </div>                          
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div> 
+	</div>
+	<h4>Lister le ou les secteur(s) d'activité(s) participant au projet Pacte <span class="obligatoire"><sup> *</sup></span></h4>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<div class="row">					
                 	<div class="col-md-12"><?= $this->Form->input('secteur_activite', ['label' => false,'id'=>'secteur_activite',
 														   	'div' => false,
 															'class' => 'form-control', 
@@ -134,9 +169,17 @@
                 											'rows' => '5', 
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br /> 		    
-				<div class="row">
-					<h4>Définir le projet d'équipe <span class="obligatoire"><sup> *</sup></span></h4>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div> 
+	</div>
+	<h4>Définir le projet d'équipe <span class="obligatoire"><sup> *</sup></span></h4>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<div class="row">					
                 	<div class="col-md-12"><?= $this->Form->input('definition', ['label' => false,'id'=>'definition',
 														   	'div' => false,
 															'class' => 'form-control', 
@@ -145,9 +188,17 @@
                 											'rows' => '5', 
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br />  		    
-				<div class="row">
-					<h4>Modalités de communication sur le projet Pacte</h4>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div> 
+	</div>
+	<h4>Modalités de communication sur le projet Pacte</h4>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">				    
+				<div class="row">					
                 	<div class="col-md-12"><?= $this->Form->input('communication', ['label' => false,'id'=>'communication',
 														   	'div' => false,
 															'class' => 'form-control', 
@@ -159,22 +210,21 @@
 			</div>						
 			<div class="col-md-1"></div>
 		</div><br /><br />
-	<p align="center">
-		<?= $this->Form->button('Enregistrer les modifications', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
-    	<?= $this->Form->end() ?>
-    	
-    	<?php 
-    	//Si toujours en phase d'engagement
-    	$session = $this->request->session();
-    	if($session->read('Equipe.Engagement') == '0') {
-    		echo "<br /><br />";
-    		echo $this->Html->link(__('Suite de la démarche'),
-    								['controller'=>'projets', 'action'=>'validate'],
-    								['confirm' => 'Avez-vous bien pensez à enregistrer les informations avant de poursuivre ?','class'=>'btn btn-info']);
-    		
-    	} 
-    	?>			
-	</p>
-	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
+		<p align="center">
+		<?php 
+    		//Si toujours en phase d'engagement
+    		$session = $this->request->session();
+    		if($session->read('Equipe.Engagement') == '0') {
+				echo $this->Form->button('Suite de la démarche', ['type'=>'submit', 'class' => 'btn btn-info']);	
+		
+    		} else {
+    			echo $this->Form->button('Enregistrer', ['type'=>'submit', 'class' => 'btn btn-info']);
+    		}
+			echo $this->Form->end() 
+			
+			
+		?>
+		</p>
+		<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
 	</div>
 </div>		

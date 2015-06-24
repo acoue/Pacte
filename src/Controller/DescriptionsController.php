@@ -12,10 +12,6 @@ class DescriptionsController extends AppController
 {
 	public function initialize() {
 		parent::initialize();
-    	//Menu et sous-menu
-	    $session = $this->request->session();
-	    $session->write('Progress.Menu','1');
-	    $session->write('Progress.SousMenu','0');
 	}
 
 	

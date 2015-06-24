@@ -15,10 +15,6 @@ class MembresController extends AppController
 
 	public function initialize() {
 		parent::initialize();
-    	//Menu et sous-menu
-	    $session = $this->request->session();
-	    $session->write('Progress.Menu','1');
-	    $session->write('Progress.SousMenu','0');
 
 	}
 
@@ -76,15 +72,16 @@ class MembresController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null,$comite=0,$type=0)
+    public function view($id = null,$comite=0,$type=0,$url=null)
     {
     	//debug($this->request);die();
         $membre = $this->Membres->get($id, [
             'contain' => ['Demarches', 'Responsabilites']
         ]);
         $this->set('membre', $membre);
-        $this->set(compact('comite', 'type'));
+        $this->set(compact('comite', 'type','url'));
         $this->set('_serialize', ['membre']);
+        
     }
 
     /**
@@ -92,7 +89,7 @@ class MembresController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($comite=0,$type=0)
     {
     	
     	
@@ -109,7 +106,7 @@ class MembresController extends AppController
         													'demarche_id' => $session->read('Equipe.Demarche'), 
         													'comite' => $donnees['comite']])->count();
         	if($membreUnique >0) {
-        		$this->Flash->error('Ajout IMPOSSIBLE. Le membre est déjà présent dans cette équipe pour cette démarche');        		
+        		$this->Flash->error('Erreur, le membre est déjà présent dans cette équipe pour cette démarche');        		
         		return $this->redirect(['action' => 'index']);
         	} else {
 	        	$membresTable = TableRegistry::get('Membres');
@@ -130,26 +127,24 @@ class MembresController extends AppController
 	        		
 	        		//Retour vers ajout du membre du comite
 	        		if($donnees['responsabilite_id'] == 5) {
-	        			$this->Flash->success('Le membre du comité de pilotage a bien été ajouté.');
-	        			return $this->redirect(['action' => 'index/1/0']);
+	        			$this->Flash->success('Le membre du comité de pilotage a bien été ajouté.');      		
+        				return $this->redirect(['controller'=>'projets','action' => 'index']);
+	        			//return $this->redirect(['action' => 'index/1/0']);
 	        		} else if($type == 1 ){
 	        			$this->Flash->success('Le membre référent de l\'équipe a bien été ajouté.');
 	                	return $this->redirect(['action' => 'index/0/1']);
 	        		} else {
 	        			$this->Flash->success('Le membre de l\'équipe a bien été ajouté.');
-	                	return $this->redirect(['action' => 'index/0/0']);
+	        			return $this->redirect(['controller'=>'projets','action' => 'index']);
+	                	//return $this->redirect(['action' => 'index/0/0']);
 	        		}
 	            } else {
 	                $this->Flash->error('Erreur dans l\'ajout du membre');
 	            }
         	}
         }
-//         $demarches = $this->Membres->Demarches->find('list', ['limit' => 200]);
-//         $responsabilites = $this->Membres->Responsabilites->find('list', ['limit' => 200]);
-//         $fonctions = $this->Membres->Fonctions->find('list', ['limit' => 200]);
-//         $services = $this->Membres->Services->find('list', ['limit' => 200]);
-//         $this->set(compact('membre', 'demarches', 'responsabilites', 'fonctions', 'services'));
-//         $this->set('_serialize', ['membre']);
+
+        $this->set(compact('comite', 'type'));
     }
 
     /**
@@ -159,8 +154,9 @@ class MembresController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null,$comite=0,$type=0)
+    public function edit($id = null,$comite=0,$type=0,$url=null)
     {
+    	//debug($this->request);die();
         $membre = $this->Membres->get($id, [
             'contain' => []
         ]);
@@ -176,7 +172,7 @@ class MembresController extends AppController
         }
         $demarches = $this->Membres->Demarches->find('list', ['limit' => 200]);
         $responsabilites = $this->Membres->Responsabilites->find('list', ['limit' => 200])->where(['online'=>1]);
-        $this->set(compact('membre', 'demarches', 'responsabilites','comite', 'type'));
+        $this->set(compact('membre', 'demarches', 'responsabilites','comite', 'type','url'));
         $this->set('_serialize', ['membre']);
     }
 
@@ -187,7 +183,7 @@ class MembresController extends AppController
      * @return void Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null,$comite=0,$type=0)
+    public function delete($id = null,$comite=0,$type=0,$url=null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $membre = $this->Membres->get($id);
@@ -196,6 +192,7 @@ class MembresController extends AppController
         } else {
             $this->Flash->error('Erreur dans la suppression du membre.');
         }
+        if($url) return $this->redirect(['controller'=>'projets','action' => 'index']); 
         return $this->redirect(['action' => 'index/'.$comite.'/'.$type]);
     }
 }

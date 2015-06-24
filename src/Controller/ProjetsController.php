@@ -15,24 +15,14 @@ class ProjetsController extends AppController
 {
 	public function initialize() {
 		parent::initialize();
-    	//Menu et sous-menu
-	    $session = $this->request->session();
-    	if($session->read('Equipe.Engagement') == 1 ) {		
-	    	$session->write('Progress.Menu','2');
-	   	 	$session->write('Progress.SousMenu','1');    		
-    	} else {		
-	    	$session->write('Progress.Menu','1');
-	   	 	$session->write('Progress.SousMenu','0');    		
-    	}
 	}
 
-	
 	public function isAuthorized($user)
 	{	
 		$session = $this->request->session();
 		if( $session->read('Auth.User.role') === 'equipe') {		
 			// Droits de tous les utilisateurs connectes sur les actions
-			if(in_array($this->request->action, ['index','validate','createPdf', 'diagnostic_index'])){
+			if(in_array($this->request->action, ['index','validate','createPdf', 'diagnostic_index','calendrier'])){
 				return true;
 			}
 		}		
@@ -70,7 +60,7 @@ class ProjetsController extends AppController
         $this->loadModel('Membres');
         $membres = $this->Membres->find('all')
         ->contain(['Responsabilites'])
-        ->where(['demarche_id' => $id_demarche,'comite'=>0]);
+        ->where(['demarche_id' => $id_demarche,'comite'=>0])->order(['nom' => 'asc','prenom' => 'asc']);
         //Controle du bon nombre de referents sur le projet
         // 2 membres referent (->id = 2 ) mini + 1 facilitateur (id = 3)
         $nbReferent = $this->Membres->find()->where(['responsabilite_id' => '2','demarche_id' => $id_demarche,'comite'=>0])->count();
@@ -98,14 +88,41 @@ class ProjetsController extends AppController
         $this->set('_serialize', ['projet']);
     }
     
+    public function calendrier() {
+    	//Menu et sous-menu
+	    $session = $this->request->session();
+	    //On recupere l'identifiant de démarche
+	    $id_demarche = $session->read('Equipe.Demarche');
+    	
+    	//Enregistrement des informations du projet
+    	$projetInitial = $this->Projets->find('all')->where(['projets.demarche_id'=>$id_demarche])->first();
+    	$projet = $this->Projets->patchEntity($projetInitial, $this->request->data);
+    	if ($this->Projets->save($projet)) {
+    	} else {
+    		$this->Flash->error('Erreur dans la sauvegarde du projet.');
+    		return $this->redirect(['action' => 'index']);
+    	}    	 
+
+    	//On retrouve les infos du projet
+    	$projet = $this->Projets->find('all')
+    	->where(['projets.demarche_id'=>$id_demarche])->first();
+    	
+    	//Recuperation des etape calendrier du projet
+    	$this->loadModel('CalendrierProjets');
+    	$calendriers = $this->CalendrierProjets->find('all')
+    	->where(['projet_id' => $projet->id]);
+    	 
+    	$this->set(compact('projet','calendriers'));
+    	$this->set('_serialize', ['projet']);
+    }
+    
     public function validate()
     {    	
 		//On recupere l'identifiant de démarche
     	$session = $this->request->session(); 
-    	$id_demarche = $session->read('Equipe.Demarche'); 	    	
+    	$id_demarche = $session->read('Equipe.Demarche'); 	
     	
-    	//Vérification des éléments obigatoires du projet
-    	$this->loadModel('Projets');
+    	//Vérification des éléments obigatoires du projet    	
     	$projet = $this->Projets->find('all')
     	->where(['projets.demarche_id'=>$id_demarche])->first();
     	//intitulé du projet
@@ -120,9 +137,6 @@ class ProjetsController extends AppController
 	    		return $this->redirect(['controller'=>'Projets', 'action' => 'index']);
 	    	}	
      	}
-    	
-    	
-    	
     	
     	//Recuperation des infos de la demarche
     	$this->loadModel('Demarches');
@@ -152,10 +166,10 @@ class ProjetsController extends AppController
     	
     	//Recuperation des membres
     	$this->loadModel('Membres');
-    	$membres = $this->Membres->find('all')
+    	$membres = $this->Membres->find('all')->contain(['Responsabilites'])
     	->where(['Membres.demarche_id' => $id_demarche,'comite'=>0]);
 		//Membres referents
-    	$membres_referents = $this->Membres->find('all')
+    	$membres_referents = $this->Membres->find('all')->contain(['Responsabilites'])
     	->contain(['Responsabilites'])
     	->where(['Membres.demarche_id' => $id_demarche,'comite'=>0,'responsabilite_id > ' => 1]);
     	
@@ -169,95 +183,115 @@ class ProjetsController extends AppController
     	->contain(['Fonctions'])
     	->where(['Descriptions.projet_id' => $projet->id]);
     	
+    	//Recuperation des etape calendrier du projet
+    	$this->loadModel('CalendrierProjets');
+    	$calendriers = $this->CalendrierProjets->find('all')
+    	->where(['projet_id' => $projet->id]);
+    	
     	if ($this->request->is(['patch', 'post', 'put'])) {
     		
-	    	//Flag dans table demarche_phases => date_validation = now()
-    		$this->loadModel('DemarchePhases');
-    		$dp = $this->DemarchePhases->find('all')
-    		->where(['DemarchePhases.demarche_id' => $id_demarche,'phase_id'=>'1'])
-    		->first();
-    		
-    		$idDemarchePhase = $dp->id;    		
-    		
-    		
-    		
-    		$demarchesPhasesTable = TableRegistry::get('DemarchePhases');
-    		$demarchesPhase = $demarchesPhasesTable->get($idDemarchePhase); 
-    		
-    		$demarchesPhase->date_validation = date('Y-m-d');
-    		if($demarchesPhasesTable->save($demarchesPhase)) $boolOk = true;
-    		else $boolOk = false;
-    		
-    		if($boolOk) {
-		    	//Creation dans table demarche_phases pour la phase 2
-	    		$demarchesPhase = $demarchesPhasesTable->newEntity();
-	    		// Atribution des valeurs
-	    		$demarchesPhase->demarche_id = $id_demarche;
-	    		$demarchesPhase->phase_id = 2; //Entree dans la premiere phase
-	    		$demarchesPhase->date_entree = date('Y-m-d');
+    		//Si demarche engagement est finis    		
+    		if($session->read('Equipe.Engagement') == 1 ){
+    			
+    			$projet = $this->Projets->patchEntity($projet, $this->request->data);
+    			if ($this->Projets->save($projet)) {
+    				$this->Flash->success('Le projet a bien été sauvegardé.');
+    				return $this->redirect(['action' => 'index']);
+    			} else {
+    				$this->Flash->error('Erreur dans la sauvegarde du projet.');
+    			}   			
+    			
+    		} else {
+    		//Si la phase d'engagement est en cours
+    			
+		    	//Flag dans table demarche_phases => date_validation = now()
+	    		$this->loadModel('DemarchePhases');
+	    		$dp = $this->DemarchePhases->find('all')
+	    		->where(['DemarchePhases.demarche_id' => $id_demarche,'phase_id'=>'1'])
+	    		->first();
 	    		
-				//Mise à jour de la session : 
-	    		$session->write('Equipe.Engagement',1);
-	    		$session->write('Equipe.Diagnostic',0);
+	    		$idDemarchePhase = $dp->id;    		
 	    		
-	    		//Enregistrement
+	    		
+	    		
+	    		$demarchesPhasesTable = TableRegistry::get('DemarchePhases');
+	    		$demarchesPhase = $demarchesPhasesTable->get($idDemarchePhase); 
+	    		
+	    		$demarchesPhase->date_validation = date('Y-m-d');
 	    		if($demarchesPhasesTable->save($demarchesPhase)) $boolOk = true;
 	    		else $boolOk = false;
 	    		
-	    		//Creation des 2 evaluations obligatoire CRM Sante et Culture Securite
-	    		$evaluationsTable = TableRegistry::get('Evaluations');
-	    		$eval = $evaluationsTable->newEntity();
-	    		// Atribution des valeurs => CRM Sante
-	    		$eval->id = null;
-	    		$eval->name = "CRM Santé";
-	    		$eval->ordre = 2;
-	    		$eval->demarche_id = $id_demarche;
-	    		//Enregistrement
-	    		$evaluationsTable->save($eval);
+	    		if($boolOk) {
+			    	//Creation dans table demarche_phases pour la phase 2
+		    		$demarchesPhase = $demarchesPhasesTable->newEntity();
+		    		// Atribution des valeurs
+		    		$demarchesPhase->demarche_id = $id_demarche;
+		    		$demarchesPhase->phase_id = 2; //Entree dans la premiere phase
+		    		$demarchesPhase->date_entree = date('Y-m-d');
+		    		
+					//Mise à jour de la session : 
+		    		$session->write('Equipe.Engagement',1);
+		    		$session->write('Equipe.Diagnostic',0);
+		    		
+		    		//Enregistrement
+		    		if($demarchesPhasesTable->save($demarchesPhase)) $boolOk = true;
+		    		else $boolOk = false;
+		    		
+		    		//Creation des 2 evaluations obligatoire CRM Sante et Culture Securite
+		    		$evaluationsTable = TableRegistry::get('Evaluations');
+		    		$eval = $evaluationsTable->newEntity();
+		    		// Atribution des valeurs => CRM Sante
+		    		$eval->id = null;
+		    		$eval->name = "CRM Santé";
+		    		$eval->ordre = 2;
+		    		$eval->demarche_id = $id_demarche;
+		    		//Enregistrement
+		    		$evaluationsTable->save($eval);
+		    		
+		    		$eval = $evaluationsTable->newEntity();
+		    		// Atribution des valeurs => Culture Securite
+		    		$eval->id = null;
+		    		$eval->name = "Culture Sécurité";
+		    		$eval->ordre = 1;
+		    		$eval->demarche_id = $id_demarche;
+		    		//Enregistrement
+		    		$evaluationsTable->save($eval);	    		
+		    		
+		    		//Creation de la mesure obligatoire Matrice de Maturite
+		    		$mesuresTable = TableRegistry::get('Mesures');
+		    		$mesure = $mesuresTable->newEntity();
+		    		// Atribution des valeurs => Matrice de Maturité
+		    		$mesure->id = null;
+		    		$mesure->name = "Matrice de Maturité";
+		    		$mesure->demarche_id = $id_demarche;
+		    		//Enregistrement
+		    		$mesuresTable->save($mesure);
+		    		
+		    		//Creation du repertoire pour le depot des document de l'equipe
+		    		$structure = DATA.'userDocument'.DS.$session->read('Auth.User.username');
+		    		mkdir($structure, 0777, true);	    			 
+		    				
+	    		} else {
+	    			$message = "une erreur s'est produite lors de la validation de l\'engagement.";
+	    			$this->set(compact('message'));
+	    			$this->render('validate_refus');
+	    		}
 	    		
-	    		$eval = $evaluationsTable->newEntity();
-	    		// Atribution des valeurs => Culture Securite
-	    		$eval->id = null;
-	    		$eval->name = "Culture Sécurité";
-	    		$eval->ordre = 1;
-	    		$eval->demarche_id = $id_demarche;
-	    		//Enregistrement
-	    		$evaluationsTable->save($eval);	    		
-	    		
-	    		//Creation de la mesure obligatoire Matrice de Maturite
-	    		$mesuresTable = TableRegistry::get('Mesures');
-	    		$mesure = $mesuresTable->newEntity();
-	    		// Atribution des valeurs => Matrice de Maturité
-	    		$mesure->id = null;
-	    		$mesure->name = "Matrice de Maturité";
-	    		$mesure->demarche_id = $id_demarche;
-	    		//Enregistrement
-	    		$mesuresTable->save($mesure);
-	    		
-	    		//Creation du repertoire pour le depot des document de l'equipe
-	    		$structure = DATA.'userDocument'.DS.$session->read('Auth.User.username');
-	    		mkdir($structure, 0777, true);	    			 
-	    				
-    		} else {
-    			$message = "une erreur s'est produite lors de la validation de l\'engagement.";
-    			$this->set(compact('message'));
-    			$this->render('validate_refus');
+		    	//Redirection vers create_pdf()	    	
+	    		if($boolOk) {
+	    			$this->redirect(['action' => 'createPdf']);
+	    		} else {
+	    			$message = "une erreur s'est produite lors de la validation de l\'engagement.";
+	    			$this->set(compact('message'));
+	    			$this->render('validate_refus');
+	    		}
     		}
-    		
-	    	//Redirection vers create_pdf()	    	
-    		if($boolOk) {
-    			$this->redirect(['action' => 'createPdf']);
-    		} else {
-    			$message = "une erreur s'est produite lors de la validation de l\'engagement.";
-    			$this->set(compact('message'));
-    			$this->render('validate_refus');
-    		}
-	    	
     	}	
 
-    	$this->set(compact('demarche','equipe','projet','reponses','membres_referents','membres','membres_comites','descriptions'));
+    	$this->set(compact('demarche','equipe','projet','reponses','membres_referents','membres','membres_comites','descriptions','calendriers'));
     	
     }
+    
     public function createPdf() {
     	
     	//On recupere l'identifiant de démarche
@@ -312,6 +346,10 @@ class ProjetsController extends AppController
     	->contain(['Fonctions'])
     	->where(['Descriptions.projet_id' => $projet->id]);
     	
+    	//Recuperation des etape calendrier du projet
+    	$this->loadModel('CalendrierProjets');
+    	$calendriers = $this->CalendrierProjets->find('all')
+    	->where(['projet_id' => $projet->id]);
     	
     	//Conception PDF    	
     	$CakePdf = new \CakePdf\Pdf\CakePdf();
@@ -323,7 +361,9 @@ class ProjetsController extends AppController
    					   		'membres_referents'=>$membres_referents,
    					   		'membres'=>$membres,
    					   		'membres_comites'=>$membres_comites,
-   					   		'descriptions'=>$descriptions]);
+   					   		'descriptions'=>$descriptions,
+   							'calendriers'=>$calendriers
+   							]);
    		 
    		
 	    //Write it to file directly
@@ -355,24 +395,30 @@ class ProjetsController extends AppController
     public function diagnostic_index() {
     	//Menu et sous-menu
 	    $session = $this->request->session();
-	    $session->write('Progress.Menu','2');
-	    $session->write('Progress.SousMenu','1');
 	    $id_demarche = $session->read('Equipe.Demarche');
 	   	    
 	    if ($this->request->is(['patch', 'post', 'put'])) {
-		   	$d = $this->request->data;
-		    $projetTable = TableRegistry::get('Projets');
-		    $projet_edit = $projetTable->get($d['id']);	    
-		    // Atribution des valeurs
-		    $projet_edit->intitule = $d['intitule'];
-		    $projet_edit->deploiement = $d['deploiement'];
-		    //Enregistrement
-		   	if ($projetTable->save($projet_edit)) {
+	    	$d = $this->request->data;
+	    	$projetTable = TableRegistry::get('Projets');
+	    	$projet_edit = $projetTable->get($d['id']);
+	    	// Atribution des valeurs
+	    	$projet_edit->intitule = $d['intitule'];
+	    	$projet_edit->deploiement = $d['deploiement'];
+	    	//Enregistrement
+	    	if ($projetTable->save($projet_edit)) {
 	    		$this->Flash->success('Le projet a bien été sauvegardé.');
-	    		return $this->redirect(['action' => 'diagnostic_index']);
 	    	} else {
 	    		$this->Flash->error('Erreur dans la sauvegarde du projet.');
 	    	}
+	    	
+	    	if($session->read('Equipe.Diagnostic') == 0) {
+	    		return $this->redirect(['controller'=>'Evaluations','action' => 'index']);	    		
+	    	} else {
+	    		return $this->redirect(['action' => 'diagnostic_index']);	    		
+	    	}
+	    	
+	    	
+		   	
 	    }
 
 	    //On retrouve les infos du projet

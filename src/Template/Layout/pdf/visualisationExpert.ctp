@@ -92,13 +92,12 @@
 		</tr>
 	</table>
 	<br /><br />
-    <h4>Description de l'équipe</h4>
+    <h4>Présentation de l'équipe</h4>
     <table cellpadding="0" cellspacing="0" class="table" >
 		<thead>
 			<tr>
     	       	<th><h5>Fonction</h5></th>
 	           	<th><h5>Nombre d'ETP</h5></th>
-	           	<th><h5>Service</h5></th>
 	       	</tr>
 		</thead>
 		<tbody>	
@@ -106,7 +105,6 @@
     		<tr>
     			<td><h5><?= h($description->fonction->name) ?></h5></td>
             	<td><h5><?= h($description->nb_etp) ?></h5></td>
-            	<td><h5><?= h($description->service) ?></h5></td>
 	    	</tr>						    
     	<?php endforeach; ?>							
 		</tbody>							
@@ -172,6 +170,23 @@
 		<tr>
 			<td><h5><?= $projet->communication ?></h5></td>
 		</tr>
+	</table><br /><br />
+	<h4>Calendrier de mise en oeuvre</h4>
+	<table cellpadding="0" cellspacing="0" class="table" width='80%'>	
+		<thead>
+			<tr>
+				<th width='60%'>Libellé</th>
+				<th width='40%'>Date</th>
+			</tr>
+		<thead>
+		<tbody>    
+		<?php foreach ($calendriers as $calendrierProjet): ?>
+			<tr>
+		    	<td><?= $calendrierProjet->libelle ?></td>
+	            <td><?= $calendrierProjet->mois." ".$this->Number->format($calendrierProjet->annee) ?></td>			           
+		    </tr>
+		 <?php endforeach; ?>          
+		</tbody>
 	</table>
 </div>
 <div class="blocblanc">
@@ -190,24 +205,7 @@
 		<tr>
 			<td><h5><?= $projet->deploiement ?></h5></td>
 		</tr>
-	</table>   
-	<h4>Calendrier de mise en oeuvre</h4>
-	<table cellpadding="0" cellspacing="0" class="table" width='80%'>	
-		<thead>
-			<tr>
-				<th width='60%'>Libellé</th>
-				<th width='40%'>Date</th>
-			</tr>
-		<thead>
-		<tbody>    
-		<?php foreach ($calendriers as $calendrierProjet): ?>
-			<tr>
-		    	<td><?= $calendrierProjet->libelle ?></td>
-	            <td><?= $calendrierProjet->mois." ".$this->Number->format($calendrierProjet->annee) ?></td>			           
-		    </tr>
-		 <?php endforeach; ?>          
-		</tbody>
-	</table>
+	</table>   	
 	<h3>Fonctionnement d'équipe</h3>
 	<table cellpadding="0" cellspacing="0" class="table table-striped">
 	    <thead>

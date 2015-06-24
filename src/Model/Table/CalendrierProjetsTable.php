@@ -46,13 +46,21 @@ class CalendrierProjetsTable extends Table
             ->notEmpty('libelle');
             
         $validator
-            ->requirePresence('mois', 'create')
-            ->notEmpty('mois');
+            ->requirePresence('mois_debut', 'create')
+            ->notEmpty('mois_debut');
             
         $validator
-            ->add('annee', 'valid', ['rule' => 'numeric'])
-            ->requirePresence('annee', 'create')
-            ->notEmpty('annee');
+            ->add('annee_debut', 'valid', ['rule' => 'numeric'])
+            ->requirePresence('annee_debut', 'create')
+            ->notEmpty('annee_debut');
+        $validator
+	        ->requirePresence('mois_fin', 'create')
+	        ->notEmpty('mois_fin');
+        
+        $validator
+	        ->add('annee_fin', 'valid', ['rule' => 'numeric'])
+	        ->requirePresence('annee_fin', 'create')
+	        ->notEmpty('annee_fin');
 
         return $validator;
     }

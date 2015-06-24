@@ -5,10 +5,13 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-2">
-			 
-			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $calendrierProjet->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]) ?><br /><br/>
-			<?= $this->Html->link(__('Retour'), ['controller'=>'Projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info']) ?>
-			
+			 <?php 
+			 	$session = $this->request->session();
+			 	echo $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $calendrierProjet->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]);
+			 	echo "<br /><br/>";
+			 	if($session->read('Equipe.Diagnostic') == '0') echo $this->Html->link(__('Retour'), ['controller'=>'Projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info']);
+			 	else echo $this->Html->link(__('Retour'), ['controller'=>'Projets', 'action' => 'calendrier'],['class' => 'btn btn-info']);
+			 ?>
 			</div>
 			<div class="col-md-8">
 			<?= $this->Form->create($calendrierProjet, ['id'=>'edit_calendrierProjet_form','action' => 'edit']); ?>  
@@ -22,23 +25,25 @@
                 											'rows' => '5', 
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br />			
+				</div><br />				
+				<?php 
+				$mois = ['janvier'=>'janvier','Février'=>'Février','Mars'=>'Mars','Avril'=>'Avril','Mai'=>'Mai','Juin'=>'Juin',
+						'Juillet'=>'Juillet','Août'=>'Août','Septembre'=>'Septembre','Octobre'=>'Octobre','Novembre'=>'Novembre','Décembre'=>'Décembre'];
+				?>		
 				<div class="row">
-                	<label class="col-md-4 control-label" for="mois">Mois <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('mois', ['label' => false,'id'=>'mois',
+                	<label class="col-md-2 control-label" for="mois">Mois <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-3"><?= $this->Form->input('mois', ['label' => false,'id'=>'mois',
 														   	'div' => false,
-															'class' => 'form-control', 'value'=> $calendrierProjet->mois,
-                    										'type' => 'text', 
+															'class' => 'form-control', 
+                    										'options'=>$mois, 'value'=> $calendrierProjet->mois,
                     										'data-location' => 'bottom',
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br />      
-				<div class="row">
-                	<label class="col-md-4 control-label" for="annee">Année <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('annee', ['label' => false,'id'=>'annee',
+                	<label class="col-md-2 control-label" for="annee">Année <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-3"><?= $this->Form->input('annee', ['label' => false,'id'=>'annee',
 														   	'div' => false,
-															'class' => 'form-control', 'value'=> $calendrierProjet->annee,
-                    										'type' => 'text',
+															'class' => 'form-control', 
+                    										'type' => 'text','value'=> $calendrierProjet->annee,
                     										'data-validation'=>'length number', 
                     										'data-validation-length'=>'min4' ,
                     										'required' =>'required']); ?>

@@ -16,8 +16,10 @@ class CalendrierProjet extends Entity
      */
     protected $_accessible = [
         'libelle' => true,
-        'mois' => true,
-        'annee' => true,
+        'mois_debut' => true,
+        'annee_debut' => true,
+        'mois_fin' => true,
+        'annee_fin' => true,
         'projet_id' => true,
         'projet' => true,
     ];

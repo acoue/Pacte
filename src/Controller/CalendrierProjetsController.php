@@ -22,6 +22,10 @@ class CalendrierProjetsController extends AppController
 		return parent::isAuthorized($user);
 	}    
 
+	public function initialize() {
+		parent::initialize();		
+	}
+	
     /**
      * Add method
      *
@@ -32,8 +36,8 @@ class CalendrierProjetsController extends AppController
 
     	//Menu et sous-menu
     	$session = $this->request->session();
-    	$session->write('Progress.Menu','2');
-    	$session->write('Progress.SousMenu','1');    	
+    	//$session->write('Progress.Menu','2');
+    	//$session->write('Progress.SousMenu','1');    	
     	
         $calendrierProjet = $this->CalendrierProjets->newEntity();
         if ($this->request->is('post')) {
@@ -45,7 +49,9 @@ class CalendrierProjetsController extends AppController
             if ($this->CalendrierProjets->save($calendrierProjet)) {
             	$projet = $calendrierProjet->projet_id;
                 $this->Flash->success('L\'étape a bien été sauvegardée');
-                return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
+                
+                if($session->read('Equipe.Engagement') == '0') return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']); 
+                else return $this->redirect(['controller'=>'Projets', 'action' => 'calendrier']);
             } else {
                 $this->Flash->error('Erreur lors de la sauvegarde de l\'étape');
             }
@@ -70,15 +76,14 @@ class CalendrierProjetsController extends AppController
     {
     	//Menu et sous-menu
     	$session = $this->request->session();
-    	$session->write('Progress.Menu','2');
-    	$session->write('Progress.SousMenu','1'); 
     	
         $calendrierProjet = $this->CalendrierProjets->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $calendrierProjet = $this->CalendrierProjets->patchEntity($calendrierProjet, $this->request->data);
             if ($this->CalendrierProjets->save($calendrierProjet)) {
                 $this->Flash->success('L\'étape a bien été sauvegardée.');
-                return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
+                if($session->read('Equipe.Engagement') == '0') return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']); 
+                else return $this->redirect(['controller'=>'Projets', 'action' => 'calendrier']);
             } else {
                 $this->Flash->error('Erreur lors de la sauvegarde de l\'étape');
             }
@@ -97,6 +102,7 @@ class CalendrierProjetsController extends AppController
      */
     public function delete($id = null)
     {
+    	$session = $this->request->session();
         $this->request->allowMethod(['post', 'delete']);
         $calendrierProjet = $this->CalendrierProjets->get($id);
         if ($this->CalendrierProjets->delete($calendrierProjet)) {
@@ -104,6 +110,8 @@ class CalendrierProjetsController extends AppController
         } else {
             $this->Flash->error('Erreur lors de la suppression de l\'étape.');
         }
-        return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
+
+        if($session->read('Equipe.Engagement') == '0') return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
+        else return $this->redirect(['controller'=>'Projets', 'action' => 'calendrier']);
     }
 }

@@ -60,6 +60,9 @@ class AppController extends Controller
 
     	$session = $this->request->session();
 
+    	
+    	
+    	
     	if($session->check('Equipe.Engagement') && $session->read('Equipe.Engagement') == 0 ) {
     		$session->write('Progress.Menu','1');
     		$session->write('Progress.SousMenu','0');
@@ -74,11 +77,14 @@ class AppController extends Controller
     		$session->write('Progress.SousMenu','0');
     	}
     	
+	
+    	
     	$phase = $session->read('Progress.Menu');
 		$this->loadModel('Outils');
     	$outilsPeda = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'pedagogiques']);
     	$outilsCle = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'cle']);   	
     	$this->set(['listeOutilsPeda' => $outilsPeda,'listeOutilsCle' => $outilsCle]);
+    	
     }
     
     public function beforeFilter(Event $event)

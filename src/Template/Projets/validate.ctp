@@ -140,70 +140,65 @@
 	</div>
 </div>
 
+
+
+
+
+
 <div class="blocblanc">
 	<h2>Fiche d'engagement de l'équipe</h2>
     <h3>Le projet Pacte</h3>    
+	<h4>Présentation de l'équipe</h4>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
-			<div class="col-md-10">
-				<div class="row">
-					<h4>Mission / Vision / Valeurs de l'équipe</h4>
-                	<div class="col-md-12"><?= $this->Form->input('mission', ['label' => false,'id'=>'mission',
-														   	'div' => false,
-															'class' => 'form-control', 
-                    										'type' => 'textarea', 'escape' => false,
-                											'value'=> $projet->mission,'disabled'=>'disabled',
-                											'rows' => '5']); ?>
-                    </div>                          
-				</div><br /> 		    
-				<div class="row">
-					<h4>Description de l'équipe</h4>   
+			<div class="col-md-10">     		    
+				<div class="row">   
 					<div class="row">
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
 							<table cellpadding="0" cellspacing="0" class="table table-striped" >
 								<thead>
 									<tr>
-					    	        	<th>Fonction</th>
-						            	<th>Nombre d'ETP</th>
-						            	<th>Service</th>
+					    	        	<th width='50%' >Fonction</th>
+						            	<th width='30%'>Nombre d'ETP</th>
 						        	</tr>
 								</thead>
 								<tbody>	
 							    	<?php foreach ($descriptions as $description): ?>
 							    	<tr>
 							    		<td><?= h($description->fonction->name) ?></td>
-			            				<td><?= h($description->nb_etp) ?></td>
-			            				<td><?= h($description->service) ?></td>
+			            				<td><?= h($description->nb_etp) ?></td>							            
 							    	</tr>						    
-						    		<?php endforeach; ?>							
+						    		<?php endforeach; ?>  
 								</tbody>							
 							</table>
 						</div>
 						<div class="col-md-1"></div>
-					</div>
+					</div>		
 					<div class="row">
 						<div class="col-md-12">
 						    <table cellpadding="0" cellspacing="0" class="table table-striped" >  
 						        <caption>Constitution de l'équipe</caption>
 						        <thead>
 						        	<tr>
-						            	<th>Prénom</th>
-						            	<th>Noms</th>
-						            	<th>Fonction</th>
-						            	<th>Service</th>
+						        		<th width='15%'>Rôle</th>
+						            	<th width='20%'>Prénom</th>
+						            	<th width='20%'>Noms</th>
+						            	<th width='15%'>Fonction</th>
+						            	<th width='15%'>Service</th>
 						        	</tr>
 						        <thead>
 						        <tbody>    
 								<?php foreach ($membres as $membre): ?>
 									<tr>
+										<td><b><?= h($membre->responsabilite->name) ?></b></td>
 							            <td><?= h($membre->prenom) ?></td>
 							            <td><?= h($membre->nom) ?></td>
 							            <td><?= h($membre->fonction) ?></td>
-							            <td><?= h($membre->service) ?></td>			            
+							            <td><?= h($membre->service) ?></td>
 							        </tr>
-							    <?php endforeach; ?>  
+							    <?php endforeach; ?> 
 						        </tbody>
 						        </table>
 						</div>
@@ -214,10 +209,10 @@
 						        <caption>Constitution du comité de pilotage</caption>
 						        <thead>
 						        	<tr>
-						            	<th>Prénom</th>
-						            	<th>Noms</th>
-						            	<th>Fonction</th>
-						            	<th>Service</th>
+						            	<th width='20%'>Prénom</th>
+						            	<th width='25%'>Noms</th>
+						            	<th width='20%'>Fonction</th>
+						            	<th width='20%'>Service</th>
 						        	</tr>
 						        <thead>
 						        <tbody>    
@@ -226,38 +221,83 @@
 							            <td><?= h($comite->prenom) ?></td>
 							            <td><?= h($comite->nom) ?></td>
 							            <td><?= h($comite->fonction) ?></td>
-							            <td><?= h($comite->service) ?></td>			           
+							            <td><?= h($comite->service) ?></td>
 							        </tr>
-							    <?php endforeach; ?>          
+							    <?php endforeach; ?> 
 						        </tbody>
 							</table>
 						</div>
-					</div> 
-				</div><br /> 		    
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div> 
+		</div>
+	</div>
+	<h4>Mission / Vision / Valeurs de l'équipe</h4>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10"> 
 				<div class="row">
-					<h4>Lister le ou les secteur(s) d'activité(s) participant au projet Pacte</h4>
+					
+					<p>Quelle est votre raison d’être (mission) ? Qu’est-ce qui est important pour votre équipe (valeurs) ?<br/>
+					Quelles sont vos perspectives (vision) ?</p>
+                	<div class="col-md-12"><?= $this->Form->input('mission', ['label' => false,'id'=>'mission',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'textarea', 'escape' => false,
+                											'value'=> $projet->mission,'disabled'=>'disabled',
+                											'rows' => '5']); ?>
+                    </div>                          
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div> 
+	</div>
+	<h4>Lister le ou les secteur(s) d'activité(s) participant au projet Pacte</h4>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<div class="row">					
                 	<div class="col-md-12"><?= $this->Form->input('secteur_activite', ['label' => false,'id'=>'secteur_activite',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'textarea', 'escape' => false,
-                											'value'=> $projet->secteur_activite,
-                											'rows' => '5','disabled'=>'disabled',
+                											'value'=> $projet->secteur_activite,'disabled'=>'disabled',
+                											'rows' => '5', 
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br /> 		    
-				<div class="row">
-					<h4>Définir le projet d'équipe</h4>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div> 
+	</div>
+	<h4>Définir le projet d'équipe</h4>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<div class="row">					
                 	<div class="col-md-12"><?= $this->Form->input('definition', ['label' => false,'id'=>'definition',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'textarea', 'escape' => false,
-                											'value'=> $projet->definition,
-                											'rows' => '5','disabled'=>'disabled',
+                											'value'=> $projet->definition,'disabled'=>'disabled',
+                											'rows' => '5', 
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br />  		    
-				<div class="row">
-					<h4>Modalités de communication sur le projet Pacte</h4>
+				</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div> 
+	</div>
+	<h4>Modalités de communication sur le projet Pacte</h4>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10">				    
+				<div class="row">					
                 	<div class="col-md-12"><?= $this->Form->input('communication', ['label' => false,'id'=>'communication',
 														   	'div' => false,
 															'class' => 'form-control', 
@@ -268,11 +308,35 @@
 				</div>
 			</div>						
 			<div class="col-md-1"></div>
-		</div><br /><br />
+		</div>
+	</div>
+	<h4>Macro-Planning</h4>
+	<div class="blocblancContent">
 		<div class="row">
-        	<p align="center">La validation des renseignement ci-dessus, entrainement l'entrée dans votre démarche d'accréditation.<br/>
-                Suite à cette validation, vous recevrez un e-mail récapitulatif des informations.
-            </p>
+			<div class="col-md-1"></div>
+			<div class="col-md-10"> 
+				<div class="row">
+					<table cellpadding="0" cellspacing="0" class="table table-striped" >
+					    <thead>
+					        <tr>
+					            <th width='60%'>Libellé</th>
+					            <th width='40%'>Date</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+					    <?php foreach ($calendriers as $calendrierProjet): ?>
+					        <tr>            
+					            <td><?= $calendrierProjet->libelle ?></td>
+					            <td><?= $calendrierProjet->mois." ".$this->Number->format($calendrierProjet->annee) ?></td>
+					        </tr>					
+					    <?php endforeach; ?>
+					    </tbody>
+				    </table>
+				</div><br />
+				<div class="row">
+		        	<p align="center">La validation des renseignement ci-dessus, entrainement l'entrée dans votre démarche d'accréditation.<br/>
+		                Suite à cette validation, vous recevrez un e-mail récapitulatif des informations.
+		            </p>
 <?php 
 	$session = $this->request->session();
     if($session->read('Equipe.Engagement') == '0') { 
@@ -289,8 +353,9 @@
 		echo "</p>";
 		echo $this->Form->end(); 
  } ?>
-    	</div>
+    			</div>
+			</div>
+			<div class="col-md-1"></div>
+		</div> 
 	</div>
-</div>
-				
-
+</div>	

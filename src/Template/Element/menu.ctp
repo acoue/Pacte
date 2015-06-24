@@ -55,6 +55,7 @@ if($session->check('Auth.User.role')) {
 			echo " 				  <li>".$this->Html->link('Membres Référent','/membres/index/0/1')."</li>";
 			echo " 				  <li>".$this->Html->link('Membres','/membres/index/0/0')."</li>";
 			echo "   			  <li>".$this->Html->link('Comité de pilotage','/membres/index/1/0')."</li>";
+			echo "   			  <li>".$this->Html->link('Macro-planning','/projets/calendrier')."</li>";
 			echo "            </ul>";
 			echo "		  </li>";
 	}
