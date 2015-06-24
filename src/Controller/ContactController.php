@@ -51,9 +51,9 @@ class ContactController extends AppController
 						$email = new Email('default');
 						$email->template('contact')
 						->emailFormat('html')
-						->to($emailContact)
+						->to($emailContact->valeur)
 						->from($adresse_mail)
-						->subject($sujetEmailContact)
+						->subject($sujetEmailContact->valeur)
 		                ->viewVars(['name'=>$name,'email'=>$adresse_mail,'message'=>$message])
 						->send();
 						

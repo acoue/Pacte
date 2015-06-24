@@ -371,7 +371,11 @@ class ProjetsController extends AppController
 	    $CakePdf = $CakePdf->write(DATA . 'pdf' . DS . $filename);
     
 
-	    
+	    //On récupere les email des membres referents (TO )+ du facilitateur (CC)
+	    foreach ($membres_referents as $mr) {
+	    	
+	    }
+	    	
     	//Envoie du mail
     	$content = "Votre validation est terminée, vous trouverez ....";
     	$email = new Email('default');

@@ -345,15 +345,17 @@
                 		<table cellpadding="0" cellspacing="0" class="table table-striped" > 
                 			<thead>
 						    	<tr>
-						        	<th width='60%'>Libellé</th>
-						        	<th width='40%'>Date</th>
+						        	<th width='50%'>Libellé</th>
+						        	<th width='40%'>Date début</th>
+						        	<th width='40%'>Date fin</th>
 						        </tr>
 						   	<thead>
 						    <tbody>    
 							 <?php foreach ($calendriers as $calendrierProjet): ?>
 								<tr>
 							    	<td><?= $calendrierProjet->libelle ?></td>
-						            <td><?= $calendrierProjet->mois." ".$this->Number->format($calendrierProjet->annee) ?></td>			           
+						            <td><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_fin) ?></td>	
+						            <td><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_fin) ?></td>			           
 							    </tr>
 							 <?php endforeach; ?>          
 							</tbody>

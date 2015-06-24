@@ -36,7 +36,7 @@
 					<?php 
 						$session = $this->request->session();
 						if($session->read('Equipe.Diagnostic') == 0) {
-							echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-info']);
+							echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);
 						} else {
 							echo $this->Form->button('Enregistrer', ['type'=>'submit', 'class' => 'btn btn-default']);
 						}

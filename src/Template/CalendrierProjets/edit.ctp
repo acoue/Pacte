@@ -31,19 +31,38 @@
 						'Juillet'=>'Juillet','Août'=>'Août','Septembre'=>'Septembre','Octobre'=>'Octobre','Novembre'=>'Novembre','Décembre'=>'Décembre'];
 				?>		
 				<div class="row">
-                	<label class="col-md-2 control-label" for="mois">Mois <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-3"><?= $this->Form->input('mois', ['label' => false,'id'=>'mois',
+                	<label class="col-md-2 control-label" for="mois_debut">Mois <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-3"><?= $this->Form->input('mois_debut', ['label' => false,'id'=>'mois_debut',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'options'=>$mois, 'value'=> $calendrierProjet->mois,
+                    										'options'=>$mois, 'value'=> $calendrierProjet->mois_debut,
                     										'data-location' => 'bottom',
                     										'required' =>'required']); ?>
                     </div>                          
-                	<label class="col-md-2 control-label" for="annee">Année <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-3"><?= $this->Form->input('annee', ['label' => false,'id'=>'annee',
+                	<label class="col-md-2 control-label" for="annee_debut">Année <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-3"><?= $this->Form->input('annee_debut', ['label' => false,'id'=>'annee_debut',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text','value'=> $calendrierProjet->annee,
+                    										'type' => 'text','value'=> $calendrierProjet->annee_debut,
+                    										'data-validation'=>'length number', 
+                    										'data-validation-length'=>'min4' ,
+                    										'required' =>'required']); ?>
+                    </div>                          
+				</div><br />
+				<div class="row">
+                	<label class="col-md-2 control-label" for="mois_fin">Mois de fin <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-3"><?= $this->Form->input('mois_fin', ['label' => false,'id'=>'mois_fin',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'options'=>$mois,'value'=> $calendrierProjet->mois_fin,
+                    										'data-location' => 'bottom',
+                    										'required' =>'required']); ?>
+                    </div>                          
+                	<label class="col-md-2 control-label" for="annee_fin">Année de fin <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-3"><?= $this->Form->input('annee_fin', ['label' => false,'id'=>'annee_fin',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text','value'=> $calendrierProjet->annee_fin,
                     										'data-validation'=>'length number', 
                     										'data-validation-length'=>'min4' ,
                     										'required' =>'required']); ?>
