@@ -87,3 +87,15 @@ define('CAKE_CORE_INCLUDE_PATH', ROOT . DS . 'vendor' . DS . 'cakephp' . DS . 'c
  */
 define('CORE_PATH', CAKE_CORE_INCLUDE_PATH . DS);
 define('CAKE', CORE_PATH . 'src' . DS);
+
+
+/**
+ * Environnement de l'application Qualification (QUAL) / Production (PROD) 
+ */
+define('ENV_APPLI', 'QUAL');
+
+/**
+ * Email administrateur
+ */
+define('EMAIL_ADMIN', 'a.coue@has-sante.fr');
+

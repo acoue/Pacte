@@ -10,6 +10,11 @@ use App\Controller\AppController;
  */
 class CalendrierProjetsController extends AppController
 {
+	/**
+	 * isAuthorized method
+	 * @see \App\Controller\AppController::isAuthorized()
+	 * @return True si les droits sont accordés ou false sinon 
+	 */
 	public function isAuthorized($user)
 	{
 		$session = $this->request->session();
@@ -22,12 +27,13 @@ class CalendrierProjetsController extends AppController
 		return parent::isAuthorized($user);
 	}    
 
+	
 	public function initialize() {
 		parent::initialize();		
 	}
 	
     /**
-     * Add method
+     * Add method : Ajout une étape dans le macro planning
      *
      * @return void Redirects on successful add, renders view otherwise.
      */

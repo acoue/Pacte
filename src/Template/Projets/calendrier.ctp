@@ -37,8 +37,8 @@
 					    </table>
 					</div>
 					<div class="col-md-2">
-												<?= $this->Html->link(__('Ajouter'),['controller'=>'CalendrierProjets', 'action'=>'add/'.$projet->id],
-												['class'=>'btn btn-info']);?>
+						<?= $this->Html->link(__('Ajouter'),['controller'=>'CalendrierProjets', 'action'=>'add/'.$projet->id],
+						['class'=>'btn btn-info']);?>
 					</div>
 				</div>
 			</div>						
@@ -49,9 +49,9 @@
     	//Si toujours en phase d'engagement
     	$session = $this->request->session();
     	if($session->read('Equipe.Engagement') == '0') {
-    		echo $this->Html->link(__('Terminer la phase d\'engagement'),['controller'=>'projets', 'action'=>'validate'],['class'=>'btn btn-info']);
+    		echo $this->Html->link(__('Terminer la phase d\'engagement'),['controller'=>'projets', 'action'=>'validate'],['class'=>'btn btn-default']);
     		echo "&nbsp;&nbsp;";
-    		echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'index'],['class'=>'btn btn-default']);
+    		echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'index'],['class'=>'btn btn-info']);
     	}
     ?>			
 	</p>	

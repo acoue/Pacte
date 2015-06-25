@@ -215,10 +215,10 @@
     		//Si toujours en phase d'engagement
     		$session = $this->request->session();
     		if($session->read('Equipe.Engagement') == '0') {
-				echo $this->Form->button('Suite de la démarche', ['type'=>'submit', 'class' => 'btn btn-info']);	
+				echo $this->Form->button('Suite de la démarche', ['type'=>'submit', 'class' => 'btn btn-default']);	
 		
     		} else {
-    			echo $this->Form->button('Enregistrer', ['type'=>'submit', 'class' => 'btn btn-info']);
+    			echo $this->Form->button('Enregistrer', ['type'=>'submit', 'class' => 'btn btn-default']);
     		}
 			echo $this->Form->end() 
 			

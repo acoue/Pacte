@@ -13,9 +13,9 @@ class EvaluationsController extends AppController
 	public function initialize() {
 		parent::initialize();
 		//Menu et sous-menu
-		$session = $this->request->session();
-		$session->write('Progress.Menu','2');
-		$session->write('Progress.SousMenu','2');
+// 		$session = $this->request->session();
+// 		$session->write('Progress.Menu','2');
+// 		$session->write('Progress.SousMenu','2');
 	}
 	
 	public function isAuthorized($user)

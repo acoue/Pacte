@@ -8,13 +8,17 @@ if ($session->check('Progress.SousMenu')) {
     $sous_menu = $session->read('Progress.SousMenu');
 } else $sous_menu = 0;
   
-
 //fin des 2 premieres phases
-if($session->read('Equipe.Engagement') && $session->read('Equipe.Diagnostic')) {
+if($session->read('MiseEnOeuvre')) {
 	$menu = 3;
 	$sous_menu = 0;
 }
 
+//Dernieres phases
+if($session->read('Equipe.Evaluation')) {
+	$menu = 4;
+	$sous_menu = 0;
+}
 
 if($menu > 0 ){
 

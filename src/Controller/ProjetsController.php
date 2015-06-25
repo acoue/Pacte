@@ -22,7 +22,7 @@ class ProjetsController extends AppController
 		$session = $this->request->session();
 		if( $session->read('Auth.User.role') === 'equipe') {		
 			// Droits de tous les utilisateurs connectes sur les actions
-			if(in_array($this->request->action, ['index','validate','createPdf', 'diagnostic_index','calendrier'])){
+			if(in_array($this->request->action, ['index','validate','createPdf', 'diagnostic_index','calendrier','terminateMEO'])){
 				return true;
 			}
 		}		
@@ -95,10 +95,9 @@ class ProjetsController extends AppController
 	    $id_demarche = $session->read('Equipe.Demarche');
     	
     	//Enregistrement des informations du projet
-    	$projetInitial = $this->Projets->find('all')->where(['projets.demarche_id'=>$id_demarche])->first();
+    	$projetInitial = $this->Projets->find('all')->where(['Projets.demarche_id'=>$id_demarche])->first();
     	$projet = $this->Projets->patchEntity($projetInitial, $this->request->data);
-    	if ($this->Projets->save($projet)) {
-    	} else {
+    	if (! $this->Projets->save($projet)) {    		
     		$this->Flash->error('Erreur dans la sauvegarde du projet.');
     		return $this->redirect(['action' => 'index']);
     	}    	 
@@ -371,18 +370,24 @@ class ProjetsController extends AppController
 	    $CakePdf = $CakePdf->write(DATA . 'pdf' . DS . $filename);
     
 
-	    //On récupere les email des membres referents (TO )+ du facilitateur (CC)
-	    foreach ($membres_referents as $mr) {
-	    	
+	    if (ENV_APPLI === 'QUAL') {
+	    	$to = EMAIL_ADMIN;
+	    	$cc = $to;
+	    } else {
+		    $to = $cc = "";
+		    //On récupere les email des membres referents (TO )+ du facilitateur (CC)	    
+		    foreach ($membres_referents as $mr) {
+		    	if($mr->responsabilite_id == 2) $to.=$mr->email.";";
+		    	else if($mr->responsabilite_id == 3) $cc.=$mr->email.";";
+		    }
 	    }
-	    	
     	//Envoie du mail
     	$content = "Votre validation est terminée, vous trouverez ....";
     	$email = new Email('default');
     	$email->template('default')
     	->emailFormat('text')
-    	->to('a.coue@has-sante.fr')
-    	->cc('anthony.coue@gmail.com')
+    	->to($to)
+    	->cc($cc)
     	->from('refex@has-sante.fr')
     	->subject('[Pacte] Récapitulatif de l\'engagement')
     	->viewVars(['content' => $content])
@@ -436,6 +441,41 @@ class ProjetsController extends AppController
 	    
 	    $this->set(compact('projet','calendriers'));
 	    $this->set('_serialize', ['projet']);
+    }
+    
+    public function terminateMEO() {
+
+    	//On recupere l'identifiant de démarche
+    	$session = $this->request->session();
+    	$id_demarche = $session->read('Equipe.Demarche');
+    	
+    	//Flag dans table demarche_phases => date_validation = now()
+    	$this->loadModel('DemarchePhases');
+    	$dp = $this->DemarchePhases->find('all')
+    	->where(['DemarchePhases.demarche_id' => $id_demarche,'phase_id'=>'3'])
+    	->first();    	
+    	$idDemarchePhase = $dp->id;
+    	$demarchesPhasesTable = TableRegistry::get('DemarchePhases');
+    	$demarchesPhase = $demarchesPhasesTable->get($idDemarchePhase);    	 
+    	$demarchesPhase->date_validation = date('Y-m-d');
+    	$demarchesPhasesTable->save($demarchesPhase);
+    	//Mise à jour de la session :
+    	$session->write('Equipe.MiseEnOeuvre',1);
+    	
+    	//Inscription de l'etape dans la table
+    	$demPhase = $demarchesPhasesTable->newEntity();
+    	// Atribution des valeurs
+    	$demPhase->id = null;    	
+    	$demPhase->demarche_id = $id_demarche;
+    	$demPhase->phase_id = 4; //Entree dans la premiere phase
+    	$demPhase->date_entree = date('Y-m-d');
+    	//Enregistrement
+    	$demarchesPhasesTable->save($demPhase);
+    	//Mise à jour de la session :
+    	$session->write('Equipe.Evaluation',0);
+    	
+    	$this->Flash->success('Phase terminée');
+    	return $this->redirect(['controller'=>'Pages', 'action' => 'home']);    	
     }
     
 }

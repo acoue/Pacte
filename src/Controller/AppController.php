@@ -75,6 +75,9 @@ class AppController extends Controller
     	} else if($session->check('Equipe.Evaluation') && $session->read('Equipe.Evaluation') == 0 ) {
     		$session->write('Progress.Menu','4');
     		$session->write('Progress.SousMenu','0');
+    	} else {
+    		$session->write('Progress.Menu','0');
+    		$session->write('Progress.SousMenu','0');
     	}
     	
 	

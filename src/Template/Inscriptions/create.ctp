@@ -13,7 +13,8 @@ if($session->check('Engagement.Finess')) $finess = $session->read('Engagement.Fi
 else $finess = "";
 if($session->check('Engagement.Raison_Sociale')) $raison_sociale = $session->read('Engagement.Raison_Sociale');
 else $raison_sociale = "";
-
+if($session->check('Engagement.Resultat_Formulaire')) $formulaire = $session->read('Engagement.Resultat_Formulaire');
+else $formulaire = null;
 ?>
 <div class="blocblanc">
 	<h2>Fiche d'engagement de la direction - Etape n°1</h2>
@@ -92,16 +93,43 @@ else $raison_sociale = "";
 				<div class="row">
 					<label class="col-md-7 control-label" for="q_<?= $question->id ?>" ><?= $question->texte ?></label>
 	                <div class="col-md-2">
-		                <div class="radio">
-							<label for="q_<?= $question->id ?>-1">
-						    	<input name="q_<?= $question->id ?>" id="q_<?= $question->id ?>-1" value="O" type="radio" required="required"> Oui
-						    </label>
-						</div>
+		                <?php 		                
+		                if($formulaire['q_'.$question->id] === 'O') {?>
+		                <div class="radio">		                
+		                	<label for="q_<?= $question->id ?>-1">
+		                	<input name="q_<?= $question->id ?>" id="q_<?= $question->id ?>-1" value="O" type="radio" required="required" checked> Oui
+		                	</label>
+		                </div>
 						<div class="radio">
 							<label for="q_<?= $question->id ?>-2">
 						    	<input name="q_<?= $question->id ?>" id="questions_<?= $question->id ?>-2" value="N" type="radio">Non
 							</label>
-						</div>	                
+						</div>			                	
+		                <?php } else if($formulaire['q_'.$question->id] === 'N') { ?>
+		                <div class="radio">		                
+		                	<label for="q_<?= $question->id ?>-1">
+		                	<input name="q_<?= $question->id ?>" id="q_<?= $question->id ?>-1" value="O" type="radio" required="required"> Oui
+		                	</label>
+		                </div>
+						<div class="radio">
+							<label for="q_<?= $question->id ?>-2">
+						    	<input name="q_<?= $question->id ?>" id="questions_<?= $question->id ?>-2" value="N" type="radio" checked>Non
+							</label>
+						</div>
+		                <?php } else { ?>
+		                <div class="radio">		                
+		                	<label for="q_<?= $question->id ?>-1">
+		                	<input name="q_<?= $question->id ?>" id="q_<?= $question->id ?>-1" value="O" type="radio" required="required"> Oui
+		                	</label>
+		                </div>
+						<div class="radio">
+							<label for="q_<?= $question->id ?>-2">
+						    	<input name="q_<?= $question->id ?>" id="questions_<?= $question->id ?>-2" value="N" type="radio">Non
+							</label>
+						</div>
+		                <?php }?>
+		                
+		                   
 	                 </div>   
 	                 <div class="col-md-3 BoutonAide">
 	                 	<a class="btn btn-xs btn-info" data-toggle="popover" title="Aide"

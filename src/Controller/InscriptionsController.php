@@ -42,8 +42,8 @@ class InscriptionsController extends AppController
     	//debug($this->request->data); die();
     	//Menu et sous-menu
     	$session = $this->request->session();
-    	$session->write('Progress.Menu','0');
-    	$session->write('Progress.SousMenu','0');
+//     	$session->write('Progress.Menu','0');
+//     	$session->write('Progress.SousMenu','0');
 
     	//Validation du formulaire pour rechercher les etablissements
     	if ($this->request->is('post')){
@@ -87,8 +87,8 @@ class InscriptionsController extends AppController
     {
     	//Menu et sous-menu
 	    $session = $this->request->session();
-	    $session->write('Progress.Menu','0');
-	    $session->write('Progress.SousMenu','0');
+// 	    $session->write('Progress.Menu','0');
+// 	    $session->write('Progress.SousMenu','0');
 	    	
     	if ($this->request->is('post')) {
     		//On retrouve les infos etablissement
@@ -165,8 +165,8 @@ class InscriptionsController extends AppController
 		//debug($etat);die();
     	//Menu et sous-menu
     	$session = $this->request->session();
-    	$session->write('Progress.Menu','0');
-    	$session->write('Progress.SousMenu','0');
+//     	$session->write('Progress.Menu','0');
+//     	$session->write('Progress.SousMenu','0');
     	
     	//Validation
     	if ($this->request->is(['post', 'put'])) {
@@ -314,10 +314,12 @@ class InscriptionsController extends AppController
     			//$sujet = $this->Parametre->getValeur('SujetEmailContact', '[PACTE]');
     			//debug($from.'-'.$sujet);die();
     			
+    			(ENV_APPLI === 'QUAL') ? $to = EMAIL_ADMIN : $to = $this->request->data('mail');
+    			
     			$email = new Email('default');
     			$email->template('inscription')
     			->emailFormat('html')
-    			->to($this->request->data('mail'))
+    			->to($to)
     			->from($from)
     			->subject($sujet)
     			->viewVars(['login'=>$username,'mdp'=>$password,'link'=>$link])
@@ -377,12 +379,11 @@ class InscriptionsController extends AppController
      * @return void Redirects on successful create, renders view otherwise.
      */
     public function create()
-    {    	
-    	//debug($this->request->data); die();
+    {       	
     	//Menu et sous-menu
 	    $session = $this->request->session();
-	    $session->write('Progress.Menu','0');
-	    $session->write('Progress.SousMenu','0');
+// 	    $session->write('Progress.Menu','0');
+// 	    $session->write('Progress.SousMenu','0');
 		
 
 	    if ($this->request->is(['post', 'put'])) {
@@ -397,7 +398,7 @@ class InscriptionsController extends AppController
 	    	$resultat = $this->request->data;
 	    	
 	    	//inscription des réponses en session
-	    	
+	    	$session->write('Engagement.Resultat_Formulaire',$resultat);
 	    	//Explode des reponses
 	    	foreach ($resultat as $key => $value) {
 	    		if($key != "etablissement_id") {

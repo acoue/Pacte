@@ -50,8 +50,9 @@ if($session->check('Auth.User.role')) {
 			
 		} else if($session->read('Equipe.MiseEnOeuvre') == 0 ){
 			echo "<p>Pensez bien à remplir l'enquête de satisfaction initiale</p>";	
-			echo $this->Html->link('Terminer la phase de mise en oeuvre', ['controller'=>'', 'action' => ''],['class' => 'btn btn-info']);
-			
+			echo $this->Html->link('Terminer la phase de mise en oeuvre', ['controller'=>'Projets', 'action' => 'terminateMEO'],['class' => 'btn btn-info']);
+		} else if($session->read('Equipe.Evaluation') == 0 ){
+			echo "<p>Bienvenue dans la dernière phase du projet</p>";	
 		} 
 		else echo "Bienvenue Equipe";
 		
@@ -62,6 +63,7 @@ if($session->check('Auth.User.role')) {
 		
 	}
 }
+if($role === 'admin') {
 ?>
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -99,7 +101,7 @@ if($session->check('Auth.User.role')) {
 
 
 
-
+<?php }?>
 
 
 

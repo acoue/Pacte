@@ -73,9 +73,7 @@ class QuestionsController extends AppController
      */
     public function edit($id = null)
     {
-        $question = $this->Questions->get($id, [
-            'contain' => []
-        ]);
+        $question = $this->Questions->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $question = $this->Questions->patchEntity($question, $this->request->data);
             if ($this->Questions->save($question)) {
