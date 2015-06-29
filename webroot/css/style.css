@@ -310,4 +310,20 @@ body, html{height:100%;}
 
 .fond-vert {
     background-color: #8699BA;
-  }
+}
+  
+.alert-mdp-warning {
+  background-color: #F8DD56;
+  border-color: #C0AF5B;
+}  
+ 
+.alert-mdp-danger {
+  background-color: #FA0D0D;
+  border-color: #FA0D0D;	
+}
+  
+.alert-mdp-success {
+  background-color: #53EA0E;
+  border-color: #31800D;
+}
+  

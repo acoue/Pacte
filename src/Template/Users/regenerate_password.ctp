@@ -21,7 +21,7 @@
 					<div class="row">
 						<div class="col-md-1"></div>
 	                	<label class="col-md-4 control-label" for="password">Mot de passe (minimun : 8 caractères)</label> 
-	                    <div class="col-md-6"><?= $this->Form->input('password', ['label' => false,
+	                    <div class="col-md-4"><?= $this->Form->input('password', ['label' => false,
 															   	'div' => false,
 																'class' => 'form-control', 
 																'placeholder' => 'Nouveau mot de passe',
@@ -30,7 +30,9 @@
 																'data-validation-length'=>'min8',
 																'required' =>'required']); ?>
 	                    </div>
-						<div class="col-md-1"></div>
+	                    <div class="col-md-3">
+	                    	<div class="" id="messagePwd"></div>
+	                    </div>
 					</div><br />
 					<div class="" id="messagePwd"></div>
 				</div> 					
