@@ -8,17 +8,31 @@
 				<?= $this->Form->hidden('id',['value' => $user->id]);?>	
 				<div class="col-md-10">
 					<div class="row">
+						<div class="alert alert-info">
+							<b>Attention : Le mot de passe doit contenir au minimum 8 caractères.</b><br />
+							Pour vous indiquerons la compléxité de votre mot de passe :
+							<ul>
+								<li>Si le mot de passe ne contient pas de lettres majuscules ou de chiffres, alors il est considéré comme de compléxité faible</li>
+								<li>Si le mot de passe contient une lettre majuscule ou un nombre alors il est considéré comme de compléxité moyenne</li>
+								<li>Si le mot de passe contient une lettre majuscule, un nombre et un caractère particulier alors il est considéré comme de compléxité forte</li>
+							</ul>
+						</div>			
+					</div>
+					<div class="row">
 						<div class="col-md-1"></div>
-	                	<label class="col-md-4 control-label" for="password">Mot de passe </label> 
+	                	<label class="col-md-4 control-label" for="password">Mot de passe (minimun : 8 caractères)</label> 
 	                    <div class="col-md-6"><?= $this->Form->input('password', ['label' => false,
 															   	'div' => false,
 																'class' => 'form-control', 
 																'placeholder' => 'Nouveau mot de passe',
-	                    										'type' => 'text', 
+	                    										'type' => 'password', 
+                    											'data-validation'=>'length',
+																'data-validation-length'=>'min8',
 																'required' =>'required']); ?>
 	                    </div>
 						<div class="col-md-1"></div>
-					</div>
+					</div><br />
+					<div class="" id="messagePwd"></div>
 				</div> 					
 			<div class="col-md-1"></div>
 		</div><br /><br />

@@ -47,6 +47,10 @@ $(document).ready(function(){
     });
     //Formulaire changement de mot de passe
     $.validate({
+        form : '#changePwd_form'
+    });
+    //Formulaire compte
+    $.validate({
         form : '#compte_form'
     });
     //Formulaire du mot de passe oublié
@@ -183,7 +187,53 @@ $(document).ready(function(){
     });
 	
 	
+	/*
+	 * Test du mot de passe
+	 * */
+	$('#pass1, #pass2').on('keyup', function(e) {
+		
+	     if($('#pass1').val() != '' && $('#pass2').val() != '' && $('#pass1').val() != $('#pass2').val()) {
+	    	 $('#messagePwd').removeClass().addClass('alert alert-danger').html('Les 2 valeurs ne correspondent pas ! ');
+	    	 return false;
+	     }
+	     // Must have capital letter, numbers and lowercase letters
+	     var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+
+	     // Must have either capitals and lowercase letters or lowercase and numbers
+	     var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+	     if (strongRegex.test($(this).val())) {
+            // If reg ex matches strong password
+            $('#messagePwd').removeClass().addClass('alert alert-success').html('Mot de passe correctement sécurisé.');
+	     } else if (mediumRegex.test($(this).val())) {
+            // If medium password matches the reg ex
+            $('#messagePwd').removeClass().addClass('alert alert-info').html('Renforcez votre mot de passe en utilisant plus de lettres majuscules, plus de chiffres et de caractères spéciaux.');
+	     } else {
+            // If password is ok
+            $('#messagePwd').removeClass().addClass('alert alert-danger').html('Mot de passe faible, essayez d\'utiliser des nombres et des lettres majuscules.');
+	     }
+        
+	     return true;
+	});
 	
+	$('#password').on('keyup', function(e) {		
+	     
+	     // Must have capital letter, numbers and lowercase letters
+	     var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+	     // Must have either capitals and lowercase letters or lowercase and numbers
+	     var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+	     if (strongRegex.test($(this).val())) {
+           // If reg ex matches strong password
+           $('#messagePwd').removeClass().addClass('alert alert-success').html('Mot de passe correctement sécurisé!');
+	     } else if (mediumRegex.test($(this).val())) {
+           // If medium password matches the reg ex
+           $('#messagePwd').removeClass().addClass('alert alert-info').html('Renforcez votre mot de passe en utilisant plus de lettres majuscules, plus de chiffres et de caractères spéciaux !');
+	     } else {
+           // If password is ok
+           $('#messagePwd').removeClass().addClass('alert alert-danger').html('Mot de passe faible, essayez d\'utiliser des nombres et des lettres majuscules.');
+	     }
+       
+	     return true;
+	});
 	
 	
 	/* Bouton aide */

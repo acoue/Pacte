@@ -60,6 +60,18 @@
 				?>
 						<br /><br />
 						<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $planAction->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]) ?>
+						
+							
+						<?php
+							$session = $this->request->session();
+							if($session->read('Equipe.Diagnostic') == '0') {
+								echo "<br /><br />";
+								echo $this->Html->link(__('Suite'),['controller'=>'Mesures', 'action'=>'index'],['class'=>'btn btn-default']);
+							}
+						?>
+
+						
+						
 						</div>
 						<div class='col-md-4'></div>
 				

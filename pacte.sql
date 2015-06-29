@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mar 16 Juin 2015 à 16:46
+-- Généré le :  Jeu 25 Juin 2015 à 14:44
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -23,8 +23,10 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `calendrier_projets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` text NOT NULL,
-  `mois` varchar(20) NOT NULL,
-  `annee` int(4) NOT NULL,
+  `mois_debut` varchar(20) NOT NULL,
+  `annee_debut` int(4) NOT NULL,
+  `mois_fin` varchar(20) NOT NULL,
+  `annee_fin` int(4) NOT NULL,
   `projet_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `projet_celendrier_projet_fk_idx` (`projet_id`)
@@ -79,14 +81,14 @@ CREATE TABLE IF NOT EXISTS `demarche_phases` (
 CREATE TABLE IF NOT EXISTS `descriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nb_etp` int(11) NOT NULL DEFAULT '0',
-  `service` varchar(255) NOT NULL,
   `fonction_id` int(11) NOT NULL,
   `projet_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `service` (`service`,`fonction_id`,`projet_id`),
+  UNIQUE KEY `projet_fonction_UK` (`projet_id`,`fonction_id`),
   KEY `fonction_description_fk_idx` (`fonction_id`),
   KEY `projet_description_fk_idx` (`projet_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 -- --------------------------------------------------------
 
@@ -104,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `enquetes` (
   PRIMARY KEY (`id`),
   KEY `demarche_enquete_fk_idx` (`demarche_id`),
   KEY `fonction_enquete_idx` (`fonction_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -155,6 +157,7 @@ CREATE TABLE IF NOT EXISTS `enquete_reponses` (
   KEY `question_enquete_reponse_fk` (`question_id`),
   KEY `enquete_reponse_enquete_fk_idx` (`enquete_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 -- --------------------------------------------------------
 
@@ -9872,7 +9875,7 @@ CREATE TABLE IF NOT EXISTS `parametres` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Contenu de la table `parametres`
@@ -9881,7 +9884,11 @@ CREATE TABLE IF NOT EXISTS `parametres` (
 INSERT INTO `parametres` (`id`, `name`, `description`, `valeur`, `created`, `modified`) VALUES
 (1, 'MessageValidationInscription', 'Message qui sera affiché à la fin de l''inscription d''une équipe', 'Inscription terminée, un mail va vous être envoyé pour terminer la validation.', '2015-04-24 12:46:46', '2015-05-20 15:07:22'),
 (2, 'EmailContact', '', 'refex@has-sante.fr', '2015-05-02 20:01:51', '2015-05-02 20:01:51'),
-(3, 'SujetEmailContact', '', '[Pacte] Message utilisateur provenant du site', '2015-05-02 20:04:27', '2015-05-02 20:04:27');
+(3, 'SujetEmailContact', '', '[Pacte] Message utilisateur provenant du site', '2015-05-02 20:04:27', '2015-05-02 20:04:27'),
+(4, 'messageAvertissementInscription', 'Message qui apparaît à l''écran à la fin de la phase d''inscription', 'une fois validée, les données saisies précédemment ne seront plus modifiables, mais uniquement consultables.<br />\r\nA cette étape, vous pouvez décider de poursuivre votre démarche, et ainsi ... Les données précédemment saisies seront stockées, ce qui vous permet d''interrompre votre saisie et de la reprendre ultérieurement.\r\nVous pouvez également décider de ne pas continuer, toutes les données saisies auparavant seront détruites.', '2015-06-18 15:13:20', '2015-06-18 15:24:39'),
+(5, 'MessageScoreInferieur', 'Message apparaissant à l''utilisateur si le score est inférieur à 5 ', 'Votre score est inférieur à la moyenne ..... ', '2015-06-18 15:21:35', '2015-06-18 15:21:35'),
+(6, 'MessageScoreSuperieur', 'Message apparaissant à l''utilisateur si le score est supérieur à 5 ', 'Bravo, votre score est supérieur à la moyenne ..... ', '2015-06-18 15:23:12', '2015-06-18 15:23:12'),
+(7, 'MessageTitreValidation', 'Message  apparaissant à l''utilisateur lorsqu''il arrive sur la page  permettant de valider son inscription', '\r\nNoter le score obtenu', '2015-06-18 15:24:20', '2015-06-18 15:24:20');
 
 -- --------------------------------------------------------
 
@@ -10010,7 +10017,7 @@ CREATE TABLE IF NOT EXISTS `responsabilites` (
 INSERT INTO `responsabilites` (`id`, `name`, `online`) VALUES
 (1, 'Membre', 1),
 (2, 'Binôme', 1),
-(3, 'Facilitateurs', 1),
+(3, 'Facilitateur', 1),
 (4, 'Animateur du CRM Santé', 1),
 (5, 'Membre du CP', 0);
 
@@ -10041,6 +10048,10 @@ INSERT INTO `type_indicateurs` (`id`, `name`) VALUES
 -- Structure de la table `users`
 --
 
+--
+-- Structure de la table `users`
+--
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
@@ -10055,16 +10066,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `token` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Contenu de la table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `nom`, `prenom`, `created`, `modified`, `lastlogin`, `active`, `token`) VALUES
-(1, 'admin', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'admin', 'COUE', 'Anthony', '2015-04-01 03:14:30', '2015-06-16 14:50:46', '2015-06-16 14:50:46', 1, ''),
-(2, 'has', '$2y$10$/XFcwUYHBr0YsVnxwLikSOmhxOi69ejBFlttN9EHEUaFyLiEq5E6u', 'has', 'HAS', 'CP', '2015-04-02 03:14:30', '2015-05-05 14:40:27', '2015-05-05 14:40:27', 1, ''),
-(3, 'expert', '$2y$10$mNM0ii2D.1zry6PcB5UiDOB6x.AB17psN.NuP2s1.OrHDQ5rG.CG6', 'expert', 'Expert', 'Test', '2015-04-08 14:42:50', '2015-06-15 15:55:37', '2015-06-15 15:55:37', 1, '');
+(1, 'a.coue', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'admin', 'COUE', 'Anthony', '2015-04-01 03:14:30', '2015-06-18 09:47:12', '2015-06-18 09:47:12', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1'),
+(2, 'has', '$2y$10$/XFcwUYHBr0YsVnxwLikSOmhxOi69ejBFlttN9EHEUaFyLiEq5E6u', 'has', 'HAS', 'CP', '2015-04-02 03:14:30', '2015-05-05 14:40:27', '2015-05-05 14:40:27', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1'),
+(3, 'expert', '$2y$10$mNM0ii2D.1zry6PcB5UiDOB6x.AB17psN.NuP2s1.OrHDQ5rG.CG6', 'expert', 'N°1', 'Expert', '2015-04-08 14:42:50', '2015-05-05 11:11:40', '2015-05-05 11:11:40', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1'),
+(4, 'y.sami', '$2y$10$wrx2xiCYn1E.l355/HkGQucePD8DfaYgaNJpG9BqRuiZt4/j15mo.', 'admin', 'SAMI', 'Yasmine', '2015-05-27 13:33:49', '2015-06-18 09:51:01', '2015-06-18 09:51:01', 1, 'AEnIqeRk23pVwioWxjZCu0rSTmDdhNFa');
 
 --
 -- Contraintes pour les tables exportées

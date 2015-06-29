@@ -13,9 +13,9 @@ class PlanActionsController extends AppController
 	public function initialize() {
 		parent::initialize();
 		//Menu et sous-menu
-		$session = $this->request->session();
-		$session->write('Progress.Menu','2');
-		$session->write('Progress.SousMenu','3');
+ 		$session = $this->request->session();
+ 		$session->write('Progress.Menu','2');
+ 		$session->write('Progress.SousMenu','3');
 	}
 	
 	
@@ -149,7 +149,9 @@ class PlanActionsController extends AppController
         		$planAction->file = $nomFichier;        		
         	} else {
         		//Suppression de l'ancien
-        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file))unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').$planAction->file);
+        		if($planAction->file && file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file)) {
+        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file);
+        		}
 				//Nouveau fichier
         		$nomFichier = $d['file_new']['name'];
         		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
@@ -189,9 +191,9 @@ class PlanActionsController extends AppController
         }
         
         if ($this->PlanActions->delete($planAction)) {
-            $this->Flash->success('The plan action has been deleted.');
+            $this->Flash->success('Le plan d\'action a bien été supprimé.');
         } else {
-            $this->Flash->error('The plan action could not be deleted. Please, try again.');
+            $this->Flash->error('Erreur dans la suppression du plan d\'action.');
         }
         
         

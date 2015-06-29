@@ -10,5 +10,8 @@
 			</div>
 			<div class="col-md-1"></div>
 		</div>
+	<p align="center">
+		<?= $this->Html->link('Poursuivre', ['controller'=>'pages', 'action'=>'home'], ['class' => 'btn btn-info']);?>
+	</p>
 	</div>
 </div>

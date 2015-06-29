@@ -57,13 +57,11 @@
 		</div>
 	</div>
 	<p align="center">
-	<?php
+<?php
 	$session = $this->request->session();
 	if($session->read('Equipe.Diagnostic') == '0') {
-		echo $this->Html->link(__('Suite'),['controller'=>'Mesures', 'action'=>'index'],['class'=>'btn btn-default']);
-		echo "&nbsp;&nbsp;";
-		echo $this->Html->link(__('Retour'),['controller'=>'PlanActions', 'action'=>'index'],['class'=>'btn btn-info']);
+		echo $this->Html->link(__('Retour au Plan d\'action'),['controller'=>'PlanActions', 'action'=>'index'],['class'=>'btn btn-default']);
 	}
-		?>
+?>
 	</p>
 </div>

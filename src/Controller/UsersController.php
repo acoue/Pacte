@@ -228,28 +228,42 @@ class UsersController extends AppController
  		$this->set('user', $user);
  	}
 
-	public function compte() {
-    	//Menu et sous-menu
-	    $session = $this->request->session();
-	    $session->write('Progress.Menu','0');
-	    $session->write('Progress.SousMenu','0');
-	    
-		//$user_id = $this->Auth->user('id');
-		$user_id = $session->read('Auth.User.id');
-		if(!$user_id) {
+ 	public function compte($id = null)
+ 	{
+ 		$user = $this->Users->get($id);
+ 		if ($this->request->is(['patch', 'post', 'put'])) {
+ 			$user = $this->Users->patchEntity($user, $this->request->data);
+ 			if ($this->Users->save($user)) {
+ 				$this->Flash->success('L\'utilisateur a bien été sauvegardé.');
+				return $this->redirect(['action' => 'compte/'.$id]);
+ 			} else {
+ 				$this->Flash->error('Erreur lors de la sauvegarde de l\'utilisateur.');
+ 			}
+ 		}
+ 		$this->set(compact('user'));
+ 		$this->set('_serialize', ['user']);
+ 		
+ 	}
+ 	
+	public function changePwd($id = null) {
+    	
+		$user = $this->Users->get($id);
+		
+		if(!$user) {
 			$this->redirect('/');
 			die();
 		} else {
 			$d = $this->request->data;
 			//debug($d);die();
 			$usersTable = TableRegistry::get('Users');
-			$modif_user = $usersTable->get($user_id);
+			$modif_user = $usersTable->get($user->id);
 			if ($this->request->is(['post', 'put'])) {			
 				if(!empty($d['pass1'])) {
 					if($d['pass1'] == $d['pass2']) {
 						$modif_user->password = $d['pass1'];
 						if($usersTable->save($modif_user)){
-							$this->Flash->success('Modification du profil effectuée.');
+							$this->Flash->success('Modification du mot de passe effectuée.');
+							return $this->redirect(['action' => 'compte/'.$id]);
 						} else {
 							$this->Flash->error('Impossible de sauvegarder.');
 						}
@@ -259,6 +273,8 @@ class UsersController extends AppController
 				} else $this->Flash->error('Merci de renseigner un mot de passe');
 			}		
 		}
+ 		$this->set(compact('user'));
+ 		$this->set('_serialize', ['user']);
 	}
 	
 	public function password() {

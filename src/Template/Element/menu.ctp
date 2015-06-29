@@ -6,6 +6,7 @@ if($session->check('Auth.User.role')) {
 	$role = $session->read('Auth.User.role');
 	$username = $session->read('Auth.User.username');
 	$personne = $session->read('Auth.User.prenom')." ".$session->read('Auth.User.nom');
+	$idUser = $session->read('Auth.User.id');
 	
 	if($session->check('Equipe.Engagement')) $etat_engagement = $session->read('Equipe.Engagement');
 	if($session->check('Equipe.Diagnostic')) $etat_diagnostic = $session->read('Equipe.Diagnostic');
@@ -123,7 +124,7 @@ if($session->check('Auth.User.role')) {
 	if($role === 'equipe')		echo "                <td width='70%'>".$session->read('Equipe.Libelle_Etablissement')."</td>";
 
 	if($role === 'admin' || $role === 'expert' || $role === 'has')		echo "                <td width='70%'>".$personne."</td>";
-	echo "				  <td width='30%'>".$this->Html->link('Mon compte','/users/compte',['class' => 'btn btn-default btn-sm'])."</td>";
+	echo "				  <td width='30%'>".$this->Html->link('Mon compte','/users/compte/'.$idUser,['class' => 'btn btn-default btn-sm'])."</td>";
 	echo "            </tr>";
 	echo "            <tr height='34px'  align='center'>";
 	if($role === 'equipe')			echo "                <td>".$session->read('Equipe.Libelle')."</td>";

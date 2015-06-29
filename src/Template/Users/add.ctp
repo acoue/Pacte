@@ -21,14 +21,18 @@
                     </div>                          
 				</div><br />  
 				<div class="row">
-                	<label class="col-md-4 control-label" for="password">Password <span class="obligatoire"><sup> *</sup></span></label>
+                	<label class="col-md-4 control-label" for="password">Mot de passe (minimun : 8 caractères)<span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('password', ['label' => false,'id'=>'password',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'password', 
+                    										'data-validation'=>'length',
+															'data-validation-length'=>'min8',
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br />     
+				</div><br />
+				<div class="" id="messagePwd"></div>
+				<br />     
 				<div class="row">
                 	<label class="col-md-4 control-label" for="prenom">Prénom </label>
                     <div class="col-md-8"><?= $this->Form->input('prenom', ['label' => false,'id'=>'prenom',

@@ -54,10 +54,8 @@ class CalendrierProjetsController extends AppController
             
             if ($this->CalendrierProjets->save($calendrierProjet)) {
             	$projet = $calendrierProjet->projet_id;
-                $this->Flash->success('L\'étape a bien été sauvegardée');
-                
-                if($session->read('Equipe.Engagement') == '0') return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']); 
-                else return $this->redirect(['controller'=>'Projets', 'action' => 'calendrier']);
+                $this->Flash->success('L\'étape a bien été sauvegardée');                
+                return $this->redirect(['controller'=>'Projets', 'action' => 'calendrier']);
             } else {
                 $this->Flash->error('Erreur lors de la sauvegarde de l\'étape');
             }

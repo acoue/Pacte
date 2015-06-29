@@ -8,7 +8,7 @@ class SecuriteComponent extends Component
 	
 	public function getCodeCaptcha()
 	{
-     	$length = 6;    		
+     	$length = 5;    		
      	$password = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
 		return $password;
 	}
