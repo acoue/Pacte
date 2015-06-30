@@ -10,7 +10,18 @@ use App\Controller\AppController;
  */
 class EtablissementsController extends AppController
 {
-
+	public function isAuthorized($user)
+	{
+		return parent::isAuthorized($user);
+	}
+	
+	public function initialize()
+	{
+		parent::initialize();
+		$this->loadComponent('Flash');
+		$this->loadComponent('RequestHandler');
+	
+	}
     /**
      * Index method
      *
@@ -18,6 +29,7 @@ class EtablissementsController extends AppController
      */
     public function index()
     {
+    	
         $this->set('etablissements', $this->paginate($this->Etablissements));
         $this->set('_serialize', ['etablissements']);
     }
@@ -102,4 +114,16 @@ class EtablissementsController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+    
+	public function search() {
+		if ($this->request->is(['ajax'])) {
+			
+			$libelle = $this->request->data['libelle'];
+            $etablissements = $this->Etablissements
+            		->find('all')
+            		->limit(20)
+                    ->where(['libelle like ' => '%'.$libelle.'%']);
+            $this->set('etablissements', $etablissements);
+		}
+	}
 }

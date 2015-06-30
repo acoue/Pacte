@@ -8,15 +8,24 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
+				            <th width='5%'></th>
 				            <th width='15%'>Outils</th>
 				            <th width='40%'>Votre Synthèse</th>
-				            <th width='30%'>Vos documents</th>
+				            <th width='25%'>Vos documents</th>
 				            <th  width='15%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
 				    <tbody>
     				<?php foreach ($evaluations as $evaluation): ?>
 				        <tr>
+				            <td>				            
+							<?php 
+							if(h($evaluation->synthese) && h($evaluation->file)) {
+								echo $this->Html->image('cocheOk.jpg', ['height' => '25px', 'title' => '']);
+							} else {
+								echo $this->Html->image('cocheKo.jpg', ['height' => '25px', 'title' => '']);						
+							} ?>				            
+				            </td>
 				            <td><?= h($evaluation->name) ?></td>
 				            <td><?= h($evaluation->synthese) ?></td>
 				            <td><?= h($evaluation->file) ?></td>

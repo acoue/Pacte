@@ -201,7 +201,8 @@ class InscriptionsController extends AppController
 			$user->id = null;
     		$user->username = $username;    
     		$user->password = $password;     
-    		$user->token = $token;   	
+    		$user->token = $token;
+    		$user->prenom = $session->read('Engagement.Libelle_Equipe');	
     		$user->role = "equipe";    			
     		//Enregistrement
     		if($usersTable->save($user)) $id_User = $user->id;

@@ -23,24 +23,23 @@
 				            <td><?= h($user->username) ?></td>
 				            <td><?= h($user->role) ?></td>
 				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $user->id], array('escape' => false)); ?>&nbsp;&nbsp;
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $user->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $user->id], ['escape' => false,'title'=>'Visualisation de l\'utilisateur']); ?>&nbsp;&nbsp;
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $user->id], ['escape' => false,'title'=>'Edition de l\'utilisateur']); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $user->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);?>
+				                ['class' => 'tip', 'escape'   => false,'title'=>'Suppression de l\'utilisateur', 'confirm'  => 'Etes-vous sûr de supprimer ?']);?>
 				  
 				<?php if($user->active == 1) echo $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-minus-sign"></i></span>',
 				                ['action' => 'desactiveUser', $user->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de desactiver l\'utilisateur ?']);
+				                ['class' => 'tip', 'escape'   => false,'title'=>'Desactivation de l\'utilisateur', 'confirm'  => 'Etes-vous sûr de desactiver l\'utilisateur ?']);
 					else echo $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-plus-sign"></i></span>',
 				                ['action' => 'activeUser', $user->id],
-				                ['class' => 'tip', 'escape'   => false]);
-				
+				                ['class' => 'tip','title'=>'Activation de l\'utilisateur', 'escape'   => false]);				
 				?>
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-retweet"></i></span>', ['action' => 'regeneratePassword', $user->id], array('escape' => false)); ?>
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-retweet"></i></span>', ['action' => 'regeneratePassword', $user->id], array('escape' => false,'title'=>'Modification du mot de passe de l\'utilisateur')); ?>
 							</td>
 				        </tr>
 				

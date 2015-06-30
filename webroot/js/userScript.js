@@ -236,6 +236,9 @@ $(document).ready(function(){
 	});
 	
 	
+	
+	
+	
 	/* Bouton aide */
     $(".BoutonAide a").popover({
         placement : 'top'

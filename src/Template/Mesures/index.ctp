@@ -8,15 +8,25 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
+				            <th width='5%'></th>
 				            <th width='15%'>Outils</th>
 				            <th width='40%'>Evolutions des résultats intermédiares<br />Points forts et axes d'amélioration identifiés</th>
-				            <th width='30%'>Vos documents</th>
-				            <th  width='15%' class="actions"><?= __('Actions') ?></th>
+				            <th width='25%'>Vos documents</th>
+				            <th  width='15%'  class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
 				    <tbody>
     				<?php foreach ($mesures as $mesure): ?>
 				        <tr>
+				            <td>				            
+							<?php 
+							if(h($mesure->resultat) && h($mesure->file)) {
+								echo $this->Html->image('cocheOk.jpg', ['height' => '25px', 'title' => '']);
+							} else {
+								echo $this->Html->image('cocheKo.jpg', ['height' => '25px', 'title' => '']);						
+							}
+							?>				            
+				            </td>
 				            <td><?= h($mesure->name) ?></td>
 				            <td><?= h($mesure->resultat) ?></td>
 				            <td><?= h($mesure->file) ?></td>

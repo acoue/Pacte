@@ -49,7 +49,7 @@ $cakeDescription = 'Pacte ';
                     </button>
                     
                     <span class="header_logo">
-                    <?=	$this->Html->image('logo.jpg', ['height' => '60px', 'alt' => 'Programme Pacte']); ?>
+                    <?=	$this->Html->image('logo.jpg', ['height' => '60px', 'title' => 'Programme Pacte']); ?>
                     </span>
                     <span class="header_titre">Pacte</span>
                 </div>
