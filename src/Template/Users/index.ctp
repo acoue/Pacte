@@ -39,7 +39,7 @@
 				                ['action' => 'activeUser', $user->id],
 				                ['class' => 'tip','title'=>'Activation de l\'utilisateur', 'escape'   => false]);				
 				?>
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-retweet"></i></span>', ['action' => 'regeneratePassword', $user->id], array('escape' => false,'title'=>'Modification du mot de passe de l\'utilisateur')); ?>
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-retweet"></i></span>', ['action' => 'regeneratePassword', $user->id], ['escape' => false,'title'=>'Modification du mot de passe de l\'utilisateur']); ?>
 							</td>
 				        </tr>
 				

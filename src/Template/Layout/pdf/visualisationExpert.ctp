@@ -93,7 +93,7 @@
 	</table>
 	<br /><br />
     <h4>Présentation de l'équipe</h4>
-    <table cellpadding="0" cellspacing="0" class="table" >
+	<table cellpadding="0" cellspacing="0" class="table" width='100%'>
 		<thead>
 			<tr>
     	       	<th><h5>Fonction</h5></th>
@@ -109,7 +109,7 @@
     	<?php endforeach; ?>							
 		</tbody>							
 	</table><br /><br />
-    <table cellpadding="0" cellspacing="0" class="table" >  
+	<table cellpadding="0" cellspacing="0" class="table" width='100%'>
         <caption><h5>Constitution de l'équipe</h5></caption>
         <thead>
         	<tr>
@@ -130,7 +130,7 @@
 	    <?php endforeach; ?>  
         </tbody>
 	</table><br /><br />
-	<table cellpadding="0" cellspacing="0" class="table" >  
+	<table cellpadding="0" cellspacing="0" class="table" width='100%'>
         <caption><h5>Constitution du comité de pilotage</h5></caption>
         <thead>
         	<tr>
@@ -151,7 +151,7 @@
 	    <?php endforeach; ?>          
         </tbody>
 	</table><br /><br />		
-	<table  cellpadding="0" cellspacing="0" class="table" width='80%'>		
+	<table cellpadding="0" cellspacing="0" class="table" width='100%'>	
 		<tr>
 			<td><h4>Lister le ou les secteur(s) d'activité(s) participant au projet Pacte</h4></td>
 		</tr>
@@ -172,20 +172,20 @@
 		</tr>
 	</table><br /><br />
 	<h4>Calendrier de mise en oeuvre</h4>
-	<table cellpadding="0" cellspacing="0" class="table" width='80%'>	
+	<table cellpadding="0" cellspacing="0" class="table" width='100%'>
 		<thead>
 			<tr>
-				<th width='40%'>Libellé</th>
-				<th width='30%'>Date</th>
-				<th width='30%'>Date</th>
+				<th width='40%'><h5>Libellé</h5></th>
+				<th width='30%'><h5>Date</h5></th>
+				<th width='30%'><h5>Date</h5></th>
 			</tr>
 		<thead>
 		<tbody>    
 		<?php foreach ($calendriers as $calendrierProjet): ?>
 			<tr>
-		    	<td><?= $calendrierProjet->libelle ?></td>
-	            <td><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_debut) ?></td>		
-	            <td><?= $calendrierProjet->mois_fin." ".$this->Number->format($calendrierProjet->annee_fin) ?></td>		           
+		    	<td><h5><?= $calendrierProjet->libelle ?></h5></td>
+	            <td><h5><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_debut) ?></h5></td>		
+	            <td><h5><?= $calendrierProjet->mois_fin." ".$this->Number->format($calendrierProjet->annee_fin) ?></h5></td>		           
 		    </tr>
 		 <?php endforeach; ?>          
 		</tbody>
@@ -194,7 +194,7 @@
 <div class="blocblanc">
 	<h2>Diagnostic</h2>
     <h3>Le projet d'équipe</h3>
-    <table  cellpadding="0" cellspacing="0" class="table" width='80%'>		
+	<table cellpadding="0" cellspacing="0" class="table" width='100%'>	
 		<tr>
 			<td><h4>Intitulé du projet</h4></td>
 		</tr>
@@ -209,18 +209,18 @@
 		</tr>
 	</table>   	
 	<h3>Fonctionnement d'équipe</h3>
-	<table cellpadding="0" cellspacing="0" class="table table-striped">
+	<table cellpadding="0" cellspacing="0" class="table" width='100%'>
 	    <thead>
 	        <tr align='center'>
-	            <th width='15%'>Outils</th>
-	            <th width='40%'>Votre Synthèse</th>
+	            <th width='15%'><h5>Outils</h5></th>
+	            <th width='40%'><h5>Votre Synthèse</h5></th>
 	        </tr>
 	    </thead>
 	    <tbody>
 	    <?php foreach ($evaluations as $evaluation): ?>
 	        <tr>
-	            <td><?= h($evaluation->name) ?></td>
-	            <td><?= h($evaluation->synthese) ?></td>
+	            <td><h5><?= h($evaluation->name) ?></h5></td>
+	            <td><h5><?= h($evaluation->synthese) ?></h5></td>
 	        </tr>
 	
 	    <?php endforeach; ?>
@@ -233,67 +233,61 @@
 	<?php 
 	if($planAction) {
 		if($planAction->is_has == 1 ) {    ?> 
-					<table cellpadding="0" cellspacing="0" class="table table-striped">
-				    <thead>
-				        <tr align='center'>
-				            <th width='5%'>N°</th>
-				            <th width='10%'>Libellé</th>
-				            <th width='10%'>Pilote</th>
-				            <th width='10%'>Echéance</th>
-				            <th width='10%'>Etat</th>
-				            <th width='10%'>Indicateur</th>
-				            <th width='10%'>Type indicateur</th>
-				            <th width='10%'>Modalité de suivi</th>
-				            <th width='10%'>Résultat</th>
-				        </tr>
-				    </thead>
-				    <tbody>
+			<table cellpadding="0" cellspacing="0" class="table" width='100%'>
+			    <thead>
+			        <tr align='center'>
+			            <th width='5%'><h5>N°</h5></th>
+			            <th width='15%'><h5>Libellé</h5></th>
+			            <th width='10%'><h5>Pilote</h5></th>
+			            <th width='10%'><h5>Echéance</h5></th>
+			            <th width='10%'><h5>Etat</h5></th>
+			            <th width='10%'><h5>Indicateur</h5></th>
+			            <th width='10%'><h5>Type indicateur</h5></th>
+			            <th width='15%'><h5>Modalité de suivi</h5></th>
+			            <th width='15%'><h5>Résultat</h5></th>
+			        </tr>
+			    </thead>
+			    <tbody>
     				<?php foreach ($etapePlanActions as $etapePlanAction): ?>
     				
-				        <tr>
-				            <td><?= $this->Number->format($etapePlanAction->numero) ?></td>
-            				<td><?= $etapePlanAction->name ?></td>
-           					<td><?= h($etapePlanAction->pilote) ?></td>
-           					<td><?= h($etapePlanAction->mois)." ".$this->Number->format($etapePlanAction->annee) ?></td>
-            				<td><?= h($etapePlanAction->etat) ?></td>
-            				<td><?= h($etapePlanAction->indicateur) ?></td>
-		            <td>
-		            <?php
-		            //echo $etapePlanAction->has('TypeIndicateur');
-		            echo h($etapePlanAction->type_indicateur['name']);
-		            ?>
-            
-				            </td>
-            				<td><?= h($etapePlanAction->modalite_suivi) ?></td>
-            				<td><?= h($etapePlanAction->resultat) ?></td>				            
-		        </tr>
+			        <tr>
+			            <td><h5><?= $this->Number->format($etapePlanAction->numero) ?></h5></td>
+            			<td><h5><?= $etapePlanAction->name ?></h5></td>
+           				<td><h5><?= h($etapePlanAction->pilote) ?></h5></td>
+           				<td><h5><?= h($etapePlanAction->mois)." ".$this->Number->format($etapePlanAction->annee) ?></h5></td>
+            			<td><h5><?= h($etapePlanAction->etat) ?></h5></td>
+            			<td><h5><?= h($etapePlanAction->indicateur) ?></h5></td>
+	            		<td><h5><?= h($etapePlanAction->type_indicateur['name']) ?></h5></td>
+            			<td><h5><?= h($etapePlanAction->modalite_suivi) ?></h5></td>
+            			<td><h5><?= h($etapePlanAction->resultat) ?></h5></td>				            
+		        	</tr>
 		
-		    <?php endforeach; ?>
-		    </tbody>
-		</table>
+		    	<?php endforeach; ?>
+		    	</tbody>
+			</table>
 		<?php 
 		} else {
-			echo "<p>Le plan d'action est géré hors Modèle HAS</p>";
+			echo "<p>Le plan d'action est géré hors Modèle HAS</p><br /><br />";
 		}
 	} else {
-		echo "<p>Aucun plan d'action n'est définis pour cette démarche</p>";
+		echo "<p>Aucun plan d'action n'est définis pour cette démarche</p><br /><br />";
 	}
 	?>
 	<h3>Evaluation à T0</h3>
-		<table cellpadding="0" cellspacing="0" class="table table-striped">
-		    <thead>
-		        <tr align='center'>
-		            <th width='15%'>Outils</th>
-		            <th width='40%'>Evolutions des résultats intermédiares / Points forts et axes d'amélioration identifiés</th>
-		        </tr>
-		    </thead>
-		    <tbody>
-    		<?php foreach ($mesures as $mesure): ?>
-	        <tr>
-	            <td><?= h($mesure->name) ?></td>
-	            <td><?= h($mesure->resultat) ?></td>
+	<table cellpadding="0" cellspacing="0" class="table" width='100%'>
+		<thead>
+	       <tr align='center'>
+		       	<th width='35%'><h5>Outils</h5></th>
+	    		<th width='65%'><h5>Evolutions des résultats intermédiares / Points forts et axes d'amélioration identifiés</h5></th>
+		   	</tr>
+		</thead>
+		<tbody>
+    	<?php foreach ($mesures as $mesure): ?>
+	     	<tr>
+	            <td><h5><?= h($mesure->name) ?></h5></td>
+	            <td><h5><?= h($mesure->resultat) ?></h5></td>
 	        </tr>	
-	    	<?php endforeach; ?>
+	    <?php endforeach; ?>
 	    </tbody>
 	</table>			
 </div>

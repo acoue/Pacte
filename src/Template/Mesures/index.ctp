@@ -31,11 +31,11 @@
 				            <td><?= h($mesure->resultat) ?></td>
 				            <td><?= h($mesure->file) ?></td>
 				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $mesure->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);?>
+				                ['class' => 'tip','title'=>'Supprimer', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);?>
 				          </td>
 				        </tr>
 				
@@ -52,9 +52,10 @@
 		<?php
 		$session = $this->request->session();
 		if($session->read('Equipe.Diagnostic') == '0') {
-			echo $this->Html->link(__('Suite'),['controller'=>'mesures', 'action'=>'validate'],['class'=>'btn btn-default']);
-			echo "&nbsp;&nbsp;";
 			echo $this->Html->link(__('Retour'),['controller'=>'planactions', 'action'=>'index'],['class'=>'btn btn-info']);
+			echo "&nbsp;&nbsp;";
+			echo $this->Html->link(__('Suite'),['controller'=>'mesures', 'action'=>'validate'],['class'=>'btn btn-default']);
+			
 		}
 			?>
 		</p>

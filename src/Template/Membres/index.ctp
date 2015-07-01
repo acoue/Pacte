@@ -53,12 +53,12 @@ else if ($comite == '0' && $type == 0) echo  "<h3>Membres de l'équipe</h3>";
 				            <td><?= h($membre->fonction) ?></td>
 				            <td><?= h($membre->service) ?></td>
 				            <td class="actions">
-							<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view/'.$membre->id.'/'.$comite.'/'.$type], array('escape' => false)); ?>&nbsp;&nbsp;
-							<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit/'.$membre->id.'/'.$comite.'/'.$type], array('escape' => false)); ?>&nbsp;&nbsp;     
+							<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view/'.$membre->id.'/'.$comite.'/'.$type], ['title'=>'Visualiser','escape' => false]); ?>&nbsp;&nbsp;
+							<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit/'.$membre->id.'/'.$comite.'/'.$type], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 							<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete/'.$membre->id.'/'.$comite.'/'.$type],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer Le membre ?']);?>
+				                ['class' => 'tip','title'=>'Supprimer', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer Le membre ?']);?>
 				            </td>
 				        </tr>
 				    <?php endforeach; ?>
@@ -171,9 +171,9 @@ else echo "<h4 class='modal-title'>Ajout d'un membre</h4>";
 			  	<p align='left'><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>    		
 			</div>
 			<div class="modal-footer">
+		  		<button data-dismiss="modal" class="btn btn-info" type="button">Fermer</button>
 				<?= $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
 		    	<?= $this->Form->end() ?>
-		  		<button data-dismiss="modal" class="btn btn-info" type="button">Fermer</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

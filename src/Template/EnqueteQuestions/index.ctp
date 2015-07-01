@@ -32,12 +32,12 @@
 				            <td><?= htmlspecialchars($msg) ?></td>
 				            <td><?= $this->Number->format($question->ordre) ?></td>
 				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $question->id], array('escape' => false)); ?>&nbsp;&nbsp;
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $question->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $question->id], ['title'=>'Visualiser la question','escape' => false]); ?>&nbsp;&nbsp;
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $question->id], ['title'=>'Editer la question','escape' => false]); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $question->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer {0} ?']);?>
+				                ['class' => 'tip', 'escape'   => false, 'title'=>'Supprimer la question','confirm'  => 'Etes-vous sûr de supprimer {0} ?']);?>
 				          </td>
 				        </tr>
 				

@@ -187,6 +187,7 @@ class EquipesController extends AppController
     		//Conception PDF
      		$CakePdf = new \CakePdf\Pdf\CakePdf();
     		$CakePdf->template('recapitulatif', 'visualisationExpert');
+   			$CakePdf->title("Pacte - Etat");
     		$CakePdf->viewVars([
     							'equipe' => $equipe,
     							'demarche' => $demarche,
@@ -211,7 +212,7 @@ class EquipesController extends AppController
     		
     		$this->autoRender = false;
     		$this->response->type('application/pdf');
-    		$this->response->file(DATA . 'pdf' . DS . $filename, array('download' => false, 'name' => 'foo'));
+    		$this->response->file(DATA . 'pdf' . DS . $filename, ['download' => true, 'name' => date('Y-m-d').'_Pacte_Récapitulatif.pdf']);
     		return $this->response;
     		
     	} 

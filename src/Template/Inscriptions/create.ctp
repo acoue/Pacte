@@ -145,8 +145,8 @@ else $formulaire = null;
 		  <div class="col-md-1"></div>
 	  </div><br /><br />
 	<p align="center">
-		<?= $this->Form->button('Poursuivre', ['type' => 'submit','class' => 'btn btn-default']) ?>
 		<?= $this->Html->link('Retour', '/Inscriptions/index', ['class' => 'btn btn-info']);?>
+		<?= $this->Form->button('Poursuivre', ['type' => 'submit','class' => 'btn btn-default']) ?>
 	</p>
 	<?= $this->Form->end() ?>
 	</div>

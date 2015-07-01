@@ -25,10 +25,10 @@
 						            <td><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_debut) ?></td>	
 						            <td><?= $calendrierProjet->mois_fin." ".$this->Number->format($calendrierProjet->annee_fin) ?></td>						            
 						            <td class="actions">
-						            <?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'CalendrierProjets','action' => 'edit', $calendrierProjet->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+						            <?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'CalendrierProjets','action' => 'edit', $calendrierProjet->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 									<?= $this->Form->postLink('<span><i class="glyphicon glyphicon-trash"></i></span>',
 							                ['controller'=>'CalendrierProjets','action' => 'delete', $calendrierProjet->id],
-							                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);?>
+							                ['class' => 'tip', 'title'=>'Supprimer','escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);?>
 							    	</td>
 						        </tr>
 						
@@ -49,9 +49,9 @@
     	//Si toujours en phase d'engagement
     	$session = $this->request->session();
     	if($session->read('Equipe.Engagement') == '0') {
-    		echo $this->Html->link(__('Terminer la phase d\'engagement'),['controller'=>'projets', 'action'=>'validate'],['class'=>'btn btn-default']);
-    		echo "&nbsp;&nbsp;";
     		echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'index'],['class'=>'btn btn-info']);
+    		echo "&nbsp;&nbsp;";
+    		echo $this->Html->link(__('Terminer la phase d\'engagement'),['controller'=>'projets', 'action'=>'validate'],['class'=>'btn btn-default']);
     	}
     ?>			
 	</p>	

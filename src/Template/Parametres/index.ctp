@@ -21,11 +21,11 @@
 				            <td><?= h($parametre->description) ?></td>
 				            <td><?= h($parametre->valeur) ?></td>
 				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $parametre->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $parametre->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $parametre->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer {0} ?']);?>
+				                ['class' => 'tip', 'title'=>'Supprimer','escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer {0} ?']);?>
 				          </td>
 				        </tr>
 				

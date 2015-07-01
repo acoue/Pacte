@@ -19,11 +19,11 @@
 				            <td><?= $this->Number->format($typeIndicateur->id) ?></td>
 				            <td><?= h($typeIndicateur->name) ?></td>
 				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $typeIndicateur->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $typeIndicateur->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $typeIndicateur->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer le type d\'indicateur ?']);?>
+				                ['class' => 'tip','title'=>'Supprimer', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer le type d\'indicateur ?']);?>
 				          </td>
 				        </tr>
 				

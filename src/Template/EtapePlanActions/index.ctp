@@ -39,11 +39,11 @@
             				<td><?= h($etapePlanAction->modalite_suivi) ?></td>
             				<td><?= h($etapePlanAction->resultat) ?></td>
 				            <td class="actions">
-							<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $etapePlanAction->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+							<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $etapePlanAction->id], ['escape' => false,'title'=>'Editer']); ?>&nbsp;&nbsp;     
 							<?= $this->Form->postLink(
 							                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 							                ['action' => 'delete', $etapePlanAction->id],
-							                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);?>
+							                ['class' => 'tip', 'escape'   => false, 'title'=>'Supprimer','confirm'  => 'Etes-vous sûr de supprimer ?']);?>
 				          </td>
 				        </tr>
 				

@@ -349,9 +349,9 @@
     	
     	
     	echo "<p align='center'>";
-    	echo $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']);
-		echo "&nbsp;&nbsp;&nbsp;";
 		echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'index'],['class'=>'btn btn-info']);
+		echo "&nbsp;&nbsp;&nbsp;";
+    	echo $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']);
 		echo "</p>";
 		echo $this->Form->end(); 
  } ?>

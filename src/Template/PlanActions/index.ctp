@@ -35,9 +35,9 @@
 				<?php
 					$session = $this->request->session();
 					if($session->read('Equipe.Diagnostic') == '0') {
-						echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);
-						echo "&nbsp;&nbsp;";
 						echo $this->Html->link(__('Retour'),['controller'=>'Evaluations', 'action'=>'index'],['class'=>'btn btn-info']);
+						echo "&nbsp;&nbsp;";
+						echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);						
 						echo $this->Form->end();
 					}?>
 				</p>

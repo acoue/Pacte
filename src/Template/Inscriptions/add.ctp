@@ -72,9 +72,9 @@ else $id_etablissement = "";
 		  <div class="col-md-2"></div>
 	  </div><br /><br />
 	<p align="center">
+		<?= $this->Html->link('Retour', '/Inscriptions/index', ['class' => 'btn btn-info']);?>
 		<?= $this->Form->button('Poursuivre', ['type' => 'submit','class' => 'btn btn-default']) ?>
 		<?= $this->Form->end() ?>
-		<?= $this->Html->link('Retour', '/Inscriptions/index', ['class' => 'btn btn-info']);?>
 	</p>
 	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
 	</div>

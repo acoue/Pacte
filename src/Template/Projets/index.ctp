@@ -23,11 +23,11 @@
 							    	<tr>
 							    		<td><?= h($description->fonction->name) ?></td>
 			            				<td><?= h($description->nb_etp) ?></td>
-							            <td class="actions"><?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'descriptions','action' => 'edit', $description->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+							            <td class="actions"><?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'descriptions','action' => 'edit', $description->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 											<?= $this->Form->postLink(
 								                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 								                ['controller'=>'descriptions','action' => 'delete', $description->id],
-								                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer la description pour cette fonction?']);?>
+								                ['class' => 'tip','title'=>'Supprimer', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer la description pour cette fonction?']);?>
 							          </td>
 							    	</tr>						    
 						    		<?php endforeach; ?>								  
@@ -67,12 +67,12 @@
 							            <td><?= h($membre->fonction) ?></td>
 							            <td><?= h($membre->service) ?></td>	
 							            <td class="actions">
-										<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view/'.$membre->id.'/0/0/projet'], array('escape' => false)); ?>&nbsp;&nbsp;
-										<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'membres','action' => 'edit/'.$membre->id.'/0/0/projet'], array('escape' => false)); ?>&nbsp;&nbsp;     
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view/'.$membre->id.'/0/0/projet'], ['title'=>'Visualiser','escape' => false]); ?>&nbsp;&nbsp;
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'membres','action' => 'edit/'.$membre->id.'/0/0/projet'],  ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 										<?= $this->Form->postLink(
 							                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 							                ['controller'=>'membres','action' => 'delete/'.$membre->id.'/0/0/projet'],
-							                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer le membre ?']);?>
+							                ['class' => 'tip',  'title'=>'Supprimer','escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer le membre ?']);?>
 							            </td>		            
 							        </tr>
 							    <?php endforeach; ?>  
@@ -106,12 +106,12 @@
 							            <td><?= h($comite->fonction) ?></td>
 							            <td><?= h($comite->service) ?></td>		
 							            <td class="actions">
-										<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view/'.$membre->id.'/1/0/projet'], array('escape' => false)); ?>&nbsp;&nbsp;
-										<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'membres','action' => 'edit/'.$membre->id.'/1/0/projet'], array('escape' => false)); ?>&nbsp;&nbsp;     
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view/'.$membre->id.'/1/0/projet'],  ['title'=>'Visualiser','escape' => false]); ?>&nbsp;&nbsp;
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'membres','action' => 'edit/'.$membre->id.'/1/0/projet'],  ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 										<?= $this->Form->postLink(
 							                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 							                ['controller'=>'membres','action' => 'delete/'.$membre->id.'/1/0/projet'],
-							                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer le membre ?']);?>
+							                ['class' => 'tip',  'title'=>'Supprimer','escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer le membre ?']);?>
 							            </td>		      		           
 							        </tr>
 							    <?php endforeach; ?>    

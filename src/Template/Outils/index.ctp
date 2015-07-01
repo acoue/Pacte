@@ -22,12 +22,12 @@
 				            <td><?php if(h($outil->type) == "cle") echo "Outils clé en main";
 				            		 else echo "Outils pédagogiques"; ?></td>
 				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $outil->id], array('escape' => false)); ?>&nbsp;&nbsp;
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $outil->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $outil->id], ['title'=>'Visualiser','escape' => false]); ?>&nbsp;&nbsp;
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $outil->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $outil->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer l\'outil ?']);?>
+				                ['class' => 'tip', 'title'=>'Supprimer', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer l\'outil ?']);?>
 				          </td>
 				        </tr>
 				

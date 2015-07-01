@@ -1,41 +1,50 @@
-<div class="actions columns large-2 medium-3">
-    <h3><?= __('Actions') ?></h3>
-    <ul class="side-nav">
-        <li><?= $this->Html->link(__('New Fonction'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Membres'), ['controller' => 'Membres', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Membre'), ['controller' => 'Membres', 'action' => 'add']) ?> </li>
-    </ul>
+<div class="blocblanc">
+	<h2>Administration</h2>
+    <h3>Fonctions</h3>
+	<div class="blocblancContent">
+		<div class="row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10"> 
+				<table cellpadding="0" cellspacing="0" class="table table-striped">
+				    <thead>
+				        <tr align='center'>
+				            <th width='10%'><?= $this->Paginator->sort('id') ?></th>
+				            <th width='10%'><?= $this->Paginator->sort('name') ?></th>
+				            <th  width='20%' class="actions"><?= __('Actions') ?></th>
+				        </tr>
+				    </thead>
+				    <tbody> 
+				    <?php foreach ($fonctions as $fonction): ?>
+				        <tr>
+				            <td><?= $this->Number->format($fonction->id) ?></td>
+				            <td><?= h($fonction->name) ?></td>				           
+				            <td class="actions">
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $fonction->id], ['title'=>'Visualiser','escape' => false]); ?>&nbsp;&nbsp;
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $fonction->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
+				<?= $this->Form->postLink(
+				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
+				                ['action' => 'delete', $fonction->id],
+				                ['class' => 'tip', 'escape'   => false, 'title'=>'Supprimer la question','confirm'  => 'Etes-vous sûr de supprimer {0} ?']);?>
+				          </td>
+				        </tr>
+				
+				    <?php endforeach; ?>
+				    </tbody>
+				   </table>
+					<div class="paginator">
+				        <ul class="pagination">
+				            <?= $this->Paginator->prev('< ' . __('Préc.')) ?>
+				            <?= $this->Paginator->numbers() ?>
+				            <?= $this->Paginator->next(__('Suiv.') . ' >') ?>
+				        </ul>
+				        <p><?= $this->Paginator->counter() ?></p>
+				    </div>
+				</div>						
+			<div class="col-md-1"></div>
+		</div>
+		<p align="center">
+			<?= $this->Html->link(__('Créer une question'), ['action' => 'add'], ['class'=>'btn btn-default']) ?>
+		</p>
+	</div>
 </div>
-<div class="fonctions index large-10 medium-9 columns">
-    <table cellpadding="0" cellspacing="0">
-    <thead>
-        <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('name') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($fonctions as $fonction): ?>
-        <tr>
-            <td><?= $this->Number->format($fonction->id) ?></td>
-            <td><?= h($fonction->name) ?></td>
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $fonction->id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $fonction->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $fonction->id], ['confirm' => __('Are you sure you want to delete # {0}?', $fonction->id)]) ?>
-            </td>
-        </tr>
 
-    <?php endforeach; ?>
-    </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-        </ul>
-        <p><?= $this->Paginator->counter() ?></p>
-    </div>
-</div>

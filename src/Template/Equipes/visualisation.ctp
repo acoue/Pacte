@@ -3,14 +3,13 @@
 // die();
 ?>
 
-<p align="center">
-	<?= $this->Html->link('Générer un PDF', ['controller'=>'Equipes', 'action' => 'visualisation/1/'.$equipe->id],['class' => 'btn btn-default', 'target' => '_blank']) ?>
+<p align="center">	
 	<?= $this->Html->link('Retour', '/pages/home', ['class' => 'btn btn-info']);?>
+	<?= $this->Html->link('Générer un PDF', ['controller'=>'Equipes', 'action' => 'visualisation/1/'.$equipe->id],['class' => 'btn btn-default', 'target' => '_blank']) ?>
 </p>
-<p align='center'><h1>Récapitulatif des informations : </h1></p>
+<p align="center"><h1>Récapitulatif des informations : </h1></p>
 <div class="blocblanc">
-<h1><?= $equipe->etablissement->libelle ?> - Equipe <?= $equipe->name?></h1>
-
+	<br /><h1>&nbsp;&nbsp;<?= $equipe->etablissement->libelle ?> - <?= $equipe->name?></h1><br />
 	<h2>Etat de la démarche Pache</h2>
 	<div class="blocblancContent">
 		<div class="row">

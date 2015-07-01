@@ -30,11 +30,11 @@
 				            <td><?= h($evaluation->synthese) ?></td>
 				            <td><?= h($evaluation->file) ?></td>
 				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $evaluation->id], array('escape' => false)); ?>&nbsp;&nbsp;     
+				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $evaluation->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $evaluation->id],
-				                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);?>
+				                ['class' => 'tip', 'escape'   => false, 'title'=>'Supprimer','confirm'  => 'Etes-vous sûr de supprimer ?']);?>
 				          </td>
 				        </tr>
 				
@@ -49,13 +49,13 @@
 		</div>
 		<p align="center">
 		<?php
-		$session = $this->request->session();
-		if($session->read('Equipe.Diagnostic') == '0') {
-			echo $this->Html->link(__('Suite'),['controller'=>'PlanActions', 'action'=>'index'],['class'=>'btn btn-default']);
-			echo "&nbsp;&nbsp;";
-			echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'diagnostic_index'],['class'=>'btn btn-info']);
-		}
-			?>
+			$session = $this->request->session();
+			if($session->read('Equipe.Diagnostic') == '0') {
+				echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'diagnostic_index'],['class'=>'btn btn-info']);
+				echo "&nbsp;&nbsp;";
+				echo $this->Html->link(__('Suite'),['controller'=>'PlanActions', 'action'=>'index'],['class'=>'btn btn-default']);
+			}
+		?>
 		</p>
 	</div>
 </div>

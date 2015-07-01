@@ -31,9 +31,7 @@ class FonctionsController extends AppController
      */
     public function view($id = null)
     {
-        $fonction = $this->Fonctions->get($id, [
-            'contain' => ['Membres']
-        ]);
+        $fonction = $this->Fonctions->get($id);
         $this->set('fonction', $fonction);
         $this->set('_serialize', ['fonction']);
     }
@@ -49,10 +47,10 @@ class FonctionsController extends AppController
         if ($this->request->is('post')) {
             $fonction = $this->Fonctions->patchEntity($fonction, $this->request->data);
             if ($this->Fonctions->save($fonction)) {
-                $this->Flash->success('The fonction has been saved.');
+                $this->Flash->success('La fonction a bien été sauvegardée.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The fonction could not be saved. Please, try again.');
+                $this->Flash->error('Erreur dans la sauvegarde de la fonction.');
             }
         }
         $this->set(compact('fonction'));
@@ -74,10 +72,10 @@ class FonctionsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $fonction = $this->Fonctions->patchEntity($fonction, $this->request->data);
             if ($this->Fonctions->save($fonction)) {
-                $this->Flash->success('The fonction has been saved.');
+                $this->Flash->success('La fonction a bien été sauvegardée.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The fonction could not be saved. Please, try again.');
+                $this->Flash->error('Erreur dans la sauvegarde de la fonction.');
             }
         }
         $this->set(compact('fonction'));
@@ -96,9 +94,9 @@ class FonctionsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $fonction = $this->Fonctions->get($id);
         if ($this->Fonctions->delete($fonction)) {
-            $this->Flash->success('The fonction has been deleted.');
+            $this->Flash->success('La fonction a bien été supprimée.');
         } else {
-            $this->Flash->error('The fonction could not be deleted. Please, try again.');
+            $this->Flash->error('Erreur dans la suppression de la fonction.');
         }
         return $this->redirect(['action' => 'index']);
     }

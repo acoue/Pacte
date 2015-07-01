@@ -353,6 +353,7 @@ class ProjetsController extends AppController
     	//Conception PDF    	
     	$CakePdf = new \CakePdf\Pdf\CakePdf();
    		$CakePdf->template('recapitulatif', 'default'); 
+   		$CakePdf->title("Pacte - Engagement");
    		$CakePdf->viewVars(['demarche'=>$demarche,
    					   		'equipe'=>$equipe,
    					   		'projet'=>$projet,

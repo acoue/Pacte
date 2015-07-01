@@ -44,11 +44,11 @@
 				            <td><?= $enquete->has('fonction') ? $enquete->fonction->name : '' ?></td> 
 				            <td><?= h($enquete->created) ?></td>
 					        <td class="actions">
-							<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $enquete->id], array('escape' => false)); ?>&nbsp;&nbsp;
+							<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $enquete->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;
 							<?= $this->Form->postLink(
 							                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 							                ['action' => 'delete', $enquete->id],
-							                ['class' => 'tip', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer l\'enquête ?']);?>
+							                ['class' => 'tip', 'escape'   => false, 'title'=>'Supprimer','confirm'  => 'Etes-vous sûr de supprimer l\'enquête ?']);?>
 				          </td>
 				        </tr>				
 				    <?php endforeach; ?>

@@ -185,7 +185,14 @@ $(document).ready(function(){
 	$.validate({
 	    form : '#edit_etablissement_form'
     });
-	
+	//Formulaire d'ajout d'une fonction
+	$.validate({
+	    form : '#add_fonction_form'
+    });
+	//Formulaire d'edition d'une fonction
+	$.validate({
+	    form : '#edit_fonction_form'
+    });
 	
 	/*
 	 * Test du mot de passe
