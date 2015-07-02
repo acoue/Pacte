@@ -4,11 +4,13 @@
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
-			<div class="col-md-2">
-			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
-			</div>
     		<?= $this->Form->create($planAction, ['id'=>'edit_plan_form','enctype' => 'multipart/form-data']); ?>
-			<div class="col-md-8"> 			    
+			<div class="col-md-10"> 
+				<div class="row">
+					<div class="col-md-1"></div>
+					<div class="col-md-10">Vous avez choisis d'utiliser votre propre plan d'action ...... </div>
+					<div class="col-md-1"></div>
+				</div><br />	    
 				<div class="row">
                 	<label class="col-md-4 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
@@ -46,8 +48,16 @@
 			<div class="col-md-1"></div>			
 		</div><br /><br />
 	<p align="center">
-		<?= $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
+	<?php
+			$session = $this->request->session();
+			if($session->read('Equipe.Diagnostic') == '1') echo $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']); 
+			echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);
+			?>
+			 
     	<?= $this->Form->end() ?>
+    	<br /><br />
+    	<?= $this->Html->link(__('Supprimer le plan d\'action'), ['controller'=>'PlanActions','action' => 'delete', $planAction->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]) ?>
+		
 	</p>
 	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
 	</div>

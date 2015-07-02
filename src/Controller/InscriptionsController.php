@@ -342,20 +342,24 @@ class InscriptionsController extends AppController
     		}
     	
     	}
+    	//Recuperation de l'email de contact
+    	$this->loadModel('Parametres');
+    	$messageNeSouhaitePasPoursuivre = $this->Parametres->find('all')->where(['name' => 'MessageNeSouhaitePasPoursuivre'])->first();
+    	$messageNiveauCertifBloquant = $this->Parametres->find('all')->where(['name' => 'MessageNiveauCertifBloquant'])->first();
     	
     	if(isset($etat)) {
     		if($etat == '0') {
     			$session = $this->request->session();
     			$session->destroy();
     			//Message
-    			$message = "Vous ne souhaitez pas poursuivre";
+    			$message = $messageNeSouhaitePasPoursuivre->valeur;
     			$this->set(compact('message'));
     			$this->render('validate_refus');
     		} else if($etat == '2' ) { //Impossible car niveau de certification de l'ES bloquant
     			$session = $this->request->session();
     			$session->destroy();
     			//Message     			
-    			$message = "Le niveau de certification de l'établissement ne permet pas de continuer la démarche Pacte";
+    			$message = $messageNiveauCertifBloquant->valeur;
     			$this->set(compact('message'));
     			$this->render('validate_refus');
     		} else if($etat == '3') { //Erreur sur l'etude du questionnaire
@@ -495,11 +499,17 @@ class InscriptionsController extends AppController
 		    	$this->redirect(['controller' => 'Inscriptions', 'action' => 'validate', '2']);
 		    }		    
 		    
+		    //Recuperation de l'email de contact
+		    $this->loadModel('Parametres');
+		    $messageTitreQuestionnaire = $this->Parametres->find('all')->where(['name' => 'MessageTitreQuestionnaire'])->first();
+		    
+		    
 		    $this->set(compact('etablissement'));
 	    	//Récupération des questions
 		    $this->loadModel('Questions');
 		    $questions = $this->Questions->find('all')->order(['ordre' => 'asc']);
 			$this->set(compact('questions'));
+			$this->set(compact('messageTitreQuestionnaire'));
 	    }
 	    
     }

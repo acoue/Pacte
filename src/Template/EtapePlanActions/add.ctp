@@ -26,18 +26,20 @@
                     										'required' =>'required']); ?>
                     </div>                          
 				</div><br />    
+				<?php 
+				$mois = ['janvier'=>'janvier','Février'=>'Février','Mars'=>'Mars','Avril'=>'Avril','Mai'=>'Mai','Juin'=>'Juin',
+						'Juillet'=>'Juillet','Août'=>'Août','Septembre'=>'Septembre','Octobre'=>'Octobre','Novembre'=>'Novembre','Décembre'=>'Décembre'];
+				?>	
 				<div class="row">
-                	<label class="col-md-4 control-label" for="mois">Echéance : Mois <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('mois', ['label' => false,'id'=>'mois',
+                	<label class="col-md-3 control-label" for="mois">Echéance : Mois <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-3"><?= $this->Form->input('mois', ['label' => false,'id'=>'mois',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text', 
+                    										'options'=>$mois, 
                     										'required' =>'required']); ?>
-                    </div>                          
-				</div><br />    
-				<div class="row">
-                	<label class="col-md-4 control-label" for="annee">Echéance : Année <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('annee', ['label' => false,'id'=>'annee',
+                    </div>     
+                	<label class="col-md-3 control-label" for="annee">Echéance : Année <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-3"><?= $this->Form->input('annee', ['label' => false,'id'=>'annee',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 

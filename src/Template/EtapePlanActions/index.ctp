@@ -1,3 +1,4 @@
+
 <div class="blocblanc">
 	<h2>Phase de diagnostic</h2>
     <h3>Objectifs d'amélioration - Modèle HAS</h3>
@@ -21,7 +22,6 @@
 				    </thead>
 				    <tbody>
     				<?php foreach ($etapePlanActions as $etapePlanAction): ?>
-    				
 				        <tr>
 				            <td><?= $this->Number->format($etapePlanAction->numero) ?></td>
             				<td><?= $etapePlanAction->name ?></td>
@@ -51,17 +51,23 @@
 				    </tbody>
 				</table><br /><br />	
 				<p align="center">			
-					<?= $this->Html->link(__('Ajouter'),['action'=>'add'],['class'=>'btn btn-info']);?>
+					<?= $this->Html->link(__('Ajouter un objectif'),['action'=>'add'],['class'=>'btn btn-info'])?>						
+				</p>
+				<p align="center">
+					<?= $this->Html->link(__('Supprimer le plan d\'action'), ['controller'=>'PlanActions','action' => 'delete', $plan], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]) ?>
+					<?php
+			$session = $this->request->session();
+			if($session->read('Equipe.Diagnostic') == '0') {
+				echo "<br /><br />";
+				echo $this->Html->link('Retour', ['controller'=>'evaluations','action' => 'index'], ['class' => 'btn btn-info']);
+				echo "&nbsp;&nbsp;";
+				echo $this->Html->link('Suite', ['controller'=>'mesures','action' => 'index'], ['class' => 'btn btn-default']);
+			}
+			?>
+				
+				
 				</p>
 			</div>
 		</div>
 	</div>
-	<p align="center">
-<?php
-	$session = $this->request->session();
-	if($session->read('Equipe.Diagnostic') == '0') {
-		echo $this->Html->link(__('Retour au Plan d\'action'),['controller'=>'PlanActions', 'action'=>'index'],['class'=>'btn btn-default']);
-	}
-?>
-	</p>
 </div>

@@ -29,6 +29,7 @@ class AppController extends Controller
 {
 	
 	public $components = array('RequestHandler');
+	public $helpers = ['AkkaCKEditor.CKEditor'];
     /**
      * Initialization hook method.
      *

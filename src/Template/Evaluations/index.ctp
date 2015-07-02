@@ -1,3 +1,6 @@
+<?php 
+$session = $this->request->session();
+?>
 <div class="blocblanc">
 	<h2>Phase de diagnostic</h2>
     <h3>Fonctionnement d'équipe</h3>
@@ -21,17 +24,20 @@
 				            <td>				            
 							<?php 
 							if(h($evaluation->synthese) && h($evaluation->file)) {
-								echo $this->Html->image('cocheOk.jpg', ['height' => '25px', 'title' => '']);
+								echo $this->Html->image('cocheOk.jpg');
 							} else {
-								echo $this->Html->image('cocheKo.jpg', ['height' => '25px', 'title' => '']);						
+								echo $this->Html->image('cocheKo.jpg');						
 							} ?>				            
 				            </td>
 				            <td><?= h($evaluation->name) ?></td>
 				            <td><?= h($evaluation->synthese) ?></td>
 				            <td><?= h($evaluation->file) ?></td>
 				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $evaluation->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
-				<?= $this->Form->postLink(
+						<?php 
+							if(h($evaluation->file)) echo $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/userDocument/'.$session->read('Auth.User.username').'/'.h($evaluation->file), ['class' => 'titre','target' => '_blank','escape' => false]);
+						?>  
+						<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $evaluation->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
+						<?= $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $evaluation->id],
 				                ['class' => 'tip', 'escape'   => false, 'title'=>'Supprimer','confirm'  => 'Etes-vous sûr de supprimer ?']);?>

@@ -10,6 +10,13 @@ use App\Controller\AppController;
  */
 class ParametresController extends AppController
 {
+	
+	public $paginate = [
+			'order' => [
+					'Parametres.name' => 'asc'
+			]
+	];
+	
 	public function isAuthorized($user)
 	{	
 		return parent::isAuthorized($user);
@@ -35,9 +42,7 @@ class ParametresController extends AppController
      */
     public function view($id = null)
     {
-        $parametre = $this->Parametres->get($id, [
-            'contain' => []
-        ]);
+        $parametre = $this->Parametres->get($id);
         $this->set('parametre', $parametre);
         $this->set('_serialize', ['parametre']);
     }

@@ -76,8 +76,7 @@ else $formulaire = null;
                     										'disabled' => 'disabled']); ?>
                     </div>                          
 				</div><br />
-                <p>Ces quelques questions peuvent vous aider à prendre la décision, pour mieux définir vos besoins avant de vous lancer.
-                Grille d’auto-évaluation sur votre capacité d’engagement. Répondez aux questions ci-dessous et visualiser les résultats</p>
+                <p><?=  $messageTitreQuestionnaire->valeur ?></p>
 
 				<div class="row">
                 	<label class="col-md-4 control-label" for="niveau">Niveau de certification </label>

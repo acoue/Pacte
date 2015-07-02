@@ -42,7 +42,9 @@ class EtapePlanActionsController extends AppController
 
     	$session = $this->request->session();
     	$id_demarche = $session->read('Equipe.Demarche');
-
+		
+    	$this->loadModel('PlanActions');
+    	$plan = $this->PlanActions->find()->where(['PlanActions.demarche_id' => $id_demarche])->first();
 
     	$this->paginate = ['order' => ['numero' => 'asc' ]];
     	
@@ -51,6 +53,8 @@ class EtapePlanActionsController extends AppController
     	->where(['PlanActions.demarche_id' => $id_demarche]);    	
     	$this->set('etapePlanActions', $this->paginate($query));
     	$this->set('_serialize', ['etapePlanActions']);
+    	$this->set('plan', $plan->id);
+    	
     	    	
 //         $this->set('etapePlanActions', $this->paginate($query));
 //         $this->set('_serialize', ['etapePlanActions']);
@@ -79,9 +83,12 @@ class EtapePlanActionsController extends AppController
         	//On retrouve le numero
         	$etape = $this->EtapePlanActions->find()->where(['plan_action_id'=>$planAction->id])
         	->order('numero DESC')->first();
-        	        	
+        	
+			if(!empty($etape)) $numEtape = $etape->numero;
+			else $numEtape=0;
+			        	
         	$etapePlanAction->id = null;
-        	$etapePlanAction->numero = $etape->numero +1;
+        	$etapePlanAction->numero = $numEtape +1;
         	$etapePlanAction->name = $d['name'];
         	$etapePlanAction->pilote = $d['pilote'];
         	$etapePlanAction->mois = $d['mois'];

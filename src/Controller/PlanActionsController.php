@@ -77,11 +77,7 @@ class PlanActionsController extends AppController
         	$this->Flash->error($message);
         	return $this->redirect(['controller'=>'evaluations', 'action' => 'index']);    		
     	}
-    	
-    	
-    	
-    	
-    	
+    	    	
     	//On retrouve les infos du plan d'action
     	$planAction = $this->PlanActions->find('all')
     	->where(['demarche_id'=>$id_demarche])->first();  	
@@ -89,6 +85,12 @@ class PlanActionsController extends AppController
     	//debug( $planAction);die();
         $this->set(compact('planAction'));
         $this->set('_serialize', ['planAction']);
+//debug($planAction);die();
+        if(! empty($planAction)) {
+        	if($planAction->is_has == 0 ) return $this->redirect(['controller'=>'PlanActions','action' => 'edit/'.$planAction->id]);
+        	else return $this->redirect(['controller'=>'EtapePlanActions','action' => 'index']);   
+        }
+        
     }
 
     /**
@@ -163,7 +165,7 @@ class PlanActionsController extends AppController
         	 
         	if ($this->PlanActions->save($planAction)) {
         		$this->Flash->success('Le plan d\'action a bien été sauvegardé.');
-        		return $this->redirect(['action' => 'index']);
+        		return $this->redirect(['controller'=>'Mesures','action' => 'index']);
         	} else {
         		$this->Flash->error('Erreur dans la sauvegarde du plan d\'action.');
         	}
@@ -181,8 +183,9 @@ class PlanActionsController extends AppController
      */
     public function delete($id = null)
     {
+    	
 		$session = $this->request->session();
-        $this->request->allowMethod(['post', 'delete']);
+        //$this->request->allowMethod(['post', 'delete']);
         $planAction = $this->PlanActions->get($id);
 
         //suppression du fichier
@@ -195,9 +198,6 @@ class PlanActionsController extends AppController
         } else {
             $this->Flash->error('Erreur dans la suppression du plan d\'action.');
         }
-        
-        
-        
         
         return $this->redirect(['action' => 'index']);
     }

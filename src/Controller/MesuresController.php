@@ -42,6 +42,28 @@ class MesuresController extends AppController
     	$session = $this->request->session();
     	$id_demarche = $session->read('Equipe.Demarche');
     	
+    	$this->loadModel('PlanActions');
+    	$plan = $this->PlanActions->find('all')
+    	->where(['PlanActions.demarche_id'=>$id_demarche])->first();
+    	
+    	
+    	
+    	
+    	
+    	//Obligatoire libelle et file pour Plan d'action propre A l'equipe    	
+    	if($plan->is_has == '0') {
+    		if(strlen($plan->name) < 1) {
+        		$this->Flash->error('Votre plan d\'action n\'est pas correctement renseigné pour le champ libellé.');
+        		return $this->redirect(['controller'=>'PlanActions','action' => 'index']);
+    		}
+    		if(strlen($plan->file) < 1) {
+    			$this->Flash->error('Merci de renseigner le document pour votre plan d\'action.');
+    			return $this->redirect(['controller'=>'PlanActions','action' => 'index']);
+    		}
+    	} 
+    	
+    	
+    	
     	 
     	$query = $this->Mesures->find('all')
     	->contain(['Demarches'])

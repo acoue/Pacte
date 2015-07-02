@@ -21,9 +21,9 @@
 				            <td>				            
 							<?php 
 							if(h($mesure->resultat) && h($mesure->file)) {
-								echo $this->Html->image('cocheOk.jpg', ['height' => '25px', 'title' => '']);
+								echo $this->Html->image('cocheOk.jpg');
 							} else {
-								echo $this->Html->image('cocheKo.jpg', ['height' => '25px', 'title' => '']);						
+								echo $this->Html->image('cocheKo.jpg');						
 							}
 							?>				            
 				            </td>
@@ -52,7 +52,7 @@
 		<?php
 		$session = $this->request->session();
 		if($session->read('Equipe.Diagnostic') == '0') {
-			echo $this->Html->link(__('Retour'),['controller'=>'planactions', 'action'=>'index'],['class'=>'btn btn-info']);
+			echo $this->Html->link(__('Retour'),['controller'=>'PlanActions', 'action'=>'index'],['class'=>'btn btn-info']);
 			echo "&nbsp;&nbsp;";
 			echo $this->Html->link(__('Suite'),['controller'=>'mesures', 'action'=>'validate'],['class'=>'btn btn-default']);
 			

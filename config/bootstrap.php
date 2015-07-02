@@ -181,6 +181,7 @@ Request::addDetector('tablet', function ($request) {
 
 Plugin::load('Migrations');
 Plugin::load('CakePdf', array('bootstrap' => true, 'routes' => true));
+Plugin::load('AkkaCKEditor', ['bootstrap' => false, 'routes' => true]);
 
 Configure::write('CakePdf', [
 				 'engine' => ['className' => 'CakePdf.WkHtmlToPdf',

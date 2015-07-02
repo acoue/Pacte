@@ -19,7 +19,7 @@
 				        <tr>
 				            <td><?= h($parametre->name) ?></td>
 				            <td><?= h($parametre->description) ?></td>
-				            <td><?= h($parametre->valeur) ?></td>
+				            <td><?= $this->Text->excerpt(h($parametre->valeur),'method',200) ?></td>
 				            <td class="actions">
 				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $parametre->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(

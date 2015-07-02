@@ -33,7 +33,7 @@ $cakeDescription = 'Pacte ';
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>  
-    
+    <?= $this->CKEditor->loadJs() ?>
 </head>
 <body>
     <div id="main">
