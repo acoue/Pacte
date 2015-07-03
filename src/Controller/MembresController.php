@@ -44,7 +44,7 @@ class MembresController extends AppController
     	
 		//Liste des membres
         $session = $this->request->session();
-    	
+         
         if($type == 1 ) { //Membre referents
 	    	$membres = $this->Membres->find('all')
 	    	->contain(['Demarches', 'Responsabilites'])
@@ -59,8 +59,14 @@ class MembresController extends AppController
     	if($type==1) $responsabilites = $this->Membres->Responsabilites->find('list')->where(['online'=>1,' id >'=>'1']);
     	else $responsabilites = $this->Membres->Responsabilites->find('list')->where(['online'=>1]);
     	
+
+    	$this->loadModel('Parametres');
+    	//Message
+    	$messageReferent = $this->Parametres->find('all')->where(['name' => 'MessageAccueilReferent'])->first();
+    	$messageMembre = $this->Parametres->find('all')->where(['name' => 'MessageAccueilMembre'])->first();
+    	$messageComite = $this->Parametres->find('all')->where(['name' => 'MessageAccueilComite'])->first();
     	
-    	$this->set(compact('demarches', 'responsabilites', 'comite', 'type'));    	
+    	$this->set(compact('demarches', 'responsabilites', 'comite', 'type','messageReferent','messageMembre','messageComite'));    	
         $this->set('membres', $membres);
         $this->set('_serialize', ['membres']);
     }

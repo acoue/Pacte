@@ -1,7 +1,13 @@
 <div class="blocblanc">
 	<h2>Phase de mise en oeuvre et de suivi</h2>
     <h3>Enquêtes de satisfactyion</h3>    
-	<div class="blocblancContent">
+	<div class="blocblancContent"> 
+		<div class="row"> 
+			<div class="col-md-1"></div>
+			<div class="col-md-11">
+			<?= $message->valeur ?>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10"> 				

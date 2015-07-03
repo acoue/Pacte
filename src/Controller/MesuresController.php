@@ -13,10 +13,10 @@ class MesuresController extends AppController
 {
 	public function initialize() {
 		parent::initialize();
-		//Menu et sous-menu
-		$session = $this->request->session();
-		$session->write('Progress.Menu','2');
-		$session->write('Progress.SousMenu','4');
+// 		//Menu et sous-menu
+// 		$session = $this->request->session();
+// 		$session->write('Progress.Menu','2');
+// 		$session->write('Progress.SousMenu','4');
 	}
 	
 	
@@ -62,14 +62,16 @@ class MesuresController extends AppController
     		}
     	} 
     	
-    	
-    	
-    	 
+    	//Message
+    	$this->loadModel('Parametres');
+    	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEvaluation'])->first();
+    	    	 
     	$query = $this->Mesures->find('all')
     	->contain(['Demarches'])
     	->where(['Mesures.demarche_id' => $id_demarche]);    	
         $this->set('mesures', $this->paginate($query));
-        $this->set('_serialize', ['mesures']);    	
+        $this->set('_serialize', ['mesures']);    
+    	$this->set('message', $message);	
     	
     }
 

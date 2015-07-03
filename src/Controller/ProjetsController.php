@@ -39,7 +39,7 @@ class ProjetsController extends AppController
      */
     public function index()
     {
-    	$session = $this->request->session();
+    	$session = $this->request->session();    	
     	$id_demarche = $session->read('Equipe.Demarche');
    	
     	//On retrouve les infos du projet
@@ -111,7 +111,12 @@ class ProjetsController extends AppController
     	$calendriers = $this->CalendrierProjets->find('all')
     	->where(['projet_id' => $projet->id]);
     	 
-    	$this->set(compact('projet','calendriers'));
+    	$this->loadModel('Parametres');
+    	//Message
+    	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilPlanning'])->first();
+    	
+    	
+    	$this->set(compact('projet','calendriers','message'));
     	$this->set('_serialize', ['projet']);
     }
     

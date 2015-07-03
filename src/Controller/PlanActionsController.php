@@ -13,10 +13,10 @@ class PlanActionsController extends AppController
 	public function initialize() {
 		parent::initialize();
 		//Menu et sous-menu
- 		$session = $this->request->session();
- 		$session->write('Progress.Menu','2');
- 		$session->write('Progress.SousMenu','3');
-	}
+//  		$session = $this->request->session();
+//  		$session->write('Progress.Menu','2');
+//  		$session->write('Progress.SousMenu','3');
+ 	}
 	
 	
 	public function isAuthorized($user)
@@ -82,9 +82,16 @@ class PlanActionsController extends AppController
     	$planAction = $this->PlanActions->find('all')
     	->where(['demarche_id'=>$id_demarche])->first();  	
     	
+
+    	//Message
+    	$this->loadModel('Parametres');
+    	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilChoixPlanAction'])->first();
+    	 
+    	
     	//debug( $planAction);die();
         $this->set(compact('planAction'));
         $this->set('_serialize', ['planAction']);
+    	$this->set('message', $message);	
 //debug($planAction);die();
         if(! empty($planAction)) {
         	if($planAction->is_has == 0 ) return $this->redirect(['controller'=>'PlanActions','action' => 'edit/'.$planAction->id]);

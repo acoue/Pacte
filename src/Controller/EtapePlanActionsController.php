@@ -14,9 +14,9 @@ class EtapePlanActionsController extends AppController
 	public function initialize() {
 		parent::initialize();
 		//Menu et sous-menu
-		$session = $this->request->session();
-		$session->write('Progress.Menu','2');
-		$session->write('Progress.SousMenu','3');
+// 		$session = $this->request->session();
+// 		$session->write('Progress.Menu','2');
+// 		$session->write('Progress.SousMenu','3');
 	}
 	
 	
@@ -46,14 +46,19 @@ class EtapePlanActionsController extends AppController
     	$this->loadModel('PlanActions');
     	$plan = $this->PlanActions->find()->where(['PlanActions.demarche_id' => $id_demarche])->first();
 
-    	$this->paginate = ['order' => ['numero' => 'asc' ]];
-    	
+    	$this->paginate = ['order' => ['numero' => 'asc' ]];    	
     	$query = $this->EtapePlanActions->find('all')
     	->contain(['PlanActions','TypeIndicateurs'])
-    	->where(['PlanActions.demarche_id' => $id_demarche]);    	
+    	->where(['PlanActions.demarche_id' => $id_demarche]);
+
+    	//Message
+    	$this->loadModel('Parametres');
+    	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilPlanActionHas'])->first();
+    	
     	$this->set('etapePlanActions', $this->paginate($query));
     	$this->set('_serialize', ['etapePlanActions']);
     	$this->set('plan', $plan->id);
+    	$this->set('message', $message);
     	
     	    	
 //         $this->set('etapePlanActions', $this->paginate($query));

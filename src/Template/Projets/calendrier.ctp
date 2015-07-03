@@ -6,6 +6,12 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
+				<div class="row"> 
+					<div class="col-md-1"></div>
+					<div class="col-md-11">
+					<?= $message->valeur ?>
+					</div>
+				</div><br />
 				<div class="row">				
 					<div class="col-md-10">
 						<table cellpadding="0" cellspacing="0" class="table table-striped" >

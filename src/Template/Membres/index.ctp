@@ -17,19 +17,13 @@ else if ($comite == '0' && $type == 0) echo  "<h3>Membres de l'équipe</h3>";
 		<div class="row"> 
 			<div class="col-md-1"></div>
 			<div class="col-md-11">
-<?php if($comite == 0 && $type == 1) { ?>
-				<p>Constituer une équipe, mettre en place et suivre le programme nécessite un accompagnement et un soutien des professionnels engagés. Des capacités de leadership pour assurer la motivation nécessaire pour mener à bien le programme Pacte et en assurer la viabilité dans le temps, nécessite la désignation : 
-                	<br /> - <strong>D’un binôme (ou trinôme)</strong> représenté de préférence d’un médecin et d’un cadre de santé
-                    <br /> - <strong>D’un facilitateur</strong>, souvent représenté par un coordonnateur de la gestion des risques
-                    <br /> - <strong>D’un animateur pour le CRM Santé</strong>, souvent extérieur à l’établissement de santé et à l’équipe
-                </p>
-<?php } else if($comite == 1) {?>
-				<p>Constituer un comité de pilotage ...</p>
-<?php } else {?>
-				<p>Constituer une équipe, mettre en place et suivre le programme nécessite un accompagnement </p>
-<?php }?>
+<?php 
+if($comite == 0 && $type == 1) echo $messageReferent->valeur;
+else if($comite == 1) echo $messageComite->valeur;
+else echo $messageMembre->valeur;
+?>
 			</div>
-		</div>
+		</div><br />
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-9">

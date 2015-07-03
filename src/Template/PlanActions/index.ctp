@@ -2,11 +2,16 @@
 	<h2>Phase de diagnostic</h2>
     <h3>Objectifs d'amélioration</h3>
 	<div class="blocblancContent">
+		<div class="row"> 
+			<div class="col-md-1"></div>
+			<div class="col-md-11">
+			<?= $message->valeur ?>
+			</div>
+		</div><br />
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10"> 
-			<?php 
-			
+			<?php 			
 			//Si pas de plan d'action 
 			if(empty($planAction)) {
 				echo $this->Form->create('planAction', ['id'=>'add_plan_form','action' => 'add']);

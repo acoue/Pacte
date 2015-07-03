@@ -15,9 +15,9 @@ class EnquetesController extends AppController
 	public function initialize() {
 		parent::initialize();
 		//Menu et sous-menu
-		$session = $this->request->session();
-		$session->write('Progress.Menu','3');
-		$session->write('Progress.SousMenu','1');
+// 		$session = $this->request->session();
+// 		$session->write('Progress.Menu','3');
+// 		$session->write('Progress.SousMenu','1');
 	}
 	
 	
@@ -49,11 +49,16 @@ class EnquetesController extends AppController
     	
     	$queryMax = $this->Enquetes->find('all')
     	->where(['Enquetes.demarche_id' => $id_demarche]);
-    	$dateMax = $queryMax->select(['max' => $query->func()->max('Enquetes.created')]);
+    	$dateMax = $queryMax->select(['max' => $query->func()->max('Enquetes.created')]);    	
+
+    	//Message
+    	$this->loadModel('Parametres');
+    	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEnqueteSatisfaction'])->first();
     	
     	$this->set('enquetes', $this->paginate($query));
         $this->set('dateMax', $dateMax);
-        $this->set('_serialize', ['enquetes']);
+        $this->set('_serialize', ['enquetes']); 
+    	$this->set('message', $message);	
     	
     }
 

@@ -13,9 +13,9 @@ class EvaluationsController extends AppController
 	public function initialize() {
 		parent::initialize();
 		//Menu et sous-menu
- 		$session = $this->request->session();
- 		$session->write('Progress.Menu','2');
- 		$session->write('Progress.SousMenu','2');
+//  		$session = $this->request->session();
+//  		$session->write('Progress.Menu','2');
+//  		$session->write('Progress.SousMenu','2');
 	}
 	
 	public function isAuthorized($user)
@@ -52,10 +52,15 @@ class EvaluationsController extends AppController
     		return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
     	}
     	
+    	//Message
+    	$this->loadModel('Parametres');
+    	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilFonctionnement'])->first();
+    	
     	//$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche])->order('ordre ASC');
     	$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche]);
         $this->set('evaluations', $evaluations);
         $this->set('_serialize', ['evaluations']);
+    	$this->set('message', $message);
     }
     
     /**
