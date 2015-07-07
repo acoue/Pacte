@@ -32,9 +32,9 @@ if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>
 									$dateAffiche = strftime('%d/%m/%y', strtotime($dm->max));
 									//$diffDate =  date_diff(DateTime($dm->max), date('Y-m-d'));
 									if($interval->format('%a') < 365) {
-										echo "<p class='alert alert-info'>Date de la dernière enquête pour le service ".$dm->service." : ".$dateAffiche." - ".$interval->format('%a')." jour(s)</p>";
+										echo "<p class='alert alert-info'>Date de la dernière enquête pour l'équipe ".$dm->service." : ".$dateAffiche." - ".$interval->format('%a')." jour(s)</p>";
 									} else {
-										echo "<p class='alert alert-warning'>Attention : la date de la dernière enquête pour le service ".$dm->service." : ".$dateAffiche." - ".$interval->format('%a')." jours</p>";
+										echo "<p class='alert alert-warning'>Attention : la date de la dernière enquête pour l'équipe ".$dm->service." : ".$dateAffiche." - ".$interval->format('%a')." jours</p>";
 									}
 								endforeach;	
 							} 	
