@@ -84,7 +84,17 @@ class ProjetsController extends AppController
         ->contain(['Fonctions'])
         ->where(['projet_id' => $projet->id]);
         
-        $this->set(compact('projet','membres','membres_comites','descriptions'));
+        //Message
+        $this->loadModel('Parametres');
+        $messageDescription = $this->Parametres->find('all')->where(['name' => 'MessageDescriptionEquipe'])->first();
+        $messageMission = $this->Parametres->find('all')->where(['name' => 'MessageMissionVisionValeur'])->first();
+        $messageSecteur = $this->Parametres->find('all')->where(['name' => 'MessageSecteurActivite'])->first();
+        $messageProjet = $this->Parametres->find('all')->where(['name' => 'MessageDefinitionProjet'])->first();
+        $messageCommunication = $this->Parametres->find('all')->where(['name' => 'MessageModaliteCommunication'])->first();
+         
+        
+        
+        $this->set(compact('projet','membres','membres_comites','descriptions','messageDescription','messageMission','messageSecteur','messageProjet','messageCommunication'));
         $this->set('_serialize', ['projet']);
     }
     
@@ -273,6 +283,7 @@ class ProjetsController extends AppController
 		    		
 		    		//Creation du repertoire pour le depot des document de l'equipe
 		    		$structure = DATA.'userDocument'.DS.$session->read('Auth.User.username');
+		    		if(file_exists($structure)) unlink($structure);
 		    		mkdir($structure, 0777, true);	    			 
 		    				
 	    		} else {
@@ -291,8 +302,11 @@ class ProjetsController extends AppController
 	    		}
     		}
     	}	
-
-    	$this->set(compact('demarche','equipe','projet','reponses','membres_referents','membres','membres_comites','descriptions','calendriers'));
+    	//Message
+    	$this->loadModel('Parametres');
+    	$message = $this->Parametres->find('all')->where(['name' => 'MessageValidationEngagement'])->first();
+    	
+    	$this->set(compact('demarche','equipe','projet','reponses','membres_referents','membres','membres_comites','descriptions','calendriers','message'));
     	
     }
     

@@ -115,6 +115,7 @@ class UsersController extends AppController
 					->contain(['Etablissements'])
 					->where(['Equipes.user_id' => $user['id']])
 					->first();					
+					$session->write('Equipe.Identifiant',$equipe->id);
 					$session->write('Equipe.Libelle',$equipe->name);
 					$session->write('Equipe.Libelle_Etablissement',$equipe->etablissement->libelle);
 					

@@ -10,6 +10,7 @@
 					<div class="row">
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
+							<p><?= $messageDescription->valeur ?></p><br />
 							<table cellpadding="0" cellspacing="0" class="table table-striped" >
 								<thead>
 									<tr>
@@ -106,11 +107,11 @@
 							            <td><?= h($comite->fonction) ?></td>
 							            <td><?= h($comite->service) ?></td>		
 							            <td class="actions">
-										<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view/'.$membre->id.'/1/0/projet'],  ['title'=>'Visualiser','escape' => false]); ?>&nbsp;&nbsp;
-										<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'membres','action' => 'edit/'.$membre->id.'/1/0/projet'],  ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view/'.$membres_comites->id.'/1/0/projet'],  ['title'=>'Visualiser','escape' => false]); ?>&nbsp;&nbsp;
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'membres','action' => 'edit/'.$membres_comites->id.'/1/0/projet'],  ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 										<?= $this->Form->postLink(
 							                '<span><i class="glyphicon glyphicon-trash"></i></span>',
-							                ['controller'=>'membres','action' => 'delete/'.$membre->id.'/1/0/projet'],
+							                ['controller'=>'membres','action' => 'delete/'.$membres_comites->id.'/1/0/projet'],
 							                ['class' => 'tip',  'title'=>'Supprimer','escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer le membre ?']);?>
 							            </td>		      		           
 							        </tr>
@@ -133,19 +134,16 @@
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
-			<div class="col-md-10"> 						
-			
+			<div class="col-md-10"> 					
 				<?php 
-		    		//Si toujours en phase d'engagement
+		    		//Si toujours en phase d'engagement => Formulaire
 		    		$session = $this->request->session();
 		    		if($session->read('Equipe.Engagement') == '1') echo $this->Form->create($projet,['id'=>'edit_projet_form','action'=>'validate']);
 		    		else echo $this->Form->create($projet,['id'=>'edit_projet_form','action'=>'calendrier']);
 		    	?>
     			<?= $this->Form->hidden('id',['value' => $projet->id]);?>		    
-				<div class="row">
-					
-					<p>Quelle est votre raison d’être (mission) ? Qu’est-ce qui est important pour votre équipe (valeurs) ?<br/>
-					Quelles sont vos perspectives (vision) ?</p>
+				<div class="row">					
+					<p><?= $messageMission->valeur ?></p>
                 	<div class="col-md-12"><?= $this->Form->input('mission', ['label' => false,'id'=>'mission',
 														   	'div' => false,
 															'class' => 'form-control', 
@@ -163,7 +161,8 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
-				<div class="row">					
+				<div class="row">	
+					<p><?= $messageSecteur->valeur ?></p>				
                 	<div class="col-md-12"><?= $this->Form->input('secteur_activite', ['label' => false,'id'=>'secteur_activite',
 														   	'div' => false,
 															'class' => 'form-control', 
@@ -182,7 +181,8 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
-				<div class="row">					
+				<div class="row">		
+					<p><?= $messageProjet->valeur ?></p>			
                 	<div class="col-md-12"><?= $this->Form->input('definition', ['label' => false,'id'=>'definition',
 														   	'div' => false,
 															'class' => 'form-control', 
@@ -201,7 +201,8 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">				    
-				<div class="row">					
+				<div class="row">			
+					<p><?= $messageCommunication->valeur ?></p>			
                 	<div class="col-md-12"><?= $this->Form->input('communication', ['label' => false,'id'=>'communication',
 														   	'div' => false,
 															'class' => 'form-control', 

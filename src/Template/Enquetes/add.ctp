@@ -6,22 +6,24 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
-				<p>Cette enquête fait partie du panel des outils proposés pour évaluer les changements induits par le projet PACTE. 
-				Votre participation à cette enquête va permettre de suivre le niveau de satisfaction individuel des professionnels qui participent au projet. 
-				</p>
-			
+				<p><?= $message->valeur ?></p>		
 			</div>
 			<div class="col-md-1"></div>
-		</div>
-	
-	
-	
-	
+		</div>	<br />
 		<div class="row">
 			<div class="col-md-1"></div>
     		<?= $this->Form->create($enquete, ['id'=>'add_enquete_reponse_form']); ?>
     		<?= $this->Form->hidden('demarche_id',['value' => $id_demarche]);?>		    
 			<div class="col-md-10">
+			<?php $numCamp = ['1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5','6'=>'6']?>
+				<div class="row">
+                	<label class="col-md-4 control-label" for="campagne">Campagne n° <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('campagne', ['label' => false,'id'=>'campagne',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'options' => $numCamp]); ?>
+                    </div>                          
+				</div><br /> 
 				<div class="row">
                 	<label class="col-md-4 control-label" for="service">Service <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('service', ['label' => false,'id'=>'service',
@@ -102,9 +104,9 @@
 			<div class="col-md-1"></div>			
 		</div><br /><br />
 	<p align="center">
+    	<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?>
 		<?= $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
     	<?= $this->Form->end() ?>
-    	<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?>
 	</p>
 	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
 	</div>

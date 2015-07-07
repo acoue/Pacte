@@ -57,7 +57,11 @@ class EnquetesTable extends Table
         $validator
             ->requirePresence('service', 'create')
             ->notEmpty('service');
-
+        
+        $validator
+        ->requirePresence('campagne', 'create')
+        ->notEmpty('campagne');
+        
         return $validator;
     }
 

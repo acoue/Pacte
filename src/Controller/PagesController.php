@@ -76,10 +76,15 @@ class PagesController extends AppController
         try {
 
         	$session = $this->request->session();
+        	//Message
+        	$this->loadModel('Parametres');
+        	
+        	//Recuperation 
         	if($session->read('Auth.User.role') === 'admin'){
+        		$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilAdministrateur'])->first();
         		$this->loadModel('Equipes');
         		$equipes = $this->Equipes->find('All',['contain'=>'Etablissements']);  
-        		$this->set(compact('equipes'));      	
+        		$this->set(compact('equipes','message'));      	
         	} else {
         		$idUser = $session->read('Auth.User.id');
         		$this->loadModel('EquipesUsers');
@@ -88,8 +93,19 @@ class PagesController extends AppController
         		->contain(['Equipes' => ['Etablissements']])
         		->where(['EquipesUsers.user_id ='=>$idUser]);
         		
+        		if($session->read('Auth.User.role') == 'expert') {
+        			$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilExpert'])->first();
+        		} else if($session->read('Auth.User.role') == 'has') {
+        			$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilCpHas'])->first();
+        		} else {	
+        			if($session->read('Equipe.Engagement') == 0 ) $message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeEngagement'])->first();
+        			else if($session->read('Equipe.Diagnostic') == 0 ) $message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeDiagnostic'])->first();
+	        		else if($session->read('Equipe.MiseEnOeuvre') == 0 ) $message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeMiseEnOeuvre'])->first();
+        			else if($session->read('Equipe.Evaluation') == 0 ) $message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeEvaluation'])->first();
+        			else $message = "Bienvenue Equipe";        		
+        		}        		
         		
-        		$this->set(compact('equipeUsers'));
+        		$this->set(compact('equipeUsers','message'));
         	}
 /*
  * 

@@ -1,6 +1,6 @@
 <p align='center'><h1>Récapitulatif des informations de votre phase d'engagement</h1></p>
 <div class="blocblanc">
-	<h2>Dossier d'engagement d'une équipe Pacte</h2>
+	<h2>Dossier d'engagement d'une équipe Pacte (Non modifiable par la suite)</h2>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -55,7 +55,7 @@
 </div>
 
 <div class="blocblanc">
-	<h2>Dossier d'engagement de la Direction</h2>
+	<h2>Dossier d'engagement de la Direction (Non modifiable par la suite)</h2>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -104,7 +104,7 @@
 </div>
 
 <div class="blocblanc">
-	<h2>Dossier d'engagement de l'équipe</h2>
+	<h2>Dossier d'engagement de l'équipe (Modifiable par la suite)</h2>
 	<h3>Membres référents de l'équipe</h3>
 	<div class="blocblancContent">
 		<div class="row">
@@ -146,7 +146,7 @@
 
 
 <div class="blocblanc">
-	<h2>Fiche d'engagement de l'équipe</h2>
+	<h2>Fiche d'engagement de l'équipe (Modifiable par la suite)</h2>
     <h3>Le projet Pacte</h3>    
 	<h4>Présentation de l'équipe</h4>
 	<div class="blocblancContent">
@@ -336,9 +336,8 @@
 				    </table>
 				</div><br />
 				<div class="row">
-		        	<p align="center">La validation des renseignement ci-dessus, entrainement l'entrée dans votre démarche d'accréditation.<br/>
-		                Suite à cette validation, vous recevrez un e-mail récapitulatif des informations.
-		            </p>
+					<p><?= $message->valeur?></p>
+		        	
 <?php 
 	$session = $this->request->session();
     if($session->read('Equipe.Engagement') == '0') { 

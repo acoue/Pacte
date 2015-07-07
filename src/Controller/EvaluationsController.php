@@ -13,9 +13,11 @@ class EvaluationsController extends AppController
 	public function initialize() {
 		parent::initialize();
 		//Menu et sous-menu
-//  		$session = $this->request->session();
-//  		$session->write('Progress.Menu','2');
-//  		$session->write('Progress.SousMenu','2');
+ 		$session = $this->request->session();
+ 		if($session->read('Equipe.Diagnostic') == 0) {
+ 			$session->write('Progress.Menu','2');
+ 			$session->write('Progress.SousMenu','2');
+ 		}
 	}
 	
 	public function isAuthorized($user)
@@ -57,7 +59,7 @@ class EvaluationsController extends AppController
     	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilFonctionnement'])->first();
     	
     	//$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche])->order('ordre ASC');
-    	$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche]);
+    	$evaluations = $this->Evaluations->find('all')->where(['demarche_id'=>$id_demarche])->order('ordre ASC');
         $this->set('evaluations', $evaluations);
         $this->set('_serialize', ['evaluations']);
     	$this->set('message', $message);
@@ -94,7 +96,12 @@ class EvaluationsController extends AppController
                 $this->Flash->error('Erreur dans la sauvegarde de l\'évaluation.');
             }
         }
-        $this->set(compact('evaluation','demarche_id'));
+        
+        //Message
+        $this->loadModel('Parametres');
+        $message = $this->Parametres->find('all')->where(['name' => 'MessageAideSyntheseFonctionnement'])->first();         
+        
+        $this->set(compact('evaluation','demarche_id','message'));
         $this->set('_serialize', ['evaluation']);
     }
 
@@ -145,7 +152,11 @@ class EvaluationsController extends AppController
                 $this->Flash->error('Erreur dans la sauvegarde de l\'évaluation.');
             }
         }
-        $this->set(compact('evaluation'));
+        //Message
+        $this->loadModel('Parametres');
+        $message = $this->Parametres->find('all')->where(['name' => 'MessageAideSyntheseFonctionnement'])->first();
+        
+        $this->set(compact('evaluation','message'));
         $this->set('_serialize', ['evaluation']);
     }
 

@@ -6,6 +6,7 @@ if($session->check('Auth.User.role')) {
 	
 	if($role === 'admin') {?>
 		<p>Bienvenue <?= $session->read('Auth.User.prenom')." ".$session->read('Auth.User.nom') ?></p>
+		<p><?= $message->valeur; ?>
 		<br /><br />
 		<table cellpadding="0" cellspacing="0" class="table">
 			<caption>Liste des équipes </caption>
@@ -22,9 +23,10 @@ if($session->check('Auth.User.role')) {
 	    </table>	    
 <?php
 	} else if($role === 'has') {
-		echo "Bienvenue Chef de Projet HAS";
+		echo "<p>".$message->valeur."</p>";
 	} else if($role === 'expert') { ?>
 		<p>Bienvenue <?= $session->read('Auth.User.prenom')." ".$session->read('Auth.User.nom') ?></p>
+		<p><?= $message->valeur; ?>
 		<br /><br />
 		<table cellpadding="0" cellspacing="0" class="table">
 			<caption>Liste des équipes dont vous pouvez voir l'état des démarches</caption>
@@ -42,25 +44,18 @@ if($session->check('Auth.User.role')) {
 <?php
 		
 	} else if($role === 'equipe') {
+		echo "<p>".$message->valeur."</p>";
+		
+		//Bouton suivant la phase
 		if($session->read('Equipe.Engagement') == 0 ){
 			echo $this->Html->link('Poursuivre l\'engagement', ['controller'=>'membres', 'action' => 'index/0/1'],['class' => 'btn btn-info']);
-			
 		}else if($session->read('Equipe.Diagnostic') == 0 ){
 			echo $this->Html->link('Poursuivre dans la phase de diagnostic', ['controller'=>'projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info']);
-			
 		} else if($session->read('Equipe.MiseEnOeuvre') == 0 ){
-			echo "<p>Pensez bien à remplir l'enquête de satisfaction initiale</p>";	
 			echo $this->Html->link('Terminer la phase de mise en oeuvre', ['controller'=>'Projets', 'action' => 'terminateMEO'],['class' => 'btn btn-info']);
 		} else if($session->read('Equipe.Evaluation') == 0 ){
-			echo "<p>Bienvenue dans la dernière phase du projet</p>";	
+			echo "<p>Voir si bouton de clôture de la démarche</p>";	
 		} 
-		else echo "Bienvenue Equipe";
-		
-		
-		
-		
-		
-		
 	}
 }
 if($role === 'admin') {
@@ -102,8 +97,6 @@ if($role === 'admin') {
 
 
 <?php }?>
-
-
 
 
 

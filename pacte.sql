@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Jeu 25 Juin 2015 à 14:44
+-- Généré le :  Ven 03 Juillet 2015 à 15:56
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -13,6 +13,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `pacte`
 --
+CREATE DATABASE IF NOT EXISTS `pacte` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `pacte`;
 
 -- --------------------------------------------------------
 
@@ -20,6 +22,7 @@ SET time_zone = "+00:00";
 -- Structure de la table `calendrier_projets`
 --
 
+DROP TABLE IF EXISTS `calendrier_projets`;
 CREATE TABLE IF NOT EXISTS `calendrier_projets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` text NOT NULL,
@@ -30,7 +33,27 @@ CREATE TABLE IF NOT EXISTS `calendrier_projets` (
   `projet_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `projet_celendrier_projet_fk_idx` (`projet_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+
+--
+-- Vider la table avant d'insérer `calendrier_projets`
+--
+
+TRUNCATE TABLE `calendrier_projets`;
+--
+-- Contenu de la table `calendrier_projets`
+--
+
+INSERT INTO `calendrier_projets` (`id`, `libelle`, `mois_debut`, `annee_debut`, `mois_fin`, `annee_fin`, `projet_id`) VALUES
+(1, '1ère étape', 'Juin', 2015, '', 0, 2),
+(2, '2ème étape', 'Aout', 2015, '', 0, 2),
+(3, '1ère étape', 'Juin', 2015, '', 0, 1),
+(4, '1èere étape', 'Juin', 2015, '', 0, 5),
+(7, '1ere étape pour commencer', 'Septembre', 2015, '', 0, 6),
+(8, '2ème étape \r\n', 'Novembre', 2015, '', 0, 6),
+(9, '3ème étape', 'Octobre', 2016, '', 0, 6),
+(10, 'aaaaa', 'Février', 2015, 'Octobre', 2015, 6),
+(12, '1èere étape', 'Février', 2016, 'Juillet', 2016, 7);
 
 -- --------------------------------------------------------
 
@@ -38,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `calendrier_projets` (
 -- Structure de la table `demarches`
 --
 
+DROP TABLE IF EXISTS `demarches`;
 CREATE TABLE IF NOT EXISTS `demarches` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date_engagement` date NOT NULL,
@@ -52,7 +76,25 @@ CREATE TABLE IF NOT EXISTS `demarches` (
   UNIQUE KEY `date_engagement_3` (`date_engagement`,`equipe_id`),
   KEY `demarche_equipe_idx` (`equipe_id`),
   KEY `date_engagement_2` (`date_engagement`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+
+--
+-- Vider la table avant d'insérer `demarches`
+--
+
+TRUNCATE TABLE `demarches`;
+--
+-- Contenu de la table `demarches`
+--
+
+INSERT INTO `demarches` (`id`, `date_engagement`, `score`, `situation_crise`, `restructuration`, `statut`, `equipe_id`, `created`, `modified`) VALUES
+(9, '2015-05-23', 8, 0, 0, 0, 9, '2015-05-06 11:47:19', '2015-05-06 11:47:19'),
+(10, '2015-05-05', 8, 0, 0, 0, 10, '2015-05-06 12:10:07', '2015-05-06 12:10:07'),
+(11, '2015-05-07', 8, 0, 0, 0, 11, '2015-05-07 07:52:44', '2015-05-07 07:52:44'),
+(16, '2015-05-23', 8, 0, 0, 0, 16, '2015-05-22 12:09:00', '2015-05-22 12:09:00'),
+(17, '2015-06-28', 6, 0, 0, 0, 17, '2015-06-23 10:32:49', '2015-06-23 10:32:49'),
+(18, '2015-06-25', 7, 0, 0, 0, 18, '2015-06-25 10:37:43', '2015-06-25 10:37:43'),
+(19, '2015-07-03', 7, 0, 0, 0, 19, '2015-07-02 14:28:57', '2015-07-02 14:28:57');
 
 -- --------------------------------------------------------
 
@@ -60,6 +102,7 @@ CREATE TABLE IF NOT EXISTS `demarches` (
 -- Structure de la table `demarche_phases`
 --
 
+DROP TABLE IF EXISTS `demarche_phases`;
 CREATE TABLE IF NOT EXISTS `demarche_phases` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `demarche_id` int(11) NOT NULL,
@@ -70,7 +113,33 @@ CREATE TABLE IF NOT EXISTS `demarche_phases` (
   UNIQUE KEY `demarche_id` (`demarche_id`,`phase_id`,`date_entree`),
   KEY `demarches_demarche_phases_fk_idx` (`demarche_id`),
   KEY `phases_demarche_phases_fk_idx` (`phase_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
+
+--
+-- Vider la table avant d'insérer `demarche_phases`
+--
+
+TRUNCATE TABLE `demarche_phases`;
+--
+-- Contenu de la table `demarche_phases`
+--
+
+INSERT INTO `demarche_phases` (`id`, `demarche_id`, `phase_id`, `date_entree`, `date_validation`) VALUES
+(1, 9, 1, '2015-05-06', '2015-05-19'),
+(2, 10, 1, '2015-05-06', '2015-05-20'),
+(3, 11, 1, '2015-05-07', NULL),
+(7, 10, 2, '2015-05-12', '2015-05-20'),
+(8, 9, 2, '2015-05-19', NULL),
+(9, 10, 3, '2015-05-20', '2015-06-25'),
+(11, 16, 1, '2015-05-22', '2015-05-22'),
+(12, 16, 2, '2015-05-22', '2015-05-22'),
+(13, 16, 3, '2015-05-22', NULL),
+(14, 17, 1, '2015-06-23', '2015-06-24'),
+(17, 17, 2, '2015-06-24', NULL),
+(21, 18, 1, '2015-06-25', '2015-06-25'),
+(22, 18, 2, '2015-06-25', NULL),
+(24, 10, 4, '2015-06-25', NULL),
+(25, 19, 1, '2015-07-02', NULL);
 
 -- --------------------------------------------------------
 
@@ -78,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `demarche_phases` (
 -- Structure de la table `descriptions`
 --
 
+DROP TABLE IF EXISTS `descriptions`;
 CREATE TABLE IF NOT EXISTS `descriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nb_etp` int(11) NOT NULL DEFAULT '0',
@@ -87,8 +157,22 @@ CREATE TABLE IF NOT EXISTS `descriptions` (
   UNIQUE KEY `projet_fonction_UK` (`projet_id`,`fonction_id`),
   KEY `fonction_description_fk_idx` (`fonction_id`),
   KEY `projet_description_fk_idx` (`projet_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
+--
+-- Vider la table avant d'insérer `descriptions`
+--
+
+TRUNCATE TABLE `descriptions`;
+--
+-- Contenu de la table `descriptions`
+--
+
+INSERT INTO `descriptions` (`id`, `nb_etp`, `fonction_id`, `projet_id`) VALUES
+(1, 2, 1, 6),
+(2, 3, 2, 6),
+(4, 5, 8, 6),
+(5, 3, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -96,6 +180,7 @@ CREATE TABLE IF NOT EXISTS `descriptions` (
 -- Structure de la table `enquetes`
 --
 
+DROP TABLE IF EXISTS `enquetes`;
 CREATE TABLE IF NOT EXISTS `enquetes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `service` varchar(2100) NOT NULL,
@@ -106,7 +191,22 @@ CREATE TABLE IF NOT EXISTS `enquetes` (
   PRIMARY KEY (`id`),
   KEY `demarche_enquete_fk_idx` (`demarche_id`),
   KEY `fonction_enquete_idx` (`fonction_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Vider la table avant d'insérer `enquetes`
+--
+
+TRUNCATE TABLE `enquetes`;
+--
+-- Contenu de la table `enquetes`
+--
+
+INSERT INTO `enquetes` (`id`, `service`, `demarche_id`, `fonction_id`, `created`, `modified`) VALUES
+(2, 'Urgence', 10, 5, '2015-05-02 14:08:54', '2015-05-02 14:08:54'),
+(3, 'Cardiologie', 16, 2, '2015-05-02 15:51:19', '2015-05-02 15:51:19'),
+(4, 'Urgence', 10, 3, '2015-05-03 09:12:41', '2015-05-03 09:12:41'),
+(5, 'Maternité', 10, 4, '2015-06-03 11:40:30', '2015-06-03 11:40:30');
 
 -- --------------------------------------------------------
 
@@ -114,6 +214,7 @@ CREATE TABLE IF NOT EXISTS `enquetes` (
 -- Structure de la table `enquete_questions`
 --
 
+DROP TABLE IF EXISTS `enquete_questions`;
 CREATE TABLE IF NOT EXISTS `enquete_questions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
@@ -124,6 +225,11 @@ CREATE TABLE IF NOT EXISTS `enquete_questions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
+--
+-- Vider la table avant d'insérer `enquete_questions`
+--
+
+TRUNCATE TABLE `enquete_questions`;
 --
 -- Contenu de la table `enquete_questions`
 --
@@ -146,6 +252,7 @@ INSERT INTO `enquete_questions` (`id`, `name`, `groupe`, `ordre`, `aide`, `type`
 -- Structure de la table `enquete_reponses`
 --
 
+DROP TABLE IF EXISTS `enquete_reponses`;
 CREATE TABLE IF NOT EXISTS `enquete_reponses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `valeur` varchar(45) NOT NULL COMMENT '1 = Tout à fait d’accord\n2 = Plutôt d’accord\n3 = Plutôt pas d’accord\n4 = Pas du tout d’accord\n5 = Ne se prononce pas',
@@ -156,8 +263,58 @@ CREATE TABLE IF NOT EXISTS `enquete_reponses` (
   PRIMARY KEY (`id`),
   KEY `question_enquete_reponse_fk` (`question_id`),
   KEY `enquete_reponse_enquete_fk_idx` (`enquete_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
 
+--
+-- Vider la table avant d'insérer `enquete_reponses`
+--
+
+TRUNCATE TABLE `enquete_reponses`;
+--
+-- Contenu de la table `enquete_reponses`
+--
+
+INSERT INTO `enquete_reponses` (`id`, `valeur`, `enquete_id`, `question_id`, `created`, `modified`) VALUES
+(1, '1', 2, 1, '2015-06-02 14:08:54', '2015-06-02 14:08:54'),
+(2, '2', 2, 2, '2015-06-02 14:08:55', '2015-06-02 14:08:55'),
+(3, '3', 2, 3, '2015-06-02 14:08:55', '2015-06-02 14:08:55'),
+(4, '4', 2, 4, '2015-06-02 14:08:55', '2015-06-02 14:08:55'),
+(5, '5', 2, 5, '2015-06-02 14:08:55', '2015-06-02 14:08:55'),
+(6, '4', 2, 6, '2015-06-02 14:08:55', '2015-06-02 14:08:55'),
+(7, '3', 2, 7, '2015-06-02 14:08:55', '2015-06-02 14:08:55'),
+(8, '2', 2, 8, '2015-06-02 14:08:55', '2015-06-02 14:08:55'),
+(9, '1', 2, 9, '2015-06-02 14:08:55', '2015-06-02 14:08:55'),
+(10, '7', 2, 10, '2015-06-02 14:08:56', '2015-06-02 14:08:56'),
+(11, '1', 3, 1, '2015-06-02 15:51:19', '2015-06-02 15:51:19'),
+(12, '1', 3, 2, '2015-06-02 15:51:19', '2015-06-02 15:51:19'),
+(13, '2', 3, 3, '2015-06-02 15:51:19', '2015-06-02 15:51:19'),
+(14, '2', 3, 4, '2015-06-02 15:51:19', '2015-06-02 15:51:19'),
+(15, '3', 3, 5, '2015-06-02 15:51:20', '2015-06-02 15:51:20'),
+(16, '3', 3, 6, '2015-06-02 15:51:20', '2015-06-02 15:51:20'),
+(17, '4', 3, 7, '2015-06-02 15:51:20', '2015-06-02 15:51:20'),
+(18, '4', 3, 8, '2015-06-02 15:51:20', '2015-06-02 15:51:20'),
+(19, '5', 3, 9, '2015-06-02 15:51:20', '2015-06-02 15:51:20'),
+(20, '4', 3, 10, '2015-06-02 15:51:20', '2015-06-02 15:51:20'),
+(21, '1', 4, 1, '2015-06-03 09:12:41', '2015-06-03 09:12:41'),
+(22, '2', 4, 2, '2015-06-03 09:12:41', '2015-06-03 09:12:41'),
+(23, '1', 4, 3, '2015-06-03 09:12:41', '2015-06-03 09:12:41'),
+(24, '2', 4, 4, '2015-06-03 09:12:41', '2015-06-03 09:12:41'),
+(25, '3', 4, 5, '2015-06-03 09:12:41', '2015-06-03 09:12:41'),
+(26, '2', 4, 6, '2015-06-03 09:12:41', '2015-06-03 09:12:41'),
+(27, '3', 4, 7, '2015-06-03 09:12:41', '2015-06-03 09:12:41'),
+(28, '4', 4, 8, '2015-06-03 09:12:41', '2015-06-03 09:12:41'),
+(29, '3', 4, 9, '2015-06-03 09:12:41', '2015-06-03 09:12:41'),
+(30, '6', 4, 10, '2015-06-03 09:12:42', '2015-06-03 09:12:42'),
+(31, '1', 5, 1, '2015-06-03 11:40:30', '2015-06-03 11:40:30'),
+(32, '1', 5, 2, '2015-06-03 11:40:31', '2015-06-03 11:40:31'),
+(33, '2', 5, 3, '2015-06-03 11:40:31', '2015-06-03 11:40:31'),
+(34, '2', 5, 4, '2015-06-03 11:40:31', '2015-06-03 11:40:31'),
+(35, '1', 5, 5, '2015-06-03 11:40:31', '2015-06-03 11:40:31'),
+(36, '2', 5, 6, '2015-06-03 11:40:31', '2015-06-03 11:40:31'),
+(37, '3', 5, 7, '2015-06-03 11:40:31', '2015-06-03 11:40:31'),
+(38, '4', 5, 8, '2015-06-03 11:40:31', '2015-06-03 11:40:31'),
+(39, '3', 5, 9, '2015-06-03 11:40:31', '2015-06-03 11:40:31'),
+(40, '7', 5, 10, '2015-06-03 11:40:31', '2015-06-03 11:40:31');
 
 -- --------------------------------------------------------
 
@@ -165,6 +322,7 @@ CREATE TABLE IF NOT EXISTS `enquete_reponses` (
 -- Structure de la table `equipes`
 --
 
+DROP TABLE IF EXISTS `equipes`;
 CREATE TABLE IF NOT EXISTS `equipes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -173,7 +331,25 @@ CREATE TABLE IF NOT EXISTS `equipes` (
   PRIMARY KEY (`id`),
   KEY `equipe_user_fk_idx` (`user_id`),
   KEY `equipe_etablissement_id_idx` (`etablissement_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
+
+--
+-- Vider la table avant d'insérer `equipes`
+--
+
+TRUNCATE TABLE `equipes`;
+--
+-- Contenu de la table `equipes`
+--
+
+INSERT INTO `equipes` (`id`, `name`, `user_id`, `etablissement_id`) VALUES
+(9, 'Equipe Cardio', 23, 4),
+(10, 'Equipe Anesthésie', 24, 5),
+(11, 'Equipe test', 25, 5),
+(16, 'Equipe Anesthésie', 30, 6),
+(17, 'Equipe test ACO', 33, 21),
+(18, 'Equipe de cardiologie de test n°2', 34, 29),
+(19, 'Equipe de chirurgie de test n°2', 35, 3787);
 
 -- --------------------------------------------------------
 
@@ -181,6 +357,7 @@ CREATE TABLE IF NOT EXISTS `equipes` (
 -- Structure de la table `equipes_users`
 --
 
+DROP TABLE IF EXISTS `equipes_users`;
 CREATE TABLE IF NOT EXISTS `equipes_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `equipe_id` int(11) NOT NULL,
@@ -188,7 +365,20 @@ CREATE TABLE IF NOT EXISTS `equipes_users` (
   PRIMARY KEY (`id`),
   KEY `equipes_equipes_users_fk_idx` (`equipe_id`),
   KEY `users_equipes_users_fk_idx` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Vider la table avant d'insérer `equipes_users`
+--
+
+TRUNCATE TABLE `equipes_users`;
+--
+-- Contenu de la table `equipes_users`
+--
+
+INSERT INTO `equipes_users` (`id`, `equipe_id`, `user_id`) VALUES
+(1, 9, 32),
+(2, 10, 32);
 
 -- --------------------------------------------------------
 
@@ -196,6 +386,7 @@ CREATE TABLE IF NOT EXISTS `equipes_users` (
 -- Structure de la table `etablissements`
 --
 
+DROP TABLE IF EXISTS `etablissements`;
 CREATE TABLE IF NOT EXISTS `etablissements` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(100) DEFAULT NULL,
@@ -207,6 +398,11 @@ CREATE TABLE IF NOT EXISTS `etablissements` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9465 ;
 
+--
+-- Vider la table avant d'insérer `etablissements`
+--
+
+TRUNCATE TABLE `etablissements`;
 --
 -- Contenu de la table `etablissements`
 --
@@ -6198,14 +6394,14 @@ INSERT INTO `etablissements` (`id`, `libelle`, `finess`, `numero_demarche`, `niv
 (5969, 'CENTRE GÉRONTOLOGIQUE PONTACQ-NAY-JURANÇON', '640791976', '7478', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
 (5970, 'CENTRE HOSPITALIER DE LOURDES', '650000045', '6621', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
 (5971, 'HOPITAL LE MONTAIGU', '650000078', '7427', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
-(5972, '''MAISON D''ENFANTS DIETETIQUE ET THERMALE DE CAPVERN LES BAINS''MEDT EN ABRÉGÉ', '650000128', '7091', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
+(5972, 'MAISON D&#039;ENFANTS DIETETIQUE ET THERMALE DE CAPVERN LES BAINS&#039;MEDT EN ABRÉGÉ', '650000128', '7091', 'Certification', '2015-06-04 14:24:46', '2015-06-29 16:51:49'),
 (5973, 'POLYCLINIQUE DE L'' ORMEAU', '650000243', '7236', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
 (5974, 'SARL CLINIQUE PSYCHIATRIQUE LAMPRE', '650000276', '8413', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
 (5975, 'CLINIQUE PIETAT', '650000284', '7622', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
 (5976, 'POLYCLINIQUE DE L''ORMEAU SITE ORMEAU PYRENEES', '650002579', '7236', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
 (5977, 'CENTRE HOSPITALIER LOURDES', '650780158', '6621', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
 (5978, 'HOPITAL LE MONTAIGU', '650780190', '7427', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
-(5979, '''MAISON D''ENFANTS DIÉTÉTIQUE ET THERMALE', '650780323', '7091', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
+(5979, 'MAISON D&#039;ENFANTS DIÉTÉTIQUE ET THERMALE', '650780323', '7091', 'Certification', '2015-06-04 14:24:46', '2015-06-29 16:51:35'),
 (5980, 'CENTRE SSR L''ARBIZON', '650780398', '7581', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
 (5981, 'POLYCLINIQUE DE L'' ORMEAU SITE ORMEAU CENTRE', '650780679', '7236', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
 (5982, 'CLINIQUE PSYCHIATRIQUE LAMPRE', '650780729', '8413', 'Certification', '2015-06-04 14:24:46', '2015-06-04 14:24:46'),
@@ -9708,6 +9904,7 @@ INSERT INTO `etablissements` (`id`, `libelle`, `finess`, `numero_demarche`, `niv
 -- Structure de la table `etape_plan_actions`
 --
 
+DROP TABLE IF EXISTS `etape_plan_actions`;
 CREATE TABLE IF NOT EXISTS `etape_plan_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `numero` int(11) DEFAULT NULL,
@@ -9724,7 +9921,24 @@ CREATE TABLE IF NOT EXISTS `etape_plan_actions` (
   PRIMARY KEY (`id`),
   KEY `plan_action_etape_fk_idx` (`plan_action_id`),
   KEY `indicateur_etape_fk_idx` (`type_indicateur_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Vider la table avant d'insérer `etape_plan_actions`
+--
+
+TRUNCATE TABLE `etape_plan_actions`;
+--
+-- Contenu de la table `etape_plan_actions`
+--
+
+INSERT INTO `etape_plan_actions` (`id`, `numero`, `name`, `pilote`, `mois`, `annee`, `etat`, `modalite_suivi`, `resultat`, `indicateur`, `type_indicateur_id`, `plan_action_id`) VALUES
+(1, 1, 'Test premiere etape du plan d''action', 'Anthony  COUE', 'septebre ', 2015, 'En Cours', '', '', '', 3, 2),
+(3, 2, 'Test 2ème étape', 'Lui même', 'Juillet ', 2015, '', 'Pour le momen treflexion', '', 'Nb de ...', 2, 2),
+(4, 3, '3ème étape', 'Madame sa Mère', 'Novembre', 2015, '', '', '', '', NULL, 2),
+(5, 4, '4ème étape', 'Lucie FERRE', 'Décembre', 2015, '', '', '', '', 1, 2),
+(6, 1, '1 etape', 'Moi', 'Juillet', 2015, '', '', '', '', 1, 6),
+(8, 1, '1ère étape', 'Anthony  COUE', 'Juillet', 2015, '', '', '', 'test ind', 2, 9);
 
 -- --------------------------------------------------------
 
@@ -9732,6 +9946,7 @@ CREATE TABLE IF NOT EXISTS `etape_plan_actions` (
 -- Structure de la table `evaluations`
 --
 
+DROP TABLE IF EXISTS `evaluations`;
 CREATE TABLE IF NOT EXISTS `evaluations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -9741,7 +9956,31 @@ CREATE TABLE IF NOT EXISTS `evaluations` (
   `demarche_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `demarche_evaluation_fk_idx` (`demarche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+
+--
+-- Vider la table avant d'insérer `evaluations`
+--
+
+TRUNCATE TABLE `evaluations`;
+--
+-- Contenu de la table `evaluations`
+--
+
+INSERT INTO `evaluations` (`id`, `name`, `synthese`, `file`, `ordre`, `demarche_id`) VALUES
+(1, 'CRM Santé', 'synthèse', 'account.php', 2, 9),
+(2, 'Culture Sécurité', 'blabla', 'view.php', 1, 9),
+(3, 'CRM Santé', 'synthèse', 'cookies.txt', 2, 10),
+(4, 'Culture Sécurité', 'Synthes de la culture sante', 'ajax.php', 1, 10),
+(5, 'CRM Santé', NULL, NULL, 2, 11),
+(6, 'Culture Sécurité', NULL, NULL, 1, 11),
+(7, 'CRM Santé', 'szsd', 'guide-processus-v-1-1394114926.pdf', 2, 16),
+(8, 'Culture Sécurité', 'fdfdf', '2015 01 30_Enquete de satisfaction_V3.docx', 1, 16),
+(9, 'Analyse de la problématique', 'dsdsd', 'Exploit_QDS_PACTE v6.xlsx', 10, 16),
+(10, 'CRM Santé', 'le crm santé', 'Exploit_QDS_PACTE v6.xlsx', 2, 17),
+(11, 'Culture Sécurité', 'azqsqsqs', 'test_export_ldap.xml', 1, 17),
+(16, 'CRM Santé', 'texte ', 'login.xhtml', 2, 18),
+(17, 'Culture Sécurité', 'esfhdhxcvbnsfhh', 'annuel.xls', 1, 18);
 
 -- --------------------------------------------------------
 
@@ -9749,12 +9988,18 @@ CREATE TABLE IF NOT EXISTS `evaluations` (
 -- Structure de la table `fonctions`
 --
 
+DROP TABLE IF EXISTS `fonctions`;
 CREATE TABLE IF NOT EXISTS `fonctions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
+--
+-- Vider la table avant d'insérer `fonctions`
+--
+
+TRUNCATE TABLE `fonctions`;
 --
 -- Contenu de la table `fonctions`
 --
@@ -9788,6 +10033,7 @@ INSERT INTO `fonctions` (`id`, `name`) VALUES
 -- Structure de la table `inscriptions`
 --
 
+DROP TABLE IF EXISTS `inscriptions`;
 CREATE TABLE IF NOT EXISTS `inscriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -9801,7 +10047,25 @@ CREATE TABLE IF NOT EXISTS `inscriptions` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
+
+--
+-- Vider la table avant d'insérer `inscriptions`
+--
+
+TRUNCATE TABLE `inscriptions`;
+--
+-- Contenu de la table `inscriptions`
+--
+
+INSERT INTO `inscriptions` (`id`, `name`, `date_engagement`, `numero_demarche`, `score`, `etablissement`, `situation_crise`, `restructuration`, `reponses`, `created`, `modified`) VALUES
+(18, 'Equipe Cardio', '2015-05-16', 3382, 10, 4, 0, 0, '9-N#10-N#1-O#2-O#3-O#4-O#5-O#6-O#7-O#8-O#', '2015-05-06 12:00:34', '2015-05-06 12:00:34'),
+(19, 'Equipe Anesthésie', '2015-05-22', 6429, 8, 6, 0, 0, '9-N#10-N#1-O#2-O#3-O#4-O#5-N#6-N#7-O#8-O#', '2015-05-22 08:44:29', '2015-05-22 08:44:29'),
+(20, 'Equipe Anesthésie', '2015-05-23', 6429, 8, 6, 0, 0, '9-N#10-N#1-O#2-O#3-O#4-O#5-N#6-N#7-O#8-O#', '2015-05-22 09:16:00', '2015-05-22 09:16:00'),
+(21, 'Equipe Cardiologie Test', '2015-06-11', 8248, 6, 15, 0, 0, '9-N#10-N#1-N#2-O#3-O#4-N#5-N#6-O#7-N#8-O#', '2015-06-15 16:10:25', '2015-06-15 16:10:25'),
+(22, 'Equipe test ACO', '2015-06-20', 6339, 9, 9114, 0, 0, '9-N#10-N#1-N#2-O#3-O#4-O#5-O#6-O#7-O#8-O#', '2015-06-18 15:09:18', '2015-06-18 15:25:31'),
+(25, 'Equipe enregistrement du formlaire de la direction', '2015-06-28', 8319, 6, 26, 0, 0, '9-N#10-N#1-O#2-N#3-O#4-N#5-O#6-N#7-O#8-N#', '2015-06-25 11:50:57', '2015-06-25 11:51:33'),
+(26, 'Equipe test', '2015-06-25', 6723, 7, 23, 0, 0, '9-N#10-N#1-O#2-O#3-O#4-N#5-O#6-N#7-N#8-O#', '2015-06-25 13:10:27', '2015-06-25 13:20:04');
 
 -- --------------------------------------------------------
 
@@ -9809,6 +10073,7 @@ CREATE TABLE IF NOT EXISTS `inscriptions` (
 -- Structure de la table `membres`
 --
 
+DROP TABLE IF EXISTS `membres`;
 CREATE TABLE IF NOT EXISTS `membres` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(45) DEFAULT NULL,
@@ -9826,7 +10091,41 @@ CREATE TABLE IF NOT EXISTS `membres` (
   UNIQUE KEY `nom` (`nom`,`prenom`,`comite`,`demarche_id`),
   KEY `responsabilite_membres_fk_idx` (`responsabilite_id`),
   KEY `demarches_membres_fk_idx` (`demarche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
+
+--
+-- Vider la table avant d'insérer `membres`
+--
+
+TRUNCATE TABLE `membres`;
+--
+-- Contenu de la table `membres`
+--
+
+INSERT INTO `membres` (`id`, `nom`, `prenom`, `email`, `telephone`, `fonction`, `service`, `comite`, `demarche_id`, `responsabilite_id`, `created`, `modified`) VALUES
+(1, 'COUE', 'Anthony', 'anthony.coue@gmail.com', '01 55 93 70 75', 'Médecin', 'Urgence', 0, 10, 2, '2015-05-07 09:29:07', '2015-05-07 09:33:34'),
+(2, 'BOIVERT', 'Jean-Pierre', 'ze@ee.fr', '01 55 93 70 76', 'IDE', 'Urgence', 0, 10, 3, '2015-05-07 09:34:05', '2015-05-07 09:34:05'),
+(3, 'FRESNEDA', 'Jean-Pierre', 'a.b@c.fr', '01 55 93 70 77', 'Chef de service', 'Rhumatologie', 1, 10, 5, '2015-05-07 09:37:41', '2015-05-07 09:37:41'),
+(4, 'FRES', 'Mickaêl', 'ml@lk.com', '01 55 93 70 74', 'DRH', 'Direction Ressources Huamines', 1, 10, 5, '2015-05-07 09:40:41', '2015-05-07 09:40:41'),
+(5, 'ROMMEL', 'Mickaêl', 'r.m@eerre.com', '01 55 93 70 73', 'Médecin', 'Gynécologie', 0, 10, 1, '2015-05-11 08:20:39', '2015-05-11 08:20:39'),
+(6, 'QUERE', 'Xavier', 'x.q@gfk.fr', '01 55 93 70 70', 'Kiné', 'Urgence', 0, 10, 1, '2015-05-11 08:26:42', '2015-05-11 08:26:42'),
+(7, 'NEDA', 'Jean-Paul', 'n.jp@jkjkd.org', '01 55 93 70 98', 'Directeur-Adjoint', 'Direction', 1, 10, 5, '2015-05-11 08:28:39', '2015-05-11 08:28:39'),
+(8, 'NEDA', 'Jean-Paul', 'd.p@gf.com', '01 55 93 70 75', 'Médecin', 'Urgence', 0, 9, 2, '2015-05-19 14:09:40', '2015-05-19 14:09:40'),
+(9, 'QUERE', 'Mickaêl', 'r.m@eerre.com', '01 55 93 70 98', 'Chef de projet', 'HAS', 0, 9, 3, '2015-05-19 14:16:21', '2015-05-19 14:16:21'),
+(11, 'FRANCK', 'Mickaël', 'r.m@eerre.com', '01 55 93 70 76', 'Kiné', 'Rhumatologie', 0, 9, 2, '2015-05-19 14:36:18', '2015-05-19 14:36:18'),
+(12, 'BOIS', 'Xavier', 'r.m@eerre.com', '01 55 93 70 76', 'Médecin', 'Gynécologie', 0, 10, 2, '2015-05-21 14:32:31', '2015-05-21 14:32:31'),
+(13, 'SAMI', 'Yasmine', 'y.sami@has-sante.fr', '01 55 93 52 03', 'Médecin', 'Chirurgie', 0, 16, 2, '2015-05-22 12:13:53', '2015-05-22 12:13:53'),
+(14, 'DUPONT', 'Marc', 'lk@ff.fr', '01 55 93 32 45', 'Kiné', 'Rhumatologie', 0, 16, 2, '2015-05-22 12:16:22', '2015-05-22 12:16:22'),
+(15, 'MARTIN', 'Jean', 'ee@kjkj.fr', '01 55 93 66 99', 'IDE', 'Chirurgie', 0, 16, 3, '2015-05-22 12:16:51', '2015-05-22 12:16:51'),
+(16, 'DUPUIS', 'Laurent', 'a.pze@jh.fr', '01 55 42 69 87', 'DRH', 'Ressources Humaines', 1, 16, 5, '2015-06-01 14:33:17', '2015-06-01 14:33:17'),
+(18, 'Cros', 'Charles', 'd.p@gf.com', '01 55 93 70 70', 'Chef de service', 'Gynécologie', 0, 17, 2, '2015-06-23 10:38:53', '2015-06-23 10:38:53'),
+(19, 'NEDAL', 'Jean-Paul', 'n.jp@jkjkd.org', '01 55 93 70 77', 'DRH', 'Direction', 0, 17, 3, '2015-06-23 10:49:53', '2015-06-23 10:51:32'),
+(22, 'FRANCK', 'Mickaël', 'n.jp@jkjkd.org', '01 55 93 70 73', 'DRH', 'Direction Ressources Huamines', 0, 17, 2, '2015-06-23 12:11:10', '2015-06-23 12:11:10'),
+(23, 'ROMMEL', 'Xavier', 'ze@ee.fr', '01 55 93 70 76', 'Médecin', 'Chirurgie', 0, 17, 1, '2015-06-23 12:11:54', '2015-06-23 12:11:54'),
+(26, 'BOISUPPRIMER', 'Blaise', 'r.m@eerre.com', '01 55 93 70 75', 'Médecin', 'Gynécologie', 1, 17, 5, '2015-06-23 15:17:53', '2015-06-23 15:17:53'),
+(27, 'NEDAL', 'Mickaël', 'anthony.coue@gmail.com', '01 55 93 70 75', 'Médecin', 'Urgence', 0, 18, 2, '2015-06-25 10:40:04', '2015-06-25 10:40:04'),
+(28, 'BOIS', 'Sophie', 'a.coue@has-sante.fr', '01 55 93 70 76', 'Médecin', 'Gynécologie', 0, 18, 2, '2015-06-25 10:40:29', '2015-06-25 10:40:29'),
+(29, 'SELES', 'Monica', 'a.b@c.fr', '01 55 93 70 98', 'Chef de service', 'Rhumatologie', 0, 18, 3, '2015-06-25 10:40:57', '2015-06-25 10:40:57');
 
 -- --------------------------------------------------------
 
@@ -9834,6 +10133,7 @@ CREATE TABLE IF NOT EXISTS `membres` (
 -- Structure de la table `mesures`
 --
 
+DROP TABLE IF EXISTS `mesures`;
 CREATE TABLE IF NOT EXISTS `mesures` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -9842,7 +10142,26 @@ CREATE TABLE IF NOT EXISTS `mesures` (
   `demarche_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `demarche_evaluation_fk_idx` (`demarche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Vider la table avant d'insérer `mesures`
+--
+
+TRUNCATE TABLE `mesures`;
+--
+-- Contenu de la table `mesures`
+--
+
+INSERT INTO `mesures` (`id`, `name`, `resultat`, `file`, `demarche_id`) VALUES
+(1, 'Matrice de Maturité', NULL, NULL, 9),
+(2, 'Matrice de Maturité', 'azazaz', 'view.php', 10),
+(3, 'Matrice de Maturité', NULL, NULL, 11),
+(4, 'Matrice de Maturité', 'wqsqs', 'guide-processus-v-1-1394114926.pdf', 16),
+(5, 'Matrice de Maturité', NULL, NULL, 17),
+(6, 'Matrice de Maturité', NULL, NULL, 17),
+(7, 'Matrice de Maturité', NULL, NULL, 17),
+(8, 'Matrice de Maturité', NULL, NULL, 18);
 
 -- --------------------------------------------------------
 
@@ -9850,6 +10169,7 @@ CREATE TABLE IF NOT EXISTS `mesures` (
 -- Structure de la table `outils`
 --
 
+DROP TABLE IF EXISTS `outils`;
 CREATE TABLE IF NOT EXISTS `outils` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
@@ -9858,7 +10178,20 @@ CREATE TABLE IF NOT EXISTS `outils` (
   `phase_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `outils_phase_fk_idx` (`phase_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Vider la table avant d'insérer `outils`
+--
+
+TRUNCATE TABLE `outils`;
+--
+-- Contenu de la table `outils`
+--
+
+INSERT INTO `outils` (`id`, `name`, `texte`, `type`, `phase_id`) VALUES
+(2, '2015 01 25_ENGAGEMENT_DIRECTION_V1.docx', 'Fiche d''engagement de la direction ', 'pedagogiques', 4),
+(3, '2014 12 28_PLAN_ACTION.docx', 'Modèle électronique du Plan d''Action HAS', 'pedagogiques', 2);
 
 -- --------------------------------------------------------
 
@@ -9866,6 +10199,7 @@ CREATE TABLE IF NOT EXISTS `outils` (
 -- Structure de la table `parametres`
 --
 
+DROP TABLE IF EXISTS `parametres`;
 CREATE TABLE IF NOT EXISTS `parametres` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -9875,20 +10209,37 @@ CREATE TABLE IF NOT EXISTS `parametres` (
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
 
+--
+-- Vider la table avant d'insérer `parametres`
+--
+
+TRUNCATE TABLE `parametres`;
 --
 -- Contenu de la table `parametres`
 --
 
 INSERT INTO `parametres` (`id`, `name`, `description`, `valeur`, `created`, `modified`) VALUES
 (1, 'MessageValidationInscription', 'Message qui sera affiché à la fin de l''inscription d''une équipe', 'Inscription terminée, un mail va vous être envoyé pour terminer la validation.', '2015-04-24 12:46:46', '2015-05-20 15:07:22'),
-(2, 'EmailContact', '', 'refex@has-sante.fr', '2015-05-02 20:01:51', '2015-05-02 20:01:51'),
+(2, 'EmailContact', 'Adresse Email de contact', 'refex@has-sante.fr', '2015-05-02 20:01:51', '2015-07-02 14:41:28'),
 (3, 'SujetEmailContact', '', '[Pacte] Message utilisateur provenant du site', '2015-05-02 20:04:27', '2015-05-02 20:04:27'),
-(4, 'messageAvertissementInscription', 'Message qui apparaît à l''écran à la fin de la phase d''inscription', 'une fois validée, les données saisies précédemment ne seront plus modifiables, mais uniquement consultables.<br />\r\nA cette étape, vous pouvez décider de poursuivre votre démarche, et ainsi ... Les données précédemment saisies seront stockées, ce qui vous permet d''interrompre votre saisie et de la reprendre ultérieurement.\r\nVous pouvez également décider de ne pas continuer, toutes les données saisies auparavant seront détruites.', '2015-06-18 15:13:20', '2015-06-18 15:24:39'),
+(4, 'messageAvertissementInscription', 'Message qui apparaît à l''écran à la fin de la phase d''inscription', '<p>une fois valid&eacute;e, les donn&eacute;es saisies pr&eacute;c&eacute;demment ne seront plus modifiables, mais uniquement consultables.<br />\r\nA cette &eacute;tape, vous pouvez <em>d&eacute;cider</em> de poursuivre votre d&eacute;marche, et ainsi ... Les donn&eacute;es pr&eacute;c&eacute;demment saisies seront <u>stock&eacute;es</u>, ce qui vous permet d&#39;interrompre votre saisie et de la reprendre ult&eacute;rieurement. Vous pouvez &eacute;galement d&eacute;cider de ne pas continuer, toutes les donn&eacute;es saisies <span style="color:#FF0000">auparavant</span> seront <strong>d&eacute;truites</strong>.</p>\r\n', '2015-06-18 15:13:20', '2015-07-02 15:53:20'),
 (5, 'MessageScoreInferieur', 'Message apparaissant à l''utilisateur si le score est inférieur à 5 ', 'Votre score est inférieur à la moyenne ..... ', '2015-06-18 15:21:35', '2015-06-18 15:21:35'),
 (6, 'MessageScoreSuperieur', 'Message apparaissant à l''utilisateur si le score est supérieur à 5 ', 'Bravo, votre score est supérieur à la moyenne ..... ', '2015-06-18 15:23:12', '2015-06-18 15:23:12'),
-(7, 'MessageTitreValidation', 'Message  apparaissant à l''utilisateur lorsqu''il arrive sur la page  permettant de valider son inscription', '\r\nNoter le score obtenu', '2015-06-18 15:24:20', '2015-06-18 15:24:20');
+(7, 'MessageTitreValidation', 'Message  apparaissant à l''utilisateur lorsqu''il arrive sur la page  permettant de valider son inscription', '\r\nNoter le score obtenu', '2015-06-18 15:24:20', '2015-06-18 15:24:20'),
+(8, 'MessageTitreQuestionnaire', 'Message sur la page du questionnaire d''engagement de la direction', '<p>Ces quelques <strong>questions </strong>peuvent vous aider &agrave; prendre la d&eacute;cision, pour mieux d&eacute;finir vos besoins avant de vous lancer.<br />\r\nGrille d&rsquo;auto-<em>&eacute;valuation </em>sur votre capacit&eacute; d&rsquo;engagement. R&eacute;pondez aux questions ci-dessous et visualiser les <span style="color:#FF0000">r&eacute;sultats</span></p>\r\n', '2015-07-02 14:26:07', '2015-07-02 15:55:27'),
+(9, 'MessageNeSouhaitePasPoursuivre', 'Message apparaissant à l''utilisateur lorsqu''il ne souhaite pas poursuivre son engagement dans Pacte', 'Vous ne souhaitez pas poursuivre ....', '2015-07-02 14:34:41', '2015-07-02 14:34:41'),
+(10, 'MessageNiveauCertifBloquant', 'Message apparaissant lorsque le niveau de certification ne permet pas de continuer l''engagement dans Pacte', 'Le niveau de certification de l''établissement ne permet pas de continuer la démarche Pacte', '2015-07-02 14:36:39', '2015-07-02 14:36:39'),
+(11, 'MessageAccueilReferent', 'Message d''accueil lors de la gestion des membres référents', '<p>Constituer une &eacute;quipe, mettre en place et suivre le programme n&eacute;cessite un accompagnement et un soutien des professionnels engag&eacute;s. Des capacit&eacute;s de leadership pour assurer la motivation n&eacute;cessaire pour mener &agrave; bien le programme Pacte et en assurer la viabilit&eacute; dans le temps, n&eacute;cessite la d&eacute;signation :<br />\r\n- <strong>D&rsquo;un bin&ocirc;me (ou trin&ocirc;me)</strong> repr&eacute;sent&eacute; de pr&eacute;f&eacute;rence d&rsquo;un m&eacute;decin et d&rsquo;un cadre de sant&eacute;<br />\r\n- <strong>D&rsquo;un facilitateur</strong>, souvent repr&eacute;sent&eacute; par un coordonnateur de la gestion des risques<br />\r\n- <strong>D&rsquo;un animateur pour le CRM Sant&eacute;</strong>, souvent ext&eacute;rieur &agrave; l&rsquo;&eacute;tablissement de sant&eacute; et &agrave; l&rsquo;&eacute;quipe</p>\r\n', '2015-07-03 10:59:47', '2015-07-03 10:59:47'),
+(12, 'MessageAccueilMembre', 'Message d''accueil lors de la gestion des membres', '<p>Constituer une &eacute;quipe, mettre en place et suivre le programme n&eacute;cessite un accompagnement</p>\r\n', '2015-07-03 11:01:14', '2015-07-03 11:01:14'),
+(13, 'MessageAccueilComite', 'Message d’accueil lors de la gestion du comité de pilotage', '<p>Constituer un comit&eacute; de pilotage ...</p>\r\n', '2015-07-03 11:02:27', '2015-07-03 11:02:27'),
+(14, 'MessageAccueilPlanning', 'Message d''accueil de la page de la gestion du Macro-planning', '<p>Test&nbsp;d&#39;accueil &agrave; d&eacute;finir</p>\r\n', '2015-07-03 11:07:16', '2015-07-03 11:07:16'),
+(15, 'MessageAccueilPlanActionHas', 'Message d''accueil lorsque l''équipe suit le plan d''action fournis par la HAS', '<p>Texte d&#39;accueil explicatif</p>\r\n', '2015-07-03 13:21:09', '2015-07-03 13:21:09'),
+(16, 'MessageAccueilFonctionnement', 'Message d''accueil de la partie fonctionnement d''équipe', '<p>Test d&#39;accueil&nbsp;</p>\r\n', '2015-07-03 13:26:04', '2015-07-03 13:26:04'),
+(17, 'MessageAccueilEvaluation', 'Message qui sera affiché à l''accueil sur la partie Évaluation à T0', '<p>Texte d&#39;accueil</p>\r\n', '2015-07-03 13:28:39', '2015-07-03 13:28:39'),
+(18, 'MessageAccueilEnqueteSatisfaction', 'Message d''accueil de la partie enquête de satisfaction', '<p>Texte d&#39;acceuil</p>\r\n', '2015-07-03 13:33:45', '2015-07-03 13:33:45'),
+(19, 'MessageAccueilChoixPlanAction', 'Message apparaissant lors du choix du type de plan d''action HAS ou Propre à l''équipe', '<p>Texte explicatif</p>\r\n', '2015-07-03 13:38:07', '2015-07-03 13:38:07');
 
 -- --------------------------------------------------------
 
@@ -9896,6 +10247,7 @@ INSERT INTO `parametres` (`id`, `name`, `description`, `valeur`, `created`, `mod
 -- Structure de la table `phases`
 --
 
+DROP TABLE IF EXISTS `phases`;
 CREATE TABLE IF NOT EXISTS `phases` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
@@ -9903,6 +10255,11 @@ CREATE TABLE IF NOT EXISTS `phases` (
   UNIQUE KEY `name_UNIQUE` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
+--
+-- Vider la table avant d'insérer `phases`
+--
+
+TRUNCATE TABLE `phases`;
 --
 -- Contenu de la table `phases`
 --
@@ -9919,6 +10276,7 @@ INSERT INTO `phases` (`id`, `name`) VALUES
 -- Structure de la table `plan_actions`
 --
 
+DROP TABLE IF EXISTS `plan_actions`;
 CREATE TABLE IF NOT EXISTS `plan_actions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
@@ -9927,7 +10285,22 @@ CREATE TABLE IF NOT EXISTS `plan_actions` (
   `demarche_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `demarche_plan_action_fk_idx` (`demarche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
+
+--
+-- Vider la table avant d'insérer `plan_actions`
+--
+
+TRUNCATE TABLE `plan_actions`;
+--
+-- Contenu de la table `plan_actions`
+--
+
+INSERT INTO `plan_actions` (`id`, `name`, `file`, `is_has`, `demarche_id`) VALUES
+(2, 'Test ajout plan d''action', 'export_etab.csv', 0, 10),
+(6, NULL, NULL, 1, 16),
+(9, NULL, NULL, 1, 18),
+(10, NULL, NULL, 0, 9);
 
 -- --------------------------------------------------------
 
@@ -9935,6 +10308,7 @@ CREATE TABLE IF NOT EXISTS `plan_actions` (
 -- Structure de la table `projets`
 --
 
+DROP TABLE IF EXISTS `projets`;
 CREATE TABLE IF NOT EXISTS `projets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mission` text,
@@ -9946,7 +10320,25 @@ CREATE TABLE IF NOT EXISTS `projets` (
   `demarche_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `demarches_projet_fk_idx` (`demarche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Vider la table avant d'insérer `projets`
+--
+
+TRUNCATE TABLE `projets`;
+--
+-- Contenu de la table `projets`
+--
+
+INSERT INTO `projets` (`id`, `mission`, `secteur_activite`, `definition`, `intitule`, `deploiement`, `communication`, `demarche_id`) VALUES
+(1, 'jhjhsdsd', 'zzeze', 'ze', 'Description de l''intitulé du projet', 'Les modalités de déploiement sont les suivantes : \r\n1-Reflexion\r\n2-Mise en oeuvre\r\n3-Actions', '', 9),
+(2, 'Mission', 'Secteur', 'beau projet', 'azaz\r\né & è ç à $ * ù % £ µ ô ê â û î ä ï ü ö', 'azazazmlkml,qfzer', 'Pour la comm', 10),
+(3, NULL, NULL, NULL, '', '', NULL, 11),
+(5, 'cvcv', 'fgfggf', 'gyy', 'dfdfdf', 'ddfdf', 'cvcv', 16),
+(6, 'kjlkqjfer', 'qsqs', 'qsqs', 'le projet blablabla', 'il sera déployer .... ', 'ttt', 17),
+(7, '', 'erer', 'eerererererer', 'Le projet est le suivant ....', 'Il sera déployé de la manière suivante .... ', '', 18),
+(8, NULL, NULL, NULL, '', '', NULL, 19);
 
 -- --------------------------------------------------------
 
@@ -9954,6 +10346,7 @@ CREATE TABLE IF NOT EXISTS `projets` (
 -- Structure de la table `questions`
 --
 
+DROP TABLE IF EXISTS `questions`;
 CREATE TABLE IF NOT EXISTS `questions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
@@ -9965,6 +10358,11 @@ CREATE TABLE IF NOT EXISTS `questions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
+--
+-- Vider la table avant d'insérer `questions`
+--
+
+TRUNCATE TABLE `questions`;
 --
 -- Contenu de la table `questions`
 --
@@ -9987,6 +10385,7 @@ INSERT INTO `questions` (`id`, `name`, `texte`, `texte_aide`, `ordre`, `created`
 -- Structure de la table `reponses`
 --
 
+DROP TABLE IF EXISTS `reponses`;
 CREATE TABLE IF NOT EXISTS `reponses` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(45) DEFAULT NULL,
@@ -9995,7 +10394,88 @@ CREATE TABLE IF NOT EXISTS `reponses` (
   PRIMARY KEY (`id`),
   KEY `demarche_reponse_fk_idx` (`demarche_id`),
   KEY `demarche_question_fk_idx` (`question_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=171 ;
+
+--
+-- Vider la table avant d'insérer `reponses`
+--
+
+TRUNCATE TABLE `reponses`;
+--
+-- Contenu de la table `reponses`
+--
+
+INSERT INTO `reponses` (`id`, `libelle`, `question_id`, `demarche_id`) VALUES
+(81, 'N', 9, 9),
+(82, 'N', 10, 9),
+(83, 'O', 1, 9),
+(84, 'O', 2, 9),
+(85, 'O', 3, 9),
+(86, 'N', 4, 9),
+(87, 'N', 5, 9),
+(88, 'O', 6, 9),
+(89, 'O', 7, 9),
+(90, 'O', 8, 9),
+(91, 'N', 9, 10),
+(92, 'N', 10, 10),
+(93, 'O', 1, 10),
+(94, 'O', 2, 10),
+(95, 'O', 3, 10),
+(96, 'O', 4, 10),
+(97, 'N', 5, 10),
+(98, 'N', 6, 10),
+(99, 'O', 7, 10),
+(100, 'O', 8, 10),
+(101, 'N', 9, 11),
+(102, 'N', 10, 11),
+(103, 'O', 1, 11),
+(104, 'O', 2, 11),
+(105, 'O', 3, 11),
+(106, 'N', 4, 11),
+(107, 'O', 5, 11),
+(108, 'O', 6, 11),
+(109, 'O', 7, 11),
+(110, 'N', 8, 11),
+(131, 'N', 9, 16),
+(132, 'N', 10, 16),
+(133, 'O', 1, 16),
+(134, 'O', 2, 16),
+(135, 'O', 3, 16),
+(136, 'O', 4, 16),
+(137, 'O', 5, 16),
+(138, 'O', 6, 16),
+(139, 'N', 7, 16),
+(140, 'N', 8, 16),
+(141, 'N', 9, 17),
+(142, 'N', 10, 17),
+(143, 'O', 1, 17),
+(144, 'O', 2, 17),
+(145, 'O', 3, 17),
+(146, 'N', 4, 17),
+(147, 'N', 5, 17),
+(148, 'N', 6, 17),
+(149, 'O', 7, 17),
+(150, 'N', 8, 17),
+(151, 'N', 9, 18),
+(152, 'N', 10, 18),
+(153, 'O', 1, 18),
+(154, 'O', 2, 18),
+(155, 'N', 3, 18),
+(156, 'N', 4, 18),
+(157, 'O', 5, 18),
+(158, 'O', 6, 18),
+(159, 'N', 7, 18),
+(160, 'O', 8, 18),
+(161, 'N', 9, 19),
+(162, 'N', 10, 19),
+(163, 'O', 1, 19),
+(164, 'N', 2, 19),
+(165, 'O', 3, 19),
+(166, 'N', 4, 19),
+(167, 'O', 5, 19),
+(168, 'N', 6, 19),
+(169, 'O', 7, 19),
+(170, 'O', 8, 19);
 
 -- --------------------------------------------------------
 
@@ -10003,6 +10483,7 @@ CREATE TABLE IF NOT EXISTS `reponses` (
 -- Structure de la table `responsabilites`
 --
 
+DROP TABLE IF EXISTS `responsabilites`;
 CREATE TABLE IF NOT EXISTS `responsabilites` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
@@ -10010,6 +10491,11 @@ CREATE TABLE IF NOT EXISTS `responsabilites` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
+--
+-- Vider la table avant d'insérer `responsabilites`
+--
+
+TRUNCATE TABLE `responsabilites`;
 --
 -- Contenu de la table `responsabilites`
 --
@@ -10027,12 +10513,18 @@ INSERT INTO `responsabilites` (`id`, `name`, `online`) VALUES
 -- Structure de la table `type_indicateurs`
 --
 
+DROP TABLE IF EXISTS `type_indicateurs`;
 CREATE TABLE IF NOT EXISTS `type_indicateurs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
+--
+-- Vider la table avant d'insérer `type_indicateurs`
+--
+
+TRUNCATE TABLE `type_indicateurs`;
 --
 -- Contenu de la table `type_indicateurs`
 --
@@ -10048,10 +10540,7 @@ INSERT INTO `type_indicateurs` (`id`, `name`) VALUES
 -- Structure de la table `users`
 --
 
---
--- Structure de la table `users`
---
-
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
@@ -10066,17 +10555,31 @@ CREATE TABLE IF NOT EXISTS `users` (
   `token` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
 
+--
+-- Vider la table avant d'insérer `users`
+--
+
+TRUNCATE TABLE `users`;
 --
 -- Contenu de la table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `role`, `nom`, `prenom`, `created`, `modified`, `lastlogin`, `active`, `token`) VALUES
-(1, 'a.coue', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'admin', 'COUE', 'Anthony', '2015-04-01 03:14:30', '2015-06-18 09:47:12', '2015-06-18 09:47:12', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1'),
-(2, 'has', '$2y$10$/XFcwUYHBr0YsVnxwLikSOmhxOi69ejBFlttN9EHEUaFyLiEq5E6u', 'has', 'HAS', 'CP', '2015-04-02 03:14:30', '2015-05-05 14:40:27', '2015-05-05 14:40:27', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1'),
-(3, 'expert', '$2y$10$mNM0ii2D.1zry6PcB5UiDOB6x.AB17psN.NuP2s1.OrHDQ5rG.CG6', 'expert', 'N°1', 'Expert', '2015-04-08 14:42:50', '2015-05-05 11:11:40', '2015-05-05 11:11:40', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1'),
-(4, 'y.sami', '$2y$10$wrx2xiCYn1E.l355/HkGQucePD8DfaYgaNJpG9BqRuiZt4/j15mo.', 'admin', 'SAMI', 'Yasmine', '2015-05-27 13:33:49', '2015-06-18 09:51:01', '2015-06-18 09:51:01', 1, 'AEnIqeRk23pVwioWxjZCu0rSTmDdhNFa');
+(1, 'admin', '$2y$10$gxMkQQvFJzkvJX4nzM5dee6uoG5chAKhwF152BzCkVMIIfgGwlEO.', 'admin', 'COUE-9', 'Anthony', '2015-04-01 03:14:30', '2015-07-03 13:19:46', '2015-07-03 13:19:46', 1, ''),
+(2, 'has', '$2y$10$/XFcwUYHBr0YsVnxwLikSOmhxOi69ejBFlttN9EHEUaFyLiEq5E6u', 'has', 'HAS', 'CP', '2015-04-02 03:14:30', '2015-05-05 14:40:27', '2015-05-05 14:40:27', 1, ''),
+(3, 'expert', '$2y$10$mNM0ii2D.1zry6PcB5UiDOB6x.AB17psN.NuP2s1.OrHDQ5rG.CG6', 'expert', 'Expert', 'Test', '2015-04-08 14:42:50', '2015-06-15 15:55:37', '2015-06-15 15:55:37', 1, ''),
+(23, '2015_3382_1', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'equipe', NULL, NULL, '2015-05-06 11:47:19', '2015-07-03 13:35:16', '2015-07-03 13:35:16', 1, 'sWqJe35iTH90rtCxSvEuIkXcgpLmRNy1'),
+(24, '2015_3383_1', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'equipe', NULL, NULL, '2015-05-06 12:10:06', '2015-07-02 14:17:35', '2015-07-02 14:17:35', 1, 'cPy3DdEmu1LrKpz680QhI2eXgRfMknNJ'),
+(25, '2015_3383_2', '$2y$10$Anw/LRb.QNAIDWoiPJSH0.49DDqN8gBVT69TFxhiAcrfP1XHE.L6q', 'equipe', NULL, NULL, '2015-05-07 07:52:44', '2015-05-07 07:54:51', '2015-05-07 07:54:35', 1, 'OHJdVr7XFELytZv5i1CkPnYgKlmW9M8D'),
+(29, '2015_6429_1', '$2y$10$Rubz6qzqKI9AGhA/A2idKeZBqG4X89PGM/ZmLPmZN/2ldg81P/udu', 'equipe', NULL, NULL, '2015-05-22 09:27:38', '2015-05-22 09:39:24', '2015-05-22 09:36:20', 1, 'fu6tpMd9XRnhm85Vwax0rIqkEDJ1ceyl'),
+(30, '2015_6429_2', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'equipe', NULL, NULL, '2015-05-22 12:08:59', '2015-07-03 13:15:41', '2015-07-03 13:15:41', 1, 'A4upQ2EFUitceMIknTdXg7zNGRDmO0Y1'),
+(31, '2015_9998_1', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'equipe', NULL, NULL, '2015-06-01 14:38:04', '2015-06-01 14:38:46', '0000-00-00 00:00:00', 1, '568QRvu0tmB1MCGo4Sxf2bUpq9jZEJel'),
+(32, 'a.coue', '$2y$10$9w4LVW1u2zLX6ghCRpn40eB56YuMdHsoI.nDtJDi6Sv/3dtGq32Qm', 'expert', 'COUE', 'Anthony', '2015-06-03 11:55:22', '2015-06-17 16:09:11', '2015-06-17 16:09:11', 1, 'AEnIqeRk23pVwioWxjZCu0rSTmDdhNFa'),
+(33, '2015_6723_1', '$2y$10$MPOyBDmkF9L.SigdHD8TruJp1AqRcQpLQNr//EIbf8JaNyPcFQJIy', 'equipe', NULL, NULL, '2015-06-23 10:32:49', '2015-07-02 14:19:49', '2015-07-02 14:19:49', 1, '0AkvUFVdTYsrQSaR1iw379ej5lqyCtXm'),
+(34, '2015_6723_2', '$2y$10$50v6kQy5xg7EnVix7QOhm./aj5x0QYPBgg7Y81seZoGBFhMR2vBGe', 'equipe', NULL, NULL, '2015-06-25 10:37:43', '2015-07-03 13:34:50', '2015-07-03 13:34:50', 1, 'NuPfdzAMgJcCHOQT8liRqG4XyS5htZWK'),
+(35, '2015_6420_1', '$2y$10$8.atNpoSulv29xp7vOL1AOo1tDoHu5MZbcTI7ikSuFkpK6hKxHifq', 'equipe', NULL, 'Equipe de chirurgie de test n°2', '2015-07-02 14:28:57', '2015-07-03 10:53:24', '2015-07-03 10:53:24', 1, 'kVujLJIcW3R8wpbC6ZfmMa72tU4KxPAS');
 
 --
 -- Contraintes pour les tables exportées

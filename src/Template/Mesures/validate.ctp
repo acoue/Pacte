@@ -5,7 +5,7 @@
 			<div class="col-md-1"></div>
 			<div class="col-md-10"> 
 				<div class="row">
-					<div class="alert alert-success">Votre phase de diagnostic est désormais terminée ... </div>			
+					<div class="alert alert-success"><?= $message->valeur?> </div>			
 				</div>
 			</div>
 			<div class="col-md-1"></div>

@@ -19,6 +19,12 @@ if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) { ?
 			echo h($outilC->name)."&nbsp;&nbsp;".$this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/'.h($outilC->name), ['class' => 'titre','target' => '_blank','escape' => false]);
 		endforeach;
 	}
+	
+	//Bouton génération PDF
+	echo "<br /><br />";
+	echo $this->Html->link('Voir l\'état de sa démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$session->read('Equipe.Identifiant')],['class' => 'btn btn-default']);
+	
+		
 } else { 
 	if($session->check('Progress.Menu')) {
 		//Inscription
@@ -26,6 +32,6 @@ if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) { ?
 		echo "Volet d’engagement &nbsp;&nbsp;".$this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/2015 01 25_ENGAGEMENT_DIRECTION_V1.docx', ['class' => 'titre','target' => '_blank','escape' => false]);
 	}
 	
-
+	
 }
 ?>        

@@ -9,6 +9,10 @@
 			</div>
 			<div class="col-md-8">
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
+					<tr align='center'>
+				    	<td width='40%'><b>Campagne n°</b></td>
+				        <td><?= $enquete->campagne ?></td>
+					</tr>
 				    <tr align='center'>
 				    	<td width='40%'><b>Service</b></td>
 				        <td><?= $enquete->service ?></td>

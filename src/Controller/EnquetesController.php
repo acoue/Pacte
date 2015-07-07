@@ -138,8 +138,14 @@ class EnquetesController extends AppController
         //Récupération des questions
         $this->loadModel('EnqueteQuestions');
         $questions = $this->EnqueteQuestions->find('all')->order(['ordre' => 'asc']);
-        $fonctions = $this->Enquetes->Fonctions->find('list', ['limit' => 200]);
-        $this->set(compact('enquete', 'questions', 'fonctions','id_demarche'));
+        $fonctions = $this->Enquetes->Fonctions->find('list');
+        
+        //Message
+        $this->loadModel('Parametres');
+        $message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilAjoutEnqueteSatisfaction'])->first();
+         
+        
+        $this->set(compact('enquete', 'questions', 'fonctions','id_demarche','message'));
         $this->set('_serialize', ['enqueteReponse']);
     }
 

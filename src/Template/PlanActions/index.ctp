@@ -1,5 +1,13 @@
 <div class="blocblanc">
-	<h2>Phase de diagnostic</h2>
+<?php 
+$session = $this->request->session();
+if($session->read('Equipe.Diagnostic') == 0) { ?>	
+    <h2>Phase de diagnostic</h2>
+<?php } else if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>	
+    <h2>Phase de mise en oeuvre</h2>
+<?php } else if($session->read('Equipe.Evaluation') == 0) { ?>
+    <h2>Phase d'évaluation</h2>
+<?php } ?>
     <h3>Objectifs d'amélioration</h3>
 	<div class="blocblancContent">
 		<div class="row"> 

@@ -302,10 +302,8 @@ class InscriptionsController extends AppController
     			$link = ['controller'=>'users', 'action' => 'activate', $user->id."-".$user->token, '_full' => true];
 
     			//Recuperation des parametres
-    			$this->loadModel('Parametres');
-    			$from = $this->Parametres->find()->where(['name' => 'EmailContact'])->first();
-    			if(empty($from)) $from = "refex@has-sante.fr";
-    			else  $from = $from['valeur'];
+    			$this->loadModel('Parametres');    			
+    			$from = "refex@has-sante.fr";
     			$sujet = $this->Parametres->find()->where(['name' => 'SujetEmailContact'])->first();
     			if(empty($sujet)) $sujet = "[PACTE] ";
     			else  $sujet = $sujet['valeur'];
@@ -315,7 +313,8 @@ class InscriptionsController extends AppController
     			//$sujet = $this->Parametre->getValeur('SujetEmailContact', '[PACTE]');
     			//debug($from.'-'.$sujet);die();
     			
-    			(ENV_APPLI === 'QUAL') ? $to = EMAIL_ADMIN : $to = $this->request->data('mail');
+    			//(ENV_APPLI === 'QUAL') ? $to = EMAIL_ADMIN : $to = $this->request->data('mail');
+    			$to = $this->request->data('mail');
     			
     			$email = new Email('default');
     			$email->template('inscription')

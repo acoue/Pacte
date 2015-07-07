@@ -16,6 +16,7 @@ class Enquete extends Entity
      */
     protected $_accessible = [
         'service' => true,
+        'campagne' => true,
         'demarche_id' => true,
         'fonction_id' => true,
         'demarch' => true,

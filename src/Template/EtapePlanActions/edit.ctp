@@ -1,10 +1,19 @@
 <div class="blocblanc">
-	<h2>Phase de diagnostic</h2>
+<?php 
+$session = $this->request->session();
+if($session->read('Equipe.Diagnostic') == 0) { ?>	
+    <h2>Phase de diagnostic</h2>
+<?php } else if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>	
+    <h2>Phase de mise en oeuvre</h2>
+<?php } else if($session->read('Equipe.Evaluation') == 0) { ?>
+    <h2>Phase d'évaluation</h2>
+<?php } ?>
     <h3>Objectifs d'amélioration - Edition d'une étape du plan d'action</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-2">
+			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $etapePlanAction->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]) ?><br /><br/>
 			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
     		<?= $this->Form->create($etapePlanAction, ['id'=>'edit_etape_form']); ?>    
@@ -36,7 +45,7 @@
                     </div>                          
 				</div><br />    
 				<div class="row">
-                	<label class="col-md-4 control-label" for="annee">Echéance : Année <span class="obligatoire"><sup> *</sup></span></label>
+                	<label class="col-md-4 control-label" for="annee">Année <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('annee', ['label' => false,'id'=>'annee',
 														   	'div' => false,
 															'class' => 'form-control', 
@@ -45,13 +54,16 @@
                     										'data-validation-length'=>'min4' ,
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br />     
+				</div><br />        
+				<?php 
+				$etat = ['En cours'=>'En cours','En attente'=>'En attente','Terminer'=>'Terminer'];
+				?>	
 				<div class="row">
                 	<label class="col-md-4 control-label" for="etat">Etat</label>
                     <div class="col-md-8"><?= $this->Form->input('etat', ['label' => false,'id'=>'etat',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text']); ?>
+                    										'options' => $etat]); ?>
                     </div>                          
 				</div><br />     
 				<div class="row">

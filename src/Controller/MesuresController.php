@@ -13,10 +13,12 @@ class MesuresController extends AppController
 {
 	public function initialize() {
 		parent::initialize();
-// 		//Menu et sous-menu
-// 		$session = $this->request->session();
-// 		$session->write('Progress.Menu','2');
-// 		$session->write('Progress.SousMenu','4');
+		//Menu et sous-menu
+		$session = $this->request->session();
+		if($session->read('Equipe.Diagnostic') == 0) {
+			$session->write('Progress.Menu','2');
+			$session->write('Progress.SousMenu','4');
+		}
 	}
 	
 	
@@ -251,11 +253,16 @@ class MesuresController extends AppController
     		//Mise à jour de la session :
     		$session->write('Equipe.Engagement',1);
     		$session->write('Equipe.Diagnostic',1);
-    		$session->write('Equipe.MiseEnOeuvre',0);
-    		 
+    		$session->write('Equipe.MiseEnOeuvre',0); 
+    		
+    		
     		//Enregistrement
     		$demarchesPhasesTable->save($demarchesPhase);
     	}
+    	//Message
+    	$this->loadModel('Parametres');
+    	$message = $this->Parametres->find('all')->where(['name' => 'MessageValidationDiagnostic'])->first();
+    	$this->set('message', $message);
     	 
     }
 }

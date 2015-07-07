@@ -1,5 +1,13 @@
 <div class="blocblanc">
-	<h2>Phase de diagnostic</h2>
+<?php 
+$session = $this->request->session();
+if($session->read('Equipe.Diagnostic') == 0) { ?>	
+    <h2>Phase de diagnostic</h2>
+<?php } else if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>	
+    <h2>Phase de mise en oeuvre et de suivi</h2>
+<?php } else if($session->read('Equipe.Evaluation') == 0) { ?>
+    <h2>Phase d'évaluation</h2>
+<?php } ?>
     <h3>Bilan : <?= $evaluation->name ?></h3>
 	<div class="blocblancContent">
 		<div class="row">
@@ -22,7 +30,12 @@
 				</div><br />  
 				<div class="row">
                 	<label class="col-md-2 control-label" for="synthese">Synthèse <span class="obligatoire"><sup> *</sup></span></label>
-                	<div class="col-md-2">AIDE</div>
+                	<div class="col-md-2 BoutonAide">
+                	<a class="btn btn-xs btn-info" data-toggle="popover" title="Aide"
+	                 		data-content="<?= strip_tags($message->valeur)?>"
+	                        role="button">Aide</a>
+                	
+                	</div>
                     <div class="col-md-8"><?= $this->Form->input('synthese', ['label' => false,'id'=>'synthese',
 														   	'div' => false,'type' => 'textarea', 'escape' => false,
 															'class' => 'form-control', 'rows' => '5', 

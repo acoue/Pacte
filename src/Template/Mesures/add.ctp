@@ -1,6 +1,14 @@
 <div class="blocblanc">
 	<h2>Phase de diagnostic</h2>
-    <h3>Ajout d'une évaluation à T0</h3>
+<?php
+$session = $this->request->session();
+if($session->read('Equipe.Diagnostic') == 0) { ?>	
+    <h3>Evaluation à T0</h3>
+<?php } else if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>	
+    <h3>Evaluation à T1</h3>
+<?php } else if($session->read('Equipe.Evaluation') == 0) { ?>
+    <h3>Evaluation à T2</h3>
+<?php } ?>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -20,7 +28,13 @@
                     </div>                          
 				</div><br />  
 				<div class="row">
-                	<label class="col-md-4 control-label" for="resultat">Evolutions des résultats intermédiares<br />Points forts et axes d'amélioration identifiés <span class="obligatoire"><sup> *</sup></span></label>
+                	<label class="col-md-4 control-label" for="resultat">
+<?php
+if($session->read('Equipe.Diagnostic') == 0) { ?>
+Evolutions des résultats initiaux<br />Points forts et axes d'amélioration identifiés <span class="obligatoire"><sup> *</sup></span>
+<?php } else { ?>
+Evolutions des résultats intermédiares<br />Points forts et axes d'amélioration identifiés <span class="obligatoire"><sup> *</sup></span>
+<?php } ?>    		</label>
                     <div class="col-md-8"><?= $this->Form->input('resultat', ['label' => false,'id'=>'resultat',
 														   	'div' => false,'type' => 'textarea', 'escape' => false,
 															'class' => 'form-control', 'rows' => '5', 'cols' => '80',

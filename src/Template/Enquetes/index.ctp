@@ -1,6 +1,14 @@
 <div class="blocblanc">
+
+<?php 
+$session = $this->request->session();
+if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>	
 	<h2>Phase de mise en oeuvre et de suivi</h2>
-    <h3>Enquêtes de satisfactyion</h3>    
+<?php } else if($session->read('Equipe.Evaluation') == 0) { ?>
+	<h2>Phase d'évaluation</h2>
+<?php } ?>
+
+    <h3>Enquêtes de satisfaction</h3>    
 	<div class="blocblancContent"> 
 		<div class="row"> 
 			<div class="col-md-1"></div>
@@ -16,19 +24,20 @@
 					<div class="col-md-10">
 						<p>
 							<?php 
-							foreach ($dateMax as $dm):
-							
-								$datetime1 = new DateTime($dm->max);
-								$datetime2 = new DateTime("now");
-								$interval = $datetime1->diff($datetime2);										
-								$dateAffiche = strftime('%d/%m/%y', strtotime($dm->max));
-								//$diffDate =  date_diff(DateTime($dm->max), date('Y-m-d'));
-								if($interval->format('%a') < 365) {
-									echo "<p class='alert alert-info'>Date de la dernière enquête pour le service '".$dm->service."' : ".$dateAffiche." - ".$interval->format('%a')." jour(s)</p>";
-								} else {
-									echo "<p class='alert alert-warning'>Attention : la date de la dernière enquête pour le service '".$dm->service."' : ".$dateAffiche." - ".$interval->format('%a')." jours</p>";
-								}
-							endforeach;					
+							if($dateMax->count()>0){
+								foreach ($dateMax as $dm):							
+									$datetime1 = new DateTime($dm->max);
+									$datetime2 = new DateTime("now");
+									$interval = $datetime1->diff($datetime2);										
+									$dateAffiche = strftime('%d/%m/%y', strtotime($dm->max));
+									//$diffDate =  date_diff(DateTime($dm->max), date('Y-m-d'));
+									if($interval->format('%a') < 365) {
+										echo "<p class='alert alert-info'>Date de la dernière enquête pour le service ".$dm->service." : ".$dateAffiche." - ".$interval->format('%a')." jour(s)</p>";
+									} else {
+										echo "<p class='alert alert-warning'>Attention : la date de la dernière enquête pour le service ".$dm->service." : ".$dateAffiche." - ".$interval->format('%a')." jours</p>";
+									}
+								endforeach;	
+							} 	
 							?>
 						</p>
 					</div>
@@ -37,8 +46,9 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
-				            <th width='35%'><?= $this->Paginator->sort('Service') ?></th>
-				            <th width='35%'><?= $this->Paginator->sort('Fonction') ?></th>
+				            <th width='10%'><?= $this->Paginator->sort('Campagne', 'Campagne n°') ?></th>
+				            <th width='30%'><?= $this->Paginator->sort('Service') ?></th>
+				            <th width='30%'><?= $this->Paginator->sort('Fonction') ?></th>
 				            <th width='15%'><?= $this->Paginator->sort('Créée le') ?></th>
 				            <th  width='15%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
@@ -46,6 +56,7 @@
 				    <tbody>
     				<?php foreach ($enquetes as $enquete): ?>
 				        <tr>
+				            <td><?= h($enquete->campagne) ?></td>
 				            <td><?= h($enquete->service) ?></td>
 				            <td><?= $enquete->has('fonction') ? $enquete->fonction->name : '' ?></td> 
 				            <td><?= h($enquete->created) ?></td>

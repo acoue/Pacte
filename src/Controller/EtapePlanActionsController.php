@@ -14,9 +14,11 @@ class EtapePlanActionsController extends AppController
 	public function initialize() {
 		parent::initialize();
 		//Menu et sous-menu
-// 		$session = $this->request->session();
-// 		$session->write('Progress.Menu','2');
-// 		$session->write('Progress.SousMenu','3');
+		$session = $this->request->session();
+		if($session->read('Equipe.Diagnostic') == 0) {
+			$session->write('Progress.Menu','2');
+			$session->write('Progress.SousMenu','3');
+		}
 	}
 	
 	

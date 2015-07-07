@@ -1,5 +1,13 @@
 <div class="blocblanc">
-	<h2>Phase de diagnostic</h2>
+<?php 
+$session = $this->request->session();
+if($session->read('Equipe.Diagnostic') == 0) { ?>	
+    <h2>Phase de diagnostic</h2>
+<?php } else if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>	
+    <h2>Phase de mise en oeuvre</h2>
+<?php } else if($session->read('Equipe.Evaluation') == 0) { ?>
+    <h2>Phase d'évaluation</h2>
+<?php } ?>
     <h3>Objectifs d'amélioration - Ajout d'une étape du plan d'action</h3>
 	<div class="blocblancContent">
 		<div class="row">
@@ -32,13 +40,13 @@
 				?>	
 				<div class="row">
                 	<label class="col-md-3 control-label" for="mois">Echéance : Mois <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-3"><?= $this->Form->input('mois', ['label' => false,'id'=>'mois',
+                    <div class="col-md-4"><?= $this->Form->input('mois', ['label' => false,'id'=>'mois',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'options'=>$mois, 
                     										'required' =>'required']); ?>
                     </div>     
-                	<label class="col-md-3 control-label" for="annee">Echéance : Année <span class="obligatoire"><sup> *</sup></span></label>
+                	<label class="col-md-2 control-label" for="annee">Année <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-3"><?= $this->Form->input('annee', ['label' => false,'id'=>'annee',
 														   	'div' => false,
 															'class' => 'form-control', 
@@ -48,12 +56,15 @@
                     										'required' =>'required']); ?>
                     </div>                          
 				</div><br />     
+				<?php 
+				$etat = ['En cours'=>'En cours','En attente'=>'En attente','Terminer'=>'Terminer'];
+				?>	
 				<div class="row">
                 	<label class="col-md-4 control-label" for="etat">Etat</label>
                     <div class="col-md-8"><?= $this->Form->input('etat', ['label' => false,'id'=>'etat',
 														   	'div' => false,
 															'class' => 'form-control', 
-                    										'type' => 'text']); ?>
+                    										'options' => $etat]); ?>
                     </div>                          
 				</div><br />     
 				<div class="row">

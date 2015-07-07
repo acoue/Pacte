@@ -1,5 +1,13 @@
 <div class="blocblanc">
-	<h2>Phase de diagnostic</h2>
+<?php 
+$session = $this->request->session();
+if($session->read('Equipe.Diagnostic') == 0) { ?>	
+    <h2>Phase de diagnostic</h2>
+<?php } else if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>	
+    <h2>Phase de mise en oeuvre</h2>
+<?php } else if($session->read('Equipe.Evaluation') == 0) { ?>
+    <h2>Phase d'évaluation</h2>
+<?php } ?>
     <h3>Objectifs d'amélioration</h3>
 	<div class="blocblancContent">
 		<div class="row">
@@ -51,7 +59,7 @@
 	<?php
 			$session = $this->request->session();
 			if($session->read('Equipe.Diagnostic') == '1') echo $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']); 
-			echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);
+			else echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);
 			?>
 			 
     	<?= $this->Form->end() ?>

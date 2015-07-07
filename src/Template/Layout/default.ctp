@@ -54,7 +54,13 @@ $cakeDescription = 'Pacte ';
                     <span class="header_titre">Pacte</span>
                 </div>
                 <!-- Menu -->
-                <?= $this->element('menu'); ?>    
+                <?php 
+                if($session->check('Auth.User.role')) {
+                	if($role == 'admin') echo $this->element('menuAdmin');
+                	else if($role == 'expert') echo $this->element('menuExpert');
+                	else if($role == 'has') echo $this->element('menuHas');
+                	else if($role == 'equipe') echo $this->element('menuEquipe');
+                } else echo $this->element('menu'); ?>    
                 <!-- /.menu-->                
             </div>
         </nav>    
