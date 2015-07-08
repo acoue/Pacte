@@ -373,8 +373,9 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
-				            <th width='15%'>Outils</th>
-				            <th width='40%'>Votre Synthèse</th>
+				            <th width='30%'>Outils</th>
+				            <th width='50%'>Votre Synthèse</th>
+				            <th width='20%'>Fichier</th>
 				        </tr>
 				    </thead>
 				    <tbody>
@@ -382,6 +383,11 @@
 				        <tr>
 				            <td><?= h($evaluation->name) ?></td>
 				            <td><?= h($evaluation->synthese) ?></td>
+				           				            <td>
+<?php 
+if(h($evaluation->file)) echo $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/userDocument/'.$username.'/'.h($evaluation->file), ['class' => 'titre','target' => '_blank','escape' => false]);
+?>
+							</td>
 				        </tr>
 				
 				    <?php endforeach; ?>
@@ -441,7 +447,13 @@
 					</table>
 					<?php 
 					} else {
-						echo "<p>Le plan d'action est géré hors Modèle HAS</p>";
+						echo "<p>Le plan d'action est géré hors Modèle HAS.";
+						if(h($planAction->file)) {
+							echo "<br />cliquez ici pour l'ouvrir :  ";
+							echo $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/userDocument/'.$username.'/'.h($planAction->file), ['class' => 'titre','target' => '_blank','escape' => false]);
+						}
+						echo "</p>";
+						
 					}
 				} else {
 					echo "<p>Aucun plan d'action n'est définis pour cette démarche</p>";
@@ -459,8 +471,9 @@
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
-				            <th width='15%'>Outils</th>
-				            <th width='40%'>Evolutions des résultats / Points forts et axes d'amélioration identifiés</th>
+				            <th width='30%'>Outils</th>
+				            <th width='50%'>Evolutions des résultats / Points forts et axes d'amélioration identifiés</th>
+				            <th width='20%'>Fichier</th>
 				        </tr>
 				    </thead>
 				    <tbody>
@@ -468,6 +481,11 @@
 				        <tr>
 				            <td><?= h($mesure->name) ?></td>
 				            <td><?= h($mesure->resultat) ?></td>
+				            <td>
+<?php 
+if(h($mesure->file)) echo $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/userDocument/'.$username.'/'.h($mesure->file), ['class' => 'titre','target' => '_blank','escape' => false]);
+?>
+							</td>
 				        </tr>
 				
 				    <?php endforeach; ?>

@@ -38,7 +38,14 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				</div><br /> 
 <?php } else {?>				
 				<div class="row">
-					<label class="col-md-4 control-label" for="file_exist">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+					<label class="col-md-3 control-label" for="file_exist">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-1">
+                    
+                    <?= $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/userDocument/'.$session->read('Auth.User.username').'/'.h($planAction->file), ['class' => 'titre','target' => '_blank','escape' => false]) ?>
+					
+                    </div>
+                    
+                    
                     <div class="col-md-6"><?= $this->Form->input('file_exist', ['label' => false,'id'=>'file_exist',
 														   	'div' => false,'value'=>$planAction->file ,
 															'class' => 'form-control', 'disabled' =>'disabled',

@@ -110,6 +110,11 @@ class EquipesController extends AppController
     	//Recuperation des infos de l'equipe / etablissement
     	$equipe = $this->Equipes->find('all',['contain'=>'Etablissements'])->where(['Equipes.id'=>$idequipe])->first();
     	
+    	//informations sur le user de l'equipe
+    	$user = $this->Equipes->find('all',['contain' => 'Users'])->where(['Equipes.id'=>$idequipe])->first();    
+    	$username = $user['user']['username'];	
+    	 
+    	
     	//informations sur la démarches
     	$this->loadModel('Demarches');
     	$demarche = $this->Demarches->find('all')->where(['Demarches.equipe_id'=>$equipe->id])->first();    	
@@ -218,7 +223,7 @@ class EquipesController extends AppController
     	} 
     	$this->set(compact('equipe','demarche','projet','reponses','phases',
     							'membres','membres_referents','membres_comites','descriptions',
-    							'calendriers','evaluations','planAction','etapePlanActions','mesures'));
+    							'calendriers','evaluations','planAction','etapePlanActions','mesures','username'));
     		 
     }
     
