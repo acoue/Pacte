@@ -144,33 +144,43 @@ class PlanActionsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
         	$d = $this->request->data;
         	
-        	if($d['file_new']['name'] === '' ) {
-        		//Cas de non modification du fichier Ou Nouveau 
-        		if(is_array($d['file'])) {
-        			//Cas nouveau
-        			$nomFichier = $d['file']['name'];
-        			$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
-        			move_uploaded_file($d['file']['tmp_name'], $destination);
-        		} else {
-        			//Cas non modification
-        			$nomFichier = $d['file'];
+
+        	//Test de la presence d'un fichier
+        	if($d['file']['name'] === '' ) {
+        		$this->Flash->error('Merci d\'ajouter un fichier.');
+        		return $this->redirect(['action' => 'edit/'.$id]);
+        	}
+        	 
+        	//Cas d'un nouveau fichier : CRM et Culture securite
+        	if(isset($d['file']) && $d['file']['tmp_name'] != '') {
+        		// Il s'agit d'un nouveau fichier
+        		//Vérification de la présence
+        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name'])) {
+        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
         		}
-        		       		
-        		$planAction->name = $d['name'];
-        		$planAction->file = $nomFichier;        		
-        	} else {
+        		//Deplacement du nouveau
+        		$nomFichier = $d['file']['name'];
+        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
+        		move_uploaded_file($d['file']['tmp_name'], $destination);
+        	} else if(isset($d['file_new']) && $d['file_new']['tmp_name'] != '') {
+        		//Cas d'une modification
         		//Suppression de l'ancien
-        		if($planAction->file && file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file)) {
+        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file) && strlen($planAction->file)>0) {
         			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file);
         		}
-				//Nouveau fichier
+        		//Deplacement du nouveau
         		$nomFichier = $d['file_new']['name'];
         		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
         		move_uploaded_file($d['file_new']['tmp_name'], $destination);
-        		$planAction->name = $d['name'];
-        		$planAction->file = $nomFichier;
-        		$planAction->is_has = 0;
-        	}       	
+        	} else {
+        		//Pas de nouveau fichier et pas de modification de fichier : modification des autres champs textes du formulaire
+        		$nomFichier = $planAction->file ;
+        	}
+        	
+        	$planAction->name = $d['name'];
+        	$planAction->file = $nomFichier;
+        	$planAction->is_has = 0;
+        	
         	 
         	if ($this->PlanActions->save($planAction)) {
         		$this->Flash->success('Le plan d\'action a bien été sauvegardé.');

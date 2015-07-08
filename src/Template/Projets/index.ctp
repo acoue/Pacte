@@ -107,11 +107,11 @@
 							            <td><?= h($comite->fonction) ?></td>
 							            <td><?= h($comite->service) ?></td>		
 							            <td class="actions">
-										<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view/'.$membres_comites->id.'/1/0/projet'],  ['title'=>'Visualiser','escape' => false]); ?>&nbsp;&nbsp;
-										<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'membres','action' => 'edit/'.$membres_comites->id.'/1/0/projet'],  ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view/'.$comite->id.'/1/0/projet'],  ['title'=>'Visualiser','escape' => false]); ?>&nbsp;&nbsp;
+										<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'membres','action' => 'edit/'.$comite->id.'/1/0/projet'],  ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 										<?= $this->Form->postLink(
 							                '<span><i class="glyphicon glyphicon-trash"></i></span>',
-							                ['controller'=>'membres','action' => 'delete/'.$membres_comites->id.'/1/0/projet'],
+							                ['controller'=>'membres','action' => 'delete/'.$comite->id.'/1/0/projet'],
 							                ['class' => 'tip',  'title'=>'Supprimer','escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer le membre ?']);?>
 							            </td>		      		           
 							        </tr>

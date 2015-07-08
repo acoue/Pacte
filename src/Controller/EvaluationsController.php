@@ -120,30 +120,43 @@ class EvaluationsController extends AppController
         	$d = $this->request->data;
         	//debug($d);die();
         	
-        	if($d['file'] === 'Modification' && $d['file_new']['name'] === '') {
+        	//Test de la presence d'un fichier
+        	if($d['file']['name'] === '' ) {
         		$this->Flash->error('Merci d\'ajouter un fichier.');
         		return $this->redirect(['action' => 'edit/'.$id]);
-        	}
+        	} 
         	
-        	if($d['file_new']['name'] === '') {
-        		$evaluation = $this->Evaluations->patchEntity($evaluation, $this->request->data);        		
-        	} else { // Nouveau fichier	       		
-        		
-	        	//Suppression de l'ancien
-	        	if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file) && strlen($evaluation->file)>0) {
-	        		unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file);
+        	//Cas d'un nouveau fichier : CRM et Culture securite
+        	if(isset($d['file']) && $d['file']['tmp_name'] != '') { 
+        		// Il s'agit d'un nouveau fichier
+	        	//Vérification de la présence
+	        	if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name'])) {
+	        		unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
 	        	}
 	        	//Deplacement du nouveau 
-	        	$nomFichier = $d['file_new']['name'];
+	        	$nomFichier = $d['file']['name'];
 	        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
-	        	move_uploaded_file($d['file_new']['tmp_name'], $destination);      	
-	        	
-	        	// mise a jour des donnees
-	        	$evaluation->demarche_id = $d['demarche_id'];
-	        	$evaluation->name = $d['name'];
-	        	$evaluation->synthese = $d['synthese'];
-	        	$evaluation->file = $nomFichier;
+	        	move_uploaded_file($d['file']['tmp_name'], $destination);      	
+        	} else if(isset($d['file_new']) && $d['file_new']['tmp_name'] != '') {        	
+	        	//Cas d'une modification
+        		//Suppression de l'ancien
+        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file) && strlen($evaluation->file)>0) {
+        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file);
+        		}
+        		//Deplacement du nouveau
+        		$nomFichier = $d['file_new']['name'];
+        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
+        		move_uploaded_file($d['file_new']['tmp_name'], $destination);
+        	} else {
+        		//Pas de nouveau fichier et pas de modification de fichier : modification des autres champs textes du formulaire 
+        		$nomFichier = $evaluation->file ;
         	} 
+        	// mise a jour des donnees
+        	$evaluation->demarche_id = $d['demarche_id'];
+        	$evaluation->name = $d['name'];
+        	$evaluation->synthese = $d['synthese'];
+        	$evaluation->file = $nomFichier;
+        	
         	
             if ($this->Evaluations->save($evaluation)) {
                 $this->Flash->success('L\'évaluation a bien été sauvegardée.');

@@ -175,17 +175,17 @@
 	<table cellpadding="0" cellspacing="0" class="table" width='80%'>	
 		<thead>
 			<tr>
-				<th width='40%'>Libellé</th>
-				<th width='30%'>Date</th>
-				<th width='30%'>Date</th>
+				<th width='40%'><h5>Libellé</h5></th>
+				<th width='30%'><h5>Date</h5></th>
+				<th width='30%'><h5>Date</h5></th>
 			</tr>
 		<thead>
 		<tbody>    
 		<?php foreach ($calendriers as $calendrierProjet): ?>
 			<tr>
-		    	<td><?= $calendrierProjet->libelle ?></td>
-	            <td><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_debut) ?></td>		
-	            <td><?= $calendrierProjet->mois_fin." ".$this->Number->format($calendrierProjet->annee_fin) ?></td>		           
+		    	<td><h5><?= $calendrierProjet->libelle ?></h5></td>
+	            <td><h5><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_debut) ?></h5></td>		
+	            <td><h5><?= $calendrierProjet->mois_fin." ".$this->Number->format($calendrierProjet->annee_fin) ?></h5></td>		           
 		    </tr>
 		 <?php endforeach; ?>          
 		</tbody>

@@ -278,7 +278,7 @@
 		<thead>
 	       <tr align='center'>
 		       	<th width='35%'><h5>Outils</h5></th>
-	    		<th width='65%'><h5>Evolutions des résultats intermédiares / Points forts et axes d'amélioration identifiés</h5></th>
+	    		<th width='65%'><h5>Evolutions des résultats / Points forts et axes d'amélioration identifiés</h5></th>
 		   	</tr>
 		</thead>
 		<tbody>

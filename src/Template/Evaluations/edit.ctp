@@ -43,11 +43,21 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
                     										'required' =>'required']); ?>
                     </div>                          
 				</div><br /> 
+<?php if(empty($evaluation->file)) { ?>
 				<div class="row">
 					<label class="col-md-4 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-6"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
-														   	'div' => false,'value'=>$evaluation->file ,
+                    <div class="col-md-8"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
+														   	'div' => false, 
 															'class' => 'form-control', 'required' =>'required',
+                    										'type' => 'file']); ?>
+                    </div>
+				</div><br /> 
+<?php } else {?>				
+				<div class="row">
+					<label class="col-md-4 control-label" for="file_exist">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-6"><?= $this->Form->input('file_exist', ['label' => false,'id'=>'file_exist',
+														   	'div' => false,'value'=>$evaluation->file ,
+															'class' => 'form-control', 'disabled' =>'disabled',
                     										'type' => 'text']); ?>
                     </div>
                     <div class="col-md-2">
@@ -68,6 +78,10 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 </div>
                     <!-- BLOC CACHES FIN --> 
 				</div><br /> 		
+<?php }?>
+				
+
+
 			</div>						
 			<div class="col-md-1"></div>			
 		</div><br /><br />

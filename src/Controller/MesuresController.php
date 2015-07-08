@@ -124,21 +124,32 @@ class MesuresController extends AppController
     public function edit($id = null)
     {
 		$session = $this->request->session();
-        $mesure = $this->Mesures->get($id, [
-            'contain' => []
-        ]);
+        $mesure = $this->Mesures->get($id);
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
         	$d = $this->request->data;
-        	
-        	if($d['file'] === 'Modification' && $d['file_new']['name'] === '') {
+
+        	//debug($d);die();
+        	 
+        	//Test de la presence d'un fichier
+        	if($d['file']['name'] === '' ) {
         		$this->Flash->error('Merci d\'ajouter un fichier.');
         		return $this->redirect(['action' => 'edit/'.$id]);
         	}
         	 
-        	if($d['file_new']['name'] === '') {
-        		$mesure = $this->Mesures->patchEntity($mesure, $this->request->data);
-        	} else { // Nouveau fichier
-        	
+        	//Cas d'un nouveau fichier : CRM et Culture securite
+        	if(isset($d['file']) && $d['file']['tmp_name'] != '') {
+        		// Il s'agit d'un nouveau fichier
+        		//Vérification de la présence
+        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name'])) {
+        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
+        		}
+        		//Deplacement du nouveau
+        		$nomFichier = $d['file']['name'];
+        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
+        		move_uploaded_file($d['file']['tmp_name'], $destination);
+        	} else if(isset($d['file_new']) && $d['file_new']['tmp_name'] != '') {
+        		//Cas d'une modification
         		//Suppression de l'ancien
         		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$mesure->file) && strlen($mesure->file)>0) {
         			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$mesure->file);
@@ -147,13 +158,16 @@ class MesuresController extends AppController
         		$nomFichier = $d['file_new']['name'];
         		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
         		move_uploaded_file($d['file_new']['tmp_name'], $destination);
-        	
-        		// mise a jour des donnees
-        		$mesure->demarche_id = $d['demarche_id'];
-        		$mesure->name = $d['name'];
-        		$mesure->resultat = $d['resultat'];
-        		$mesure->file = $nomFichier;
+        	} else {
+        		//Pas de nouveau fichier et pas de modification de fichier : modification des autres champs textes du formulaire
+        		$nomFichier = $mesure->file ;
         	}
+        	
+        	// mise a jour des donnees
+        	$mesure->demarche_id = $d['demarche_id'];
+        	$mesure->name = $d['name'];
+        	$mesure->resultat = $d['resultat'];
+        	$mesure->file = $nomFichier;
         	
             if ($this->Mesures->save($mesure)) {
                 $this->Flash->success('La mesure a bien été sauvegardée.');

@@ -460,7 +460,7 @@
 				    <thead>
 				        <tr align='center'>
 				            <th width='15%'>Outils</th>
-				            <th width='40%'>Evolutions des résultats intermédiares / Points forts et axes d'amélioration identifiés</th>
+				            <th width='40%'>Evolutions des résultats / Points forts et axes d'amélioration identifiés</th>
 				        </tr>
 				    </thead>
 				    <tbody>

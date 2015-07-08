@@ -27,11 +27,21 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
                     										'type' => 'text']); ?>
                     </div>                          
 				</div><br />
+<?php if(empty($planAction->file)) { ?>
 				<div class="row">
 					<label class="col-md-4 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-6"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
-														   	'div' => false,'value'=>$planAction->file ,
+                    <div class="col-md-8"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
+														   	'div' => false, 
 															'class' => 'form-control', 'required' =>'required',
+                    										'type' => 'file']); ?>
+                    </div>
+				</div><br /> 
+<?php } else {?>				
+				<div class="row">
+					<label class="col-md-4 control-label" for="file_exist">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-6"><?= $this->Form->input('file_exist', ['label' => false,'id'=>'file_exist',
+														   	'div' => false,'value'=>$planAction->file ,
+															'class' => 'form-control', 'disabled' =>'disabled',
                     										'type' => 'text']); ?>
                     </div>
                     <div class="col-md-2">
@@ -51,7 +61,8 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 	</div>
 </div>
                     <!-- BLOC CACHES FIN --> 
-				</div><br /> 
+				</div><br /> 		
+<?php }?>	
 			</div>						
 			<div class="col-md-1"></div>			
 		</div><br /><br />
@@ -59,7 +70,11 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 	<?php
 			$session = $this->request->session();
 			if($session->read('Equipe.Diagnostic') == '1') echo $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']); 
-			else echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);
+			else {
+				echo $this->Html->link(__('Retour'),['controller'=>'Evaluations', 'action'=>'index'],['class'=>'btn btn-info']);
+				echo "&nbsp;&nbsp;";
+				echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);
+			}
 			?>
 			 
     	<?= $this->Form->end() ?>
