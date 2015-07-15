@@ -53,7 +53,7 @@ class ContactController extends AppController
 						->emailFormat('html')
 						->to($emailContact->valeur)
 						->from($adresse_mail)
-						->subject($sujetEmailContact->valeur)
+						->subject(strip_tags($sujetEmailContact->valeur))
 		                ->viewVars(['name'=>$name,'email'=>$adresse_mail,'message'=>$message])
 						->send();
 						

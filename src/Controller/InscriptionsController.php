@@ -303,11 +303,10 @@ class InscriptionsController extends AppController
 
     			//Recuperation des parametres
     			$this->loadModel('Parametres');    			
-    			$from = "refex@has-sante.fr";
-    			$sujet = $this->Parametres->find()->where(['name' => 'SujetEmailContact'])->first();
+    			$from = EMAIL_FROM;
+    			$sujet = $this->Parametres->find()->where(['name' => 'SujetEmailInscription'])->first();
     			if(empty($sujet)) $sujet = "[PACTE] ";
-    			else  $sujet = $sujet['valeur'];
-    			
+    			else  $sujet = strip_tags($sujet['valeur']);
     			
     			//$from = $this->Parametre->getValeur('EmailContact','refex@has-sante.fr');
     			//$sujet = $this->Parametre->getValeur('SujetEmailContact', '[PACTE]');
@@ -326,7 +325,7 @@ class InscriptionsController extends AppController
     			->send();
     			
 	    		//Recuperation du message en base (parametres)
-    			$this->loadModel('Parametres');
+    			//$this->loadModel('Parametres');
     			$message = $this->Parametres->find()->where(['name' => 'MessageValidationInscription'])->first();
     			
     			if(empty($message)) $message = "Erreur";

@@ -31,6 +31,7 @@ echo "        <li class='dropdown'>";
 echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Suivi <span class='caret'></span></a>";
 echo "            <ul class='dropdown-menu' role='menu'>";
 echo " 				 <li>".$this->Html->link('Démarches','/pages/home')."</li>";
+echo " 				 <li>".$this->Html->link('Envoyer un email','/users/sendMail')."</li>";
 echo "            </ul>";
 echo "        </li>";
 echo "    </ul>";

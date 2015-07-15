@@ -401,16 +401,22 @@ class ProjetsController extends AppController
 		    	else if($mr->responsabilite_id == 3) $cc.=$mr->email.";";
 		    }
 	    }
-    	//Envoie du mail
-    	$content = "Votre validation est terminée, vous trouverez ....";
+    	//Envoie du mail 			
+    	$from = EMAIL_FROM;
+	    $this->loadModel('Parametres');
+	    $sujet = $this->Parametres->find()->where(['name' => 'SujetEmailRecapitulatifEngagement'])->first();
+	    $content = $this->Parametres->find()->where(['name' => 'MessageRecapitulatifEngagement'])->first();
+	    if(empty($sujet)) $sujet = "[PACTE] ";
+	    else  $sujet = strip_tags($sujet['valeur']);
+	
     	$email = new Email('default');
     	$email->template('default')
-    	->emailFormat('text')
+    	->emailFormat('html')
     	->to($to)
     	->cc($cc)
-    	->from('refex@has-sante.fr')
-    	->subject('[Pacte] Récapitulatif de l\'engagement')
-    	->viewVars(['content' => $content])
+    	->from($from)
+    	->subject($sujet)
+    	->viewVars(['content' => $content['valeur']])
     	->attachments(DATA . 'pdf' . DS . $filename)
     	->send();
     

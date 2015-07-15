@@ -97,8 +97,7 @@ class UsersController extends AppController
 	}
 	
 	public function login()
-	{	
-
+	{			
 		//Destruction de la session
 		$session = $this->request->session();
 		$session->destroy();
@@ -398,5 +397,25 @@ class UsersController extends AppController
 			$this->Flash->error('Erreur dans la suppression de l\'utilisateur.');
 		}
 		return $this->redirect(['action' => 'index']);
+	}
+	
+	public function sendMail() {
+		
+		if ($this->request->is(['patch', 'post', 'put'])) {
+	    	$d = $this->request->data;    	
+	    	
+			$email = new Email('default');
+			$email->template('default')
+			->emailFormat('html')
+			->to($d['destinataire'])
+			->from(EMAIL_ADMIN)
+			->subject('[Pacte]'.$d['sujet'])
+    		->viewVars(['content' => $d['body']])
+			->send();
+			
+			$this->Flash->success('Message envoyé.');
+			
+		}
+		
 	}
 }
