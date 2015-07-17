@@ -20,6 +20,11 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 					<?= $message->valeur ?>
 					</div>
 				</div><br />
+				<p align="center">
+					<?= $this->Html->link(__('Supprimer le plan d\'action'), ['controller'=>'PlanActions','action' => 'delete', $plan], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')])."&nbsp;&nbsp;";?>
+					<?= $this->Html->link(__('Imprimer'), ['controller'=>'PlanActions','action' => 'printPlan', $plan], ['class'=>'btn btn-default']) ?>
+					
+				</p>
 				<div class="row"> 
 					<div class="col-md-12">
 						<table cellpadding="0" cellspacing="0" class="table table-striped">
@@ -73,11 +78,10 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 					<?= $this->Html->link(__('Ajouter un objectif'),['action'=>'add'],['class'=>'btn btn-info'])?>						
 				</p>
 				<p align="center">
-					<?= $this->Html->link(__('Supprimer le plan d\'action'), ['controller'=>'PlanActions','action' => 'delete', $plan], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]) ?>
 					<?php
 			$session = $this->request->session();
 			if($session->read('Equipe.Diagnostic') == '0') {
-				echo "<br /><br />";
+				echo "<br />";
 				echo $this->Html->link('Retour', ['controller'=>'evaluations','action' => 'index'], ['class' => 'btn btn-info']);
 				echo "&nbsp;&nbsp;";
 				echo $this->Html->link('Suite', ['controller'=>'mesures','action' => 'index'], ['class' => 'btn btn-default']);

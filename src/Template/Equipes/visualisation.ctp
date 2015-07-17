@@ -10,7 +10,7 @@
 <p align="center"><h1>Récapitulatif des informations : </h1></p>
 <div class="blocblanc">
 	<br /><h1>&nbsp;&nbsp;<?= $equipe->etablissement->libelle ?> - <?= $equipe->name?></h1><br />
-	<h2>Etat de la démarche Pache</h2>
+	<h2>Etat de la démarche Pacte</h2>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>

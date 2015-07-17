@@ -47,10 +47,9 @@ if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>
 				    <thead>
 				        <tr align='center'>
 				            <th width='10%'><?= $this->Paginator->sort('Campagne', 'Campagne n°') ?></th>
-				            <th width='30%'><?= $this->Paginator->sort('Service') ?></th>
-				            <th width='30%'><?= $this->Paginator->sort('Fonction') ?></th>
-				            <th width='15%'><?= $this->Paginator->sort('Créée le') ?></th>
-				            <th  width='15%' class="actions"><?= __('Actions') ?></th>
+				            <th width='50%'><?= $this->Paginator->sort('Service') ?></th>
+				            <th width='20%'><?= $this->Paginator->sort('Créée le') ?></th>
+				            <th  width='20%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
 				    <tbody>
@@ -58,7 +57,6 @@ if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>
 				        <tr>
 				            <td><?= h($enquete->campagne) ?></td>
 				            <td><?= h($enquete->service) ?></td>
-				            <td><?= $enquete->has('fonction') ? $enquete->fonction->name : '' ?></td> 
 				            <td><?= h($enquete->created) ?></td>
 					        <td class="actions">
 							<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $enquete->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;

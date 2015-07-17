@@ -17,10 +17,6 @@
 				    	<td width='40%'><b>Service</b></td>
 				        <td><?= $enquete->service ?></td>
 					</tr>
-				    <tr align='center'>
-				    	<td><b>Fonction</b></td>
-				        <td><?= $enquete->fonction->name ?></td>
-				   	</tr>
 				</table>			
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>

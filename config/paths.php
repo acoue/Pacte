@@ -102,4 +102,4 @@ define('EMAIL_ADMIN', 'a.coue@has-sante.fr');
 /**
  * Email emetteur des mails
  */
-define('EMAIL_FROM', 'a.coue@has-sante.fr');
+define('EMAIL_FROM', 'refex@has-sante.fr');

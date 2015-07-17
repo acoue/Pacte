@@ -26,7 +26,7 @@ class PlanActionsController extends AppController
 		$session = $this->request->session();
 		if( $session->read('Auth.User.role') === 'equipe') {
 		// Droits de tous les utilisateurs connectes sur les actions
-			if(in_array($this->request->action, ['index','add','edit', 'delete'])){
+			if(in_array($this->request->action, ['index','add','edit', 'delete','printPlan'])){
 				return true;
 			}
 		}
@@ -219,5 +219,33 @@ class PlanActionsController extends AppController
         }
         
         return $this->redirect(['action' => 'index']);
+    }
+    
+    public function printPlan($id = null) {
+
+    	//On retrouve les infos du plan d'action
+    	$this->loadModel('EtapePlanActions');
+    	$etapePlanActions = $this->EtapePlanActions->find('all')
+    	->contain(['PlanActions','TypeIndicateurs'])
+    	->where(['PlanActions.id' => $id]);
+    	
+    	//generation d'un PDF avec les infos
+    	//Conception PDF
+    	$CakePdf = new \CakePdf\Pdf\CakePdf();
+    	$CakePdf->template('recapitulatif', 'visualisationPlan');
+    	$CakePdf->title("Pacte - Etat");
+    	$CakePdf->viewVars([
+    			'etapePlanActions' => $etapePlanActions
+    	]);
+    	
+    	 
+    	//Write it to file directly
+    	$filename = '__AC_'.date('Ymd_His').''.mt_rand().'.pdf';
+    	$CakePdf = $CakePdf->write(DATA . 'pdf' . DS . $filename);
+    	
+    	$this->autoRender = false;
+    	$this->response->type('application/pdf');
+    	$this->response->file(DATA . 'pdf' . DS . $filename, ['download' => true, 'name' => date('Y-m-d').'_Pacte_Récapitulatif.pdf']);
+    	return $this->response;
     }
 }
