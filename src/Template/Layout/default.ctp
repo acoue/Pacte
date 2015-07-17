@@ -106,7 +106,9 @@ $cakeDescription = 'Pacte ';
                 <div class="row">
                     <div class="col-md-6 text-footer-left">&copy; Haute Autorité de Sante</div>
                     <div class="col-md-5 text-footer-right">Version 1.0</div>
-                    <div class="col-md-1 text-footer-right"><a href="#">A propos</a></div>
+                    <div class="col-md-1 text-footer-right">
+                    <?= $this->Html->link('Mentions légales','/users/mentions')?>
+                    </div>
                 </div>
             </div>
         </footer><!-- /.footer -->

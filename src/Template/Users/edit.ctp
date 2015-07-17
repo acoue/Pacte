@@ -1,5 +1,6 @@
 <div class="blocblanc">
 	<h2>Administration - Edition Utilisateur </h2>
+    <h3><?= $user->prenom." ".$user->nom ?></h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>

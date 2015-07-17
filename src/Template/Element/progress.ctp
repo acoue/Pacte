@@ -54,7 +54,7 @@ switch ($menu) {
         echo "<tr>";
         echo "<td width='25%' class='celluleGaucheOk'>".$libMenu1."</td>";
         echo "<td width='25%' class='celluleEnCours'>".$libMenu2."</td>";
-        echo "<td width='25%' class='celluleGaucheNonOk'>".$libMenu3."</td>";
+        echo "<td width='25%' class='celluleNonOk'>".$libMenu3."</td>";
         echo "<td width='25%' class='celluleDroiteNonOk'>".$libMenu4."</td>";
         echo "</tr><tr>";  
         echo "<td colspan='3'><div class='arrow_box'></div></td>";

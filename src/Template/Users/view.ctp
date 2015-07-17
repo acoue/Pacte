@@ -1,6 +1,6 @@
 <div class="blocblanc">
-	<h2>Administration - Utilisateurs </h2>
-    <h3><?= h($user->name) ?></h3>
+	<h2>Administration - Utilisateur </h2>
+    <h3><?= $user->prenom." ".$user->nom ?></h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>

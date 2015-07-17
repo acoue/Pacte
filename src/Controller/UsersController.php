@@ -16,7 +16,7 @@ class UsersController extends AppController
   	public function beforeFilter(Event $event)
   	{
   		parent::beforeFilter($event);
-  		$this->Auth->allow(['activate', 'login', 'password']);  		
+  		$this->Auth->allow(['activate', 'login', 'password','mentions']);  		
   	}
 	
 	public function isAuthorized($user)
@@ -402,13 +402,15 @@ class UsersController extends AppController
 	public function sendMail() {
 		
 		if ($this->request->is(['patch', 'post', 'put'])) {
-	    	$d = $this->request->data;    	
-	    	
+	    	$d = $this->request->data;   
+
+	    	$userDestinataires = explode( ';', $d['destinataire'] );
+	    		
 			$email = new Email('default');
 			$email->template('default')
 			->emailFormat('html')
-			->to($d['destinataire'])
 			->from(EMAIL_ADMIN)
+			->to($userDestinataires)
 			->subject('[Pacte]'.$d['sujet'])
     		->viewVars(['content' => $d['body']])
 			->send();
@@ -416,6 +418,10 @@ class UsersController extends AppController
 			$this->Flash->success('Message envoyé.');
 			
 		}
+		
+	}
+	
+	public function mentions() {
 		
 	}
 }

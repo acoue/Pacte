@@ -9,7 +9,7 @@
 				    <thead>
 				        <tr align='center'>
 				            <th width='40%'><?= $this->Paginator->sort('Libellé') ?></th>
-				            <th width='25%'><?= $this->Paginator->sort('Phase') ?></th>
+				            <th width='20%'><?= $this->Paginator->sort('Phase') ?></th>
 				            <th width='20%'><?= $this->Paginator->sort('Type') ?></th>
 				            <th  width='20%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
@@ -22,6 +22,11 @@
 				            <td><?php if(h($outil->type) == "cle") echo "Outils clé en main";
 				            		 else echo "Outils pédagogiques"; ?></td>
 				            <td class="actions">
+				            
+								<?php 
+									if(h($outil->name)) echo $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/'.h($outil->name), ['class' => 'titre','target' => '_blank','escape' => false]);
+								?>
+								
 				<?= $this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['action' => 'view', $outil->id], ['title'=>'Visualiser','escape' => false]); ?>&nbsp;&nbsp;
 				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $outil->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 				<?= $this->Form->postLink(

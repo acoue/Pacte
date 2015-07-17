@@ -9,7 +9,7 @@
 				    <thead>
 				        <tr align='center'>
 				            <th width='10%'><?= $this->Paginator->sort('id') ?></th>
-				            <th width='10%'><?= $this->Paginator->sort('name') ?></th>
+				            <th width='70%'><?= $this->Paginator->sort('name') ?></th>
 				            <th  width='20%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>

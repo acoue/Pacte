@@ -127,9 +127,10 @@ class MesuresController extends AppController
         $mesure = $this->Mesures->get($id);
         
         if ($this->request->is(['patch', 'post', 'put'])) {
-        	$d = $this->request->data;
-
-        	//debug($d);die();
+        	
+        	//debug($this->request->data);die();
+        	
+        	$d = $this->request->data;        	
         	 
         	//Test de la presence d'un fichier
         	if($d['file']['name'] === '' ) {
