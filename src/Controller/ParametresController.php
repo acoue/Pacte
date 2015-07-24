@@ -22,6 +22,13 @@ class ParametresController extends AppController
 		return parent::isAuthorized($user);
 	}
 
+	public function initialize()
+	{
+		parent::initialize();
+		$this->loadComponent('Flash');
+		$this->loadComponent('RequestHandler');
+	
+	}
     /**
      * Index method
      *
@@ -111,4 +118,18 @@ class ParametresController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+    
+
+    public function search() {
+    	if ($this->request->is(['ajax'])) {
+    			
+    		$libelle = $this->request->data['libelle'];
+    		$parametres = $this->Parametres
+    		->find('all')
+    		->limit(20)
+    		->where(['description like '=>'%'.$libelle.'%']);
+    		$this->set('parametres', $parametres);
+    	}
+    }
+    
 }

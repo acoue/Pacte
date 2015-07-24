@@ -18,12 +18,7 @@
 			
 			<?= $this->Form->end() ?>
 				<div id="listeDiv"></div>
-			
-			
-			
-				
-					
-				</div>						
+			</div>						
 			<div class="col-md-1"></div>
 		</div>
 		<p align="center">

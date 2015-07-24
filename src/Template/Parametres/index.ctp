@@ -5,41 +5,19 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10"> 
-				<table cellpadding="0" cellspacing="0" class="table table-striped">
-				    <thead>
-				        <tr align='center'>
-				            <th width='20%'><?= $this->Paginator->sort('Libellé') ?></th>
-				            <th width='40%'><?= $this->Paginator->sort('description') ?></th>
-				            <th width='25%'><?= $this->Paginator->sort('valeur') ?></th>
-				            <th  width='15%' class="actions"><?= __('Actions') ?></th>
-				        </tr>
-				    </thead>
-				    <tbody>
-    				<?php foreach ($parametres as $parametre): ?>
-				        <tr>
-				            <td><?= h($parametre->name) ?></td>
-				            <td><?= h($parametre->description) ?></td>
-				            <td><?= $this->Text->excerpt(h($parametre->valeur),'method',200) ?></td>
-				            <td class="actions">
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $parametre->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
-				<?= $this->Form->postLink(
-				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
-				                ['action' => 'delete', $parametre->id],
-				                ['class' => 'tip', 'title'=>'Supprimer','escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer {0} ?']);?>
-				          </td>
-				        </tr>
-				
-				    <?php endforeach; ?>
-				    </tbody>
-				   </table>
-					<div class="paginator">
-				        <ul class="pagination">
-				            <?= $this->Paginator->prev('< ' . __('Préc.')) ?>
-				            <?= $this->Paginator->numbers() ?>
-				            <?= $this->Paginator->next(__('Suiv.') . ' >') ?>
-				        </ul>
-				        <p><?= $this->Paginator->counter() ?></p>
-				    </div>
+			<?= $this->Form->create(NULL); ?>
+				<div class="row">
+                	<label class="col-md-4 control-label" for="libelle">Entrez un Libellé pour la recherche : </label>
+                    <div class="col-md-5"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text']); ?>
+                    </div> 
+                    <div class="col-md-3"></div>                         
+				</div><br />  
+			
+			<?= $this->Form->end() ?>
+				<div id="listeDiv"></div>
 			</div>						
 			<div class="col-md-1"></div>
 		</div>
@@ -48,3 +26,26 @@
 		</p>
 	</div>
 </div>
+
+<?php $this->append('script');?>
+	<script>
+	$(function () {
+
+		$("#libelle").bind('input', function () {
+            $.ajax({
+                url: "<?= $this->Url->build(['controller'=>'parametres','action'=>'search'])?>",
+                data: {
+                    libelle: $("#libelle").val()
+                },
+                length: 3,
+                dataType: 'html',
+                type: 'post',
+                success: function (html) {
+                    $("#listeDiv").html(html);
+                }
+            })
+        });
+		
+	});
+	</script>
+<?php $this->end();?>
