@@ -1,4 +1,5 @@
 <?php
+use Cake\I18n\Time;
 $session = $this->request->session();
 
 if($session->check('Auth.User.role')) {
@@ -44,18 +45,38 @@ if($session->check('Auth.User.role')) {
 <?php
 		
 	} else if($role === 'equipe') {
-		echo "<p>".$message->valeur."</p>";
+		echo "<p>".$message."</p>";
 		
-		//Bouton suivant la phase
-		if($session->read('Equipe.Engagement') == 0 ){
-			echo $this->Html->link('Poursuivre l\'engagement', ['controller'=>'membres', 'action' => 'index/0/1'],['class' => 'btn btn-info']);
-		}else if($session->read('Equipe.Diagnostic') == 0 ){
-			echo $this->Html->link('Poursuivre dans la phase de diagnostic', ['controller'=>'projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info']);
-		} else if($session->read('Equipe.MiseEnOeuvre') == 0 ){
-			echo $this->Html->link('Terminer la phase de mise en oeuvre', ['controller'=>'Projets', 'action' => 'terminateMEO'],['class' => 'btn btn-info']);
-		} else if($session->read('Equipe.Evaluation') == 0 ){
-			echo "<p>Voir si bouton de clôture de la démarche</p>";	
-		} 
+		if($session->read('Equipe.DemarcheEtat') == 0){			
+			//Démarche en COURS
+			//Bouton suivant la phase
+			if($session->read('Equipe.Engagement') == 0 ){
+				echo $this->Html->link('Poursuivre l\'engagement', ['controller'=>'membres', 'action' => 'index/0/1'],['class' => 'btn btn-info']);
+			}else if($session->read('Equipe.Diagnostic') == 0 ){
+				echo $this->Html->link('Poursuivre dans la phase de diagnostic', ['controller'=>'projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info']);
+			} else if($session->read('Equipe.MiseEnOeuvre') == 0 ){
+				echo $this->Html->link('Terminer la phase de mise en oeuvre', ['controller'=>'Projets', 'action' => 'terminateMEO'],['class' => 'btn btn-info','confirm' => __('Etes-vous sûr de vouloir terminer la phase de "Mise en Oeuvre" ?')]);
+			} else if($session->read('Equipe.Evaluation') == 0 ){
+				echo $this->Html->link('Terminer la démarche Pacte',['controller'=>'Demarches', 'action' => 'terminateDemarche'],['class' => 'btn btn-info','confirm' => __('Etes-vous sûr de vouloir terminer votre démarche ?')]);
+			}
+		} else {
+			//Demarche TERMINEE		
+			if($interval < 182) {
+				echo "<p>Votre démarche est terminée : vous pourrez la consulter jusqu'au ".substr($dateMax,0,10)."</p>";
+				echo $this->Html->link('Voir la démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$equipe],['class' => 'btn btn-default']);
+				
+			} else {
+				echo "<p class='alert alert-warning'>Votre démarche n'est plus consultable, pour toute question merci de contacter la HAS</p>";
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+		}
 	}
 }
 if($role === 'admin') {

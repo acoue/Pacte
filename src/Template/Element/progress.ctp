@@ -31,9 +31,9 @@ $libSousMenu1 = "Projet d'équipe";
 $libSousMenu2 = "Fonctionnement d'équipe";
 $libSousMenu3 = "Objectifs d'amélioration";
 $libSousMenu4 = "Evaluation à T0";	
-	
-	
-	
+
+
+if($session->read('Equipe.DemarcheEtat') == 0 ) {
 ?>
 <div class="container">
     <div>
@@ -119,4 +119,6 @@ switch ($menu) {
       </table>    
     </div>
 </div><br />
-<?php } ?>
+<?php } 
+}
+?>

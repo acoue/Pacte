@@ -12,77 +12,86 @@ else $etat_oeuvre = 0;
 if($session->check('Equipe.Evaluation')) $etat_evaluation = $session->read('Equipe.Evaluation');
 else $etat_evaluation = 0;
 
+
+$statutDemarche = $session->read('Equipe.DemarcheEtat',1);
+
 echo "<div id='navbar' class='navbar-collapse collapse'>";
-echo "    <ul class='nav navbar-nav'>";
-echo "        <li>".$this->Html->link('Accueil','/pages/home')."</li>";
-if($etat_engagement == 1 ) {	
-		echo "        <li class='dropdown'>";
-		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Engagement <span class='caret'></span></a>";
-		echo "            <ul class='dropdown-menu' role='menu'>";
-		echo "                <li>".$this->Html->link('Projet','/projets/index')."</li>";
-		echo " 				  <li>".$this->Html->link('Membres Référent','/membres/index/0/1')."</li>";
-		echo " 				  <li>".$this->Html->link('Membres','/membres/index/0/0')."</li>";
-		echo "   			  <li>".$this->Html->link('Comité de pilotage','/membres/index/1/0')."</li>";
-		echo "   			  <li>".$this->Html->link('Macro-planning','/projets/calendrier')."</li>";
-		echo "            </ul>";
-		echo "		  </li>";
-}
 
-if($etat_engagement == 1 && $etat_diagnostic == 0 ) {
-		echo "        <li>".$this->Html->link('Diagnostic','/projets/diagnostic_index')."</li>";
-}
+if($statutDemarche==0){	
+	echo "    <ul class='nav navbar-nav'>";
+	echo "        <li>".$this->Html->link('Accueil','/pages/home')."</li>";
 
-if($etat_engagement == 1 && $etat_diagnostic == 1 && $etat_oeuvre == 0) {	
+	
+
+	if($etat_engagement == 1 ) {	
+			echo "        <li class='dropdown'>";
+			echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Engagement <span class='caret'></span></a>";
+			echo "            <ul class='dropdown-menu' role='menu'>";
+			echo "                <li>".$this->Html->link('Projet','/projets/index')."</li>";
+			echo " 				  <li>".$this->Html->link('Membres Référent','/membres/index/0/1')."</li>";
+			echo " 				  <li>".$this->Html->link('Membres','/membres/index/0/0')."</li>";
+			echo "   			  <li>".$this->Html->link('Comité de pilotage','/membres/index/1/0')."</li>";
+			echo "   			  <li>".$this->Html->link('Macro-planning','/projets/calendrier')."</li>";
+			echo "            </ul>";
+			echo "		  </li>";
+	}
+
+	if($etat_engagement == 1 && $etat_diagnostic == 0 ) {
+			echo "        <li>".$this->Html->link('Diagnostic','/projets/diagnostic_index')."</li>";
+	}
+
+	if($etat_engagement == 1 && $etat_diagnostic == 1 && $etat_oeuvre == 0) {	
+			echo "        <li class='dropdown'>";
+			echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Diagnostic <span class='caret'></span></a>";
+			echo "            <ul class='dropdown-menu' role='menu'>";
+			echo "                <li>".$this->Html->link('Projet','/projets/diagnostic_index')."</li>";
+			echo " 				  <li>".$this->Html->link('Fonctionnement d\'équipe','/Evaluations/index')."</li>";
+			echo "            </ul>";
+			echo "        </li>";
+			echo "        <li class='dropdown'>";
+			echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Mise en Oeuvre <span class='caret'></span></a>";
+			echo "			  <ul class='dropdown-menu' role='menu'>";
+			echo " 			  	<li>".$this->Html->link('Objectifs d\'amélioration','/PlanActions/index')."</li>";
+			echo "				<li>".$this->Html->link('Evaluation à T1','/Mesures/index')."</li>";
+			echo "              <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
+	// 		echo "          	  <li class='dropdown-submenu'>";
+	// 		echo "            		  <a tabindex='-1' href='#'>Mesures</a>";
+	// 		echo "           		  <ul class='dropdown-menu'>";
+	// 		echo "						  <li>".$this->Html->link('Evaluation à T1','/Mesures/index')."</li>";
+	// 		echo "             			  <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
+	// 		echo "           		  </ul>";
+	// 		echo "          	  </li>";
+			echo "            </ul>";
+			echo "        </li>";
+	}
+
+	if($etat_engagement == 1 && $etat_diagnostic == 1 && $etat_oeuvre == 1 && $etat_evaluation == 0 ) {
 		echo "        <li class='dropdown'>";
 		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Diagnostic <span class='caret'></span></a>";
 		echo "            <ul class='dropdown-menu' role='menu'>";
 		echo "                <li>".$this->Html->link('Projet','/projets/diagnostic_index')."</li>";
-		echo " 				  <li>".$this->Html->link('Fonctionnement d\'équipe','/Evaluations/index')."</li>";
 		echo "            </ul>";
 		echo "        </li>";
 		echo "        <li class='dropdown'>";
-		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Mise en Oeuvre <span class='caret'></span></a>";
-		echo "			  <ul class='dropdown-menu' role='menu'>";
-		echo " 			  	<li>".$this->Html->link('Objectifs d\'amélioration','/PlanActions/index')."</li>";
-		echo "				<li>".$this->Html->link('Evaluation à T1','/Mesures/index')."</li>";
-		echo "              <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
-// 		echo "          	  <li class='dropdown-submenu'>";
-// 		echo "            		  <a tabindex='-1' href='#'>Mesures</a>";
-// 		echo "           		  <ul class='dropdown-menu'>";
-// 		echo "						  <li>".$this->Html->link('Evaluation à T1','/Mesures/index')."</li>";
-// 		echo "             			  <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
-// 		echo "           		  </ul>";
-// 		echo "          	  </li>";
+		echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Evaluation <span class='caret'></span></a>";
+		echo "            <ul class='dropdown-menu' role='menu'>";
+		echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','/PlanActions/index')."</li>";
+		echo " 				  <li>".$this->Html->link('Fonctionnement d\'équipe','/Evaluations/index')."</li>";
+		//echo " 				  <li>".$this->Html->link('Fonctionnement d\'équipe','/Evaluations/index')."</li>";	
+		echo "   			  <li>".$this->Html->link('Evaluation à T2	','/Mesures/index')."</li>";		
+		echo "                <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
+	// 	echo "          	  <li class='dropdown-submenu'>";	
+	// 	echo "            		  <a tabindex='-1' href='#'>Mesures</a>";	
+	//  	echo "           		  <ul class='dropdown-menu'>";	
+	// 	echo "   			  		  <li>".$this->Html->link('Evaluation à T2	','/Mesures/index')."</li>";		
+	// 	echo "                		  <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
+	//  	echo "           		  </ul>";	
+	// 	echo "          	  </li>";	
 		echo "            </ul>";
 		echo "        </li>";
-}
-
-if($etat_engagement == 1 && $etat_diagnostic == 1 && $etat_oeuvre == 1 && $etat_evaluation == 0 ) {
-	echo "        <li class='dropdown'>";
-	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Diagnostic <span class='caret'></span></a>";
-	echo "            <ul class='dropdown-menu' role='menu'>";
-	echo "                <li>".$this->Html->link('Projet','/projets/diagnostic_index')."</li>";
-	echo "            </ul>";
-	echo "        </li>";
-	echo "        <li class='dropdown'>";
-	echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Evaluation <span class='caret'></span></a>";
-	echo "            <ul class='dropdown-menu' role='menu'>";
-	echo " 				  <li>".$this->Html->link('Objectifs d\'amélioration','/PlanActions/index')."</li>";
-	//echo " 				  <li>".$this->Html->link('Fonctionnement d\'équipe','/Evaluations/index')."</li>";	
-	echo "   			  <li>".$this->Html->link('Evaluation à T2	','/Mesures/index')."</li>";		
-	echo "                <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
-// 	echo "          	  <li class='dropdown-submenu'>";	
-// 	echo "            		  <a tabindex='-1' href='#'>Mesures</a>";	
-//  	echo "           		  <ul class='dropdown-menu'>";	
-// 	echo "   			  		  <li>".$this->Html->link('Evaluation à T2	','/Mesures/index')."</li>";		
-// 	echo "                		  <li>".$this->Html->link('Enquête de satisfaction','/Enquetes/index')."</li>";
-//  	echo "           		  </ul>";	
-// 	echo "          	  </li>";	
-	echo "            </ul>";
-	echo "        </li>";
-}	
-echo "    </ul>";
-
+	}	
+	echo "    </ul>";
+} 
 //Bloc Connecté
 echo "    <div class='bloc_connected'>";
 echo "        <table width='100%' cellspacing='5px' cellpadding='5px'>";
@@ -96,6 +105,7 @@ echo "                <td>".$this->Html->link('Déconnexion','/users/logout',['c
 echo "            </tr>";
 echo "        </table>";
 echo "    </div>";
+
 echo "</div>";
 
 ?>

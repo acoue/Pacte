@@ -18,7 +18,10 @@ class DescriptionsController extends AppController
 	public function isAuthorized($user)
 	{			
 		$session = $this->request->session();
-		if( $session->read('Auth.User.role') === 'equipe') {
+		if( $session->read('Auth.User.role') === 'equipe') {	
+			//Demarche terminée
+			if($session->read('Equipe.DemarcheEtat') == 1) return false;
+			
 		// Droits de tous les utilisateurs connectes sur les actions
 			if(in_array($this->request->action, ['index','add','edit','delete'])){
 				return true;

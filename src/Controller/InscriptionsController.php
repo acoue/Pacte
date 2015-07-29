@@ -302,8 +302,8 @@ class InscriptionsController extends AppController
     			$link = ['controller'=>'users', 'action' => 'activate', $user->id."-".$user->token, '_full' => true];
 
     			//Recuperation des parametres
-    			$this->loadModel('Parametres');    			
-    			$from = EMAIL_FROM;
+    			$this->loadModel('Parametres'); 
+    			$from = $this->Parametres->find('all')->where(['name' => 'EmailContact'])->first();
     			$sujet = $this->Parametres->find()->where(['name' => 'SujetEmailInscription'])->first();
     			if(empty($sujet)) $sujet = "[PACTE] ";
     			else  $sujet = strip_tags($sujet['valeur']);
@@ -319,7 +319,7 @@ class InscriptionsController extends AppController
     			$email->template('inscription')
     			->emailFormat('html')
     			->to($to)
-    			->from($from)
+    			->from(trim($from->valeur))
     			->subject($sujet)
     			->viewVars(['login'=>$username,'mdp'=>$password,'link'=>$link])
     			->send();
@@ -340,7 +340,7 @@ class InscriptionsController extends AppController
     		}
     	
     	}
-    	//Recuperation de l'email de contact
+    	//Recuperation des parametres
     	$this->loadModel('Parametres');
     	$messageNeSouhaitePasPoursuivre = $this->Parametres->find('all')->where(['name' => 'MessageNeSouhaitePasPoursuivre'])->first();
     	$messageNiveauCertifBloquant = $this->Parametres->find('all')->where(['name' => 'MessageNiveauCertifBloquant'])->first();
@@ -471,7 +471,7 @@ class InscriptionsController extends AppController
 		    	//Enregistrement de l'ID en session en cas de retour
 		    	if(! $session->check('Engagement.id_Inscription')) $session->write('Engagement.id_Inscription',$inscription->id);
 		    			    	
-		    	//Recuperation de l'email de contact
+		    	//Recuperation des parametres
 		    	$this->loadModel('Parametres');
 		    	$messageTitreValidation = $this->Parametres->find('all')->where(['name' => 'MessageTitreValidation'])->first();
 		    	$messageAvertissement = $this->Parametres->find('all')->where(['name' => 'MessageAvertissementInscription'])->first();
@@ -497,7 +497,7 @@ class InscriptionsController extends AppController
 		    	$this->redirect(['controller' => 'Inscriptions', 'action' => 'validate', '2']);
 		    }		    
 		    
-		    //Recuperation de l'email de contact
+		    //Recuperation des parametres
 		    $this->loadModel('Parametres');
 		    $messageTitreQuestionnaire = $this->Parametres->find('all')->where(['name' => 'MessageTitreQuestionnaire'])->first();
 		    

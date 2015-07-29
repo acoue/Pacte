@@ -20,7 +20,10 @@ class ProjetsController extends AppController
 	public function isAuthorized($user)
 	{	
 		$session = $this->request->session();
-		if( $session->read('Auth.User.role') === 'equipe') {		
+		if( $session->read('Auth.User.role') === 'equipe') {	
+			//Demarche terminée
+			if($session->read('Equipe.DemarcheEtat') == 1) return false;
+			
 			// Droits de tous les utilisateurs connectes sur les actions
 			if(in_array($this->request->action, ['index','validate','createPdf', 'diagnostic_index','calendrier','terminateMEO'])){
 				return true;
@@ -401,9 +404,9 @@ class ProjetsController extends AppController
 		    	else if($mr->responsabilite_id == 3) $cc.=$mr->email.";";
 		    }
 	    }
-    	//Envoie du mail 			
-    	$from = EMAIL_FROM;
-	    $this->loadModel('Parametres');
+    	//Envoie du mail 		
+	    $this->loadModel('Parametres');    
+	    $from = $this->Parametres->find('all')->where(['name' => 'EmailContact'])->first();
 	    $sujet = $this->Parametres->find()->where(['name' => 'SujetEmailRecapitulatifEngagement'])->first();
 	    $content = $this->Parametres->find()->where(['name' => 'MessageRecapitulatifEngagement'])->first();
 	    if(empty($sujet)) $sujet = "[PACTE] ";
@@ -414,7 +417,7 @@ class ProjetsController extends AppController
     	->emailFormat('html')
     	->to($to)
     	->cc($cc)
-    	->from($from)
+    	->from(trim($from->valeur))
     	->subject($sujet)
     	->viewVars(['content' => $content['valeur']])
     	->attachments(DATA . 'pdf' . DS . $filename)
@@ -423,7 +426,7 @@ class ProjetsController extends AppController
     	//Suppression de la pj
     	unlink(DATA . 'pdf' . DS . $filename);
 		//Retour vers la vue
-	    $message = "Votre engagement est désormais terminé, vous allre recevoir .... ";
+	    $message = "Votre engagement est désormais terminé, vous aller recevoir .... ";
 	    $this->set(compact('message'));	    
     }
     
@@ -474,6 +477,16 @@ class ProjetsController extends AppController
     	//On recupere l'identifiant de démarche
     	$session = $this->request->session();
     	$id_demarche = $session->read('Equipe.Demarche');
+    	
+    	//Creation de ma mesure obligatoire Culture Securite à T2
+    	$mesuresTable = TableRegistry::get('Mesures');
+    	$mesure = $mesuresTable->newEntity();
+    	// Atribution des valeurs => Culture Securite à T2
+    	$mesure->id = null;
+    	$mesure->name = "Culture Sécurité à T2";
+    	$mesure->demarche_id = $id_demarche;
+    	//Enregistrement
+    	$mesuresTable->save($mesure);    	
     	
     	//Flag dans table demarche_phases => date_validation = now()
     	$this->loadModel('DemarchePhases');

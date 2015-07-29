@@ -37,9 +37,9 @@ class EquipesController extends AppController
 
     	//debug($this->request->data); die();
     	//Menu et sous-menu
-    	$session = $this->request->session();
-    	$session->write('Progress.Menu','1');
-    	$session->write('Progress.SousMenu','1');
+//     	$session = $this->request->session();
+//     	$session->write('Progress.Menu','1');
+//     	$session->write('Progress.SousMenu','1');
 
     	
     }
@@ -52,9 +52,9 @@ class EquipesController extends AppController
     public function add()
     {
     	//Menu et sous-menu
-	    $session = $this->request->session();
-	    $session->write('Progress.Menu','1');
-	    $session->write('Progress.SousMenu','1');
+// 	    $session = $this->request->session();
+// 	    $session->write('Progress.Menu','1');
+// 	    $session->write('Progress.SousMenu','1');
 	    
     }
     

@@ -6,7 +6,17 @@
 <p align="center">	
 	<?= $this->Html->link('Retour', '/pages/home', ['class' => 'btn btn-info']);?>
 	<?= $this->Html->link('Générer un PDF', ['controller'=>'Equipes', 'action' => 'visualisation/1/'.$equipe->id],['class' => 'btn btn-default', 'target' => '_blank']) ?>
-</p>
+<?php 
+$session = $this->request->session();
+if($session->read('Auth.User.role') === 'admin') {
+
+	if($demarche->statut == 0 ) echo "&nbsp;".$this->Html->link('Clôturer la démarche',['controller'=>'Demarches', 'action' => 'cloturerDemarche'],['class' => 'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir clôturer la démarche ?')]);
+	else echo "<p align='center' class='alert-mdp-warning'>La demande est clôturée</p>";
+} else {
+	if($demarche->statut == 1 ) echo "<p align='center' class='alert-mdp-warning'>La demande est clôturée</p>";
+}
+?>
+	</p>
 <p align="center"><h1>Récapitulatif des informations : </h1></p>
 <div class="blocblanc">
 	<br /><h1>&nbsp;&nbsp;<?= $equipe->etablissement->libelle ?> - <?= $equipe->name?></h1><br />

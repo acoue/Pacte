@@ -19,6 +19,7 @@ use Cake\Core\Configure;
 use Cake\Network\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
 use Cake\Event\Event;
+use Cake\I18n\Time;
 
 
 /**
@@ -82,6 +83,7 @@ class PagesController extends AppController
         	//Recuperation 
         	if($session->read('Auth.User.role') === 'admin'){
         		$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilAdministrateur'])->first();
+        		//récuperation des équipes : 1 démarches actives par démarche
         		$this->loadModel('Equipes');
         		$equipes = $this->Equipes->find('All',['contain'=>'Etablissements']);  
         		$this->set(compact('equipes','message'));      	
@@ -93,16 +95,43 @@ class PagesController extends AppController
         		->contain(['Equipes' => ['Etablissements']])
         		->where(['EquipesUsers.user_id ='=>$idUser]);
         		
+        		
         		if($session->read('Auth.User.role') == 'expert') {
         			$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilExpert'])->first();
         		} else if($session->read('Auth.User.role') == 'has') {
         			$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilCpHas'])->first();
         		} else {	
-        			if($session->read('Equipe.Engagement') == 0 ) $message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeEngagement'])->first();
-        			else if($session->read('Equipe.Diagnostic') == 0 ) $message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeDiagnostic'])->first();
-	        		else if($session->read('Equipe.MiseEnOeuvre') == 0 ) $message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeMiseEnOeuvre'])->first();
-        			else if($session->read('Equipe.Evaluation') == 0 ) $message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeEvaluation'])->first();
-        			else $message = "Bienvenue Equipe";        		
+        			if($session->read('Equipe.Engagement') == 0 ) {
+        				$messageData = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeEngagement'])->first();
+        				$message=$messageData->valeur;
+        			} else if($session->read('Equipe.Diagnostic') == 0 ) {
+        				$messageData = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeDiagnostic'])->first();
+        				$message=$messageData->valeur;
+        				$message=$messageData->valeur;
+        			} else if($session->read('Equipe.MiseEnOeuvre') == 0 ) {
+	        			$messageData = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeMiseEnOeuvre'])->first();
+        				$message=$messageData->valeur;
+	        		} else if($session->read('Equipe.Evaluation') == 0 ) { 
+	        			$messageData = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeEvaluation'])->first();
+        				$message=$messageData->valeur;
+	        		} else {
+	        			//Demarche terminée
+	        			$message = "Bienvenue";
+
+	        			//Récupération de l'état de l'engagement de l'équipe
+	        			$this->loadModel('DemarchePhases');
+	        			$etat = $this->DemarchePhases->find('all')
+	        			->where(['demarche_id' => $session->read('Equipe.Demarche'),'phase_id'=>'4'])->first();
+
+	        			$date1 = new Time($etat->date_validation);
+						$date2 = new Time(); 
+						$interval = $date2->diff($date1)->format("%a");    
+						
+						$this->set('dateMax',$date1->addDays(182));
+	        			$this->set('interval',$interval);
+	        			$this->set('equipe',$session->read('Equipe.Identifiant'));
+	        			
+	        		}
         		}        		
         		
         		$this->set(compact('equipeUsers','message'));

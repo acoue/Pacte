@@ -103,3 +103,9 @@ define('EMAIL_ADMIN', 'a.coue@has-sante.fr');
  * Email emetteur des mails
  */
 define('EMAIL_FROM', 'refex@has-sante.fr');
+
+/**
+ *  Adresse de la machine
+ */ 
+define('HTTP_ROOT', 'http://localhost/Pacte');
+

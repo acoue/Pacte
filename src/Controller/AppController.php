@@ -81,6 +81,7 @@ class AppController extends Controller
     		$session->write('Progress.SousMenu','0');
     	}
     	
+    	
 	
     	
     	$phase = $session->read('Progress.Menu');
@@ -104,12 +105,18 @@ class AppController extends Controller
 
     public function isAuthorized($user)
     {
+    	$session = $this->request->session();
+		if( $session->read('Auth.User.role') === 'equipe') {
+    		//Demarche terminée
+    		if($session->read('Equipe.DemarcheEtat') == 1) return false;
+		}	
+		
     	// Admin peuvent acceder a chaque action
     	if (isset($user['role']) && $user['role'] === 'admin') {
     		return true;
     	}
-    
-    	// Par defaut refuser
+
+        // Par defaut refuser
     	return false;
     }
 }

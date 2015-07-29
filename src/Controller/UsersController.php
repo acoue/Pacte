@@ -125,6 +125,7 @@ class UsersController extends AppController
 					->where(['equipe_id' => $equipe->id])
 					->first();
 					$session->write('Equipe.Demarche',$demarche->id);
+					$session->write('Equipe.DemarcheEtat',$demarche->statut);
 
 					//Récupération de l'état de l'engagement de l'équipe
 					$this->loadModel('DemarchePhases');
@@ -149,7 +150,10 @@ class UsersController extends AppController
 							break;						
 							case 4:
 								if(empty($e->date_validation)) $session->write('Equipe.Evaluation',0);
-								else $session->write('Equipe.Evaluation',1);
+								else {
+									$session->write('Equipe.Evaluation',1);
+									$dateCloture = strftime('%d/%m/%y', strtotime($e->date_validation));
+								}
 							break;						
 						}					
 					}						
@@ -160,6 +164,11 @@ class UsersController extends AppController
 				$modif_user->lastlogin = date('Y-m-d H:i:s');
 				$usersTable->save($modif_user);				
 				$this->Auth->setUser($user);
+				
+
+				//$this->set('demarche', $demarche);
+				if(isset($dateCloture)) $this->set('dateCloture', $dateCloture);
+				//$this->set('_serialize', ['demarche']);
 				
 				return $this->redirect($this->Auth->redirectUrl());
 								
@@ -315,15 +324,19 @@ class UsersController extends AppController
 	    	if(empty($user)) {
 	    		$this->Flash->error('Aucun utilisateur ne correspond à cet identifiant.');	    	
 	    	} else {
+	    		//Recuperation des parametres
+	    		$this->loadModel('Parametres');
+	    		$from = $this->Parametres->find('all')->where(['name' => 'EmailContact'])->first();
+	    		
 	    		//Enregistrement de l'ID en session en cas de retour
 	    		$link = ['controller'=>'users', 'action' => 'password', 'token'=> $user->id."-".$user->token, '_full' => true];
-	    		 
+	    			    		
 	    		$email = new Email('default');
 	    		$email->template('mdp')
 	    		->emailFormat('html')
 	    		->to($d['email'])
-	    		->from('refex@has-sante.fr')
-	    		->subject('[Pacte] Regénération de mot de passe')
+	    		->from(trim($from->valeur))
+	    		->subject('[Pacte] Regénération de votre mot de passe')
 	    		->viewVars(['link'=>$link])
 	    		->send();
 

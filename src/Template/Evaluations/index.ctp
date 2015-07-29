@@ -50,12 +50,17 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 						            <td class="actions">
 								<?php 
 									if(h($evaluation->file)) echo $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/userDocument/'.$session->read('Auth.User.username').'/'.h($evaluation->file), ['class' => 'titre','target' => '_blank','escape' => false]);
-								?>  
-								<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $evaluation->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
-								<?= $this->Form->postLink(
-						                '<span><i class="glyphicon glyphicon-trash"></i></span>',
-						                ['action' => 'delete', $evaluation->id],
-						                ['class' => 'tip', 'escape'   => false, 'title'=>'Supprimer','confirm'  => 'Etes-vous sûr de supprimer ?']);?>
+								 	//En phase 4 les evaluations ne sont plus modifiable
+									if($session->read('Equipe.MiseEnOeuvre') == 0){
+										echo "&nbsp;&nbsp;";
+										echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $evaluation->id], ['title'=>'Editer','escape' => false]);
+										echo "&nbsp;&nbsp;";
+										echo $this->Form->postLink(
+												'<span><i class="glyphicon glyphicon-trash"></i></span>',
+												['action' => 'delete', $evaluation->id],
+												['class' => 'tip', 'escape'   => false, 'title'=>'Supprimer','confirm'  => 'Etes-vous sûr de supprimer ?']);										
+									}
+								?>
 						          </td>
 						        </tr>
 						
@@ -66,7 +71,9 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				</div>					
 			</div>						
 			<div class="col-md-1">
-			<?= $this->Html->link(__('Ajouter'),['action'=>'add'],['class'=>'btn btn-info']);?>
+			<?php 
+			if($session->read('Equipe.MiseEnOeuvre') == 0) echo $this->Html->link(__('Ajouter'),['action'=>'add'],['class'=>'btn btn-info']);
+			?>
 			</div>
 			<div class="col-md-1"></div>
 		</div>
