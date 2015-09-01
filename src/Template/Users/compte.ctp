@@ -32,7 +32,13 @@ if($session->read("Auth.User.role") == "equipe") {
 															'required' =>'required']); ?>
                     </div>                          
 				</div><br />   
-
+			</div>						
+			<div class="col-md-1"></div>
+		</div><br />
+	
+		<p align="center">
+			<?= $this->Html->link('Retour', '/pages/home', ['class' => 'btn btn-info']) ?>
+		</p>
 
 <?php }else { ?>
 				<div class="row">
@@ -62,15 +68,16 @@ if($session->read("Auth.User.role") == "equipe") {
 															'required' =>'required']); ?>
                     </div>                          
 				</div><br />
-<?php } ?>
 			</div><br />						
 			<div class="col-md-1"></div>
 		</div><br />
 	
-	<p align="center">
-		<?= $this->Form->button('Valider', ['type' => 'submit','class' => 'btn btn-info']) ?>
-		<?= $this->Form->end() ?>
-	</p>
+		<p align="center">
+			<?= $this->Form->button('Valider', ['type' => 'submit','class' => 'btn btn-info']) ?>
+			<?= $this->Form->end() ?>
+		</p>
+<?php } ?>
+		
 	</div>
 	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
 </div>

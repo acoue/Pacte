@@ -54,11 +54,13 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 									if($session->read('Equipe.MiseEnOeuvre') == 0){
 										echo "&nbsp;&nbsp;";
 										echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $evaluation->id], ['title'=>'Editer','escape' => false]);
-										echo "&nbsp;&nbsp;";
-										echo $this->Form->postLink(
-												'<span><i class="glyphicon glyphicon-trash"></i></span>',
-												['action' => 'delete', $evaluation->id],
-												['class' => 'tip', 'escape'   => false, 'title'=>'Supprimer','confirm'  => 'Etes-vous sûr de supprimer ?']);										
+										if(!in_array($evaluation->name, ['CRM Santé','Culture Sécurité'])){
+											echo "&nbsp;&nbsp;";
+											echo $this->Form->postLink(
+													'<span><i class="glyphicon glyphicon-trash"></i></span>',
+													['action' => 'delete', $evaluation->id],
+													['class' => 'tip', 'escape'   => false, 'title'=>'Supprimer','confirm'  => 'Etes-vous sûr de supprimer ?']);										
+										}
 									}
 								?>
 						          </td>

@@ -118,7 +118,8 @@ class CalendrierProjetsController extends AppController
             $this->Flash->error('Erreur lors de la suppression de l\'étape.');
         }
 
-        if($session->read('Equipe.Engagement') == '0') return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
-        else return $this->redirect(['controller'=>'Projets', 'action' => 'calendrier']);
+        //if($session->read('Equipe.Engagement') == '1') return $this->redirect(['controller'=>'Projets', 'action' => 'diagnostic_index']);
+        //else return $this->redirect(['controller'=>'Projets', 'action' => 'calendrier']);
+        return $this->redirect(['controller'=>'Projets', 'action' => 'calendrier']);
     }
 }

@@ -29,7 +29,7 @@ $libMenu3 = "Phase de mise en oeuvre et de suivi";
 $libMenu4 = "Phase d'évaluation";
 $libSousMenu1 = "Projet d'équipe";
 $libSousMenu2 = "Fonctionnement d'équipe";
-$libSousMenu3 = "Objectifs d'amélioration";
+$libSousMenu3 = "Plan d'action";
 $libSousMenu4 = "Evaluation à T0";	
 
 
@@ -65,9 +65,9 @@ switch ($menu) {
         	case 1:
 		        echo "<tr>";
 		        echo "<td width='25%' class='sousCelluleGaucheEnCours'>".$libSousMenu1."</td>";
-		        echo "<td width='25%' class='sousCelluleNonOk'>Fonctionnement d'équipe</td>";
-		        echo "<td width='25%' class='sousCelluleNonOk'>Objectifs d'amélioration</td>";
-		        echo "<td width='25%' class='sousCelluleDroiteNonOk'>Evaluation à T0</td>";
+		        echo "<td width='25%' class='sousCelluleNonOk'>".$libSousMenu2."</td>";
+		        echo "<td width='25%' class='sousCelluleNonOk'>".$libSousMenu3."</td>";
+		        echo "<td width='25%' class='sousCelluleDroiteNonOk'>".$libSousMenu4."</td>";
 		        echo "</tr>";  
 		        break;
 	        case 2:

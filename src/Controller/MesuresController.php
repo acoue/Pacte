@@ -67,13 +67,19 @@ class MesuresController extends AppController
     		}
     	} 
     	
+    	//Date d'entree dans la phase
+    	$this->loadModel('DemarchePhases');
+    	$datePhase = $this->DemarchePhases->find('all')
+    	->where(['demarche_id' => $id_demarche,'phase_id'=>'2'])->first();    	
+    	
     	//Message
     	$this->loadModel('Parametres');
-    	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEvaluation'])->first();
-    	    	 
+    	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEvaluation'])->first();    	    	 
+    	
     	$query = $this->Mesures->find('all')
     	->contain(['Demarches'])
     	->where(['Mesures.demarche_id' => $id_demarche]);    	
+    	$this->set('datePhase',$datePhase->date_entree);
         $this->set('mesures', $this->paginate($query));
         $this->set('_serialize', ['mesures']);    
     	$this->set('message', $message);	
@@ -233,7 +239,7 @@ class MesuresController extends AppController
     		if($eval->name == 'Matrice de Maturité') {
     			if(strlen($eval->resultat) <1) {
     				$boolOk = false;
-    				$message = "Le résultat de la Matrice de Maturité doit être complétée.";
+    				$message = "Le résultat de la Matrice de Maturité doit être complété.";
     				break;
     			}
     			if(strlen($eval->file) <1) {

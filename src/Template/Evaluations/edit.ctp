@@ -13,15 +13,19 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-2">
-			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $evaluation->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]) ?><br /><br/>
+			<?php 
+			if(!in_array($evaluation->name, ['CRM Santé','Culture Sécurité'])){
+				echo $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $evaluation->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]);
+			}
+			?><br /><br/>
 			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
     		<?= $this->Form->create($evaluation, ['id'=>'edit_evaluation_form','enctype' => 'multipart/form-data']); ?>
     		<?= $this->Form->hidden('demarche_id',['value' => $evaluation->demarche_id]);?>		    
 			<div class="col-md-8">     
 				<div class="row">
-                	<label class="col-md-4 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
+                	<label class="col-md-5 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-7"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 'value'=>$evaluation->name ,
@@ -30,13 +34,13 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				</div><br />  
 				<div class="row">
                 	<label class="col-md-2 control-label" for="synthese">Synthèse <span class="obligatoire"><sup> *</sup></span></label>
-                	<div class="col-md-2 BoutonAide">
+                	<div class="col-md-3 BoutonAide">
                 	<a class="btn btn-xs btn-info" data-toggle="popover" title="Aide"
 	                 		data-content="<?= strip_tags($message->valeur)?>"
 	                        role="button">Aide</a>
                 	
                 	</div>
-                    <div class="col-md-8"><?= $this->Form->input('synthese', ['label' => false,'id'=>'synthese',
+                    <div class="col-md-7"><?= $this->Form->input('synthese', ['label' => false,'id'=>'synthese',
 														   	'div' => false,'type' => 'textarea', 'escape' => false,
 															'class' => 'form-control', 'rows' => '5', 
                     										'value'=>$evaluation->synthese ,
@@ -45,8 +49,8 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				</div><br /> 
 <?php if(empty($evaluation->file)) { ?>
 				<div class="row">
-					<label class="col-md-4 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
+					<label class="col-md-5 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-7"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
 														   	'div' => false, 
 															'class' => 'form-control', 'required' =>'required',
                     										'type' => 'file']); ?>
@@ -54,8 +58,8 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				</div><br /> 
 <?php } else {?>				
 				<div class="row">
-					<label class="col-md-4 control-label" for="file_exist">Votre document <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-6"><?= $this->Form->input('file_exist', ['label' => false,'id'=>'file_exist',
+					<label class="col-md-5 control-label" for="file_exist">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-5"><?= $this->Form->input('file_exist', ['label' => false,'id'=>'file_exist',
 														   	'div' => false,'value'=>$evaluation->file ,
 															'class' => 'form-control', 'disabled' =>'disabled',
                     										'type' => 'text']); ?>

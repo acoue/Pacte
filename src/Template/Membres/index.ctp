@@ -63,7 +63,7 @@ else echo $messageMembre->valeur;
 				<a data-toggle="modal" data-backdrop="false" data-target="#fenetreModal" class="btn btn-info">Ajouter</a>
 			</div>				
 			<div class="col-md-1"></div>
-		</div>
+		</div><br />
 		<p align="center">
 			<?php
 			$session = $this->request->session();
@@ -165,8 +165,8 @@ else echo "<h4 class='modal-title'>Ajout d'un membre</h4>";
 			  	<p align='left'><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>    		
 			</div>
 			<div class="modal-footer">
-		  		<button data-dismiss="modal" class="btn btn-info" type="button">Fermer</button>
-				<?= $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']) ?>
+		  		<button data-dismiss="modal" class="btn btn-default" type="button">Fermer</button>
+				<?= $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-info']) ?>
 		    	<?= $this->Form->end() ?>
 			</div>
 		</div><!-- /.modal-content -->

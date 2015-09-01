@@ -426,7 +426,7 @@ class ProjetsController extends AppController
     	//Suppression de la pj
     	unlink(DATA . 'pdf' . DS . $filename);
 		//Retour vers la vue
-	    $message = "Votre engagement est désormais terminé, vous aller recevoir .... ";
+    	$message = $this->Parametres->find('all')->where(['name' => 'MessageValidationEngagementTerminee'])->first();
 	    $this->set(compact('message'));	    
     }
     

@@ -13,7 +13,11 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-2">
-			<?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $mesure->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]) ?><br /><br/>
+			<?php
+			if($mesure->name != 'Matrice de Maturité' ) {
+				echo $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $mesure->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]); 
+			} 
+			?><br /><br/>
 			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
     		<?= $this->Form->create($mesure, ['id'=>'edit_mesure_form','enctype' => 'multipart/form-data']); ?>

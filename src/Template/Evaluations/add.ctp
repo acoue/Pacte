@@ -19,8 +19,8 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
     		<?= $this->Form->hidden('demarche_id',['value' => $demarche_id]);?>		    
 			<div class="col-md-8">     
 				<div class="row">
-                	<label class="col-md-4 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
+                	<label class="col-md-5 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-7"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 
@@ -29,21 +29,21 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				</div><br />  
 				<div class="row">
 					<label class="col-md-2 control-label" for="synthese">Synthèse <span class="obligatoire"><sup> *</sup></span></label>
-                	<div class="col-md-2 BoutonAide">
+                	<div class="col-md-3 BoutonAide">
                 	<a class="btn btn-xs btn-info" data-toggle="popover" title="Aide"
 	                 		data-content="<?= strip_tags($message->valeur)?>"
 	                        role="button">Aide</a>
                 	
                 	</div>
-                    <div class="col-md-8"><?= $this->Form->input('synthese', ['label' => false,'id'=>'synthese',
+                    <div class="col-md-7"><?= $this->Form->input('synthese', ['label' => false,'id'=>'synthese',
 														   	'div' => false,'type' => 'textarea', 'escape' => false,
 															'class' => 'form-control', 'rows' => '5', 'cols' => '80',
                     										'required' =>'required']); ?>
                     </div>                
 				</div><br /> 
 				<div class="row">
-					<label class="col-md-4 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
+					<label class="col-md-5 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-7"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
 														   	'div' => false,
 															'class' => 'form-control', 'required' =>'required',
                     										'type' => 'file']); ?>

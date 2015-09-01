@@ -112,8 +112,18 @@ class MembresController extends AppController
         													'demarche_id' => $session->read('Equipe.Demarche'), 
         													'comite' => $donnees['comite']])->count();
         	if($membreUnique >0) {
-        		$this->Flash->error('Erreur, le membre est déjà présent dans cette équipe pour cette démarche');        		
-        		return $this->redirect(['action' => 'index']);
+        		$this->Flash->error('Erreur, le membre est déjà présent dans cette équipe pour cette démarche');     
+        		if($donnees['responsabilite_id'] == 5) {
+        			return $this->redirect(['controller'=>'projets','action' => 'index']);
+        		} else if($type == 1 ){
+        			return $this->redirect(['action' => 'index/0/1']);
+        		} else {
+        			return $this->redirect(['controller'=>'projets','action' => 'index']);
+        		}
+        		
+        		
+        		
+        		
         	} else {
 	        	$membresTable = TableRegistry::get('Membres');
 				$membre = $membresTable->newEntity();	

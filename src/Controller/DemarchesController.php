@@ -154,7 +154,7 @@ class DemarchesController extends AppController
     		if($eval->name == 'Culture Sécurité à T2') {
     			if(strlen($eval->resultat) <1) {
     				$boolOk = false;
-    				$message = "Le résultat de la Culture Securite à T2 doit être complétée.";
+    				$message = "Le résultat de la Culture Securite à T2 doit être complété.";
     				break;
     			}
     			if(strlen($eval->file) <1) {

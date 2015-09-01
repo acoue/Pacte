@@ -10,7 +10,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
     <h2>Phase d'évaluation</h2>
 <?php } ?>
 	
-    <h3>Objectifs d'amélioration - Modèle HAS</h3>
+    <h3>Plan d'action - Modèle HAS</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-12"> 
@@ -21,9 +21,9 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 					</div>
 				</div><br />
 				<p align="center">
-					<?= $this->Html->link(__('Supprimer le plan d\'action'), ['controller'=>'PlanActions','action' => 'delete', $plan], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')])."&nbsp;&nbsp;";?>
-					<?= $this->Html->link(__('Imprimer'), ['controller'=>'PlanActions','action' => 'printPlan', $plan], ['class'=>'btn btn-default']) ?>
-					
+					<?= $this->Html->link(__('Ajouter un objectif'),['action'=>'add'],['class'=>'btn btn-info'])?>	
+					<?php echo "&nbsp;&nbsp;"?>
+					<?= $this->Html->link(__('Imprimer'), ['controller'=>'PlanActions','action' => 'printPlan', $plan], ['class'=>'btn btn-default']) ?>					
 				</p>
 				<div class="row"> 
 					<div class="col-md-12">
@@ -75,7 +75,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 					</div>
 				</div><br />	
 				<p align="center">			
-					<?= $this->Html->link(__('Ajouter un objectif'),['action'=>'add'],['class'=>'btn btn-info'])?>						
+					<?= $this->Html->link(__('Supprimer le plan d\'action'), ['controller'=>'PlanActions','action' => 'delete', $plan], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]) ?>
 				</p>
 				<p align="center">
 					<?php
@@ -85,6 +85,8 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				echo $this->Html->link('Retour', ['controller'=>'evaluations','action' => 'index'], ['class' => 'btn btn-info']);
 				echo "&nbsp;&nbsp;";
 				echo $this->Html->link('Suite', ['controller'=>'mesures','action' => 'index'], ['class' => 'btn btn-default']);
+			} else {
+				echo $this->Html->link('Retour', ['controller'=>'pages','action' => 'home'], ['class' => 'btn btn-info']);
 			}
 			?>
 				

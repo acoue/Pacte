@@ -160,7 +160,7 @@ class EtapePlanActionsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $etapePlanAction = $this->EtapePlanActions->get($id);
         if ($this->EtapePlanActions->delete($etapePlanAction)) {
-            $this->Flash->success('\'étape du plan d\'action supprimée.');
+            $this->Flash->success('L\'étape du plan d\'action supprimée.');
         } else {
             $this->Flash->error('Erreur lors de la suppression de l\'étape du plan d\'action.');
         }

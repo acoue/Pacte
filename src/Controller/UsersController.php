@@ -16,7 +16,7 @@ class UsersController extends AppController
   	public function beforeFilter(Event $event)
   	{
   		parent::beforeFilter($event);
-  		$this->Auth->allow(['activate', 'login', 'password','mentions']);  		
+  		$this->Auth->allow(['activate', 'login', 'password','mentions','changePwd']);  		
   	}
 	
 	public function isAuthorized($user)

@@ -23,7 +23,13 @@ if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>
 					<div class="col-md-1"></div>
 					<div class="col-md-10">
 						<p>
-							<?php 
+						<?php 
+						//Affichage du nombre d'enquete
+							if ($nbEnquete == 0) echo "<p>Votre équipe n'a répondu à aucune enquête.</p>"; 
+							else if ($nbEnquete == 1) echo "<p>Votre équipe a répondu à une enquête.</p>";
+							else echo "<p>Votre équipe a répondu à ".$nbEnquete." enquêtes.</p>";
+						
+						//affichage de la date de l'enquete max
 							if($dateMax->count()>0){
 								foreach ($dateMax as $dm):							
 									$datetime1 = new DateTime($dm->max);
@@ -81,7 +87,12 @@ if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>
 			<div class="col-md-1"></div>
 		</div>
 		<p align="center">
-			<?= $this->Html->link(__('Remplir une nouvelle enquête'), ['action' => 'add'], ['class'=>'btn btn-default']) ?>
+			<?php echo $this->Html->link(__('Remplir une nouvelle enquête'), ['action' => 'add'], ['class'=>'btn btn-default']);
+			echo "<br /><br />";
+			echo $this->Html->link('Retour', ['controller'=>'pages','action' => 'home'], ['class' => 'btn btn-info']); ?>
+		
+			
+			
 		</p>
 	</div>
 </div>

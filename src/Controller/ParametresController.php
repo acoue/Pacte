@@ -129,6 +129,8 @@ class ParametresController extends AppController
     		->limit(20)
     		->where(['description like '=>'%'.$libelle.'%']);
     		$this->set('parametres', $parametres);
+    		
+    		//% or name like %% or description like %%
     	}
     }
     

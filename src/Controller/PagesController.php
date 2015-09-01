@@ -78,7 +78,8 @@ class PagesController extends AppController
 
         	$session = $this->request->session();
         	//Message
-        	$this->loadModel('Parametres');
+        	$this->loadModel('Parametres');    	        	
+        	$id_demarche = $session->read('Equipe.Demarche');
         	
         	//Recuperation 
         	if($session->read('Auth.User.role') === 'admin'){
@@ -111,6 +112,13 @@ class PagesController extends AppController
         			} else if($session->read('Equipe.MiseEnOeuvre') == 0 ) {
 	        			$messageData = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeMiseEnOeuvre'])->first();
         				$message=$messageData->valeur;
+        				
+        				//Date d'entree dans la phase
+        				$this->loadModel('DemarchePhases');
+        				$datePhase = $this->DemarchePhases->find('all')
+        				->where(['demarche_id' => $id_demarche,'phase_id'=>'3'])->first();
+        				$this->set('datePhase',$datePhase->date_entree);
+        				
 	        		} else if($session->read('Equipe.Evaluation') == 0 ) { 
 	        			$messageData = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeEvaluation'])->first();
         				$message=$messageData->valeur;

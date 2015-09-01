@@ -395,6 +395,7 @@ class InscriptionsController extends AppController
 	    	$boolInscription = true;
 	    	// Calculer le score
 	    	$score = 0;
+	    	$nbOui = 0;
 	    	$situation_crise = 1;
 	    	$restructuration = 1;
 	    	$reponses = "";
@@ -411,14 +412,16 @@ class InscriptionsController extends AppController
 	    				if($value === 'N') {
 	    					$situation_crise = 0; 
 	    					$score = $score + 1;
-	    				}
+	    				} 
 	    			} else if($num == 10) { // Restructuration -> question id : 10
 	    				if($value === 'N') {
 	    					$restructuration = 0; 
 	    					$score = $score + 1;
 	    				}
-	    			}
-					else if($value === 'O') $score = $score + 1;					
+	    			} else if($value === 'O') {
+						$score = $score + 1;			
+						$nbOui = $nbOui + 1;
+					}
 	    			$reponses .= $num."-".$value."#";
 	    		}
 	    		
@@ -475,12 +478,30 @@ class InscriptionsController extends AppController
 		    	$this->loadModel('Parametres');
 		    	$messageTitreValidation = $this->Parametres->find('all')->where(['name' => 'MessageTitreValidation'])->first();
 		    	$messageAvertissement = $this->Parametres->find('all')->where(['name' => 'MessageAvertissementInscription'])->first();
-		    	 
-		    	if($score < 5 ) $messageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreInferieur'])->first();
-		    	else $messageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreSupérieur'])->first();
+
+		    	// Message avertissemnt si Situation de Crise
+		    	if($situation_crise == 1 ){
+		    		$reqMessageSituationcrise = $this->Parametres->find('all')->where(['name' => 'MessageSituationCrise'])->first();
+		    		$MessageSituationcrise = $reqMessageSituationcrise->valeur;
+		    	} else $MessageSituationcrise="";
+		    	// Message avertissemnt si Restructuration < 6 mois
+		    	if($restructuration == 1 ){
+		    		$reqMessageRestructuration = $this->Parametres->find('all')->where(['name' => 'MessageRestructuration'])->first();
+		    		$MessageRestructuration = $reqMessageRestructuration->valeur;
+		    	} else $MessageRestructuration="";
 		    	
+		    	//Message lié au score
+		    	if($score < 5 ) $reqMessageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreInferieur'])->first();
+		    	else $reqMessageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreSupérieur'])->first();		    	
+		    	$messageScore = $reqMessageScore->valeur;
+		    	
+		    	//Ajout au message du message lié au nombre de oui
+		    	if($nbOui < 5 ) $reqMessageNbOui = $this->Parametres->find('all')->where(['name' => 'MessageNbOuiInferieur'])->first();
+		    	else $reqMessageNbOui = $this->Parametres->find('all')->where(['name' => 'MessageNbOuiSuperieur'])->first();
+		    	$messageScore .= "<br /><br />".$reqMessageNbOui->valeur; 
+		    			    	
 		    	//Renvoi à la vue
-		    	$this->set(compact('score','messageAvertissement','messageScore','messageTitreValidation'));
+		    	$this->set(compact('score','messageAvertissement','messageScore','messageTitreValidation','nbOui','MessageSituationcrise','MessageRestructuration'));
     			$this->render('validate');
 	    	} else {
 	    		//redirection vers page d'erreur

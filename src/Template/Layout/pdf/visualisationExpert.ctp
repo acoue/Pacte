@@ -229,7 +229,7 @@
 </div>
 <div class="blocblanc">
 	<h2>Mise en Oeuvre</h2>	
-	<h3>Objectifs d'amélioration</h3>
+	<h3>Plan d'action</h3>
 	<?php 
 	if($planAction) {
 		if($planAction->is_has == 1 ) {    ?> 

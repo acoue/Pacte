@@ -46,7 +46,7 @@
 			<div class="col-md-1"></div>
 		</div>		
 	<p align="center">
-		<?= $this->Form->button('Valider', ['type' => 'submit','class' => 'btn btn-info']) ?>
+		<?= $this->Form->button('Valider', ['type' => 'submit','class' => 'btn btn-default']) ?>
 		<?= $this->Form->end() ?>
 	</p>
 	</div>

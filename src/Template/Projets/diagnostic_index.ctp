@@ -30,7 +30,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				</div><br /> 		    
 				<div class="row">
 					<label class="col-md-4 control-label" for="deploiement">Modalité de déploiement <span class="obligatoire"><sup> *</sup></span>
-					<br /><span class="text-muted">(Cadre organosationnel, ressources allouées, formation, etc.)</span> 
+					<br /><span class="text-muted">(Cadre organisationnel, ressources allouées, formation, etc.)</span> 
 					</label>
                 	<div class="col-md-8"><?= $this->Form->input('deploiement', ['label' => false,'id'=>'deploiement',
 														   	'div' => false,

@@ -8,7 +8,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 <?php } else if($session->read('Equipe.Evaluation') == 0) { ?>
     <h2>Phase d'évaluation</h2>
 <?php } ?>
-    <h3>Objectifs d'amélioration</h3>
+    <h3>Plan d'action</h3>
 	<div class="blocblancContent">
 		<div class="row"> 
 			<div class="col-md-1"></div>

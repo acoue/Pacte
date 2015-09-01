@@ -49,7 +49,9 @@ class EnquetesController extends AppController
     	$query = $this->Enquetes->find('all')
     	->contain(['Fonctions', 'Demarches'])
     	->where(['Enquetes.demarche_id' => $id_demarche])
-    	->order('Enquetes.created DESC');
+    	->order('Enquetes.campagne, Enquetes.created DESC');
+    	
+    	$nbEnquete = $query->count();
     	
     	$queryMax = $this->Enquetes->find('all')
     	->where(['Enquetes.demarche_id' => $id_demarche]);
@@ -62,6 +64,7 @@ class EnquetesController extends AppController
     	
     	$this->set('enquetes', $this->paginate($query));
         $this->set('dateMax', $dateMax);
+        $this->set('nbEnquete',$nbEnquete);
         $this->set('_serialize', ['enquetes']); 
     	$this->set('message', $message);	
     	
@@ -77,8 +80,8 @@ class EnquetesController extends AppController
     public function view($id = null)
     {
     	//Recuperation de la demarche
-    	$session = $this->request->session();
-    	$id_demarche = $session->read('Equipe.Demarche');
+    	//$session = $this->request->session();
+    	//$id_demarche = $session->read('Equipe.Demarche');
     	
         $enquete = $this->Enquetes->get($id, [
             'contain' => ['Demarches', 'Fonctions']
@@ -113,12 +116,14 @@ class EnquetesController extends AppController
         	$resultat = $this->request->data;
         	//debug($resultat);die();  
         	$service = $resultat['service'];
+        	$campagne = $resultat['campagne'];
         	$demarche_id = $resultat['demarche_id'];
         	$fonction_id = $resultat['fonction_id'];
 			//Mise a jour des données
         	$enquete->service = $service;
         	$enquete->fonction_id = $fonction_id;
-        	$enquete->demarche_id = $demarche_id;        	
+        	$enquete->demarche_id = $demarche_id;        
+        	$enquete->campagne = $campagne; 	
         	$this->Enquetes->save($enquete);
         	$id_enquete = $enquete->id;
         	

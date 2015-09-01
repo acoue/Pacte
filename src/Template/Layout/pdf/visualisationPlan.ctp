@@ -15,7 +15,7 @@
 <br /><br />
 <div class="blocblanc">
 	<h2>Mise en Oeuvre</h2>	
-	<h3>Objectifs d'amélioration</h3>
+	<h3>Plan d'action</h3>
 	<table cellpadding="0" cellspacing="0" class="table" width='100%'>
 	    <thead>
 	        <tr align='center'>
