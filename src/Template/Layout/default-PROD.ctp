@@ -37,8 +37,6 @@ $cakeDescription = 'Pacte ';
 </head>
 <body>
     <div id="main">
-    
-    <div style="background-color:#8BF0A6;width:100%;text-align:center;font: bold 20px verdana;">Environnement de DEVELOPPEMENT</div>
         <!-- navbar -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
             <div class="container">
