@@ -279,7 +279,7 @@ class ProjetsController extends AppController
 		    		$mesure = $mesuresTable->newEntity();
 		    		// Atribution des valeurs => Matrice de Maturité
 		    		$mesure->id = null;
-		    		$mesure->name = "Matrice de Maturité T0" ;
+		    		$mesure->name = "Matrice de Maturité à T0" ;
 		    		$mesure->demarche_id = $id_demarche;
 		    		//Enregistrement
 		    		$mesuresTable->save($mesure);
@@ -477,44 +477,81 @@ class ProjetsController extends AppController
     	//On recupere l'identifiant de démarche
     	$session = $this->request->session();
     	$id_demarche = $session->read('Equipe.Demarche');
+
+    	//Vérification des éléments obigatoires de la phase MOE
+    	$boolOk = true;
+    	$message= "";
+    	$this->loadModel('Mesures');
+    	$evaluations = $this->Mesures->find('all')
+    	->where(['Mesures.demarche_id'=>$id_demarche]);
+    	 
+    	//Obligatoire resultat et file pour Matrice de Maturité
+    	foreach ($evaluations as $eval){
+    		if($eval->name == 'Matrice de Maturité à T1') {
+    			if(strlen($eval->resultat) <1) {
+    				$boolOk = false;
+    				$message = "Le résultat de la Matrice de Maturité à T1 doit être complété.";
+    				break;
+    			}
+    			if(strlen($eval->file) <1) {
+    				$boolOk = false;
+    				$message = "Merci d'associer un fichier à la Matrice de Maturité à T1.";
+    				break;
+    			}
+    		} else break;
+    	}
     	
-    	//Creation de ma mesure obligatoire Culture Securite à T2
-    	$mesuresTable = TableRegistry::get('Mesures');
-    	$mesure = $mesuresTable->newEntity();
-    	// Atribution des valeurs => Culture Securite à T2
-    	$mesure->id = null;
-    	$mesure->name = "Culture Sécurité à T2";
-    	$mesure->demarche_id = $id_demarche;
-    	//Enregistrement
-    	$mesuresTable->save($mesure);    	
-    	
-    	//Flag dans table demarche_phases => date_validation = now()
-    	$this->loadModel('DemarchePhases');
-    	$dp = $this->DemarchePhases->find('all')
-    	->where(['DemarchePhases.demarche_id' => $id_demarche,'phase_id'=>'3'])
-    	->first();    	
-    	$idDemarchePhase = $dp->id;
-    	$demarchesPhasesTable = TableRegistry::get('DemarchePhases');
-    	$demarchesPhase = $demarchesPhasesTable->get($idDemarchePhase);    	 
-    	$demarchesPhase->date_validation = date('Y-m-d');
-    	$demarchesPhasesTable->save($demarchesPhase);
-    	//Mise à jour de la session :
-    	$session->write('Equipe.MiseEnOeuvre',1);
-    	
-    	//Inscription de l'etape dans la table
-    	$demPhase = $demarchesPhasesTable->newEntity();
-    	// Atribution des valeurs
-    	$demPhase->id = null;    	
-    	$demPhase->demarche_id = $id_demarche;
-    	$demPhase->phase_id = 4; //Entree dans la premiere phase
-    	$demPhase->date_entree = date('Y-m-d');
-    	//Enregistrement
-    	$demarchesPhasesTable->save($demPhase);
-    	//Mise à jour de la session :
-    	$session->write('Equipe.Evaluation',0);
-    	
-    	$this->Flash->success('Phase terminée');
-    	return $this->redirect(['controller'=>'Pages', 'action' => 'home']);    	
+    	//Si tout est ok
+    	if(!$boolOk) {
+    		$this->Flash->error($message);
+    		return $this->redirect(['controller'=>'pages', 'action' => 'home']);
+    	} else {
+	    	//Creation de ma mesure obligatoire Culture Securite à T2
+	    	$mesuresTable = TableRegistry::get('Mesures');
+	    	$mesure = $mesuresTable->newEntity();
+	    	// Atribution des valeurs => Culture Securite à T2
+	    	$mesure->id = null;
+	    	$mesure->name = "Culture Sécurité à T2";
+	    	$mesure->demarche_id = $id_demarche;
+	    	//Enregistrement
+	    	$mesuresTable->save($mesure);   
+	    	//Creation de ma mesure obligatoire Matrice de maturité à T2
+	    	$mesure1 = $mesuresTable->newEntity();
+	    	// Atribution des valeurs => Culture Securite à T2
+	    	$mesure1->id = null;
+	    	$mesure1->name = "Matrice de Maturité à T2";
+	    	$mesure1->demarche_id = $id_demarche;
+	    	//Enregistrement
+	    	$mesuresTable->save($mesure1);
+	    	
+	    	//Flag dans table demarche_phases => date_validation = now()
+	    	$this->loadModel('DemarchePhases');
+	    	$dp = $this->DemarchePhases->find('all')
+	    	->where(['DemarchePhases.demarche_id' => $id_demarche,'phase_id'=>'3'])
+	    	->first();    	
+	    	$idDemarchePhase = $dp->id;
+	    	$demarchesPhasesTable = TableRegistry::get('DemarchePhases');
+	    	$demarchesPhase = $demarchesPhasesTable->get($idDemarchePhase);    	 
+	    	$demarchesPhase->date_validation = date('Y-m-d');
+	    	$demarchesPhasesTable->save($demarchesPhase);
+	    	//Mise à jour de la session :
+	    	$session->write('Equipe.MiseEnOeuvre',1);
+	    	
+	    	//Inscription de l'etape dans la table
+	    	$demPhase = $demarchesPhasesTable->newEntity();
+	    	// Atribution des valeurs
+	    	$demPhase->id = null;    	
+	    	$demPhase->demarche_id = $id_demarche;
+	    	$demPhase->phase_id = 4; //Entree dans la premiere phase
+	    	$demPhase->date_entree = date('Y-m-d');
+	    	//Enregistrement
+	    	$demarchesPhasesTable->save($demPhase);
+	    	//Mise à jour de la session :
+	    	$session->write('Equipe.Evaluation',0);
+	    	
+	    	$this->Flash->success('Phase terminée');
+	    	return $this->redirect(['controller'=>'Pages', 'action' => 'home']);  
+    	}  	
     }
     
 }

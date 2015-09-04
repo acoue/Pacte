@@ -273,7 +273,7 @@
 		echo "<p>Aucun plan d'action n'est défini pour cette démarche</p><br /><br />";
 	}
 	?>
-	<h3>Evaluation à T0</h3>
+	<h3>Evaluation</h3>
 	<table cellpadding="0" cellspacing="0" class="table" width='100%'>
 		<thead>
 	       <tr align='center'>

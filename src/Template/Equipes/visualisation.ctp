@@ -409,7 +409,7 @@ if(h($evaluation->file)) echo $this->Html->link('<span><i class="glyphicon glyph
 	</div></div>		
 <div class="blocblanc">
 	<h2>Mise en Oeuvre</h2>	
-	<h3>Pln d'action</h3>
+	<h3>Plan d'action</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -473,7 +473,7 @@ if(h($evaluation->file)) echo $this->Html->link('<span><i class="glyphicon glyph
 			<div class="col-md-1"></div>
 		</div>
 	</div>
-	<h3>Evaluation à T0</h3>
+	<h3>Evaluation</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>

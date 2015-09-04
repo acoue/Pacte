@@ -53,7 +53,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				?>
 				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 			
-				<?php if($mesure->name != 'Matrice de Maturité T0' ) { 
+				<?php if($mesure->name != 'Matrice de Maturité à T0' ) { 
 						echo $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $mesure->id],

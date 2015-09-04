@@ -14,7 +14,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			<div class="col-md-1"></div>
 			<div class="col-md-2">
 			<?php
-			if($mesure->name != 'Matrice de Maturité T0' ) {
+			if($mesure->name != 'Matrice de Maturité à T0' ) {
 				echo $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $mesure->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]); 
 			} 
 			?><br /><br/>
@@ -27,7 +27,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
                 	<label class="col-md-4 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8">
                     <?php 
-                    if($mesure->name != 'Matrice de Maturité T0' ) {
+                    if($mesure->name != 'Matrice de Maturité à T0' ) {
                     	echo $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false,
 															'class' => 'form-control', 

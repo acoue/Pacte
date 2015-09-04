@@ -162,6 +162,18 @@ class DemarchesController extends AppController
     				$message = "Merci d'associer un fichier à la Culture Securite à T2.";
     				break;
     			}    		
+    		} if($eval->name == 'Matrice de Maturité à T2') {
+    			if(strlen($eval->resultat) <1) {
+    				$boolOk = false;
+    				$message = "Le résultat de la Matrice de Maturité à T2 doit être complété.";
+    				break;
+    			}
+    			if(strlen($eval->file) <1) {
+    				$boolOk = false;
+    				$message = "Merci d'associer un fichier à la Matrice de Maturité à T2.";
+    				break;
+    			}    		
+    			
     		} else break;
     	}
 

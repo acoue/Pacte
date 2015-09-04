@@ -204,8 +204,8 @@ class MesuresController extends AppController
         $mesure = $this->Mesures->get($id);
         
         //Si Matrice de Maturité -> pas de suppression
-        if($mesure->name === "Matrice de Maturité T0") {
-        	$this->Flash->error('Vous ne pouvez pas supprimer la mesure "Matrice de Maturité T0".');
+        if($mesure->name === "Matrice de Maturité à T0") {
+        	$this->Flash->error('Vous ne pouvez pas supprimer la mesure "Matrice de Maturité à T0".');
         	return $this->redirect(['action' => 'index']);
         }
         
@@ -236,15 +236,15 @@ class MesuresController extends AppController
     	
     	//Obligatoire resultat et file pour Matrice de Maturité
     	foreach ($evaluations as $eval){
-    		if($eval->name == 'Matrice de Maturité T0') {
+    		if($eval->name == 'Matrice de Maturité à T0') {
     			if(strlen($eval->resultat) <1) {
     				$boolOk = false;
-    				$message = "Le résultat de la Matrice de Maturité T0 doit être complété.";
+    				$message = "Le résultat de la Matrice de Maturité à T0 doit être complété.";
     				break;
     			}
     			if(strlen($eval->file) <1) {
     				$boolOk = false;
-    				$message = "Merci d'associer un fichier à la Matrice de Maturité T0.";
+    				$message = "Merci d'associer un fichier à la Matrice de Maturité à T0.";
     				break;
     			}    		
     		} else break;
@@ -267,13 +267,23 @@ class MesuresController extends AppController
     		$demarchesPhase->date_validation = date('Y-m-d');
     		$demarchesPhasesTable->save($demarchesPhase);
     		
-    		//Creation dans table demarche_phases pour la phase 2
+    		//Creation dans table demarche_phases pour la phase 3
     		$demarchesPhase = $demarchesPhasesTable->newEntity();
     		// Atribution des valeurs
     		$demarchesPhase->demarche_id = $id_demarche;
     		$demarchesPhase->phase_id = 3; //Entree dans la premiere phase
     		$demarchesPhase->date_entree = date('Y-m-d');
-    		 
+    		
+    		//Creation de la mesure obligatoire Matrice de Maturité à T1
+    		$mesuresTable = TableRegistry::get('Mesures');
+    		$mesure = $mesuresTable->newEntity();
+    		// Atribution des valeurs => Culture Securite à T2
+    		$mesure->id = null;
+    		$mesure->name = "Matrice de Maturité à T1";
+    		$mesure->demarche_id = $id_demarche;
+    		//Enregistrement
+    		$mesuresTable->save($mesure);
+    		
     		//Mise à jour de la session :
     		$session->write('Equipe.Engagement',1);
     		$session->write('Equipe.Diagnostic',1);
