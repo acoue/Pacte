@@ -26,10 +26,10 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				    <thead>
 				        <tr align='center'>
 				            <th width='5%'></th>
-				            <th width='15%'>Outils</th>
+				            <th width='20%'>Outils</th>
 				            <th width='40%'>Evolutions des résultats<br />Points forts et axes d'amélioration identifiés</th>
 				            <th width='25%'>Vos documents</th>
-				            <th  width='15%'  class="actions"><?= __('Actions') ?></th>
+				            <th  width='10%'  class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>
 				    <tbody>
@@ -49,16 +49,31 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				            <td><?= h($mesure->file) ?></td>
 				            <td class="actions">
 				<?php 
-					if(h($mesure->file)) echo $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/userDocument/'.$session->read('Auth.User.username').'/'.h($mesure->file), ['class' => 'titre','target' => '_blank','escape' => false]);
+							if(h($mesure->file)) {
+								echo $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/userDocument/'.$session->read('Auth.User.username').'/'.h($mesure->file), ['class' => 'titre','target' => '_blank','escape' => false]);
+							}
+							
+							//Affichage dans la phase de MOE
+							if($mesure->name != 'Matrice de Maturité à T0') {
+								if($mesure->name == 'Matrice de Maturité à T1' && $session->read('Equipe.MiseEnOeuvre') == '1') {
+									echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]);
+									echo "&nbsp;&nbsp;";
+									echo $this->Form->postLink(
+											'<span><i class="glyphicon glyphicon-trash"></i></span>',
+											['action' => 'delete', $mesure->id],
+											['class' => 'tip','title'=>'Supprimer', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);
+								} else {
+									echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]);
+									echo "&nbsp;&nbsp;";
+									echo $this->Form->postLink(
+											'<span><i class="glyphicon glyphicon-trash"></i></span>',
+											['action' => 'delete', $mesure->id],
+											['class' => 'tip','title'=>'Supprimer', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);
+									
+								}
+							}
+							
 				?>
-				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
-			
-				<?php if($mesure->name != 'Matrice de Maturité à T0' ) { 
-						echo $this->Form->postLink(
-				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
-				                ['action' => 'delete', $mesure->id],
-				                ['class' => 'tip','title'=>'Supprimer', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);
-						} ?>
 				          </td>
 				        </tr>
 				
