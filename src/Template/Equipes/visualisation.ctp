@@ -466,7 +466,7 @@ if(h($evaluation->file)) echo $this->Html->link('<span><i class="glyphicon glyph
 						
 					}
 				} else {
-					echo "<p>Aucun plan d'action n'est définis pour cette démarche</p>";
+					echo "<p>Aucun plan d'action n'est défini pour cette démarche</p>";
 				}
 				?>
 			</div>

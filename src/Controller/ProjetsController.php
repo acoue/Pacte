@@ -274,12 +274,12 @@ class ProjetsController extends AppController
 		    		//Enregistrement
 		    		$evaluationsTable->save($eval);	    		
 		    		
-		    		//Creation de la mesure obligatoire Matrice de Maturite
+		    		//Creation de la mesure obligatoire Matrice de Maturite T0
 		    		$mesuresTable = TableRegistry::get('Mesures');
 		    		$mesure = $mesuresTable->newEntity();
 		    		// Atribution des valeurs => Matrice de Maturité
 		    		$mesure->id = null;
-		    		$mesure->name = "Matrice de Maturité";
+		    		$mesure->name = "Matrice de Maturité T0" ;
 		    		$mesure->demarche_id = $id_demarche;
 		    		//Enregistrement
 		    		$mesuresTable->save($mesure);

@@ -14,7 +14,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			<div class="col-md-1"></div>
 			<div class="col-md-2">
 			<?php
-			if($mesure->name != 'Matrice de Maturité' ) {
+			if($mesure->name != 'Matrice de Maturité T0' ) {
 				echo $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $mesure->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]); 
 			} 
 			?><br /><br/>
@@ -25,11 +25,22 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			<div class="col-md-8">     
 				<div class="row">
                 	<label class="col-md-4 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
+                    <div class="col-md-8">
+                    <?php 
+                    if($mesure->name != 'Matrice de Maturité T0' ) {
+                    	echo $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 'value'=>$mesure->name ,
-                    										'required' =>'required']); ?>
+                    										'required' =>'required']);
+                    } else {
+                    	echo $this->Form->input('name', ['label' => false,'id'=>'name',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 'value'=>$mesure->name ,
+                    										'required' =>'required','disabled'=>'disabled']);
+                    }                    
+                    ?>
                     </div>                          
 				</div><br />  
 				<div class="row">

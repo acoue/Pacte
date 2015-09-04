@@ -204,8 +204,8 @@ class MesuresController extends AppController
         $mesure = $this->Mesures->get($id);
         
         //Si Matrice de Maturité -> pas de suppression
-        if($mesure->name === "Matrice de Maturité") {
-        	$this->Flash->error('Vous ne pouvez pas supprimer la mesure "Matrice de Maturité".');
+        if($mesure->name === "Matrice de Maturité T0") {
+        	$this->Flash->error('Vous ne pouvez pas supprimer la mesure "Matrice de Maturité T0".');
         	return $this->redirect(['action' => 'index']);
         }
         
@@ -236,15 +236,15 @@ class MesuresController extends AppController
     	
     	//Obligatoire resultat et file pour Matrice de Maturité
     	foreach ($evaluations as $eval){
-    		if($eval->name == 'Matrice de Maturité') {
+    		if($eval->name == 'Matrice de Maturité T0') {
     			if(strlen($eval->resultat) <1) {
     				$boolOk = false;
-    				$message = "Le résultat de la Matrice de Maturité doit être complété.";
+    				$message = "Le résultat de la Matrice de Maturité T0 doit être complété.";
     				break;
     			}
     			if(strlen($eval->file) <1) {
     				$boolOk = false;
-    				$message = "Merci d'associer un fichier à la Matrice de Maturité.";
+    				$message = "Merci d'associer un fichier à la Matrice de Maturité T0.";
     				break;
     			}    		
     		} else break;

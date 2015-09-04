@@ -270,7 +270,7 @@
 			echo "<p>Le plan d'action est géré hors Modèle HAS</p><br /><br />";
 		}
 	} else {
-		echo "<p>Aucun plan d'action n'est définis pour cette démarche</p><br /><br />";
+		echo "<p>Aucun plan d'action n'est défini pour cette démarche</p><br /><br />";
 	}
 	?>
 	<h3>Evaluation à T0</h3>

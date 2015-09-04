@@ -53,7 +53,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				?>
 				<?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 			
-				<?php if($mesure->name != 'Matrice de Maturité' ) { 
+				<?php if($mesure->name != 'Matrice de Maturité T0' ) { 
 						echo $this->Form->postLink(
 				                '<span><i class="glyphicon glyphicon-trash"></i></span>',
 				                ['action' => 'delete', $mesure->id],
@@ -72,7 +72,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			<div class="col-md-1"></div>
 		</div>
 		<p align="center">
-		<?php
+<?php
 		$session = $this->request->session();
 		if($session->read('Equipe.Diagnostic') == '0') {
 			
@@ -83,22 +83,26 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			$datetime1 = new DateTime($dateSource);
 			$datetime2 = new DateTime("now");
 			$interval = $datetime1->diff($datetime2);
+?>
 			
-			if($interval->format('%a') < 365) {
-				echo "<div class='row'><div class='col-md-2'></div><div class='col-md-8'>";
-				echo "<p class='alert alert-info'>";
-				echo "Vous avez commencé la phase de diagnostic le ".substr($datePhase,0,10).", c'est à dire il y a ".$interval->format('%a')." jour(s)<br />";
-				echo "Vous ne pouvez clôturer cette phase avant le ".$datetime1->add(new DateInterval('P1Y'))->format('d/m/Y');
-					
-				echo "</p></div><div class='col-md-2'></div>";
-			} else {
-				echo "&nbsp;&nbsp;";
-				echo $this->Html->link(__('Suite'),['controller'=>'mesures', 'action'=>'validate'],['class'=>'btn btn-default']);
-			}
+				<div class='row'>
+					<div class='col-md-2'></div>
+					<div class='col-md-8'>
+						<p class='alert alert-info' align='center'>
+						Nous avons constaté que durée de 6 mois est appropriée pour terminer cette phase de diagnostic.</br >
+						Vous avez commencé la phase de diagnostic le <?= substr($datePhase,0,10) ?>, c'est à dire il y a <?= $interval->format('%m') ?> mois<br /><br />
+						Pour clôturer votre phase de diiagnostic, cliquez sur le bouton ci-dessous. <br /><br />
+						<?= $this->Html->link(__('Suite'),['controller'=>'mesures', 'action'=>'validate'],['class'=>'btn btn-default'])?>
+							
+						</p>
+					</div>
+					<div class='col-md-2'></div>
+				</div>
+<?php 
 		} else {
 			echo $this->Html->link('Retour', ['controller'=>'pages','action' => 'home'], ['class' => 'btn btn-info']);
 		}
-		?>
+?>
 		</p>
 	</div>
 </div>

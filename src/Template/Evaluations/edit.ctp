@@ -25,11 +25,23 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			<div class="col-md-8">     
 				<div class="row">
                 	<label class="col-md-5 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-7"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
-														   	'div' => false,
-															'class' => 'form-control', 
-                    										'type' => 'text', 'value'=>$evaluation->name ,
-                    										'required' =>'required']); ?>
+                    <div class="col-md-7">
+                    <?php 
+                    if(!in_array($evaluation->name, ['CRM Santé','Culture Sécurité'])){
+                    	echo $this->Form->input('name', ['label' => false,'id'=>'name',
+                    			'div' => false,
+                    			'class' => 'form-control',
+                    			'type' => 'text', 'value'=>$evaluation->name ,
+                    			'required' =>'required']);
+                    } else {
+                    	echo $this->Form->input('name', ['label' => false,'id'=>'name',
+                    			'div' => false,
+                    			'class' => 'form-control',
+                    			'type' => 'text', 'value'=>$evaluation->name ,
+                    			'required' =>'required','disabled' => 'disabled']);                   	
+                    }
+                    
+                    ?>                    
                     </div>                          
 				</div><br />  
 				<div class="row">

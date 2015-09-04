@@ -36,7 +36,7 @@ if(strlen($MessageRestructuration) > 1 )  { ?>
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 
-                    										'value' => $nbOui,
+                    										'value' => $nbOui."/10",
                     										'disabled' => 'disabled']); ?>
                     </div>	                    
 					<div class="col-md-1"></div>

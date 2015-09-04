@@ -43,12 +43,12 @@
 						<div class="col-md-1"></div>
 					</div>		
 					<div class="row">
-						<p><span class="text-muted">Liste détaillées de l'équipe (liste nominative)</span>                	
+						<!--  <p><span class="text-muted">Liste détaillées de l'équipe (liste nominative)</span>  -->              	
                 	
 						</p>
 						<div class="col-md-12">
 						    <table cellpadding="0" cellspacing="0" class="table table-striped" >  
-						        <caption>Constitution de l'équipe</caption>
+						        <caption>Constitution de l'équipe (Liste nominative ci-dessous)</caption>
 						        <thead>
 						        	<tr>
 						        		<th width='15%'>Rôle</th>

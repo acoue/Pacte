@@ -193,7 +193,7 @@ class EvaluationsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $evaluation = $this->Evaluations->get($id);
         
-        //Si Matrice de Maturité -> pas de suppression
+        //Si CRM Santé ou Culture Sécurité -> pas de suppression
         if( in_array($evaluation->name, ["CRM Santé","Culture Sécurité"])   ) {
         	$this->Flash->error('Vous ne pouvez pas supprimer les éléments "CRM Santé" ou "Culture Sécurité".');
         	return $this->redirect(['action' => 'index']);

@@ -122,6 +122,12 @@ class PagesController extends AppController
 	        		} else if($session->read('Equipe.Evaluation') == 0 ) { 
 	        			$messageData = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeEvaluation'])->first();
         				$message=$messageData->valeur;
+        				//Date d'entree dans la phase
+        				$this->loadModel('DemarchePhases');
+        				$datePhase = $this->DemarchePhases->find('all')
+        				->where(['demarche_id' => $id_demarche,'phase_id'=>'4'])->first();
+        				$this->set('datePhase',$datePhase->date_entree);
+        				
 	        		} else {
 	        			//Demarche terminée
 	        			$message = "Bienvenue";

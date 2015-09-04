@@ -93,7 +93,7 @@ if($session->check('Auth.User.role')) {
                     </div>                          
 				</div><br />
 				
-				<p class='alert alert-info'>
+				<p class='alert alert-info' align='center'>
 <?php
 				
 				$dateSource = substr($datePhase, 6,4)."-".substr($datePhase, 3,2)."-".substr($datePhase, 0,2);
@@ -101,9 +101,9 @@ if($session->check('Auth.User.role')) {
 				$datetime2 = new DateTime("now");
 				$interval = $datetime1->diff($datetime2);
 				
-				if($interval->format('%a') < 183) {
+				if($interval->format('%a') < 365) {
 					echo "Vous avez commencé la phase de mise en oeuvre le ".substr($datePhase,0,10).", c'est à dire il y a ".$interval->format('%a')." jour(s)<br />";
-					echo "Vous ne pouvez clôturer cette phase avant le ".$datetime1->add(new DateInterval('P183D'))->format('d/m/Y');
+					echo "Vous ne pouvez clôturer cette phase avant le ".$datetime1->add(new DateInterval('P365D'))->format('d/m/Y');
  				
 				} else {
 					echo "Vous avez commencé la phase de mise en oeuvre le ".substr($datePhase,0,10).", c'est à dire il y a ".$interval->format('%a')." jour(s)<br />";
@@ -115,13 +115,37 @@ if($session->check('Auth.User.role')) {
 				 ?>
 				
 				</p>
-<?php 				
-				
-				
-				
-			} else if($session->read('Equipe.Evaluation') == 0 ){
+				<p align='center'>
+<?php if (ENV_APPLI === 'QUAL') echo "Qualification => ".$this->Html->link('Terminer la phase de mise en oeuvre', ['controller'=>'Projets', 'action' => 'terminateMEO'],['class' => 'btn btn-info','confirm' => __('Etes-vous sûr de vouloir terminer la phase de "Mise en Oeuvre" ?')]); ?>
+				</p>
+<?php 		
+			} else if($session->read('Equipe.Evaluation') == 0 ) {
 				//Accueil de la phase d'evaluation
-				echo $this->Html->link('Terminer la démarche Pacte',['controller'=>'Demarches', 'action' => 'terminateDemarche'],['class' => 'btn btn-info','confirm' => __('Etes-vous sûr de vouloir terminer votre démarche ?')]);
+?>			
+				<p class='alert alert-info' align='center'>
+<?php 
+				$dateSource = substr($datePhase, 6,4)."-".substr($datePhase, 3,2)."-".substr($datePhase, 0,2);
+				$datetime1 = new DateTime($dateSource);
+				$datetime2 = new DateTime("now");
+				$interval = $datetime1->diff($datetime2);
+				
+				if($interval->format('%a') < 183) {
+					echo "Vous avez commencé la phase d'Evaluation le ".substr($datePhase,0,10).", c'est à dire il y a ".$interval->format('%a')." jour(s)<br />";
+					echo "Vous ne pouvez clôturer cette phase et donc votre démarche avant le ".$datetime1->add(new DateInterval('P365D'))->format('d/m/Y');
+						
+				} else {
+					echo "Vous avez commencé la phase d'Evaluation le ".substr($datePhase,0,10).", c'est à dire il y a ".$interval->format('%a')." jour(s)<br />";
+					echo "Vous pouvez désormais clôturer cette phase et ainsi terminer votre démarche Pacte, via le bouton ci-dessous<br /><br />";
+					echo $this->Html->link('Terminer la démarche Pacte',['controller'=>'Demarches', 'action' => 'terminateDemarche'],['class' => 'btn btn-info','confirm' => __('Etes-vous sûr de vouloir terminer votre démarche ?')]);
+				}
+?>				
+				</p>	
+<?php 				
+				if (ENV_APPLI === 'QUAL') {
+					echo "<p align='center'>";
+					echo "Qualification => ".$this->Html->link('Terminer la démarche Pacte',['controller'=>'Demarches', 'action' => 'terminateDemarche'],['class' => 'btn btn-info','confirm' => __('Etes-vous sûr de vouloir terminer votre démarche ?')]);
+					echo "</p>";
+				}
 			}
 		} else {
 			//Demarche TERMINEE		
