@@ -12,6 +12,7 @@ class PlanActionsController extends AppController
 {
 	public function initialize() {
 		parent::initialize();
+ 		$this->loadComponent('Utilitaire');
 		//Menu et sous-menu
  		$session = $this->request->session();
  		if($session->read('Equipe.Diagnostic') == 0) {
@@ -19,7 +20,7 @@ class PlanActionsController extends AppController
  			$session->write('Progress.SousMenu','3');
  		}
  	}
-	
+
 	
 	public function isAuthorized($user)
 	{
@@ -91,12 +92,14 @@ class PlanActionsController extends AppController
     	//Message
     	$this->loadModel('Parametres');
     	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilChoixPlanAction'])->first();
+    	$messageAvertissement = $this->Parametres->find('all')->where(['name' => 'MessageAvertissementChoixPlanAction'])->first();
     	 
     	
     	//debug( $planAction);die();
         $this->set(compact('planAction'));
         $this->set('_serialize', ['planAction']);
-    	$this->set('message', $message);	
+    	$this->set('message', $message);
+    	$this->set('messageAvertissement',$messageAvertissement);
 //debug($planAction);die();
         if(! empty($planAction)) {
         	if($planAction->is_has == 0 ) return $this->redirect(['controller'=>'PlanActions','action' => 'edit/'.$planAction->id]);
@@ -124,7 +127,15 @@ class PlanActionsController extends AppController
         	 
         	if ($this->PlanActions->save($planAction)) {
         		$this->Flash->success('Le plan d\'action a bien été créé.');
-        		return $this->redirect(['action' => 'index']);
+        		
+        		if($session->read('Equipe.Diagnostic') == '0') {        		
+        			return $this->redirect(['action' => 'index']);
+        		} else {
+        			
+        			if($planAction->is_has == 0 ) return $this->redirect(['action' => 'edit/'.$planAction->id]);
+        			else return $this->redirect(['controller'=>'EtapePlanActions','action' => 'index']);   			
+        			
+        		}
         	} else {
         		$this->Flash->error('Erreur dans la création du  plan d\'action.');
         	}
@@ -162,7 +173,7 @@ class PlanActionsController extends AppController
         			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
         		}
         		//Deplacement du nouveau
-        		$nomFichier = $d['file']['name'];
+        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);  
         		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
         		move_uploaded_file($d['file']['tmp_name'], $destination);
         	} else if(isset($d['file_new']) && $d['file_new']['tmp_name'] != '') {
@@ -172,7 +183,7 @@ class PlanActionsController extends AppController
         			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file);
         		}
         		//Deplacement du nouveau
-        		$nomFichier = $d['file_new']['name'];
+        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']); 
         		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
         		move_uploaded_file($d['file_new']['tmp_name'], $destination);
         	} else {
@@ -187,7 +198,13 @@ class PlanActionsController extends AppController
         	 
         	if ($this->PlanActions->save($planAction)) {
         		$this->Flash->success('Le plan d\'action a bien été sauvegardé.');
-        		return $this->redirect(['controller'=>'Mesures','action' => 'index']);
+        		
+        		if($session->read('Equipe.Diagnostic') == '0') {
+        			return $this->redirect(['controller'=>'Mesures','action' => 'index']);
+        		} else {        			 
+        			return $this->redirect(['controller'=>'Pages','action' => 'home']);        			 
+        		} 
+        		
         	} else {
         		$this->Flash->error('Erreur dans la sauvegarde du plan d\'action.');
         	}

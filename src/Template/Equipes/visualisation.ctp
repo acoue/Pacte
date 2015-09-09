@@ -10,8 +10,12 @@
 $session = $this->request->session();
 if($session->read('Auth.User.role') === 'admin') {
 
-	if($demarche->statut == 0 ) echo "&nbsp;".$this->Html->link('Clôturer la démarche',['controller'=>'Demarches', 'action' => 'cloturerDemarche'],['class' => 'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir clôturer la démarche ?')]);
-	else echo "<p align='center' class='alert-mdp-warning'>La demande est clôturée</p>";
+	if($demarche->statut == 0 ) {
+		echo "&nbsp;".$this->Html->link('Clôturer la démarche',['controller'=>'Demarches', 'action' => 'cloturerDemarche/'.$demarche->id],['class' => 'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir clôturer la démarche ?')]);
+	} else {
+		echo "&nbsp;".$this->Html->link('Réactiver la démarche',['controller'=>'Demarches', 'action' => 'reactiverDemarche/'.$demarche->id],['class' => 'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir réactiver la démarche ?')]);
+		echo "<p align='center' class='alert-mdp-warning'>La demande est clôturée</p>";
+	}
 } else {
 	if($demarche->statut == 1 ) echo "<p align='center' class='alert-mdp-warning'>La demande est clôturée</p>";
 }

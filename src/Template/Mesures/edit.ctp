@@ -21,7 +21,13 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
     		<?= $this->Form->create($mesure, ['id'=>'edit_mesure_form','enctype' => 'multipart/form-data']); ?>
-    		<?= $this->Form->hidden('demarche_id',['value' => $mesure->demarche_id]);?>		    
+    		<?= $this->Form->hidden('demarche_id',['value' => $mesure->demarche_id]);?>	
+    		<?php 
+//Pb de non remontée du name quand le champ est en disabled
+    		if($mesure->name == 'Matrice de Maturité à T0'){
+    			echo $this->Form->hidden('name',['value' => $mesure->name]);
+    		}
+    		?>		    
 			<div class="col-md-8">     
 				<div class="row">
                 	<label class="col-md-4 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>

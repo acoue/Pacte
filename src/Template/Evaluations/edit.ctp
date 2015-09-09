@@ -21,7 +21,16 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			<?= $this->Html->link(__('Retour'), ['action' => 'index'],['class' => 'btn btn-info']) ?> 
 			</div>
     		<?= $this->Form->create($evaluation, ['id'=>'edit_evaluation_form','enctype' => 'multipart/form-data']); ?>
-    		<?= $this->Form->hidden('demarche_id',['value' => $evaluation->demarche_id]);?>		    
+    		<?= $this->Form->hidden('demarche_id',['value' => $evaluation->demarche_id]);?>		
+    		<?php 
+//Pb de non remontée du name quand le champ est en disabled
+    		if(in_array($evaluation->name, ['CRM Santé','Culture Sécurité'])){
+    			echo $this->Form->hidden('name',['value' => $evaluation->name]);
+    		}
+    		?>	
+    		
+    		
+    		    
 			<div class="col-md-8">     
 				<div class="row">
                 	<label class="col-md-5 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>

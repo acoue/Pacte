@@ -32,6 +32,11 @@ class OutilsController extends AppController
         $this->set('_serialize', ['outils']);
     }
 
+    public function initialize() {
+    	parent::initialize();
+    	$this->loadComponent('Utilitaire');
+    }
+    
     /**
      * View method
      *
@@ -60,7 +65,7 @@ class OutilsController extends AppController
 			//debug($this->request->data); die();
         	//déplacement du fichier
         	$d = $this->request->data;
-			$nomFichier = $d['fichier']['name'];
+        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['fichier']['name']);  
         	$destination = DATA.'outil'.DS.$nomFichier;
         	move_uploaded_file($d['fichier']['tmp_name'], $destination);
         	
@@ -128,7 +133,7 @@ class OutilsController extends AppController
         
 		//suppression du dossier 
         $destination = DATA.'outil'.DS.$outil->name;
-		unlink($destination);
+		if(file_exists($destination)) unlink($destination);
         
 		//suppresion de la base 
         if ($this->Outils->delete($outil)) {

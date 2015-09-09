@@ -27,7 +27,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				        <tr align='center'>
 				            <th width='5%'></th>
 				            <th width='20%'>Outils</th>
-				            <th width='40%'>Evolutions des résultats<br />Points forts et axes d'amélioration identifiés</th>
+				            <th width='40%'>Evolution des résultats<br />Points forts et axes d'amélioration identifiés</th>
 				            <th width='25%'>Vos documents</th>
 				            <th  width='10%'  class="actions"><?= __('Actions') ?></th>
 				        </tr>
@@ -54,23 +54,24 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 							}
 							
 							//Affichage dans la phase de MOE
-							if($mesure->name != 'Matrice de Maturité à T0') {
-								if($mesure->name == 'Matrice de Maturité à T1' && $session->read('Equipe.MiseEnOeuvre') == '1') {
+							if($mesure->name == 'Matrice de Maturité à T0') {
+								if($session->read('Equipe.Diagnostic') == '0') {
+									echo "&nbsp;&nbsp;";
+									echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]);								
+								} 								
+							} else if ($mesure->name == 'Matrice de Maturité à T1') { 
+								if($session->read('Equipe.MiseEnOeuvre') == '0') {
+									echo "&nbsp;&nbsp;";
+									echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]);
+								}	
+							} else {
+									echo "&nbsp;&nbsp;";
 									echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]);
 									echo "&nbsp;&nbsp;";
 									echo $this->Form->postLink(
 											'<span><i class="glyphicon glyphicon-trash"></i></span>',
 											['action' => 'delete', $mesure->id],
 											['class' => 'tip','title'=>'Supprimer', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);
-								} else {
-									echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]);
-									echo "&nbsp;&nbsp;";
-									echo $this->Form->postLink(
-											'<span><i class="glyphicon glyphicon-trash"></i></span>',
-											['action' => 'delete', $mesure->id],
-											['class' => 'tip','title'=>'Supprimer', 'escape'   => false, 'confirm'  => 'Etes-vous sûr de supprimer ?']);
-									
-								}
 							}
 							
 				?>
@@ -104,9 +105,9 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 					<div class='col-md-2'></div>
 					<div class='col-md-8'>
 						<p class='alert alert-info' align='center'>
-						Nous avons constaté que durée de 6 mois est appropriée pour terminer cette phase de diagnostic.</br >
+						Nous avons constaté qu'une durée de 6 mois est appropriée pour terminer cette phase de diagnostic.</br >
 						Vous avez commencé la phase de diagnostic le <?= substr($datePhase,0,10) ?>, c'est à dire il y a <?= $interval->format('%m') ?> mois<br /><br />
-						Pour clôturer votre phase de diiagnostic, cliquez sur le bouton ci-dessous. <br /><br />
+						Pour clôturer votre phase de diagnostic, cliquez sur le bouton ci-dessous. <br /><br />
 						<?= $this->Html->link(__('Suite'),['controller'=>'mesures', 'action'=>'validate'],['class'=>'btn btn-default'])?>
 							
 						</p>

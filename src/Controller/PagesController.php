@@ -109,6 +109,18 @@ class PagesController extends AppController
         				$messageData = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeDiagnostic'])->first();
         				$message=$messageData->valeur;
         				$message=$messageData->valeur;
+        				
+        				//TEST        				
+//         				$this->loadModel('Parametres');
+//         				$sujetReq = $this->Parametres->find()->where(['name' => 'SujetEmailRecapitulatifEngagement'])->first();
+//         				$sujetSource = $sujetReq->valeur;
+        				
+//         				$sujet = trim($sujetSource);
+//         				$sujet1 = strip_tags($sujetSource);
+//         				$this->set('sujet',$sujet);
+//         				$this->set('sujet1',$sujet1);
+        				//FIN DE TEST
+        				
         			} else if($session->read('Equipe.MiseEnOeuvre') == 0 ) {
 	        			$messageData = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEquipeMiseEnOeuvre'])->first();
         				$message=$messageData->valeur;

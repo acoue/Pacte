@@ -12,6 +12,7 @@ class EvaluationsController extends AppController
 {
 	public function initialize() {
 		parent::initialize();
+		$this->loadComponent('Utilitaire');
 		//Menu et sous-menu
  		$session = $this->request->session();
  		if($session->read('Equipe.Diagnostic') == 0) {
@@ -86,8 +87,8 @@ class EvaluationsController extends AppController
         	
         	//debug($this->request->data);die();
         	$d = $this->request->data;
-        	$nomFichier = $d['file']['name'];
-        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
+        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);        	
+        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;        	
         	move_uploaded_file($d['file']['tmp_name'], $destination);
         	 
         	$evaluation->id = null;
@@ -125,14 +126,14 @@ class EvaluationsController extends AppController
         $evaluation = $this->Evaluations->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
         	$d = $this->request->data;
-        	//debug($d);die();
+        	
         	
         	//Test de la presence d'un fichier
-        	if($d['file']['name'] === '' ) {
+        	if(isset($d['file']) && $d['file']['name'] === '' ) {
         		$this->Flash->error('Merci d\'ajouter un fichier.');
         		return $this->redirect(['action' => 'edit/'.$id]);
         	} 
-        	
+        	//debug($d);die();
         	//Cas d'un nouveau fichier : CRM et Culture securite
         	if(isset($d['file']) && $d['file']['tmp_name'] != '') { 
         		// Il s'agit d'un nouveau fichier
@@ -141,7 +142,7 @@ class EvaluationsController extends AppController
 	        		unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
 	        	}
 	        	//Deplacement du nouveau 
-	        	$nomFichier = $d['file']['name'];
+	        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);
 	        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
 	        	move_uploaded_file($d['file']['tmp_name'], $destination);      	
         	} else if(isset($d['file_new']) && $d['file_new']['tmp_name'] != '') {        	
@@ -151,7 +152,7 @@ class EvaluationsController extends AppController
         			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file);
         		}
         		//Deplacement du nouveau
-        		$nomFichier = $d['file_new']['name'];
+        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']);
         		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
         		move_uploaded_file($d['file_new']['tmp_name'], $destination);
         	} else {

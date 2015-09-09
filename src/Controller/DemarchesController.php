@@ -135,6 +135,8 @@ class DemarchesController extends AppController
 //         return $this->redirect(['action' => 'index']);
 //     }
     
+
+    
     public function terminateDemarche() {
     
     	//On recupere l'identifiant de démarche
@@ -340,7 +342,7 @@ class DemarchesController extends AppController
     			->send();
     		
     			//Suppression de la pj
-    			unlink(DATA . 'pdf' . DS . $filename);
+    			if(file_exists(DATA . 'pdf' . DS . $filename))  unlink(DATA . 'pdf' . DS . $filename);
     		
     			$this->Flash->success('Votre démarche est désormais clôturée. Un email vient de vous être envoyé avec un récapitulatif.');
     		}else {
@@ -370,11 +372,35 @@ class DemarchesController extends AppController
     			$demarchesPhase = $demarchesPhasesTable->get($idDemarchePhase);
     			$demarchesPhase->date_validation = date('Y-m-d');
     			$demarchesPhasesTable->save($demarchesPhase);
-    			$this->Flash->success('Phase clôturée avec succès');
+    			$this->Flash->success('Démarche clôturée avec succès');
     		}else {
     			$this->Flash->error('Erreur dans la clôture de la démarche.');
     		}
     	}    
+    	return $this->redirect(['controller'=>'Pages', 'action' => 'home']);
+    }
+    
+    public function reactiverDemarche($id=null) {
+    	if($id) {
+    		//Cloture de la demarche
+    		$demarche = $this->Demarches->get($id);
+    		$demarche->statut = 0;
+    		if($this->Demarches->save($demarche)) {
+    			//Flag dans table demarche_phases => date_validation = null
+    			$this->loadModel('DemarchePhases');
+    			$dp = $this->DemarchePhases->find('all')
+    			->where(['DemarchePhases.demarche_id' => $id,'phase_id'=>'4'])
+    			->first();
+    			$idDemarchePhase = $dp->id;
+    			$demarchesPhasesTable = TableRegistry::get('DemarchePhases');
+    			$demarchesPhase = $demarchesPhasesTable->get($idDemarchePhase);
+    			$demarchesPhase->date_validation = 'null';
+    			$demarchesPhasesTable->save($demarchesPhase);
+    			$this->Flash->success('Démarche réactivée avec succès');
+    		}else {
+    			$this->Flash->error('Erreur dans la réactivation de la démarche.');
+    		}
+    	}
     	return $this->redirect(['controller'=>'Pages', 'action' => 'home']);
     }
 }

@@ -7,6 +7,7 @@ $idUser = $session->read('Auth.User.id');
 
 echo "<div id='navbar' class='navbar-collapse collapse'>";
 echo "    <ul class='nav navbar-nav'>";
+echo "        <li>".$this->Html->link('Accueil','/pages/home')."</li>";
 //Gestion > Admin
 echo "        <li class='dropdown'>";
 echo "            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'>Gestion <span class='caret'></span></a>";

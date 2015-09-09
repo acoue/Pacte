@@ -22,7 +22,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				 <div class="row">
 				 	<div class="col-md-1"></div>
 				 	<div class="col-md-2"><?= $this->Html->image('attention.png', ['height' => '60px', 'title' => 'Programme Pacte']) ?></div>
-				 	<div class="col-md-8">blablabla</div>
+				 	<div class="col-md-8"><?= $messageAvertissement->valeur ?></div>
 				 	<div class="col-md-1"></div>
 				 </div><br />
 			
@@ -58,10 +58,14 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 					$session = $this->request->session();
 					if($session->read('Equipe.Diagnostic') == '0') {
 						echo $this->Html->link(__('Retour'),['controller'=>'Evaluations', 'action'=>'index'],['class'=>'btn btn-info']);
-						echo "&nbsp;&nbsp;";
-						echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);						
-						echo $this->Form->end();
-					}?>
+						
+					} else {
+						echo $this->Html->link(__('Retour'),['controller'=>'pages','action' => 'home'],['class'=>'btn btn-info']);						
+					}
+					echo "&nbsp;&nbsp;";
+					echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);
+					echo $this->Form->end();
+				?>
 				</p>
 					
 			<?php 
@@ -89,7 +93,8 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 							if($session->read('Equipe.Diagnostic') == '0') {
 								echo "<br /><br />";
 								echo $this->Html->link(__('Suite'),['controller'=>'Mesures', 'action'=>'index'],['class'=>'btn btn-default']);
-							}
+							} 
+							
 						?>
 
 						

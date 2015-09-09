@@ -423,8 +423,10 @@ class ProjetsController extends AppController
     	->attachments(DATA . 'pdf' . DS . $filename)
     	->send();
     
+    	
+    	//debug($sujet); die();
     	//Suppression de la pj
-    	unlink(DATA . 'pdf' . DS . $filename);
+    	if(file_exists(DATA . 'pdf' . DS . $filename)) unlink(DATA . 'pdf' . DS . $filename);
 		//Retour vers la vue
     	$message = $this->Parametres->find('all')->where(['name' => 'MessageValidationEngagementTerminee'])->first();
 	    $this->set(compact('message'));	    
@@ -484,7 +486,7 @@ class ProjetsController extends AppController
     	$this->loadModel('Mesures');
     	$evaluations = $this->Mesures->find('all')
     	->where(['Mesures.demarche_id'=>$id_demarche]);
-    	 
+    	 //debug($evaluations);die();
     	//Obligatoire resultat et file pour Matrice de Maturité
     	foreach ($evaluations as $eval){
     		if($eval->name == 'Matrice de Maturité à T1') {
@@ -498,8 +500,10 @@ class ProjetsController extends AppController
     				$message = "Merci d'associer un fichier à la Matrice de Maturité à T1.";
     				break;
     			}
-    		} else break;
+    		} //else break;
     	}
+    	
+    	//debug($boolOk);die();
     	
     	//Si tout est ok
     	if(!$boolOk) {

@@ -76,8 +76,11 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 	<p align="center">
 	<?php
 			$session = $this->request->session();
-			if($session->read('Equipe.Diagnostic') == '1') echo $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']); 
-			else {
+			if($session->read('Equipe.Diagnostic') == '1') {
+				echo $this->Html->link('Retour', ['controller'=>'pages','action' => 'home'], ['class' => 'btn btn-info']);
+				echo "&nbsp;&nbsp;";
+				echo $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']); 
+			} else {
 				echo $this->Html->link(__('Retour'),['controller'=>'Evaluations', 'action'=>'index'],['class'=>'btn btn-info']);
 				echo "&nbsp;&nbsp;";
 				echo $this->Form->button('Suite', ['type'=>'submit', 'class' => 'btn btn-default']);
