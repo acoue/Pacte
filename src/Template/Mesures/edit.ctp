@@ -14,7 +14,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			<div class="col-md-1"></div>
 			<div class="col-md-2">
 			<?php
-			if($mesure->name != 'Matrice de Maturité à T0' ) {
+			if( !in_array($mesure->name,['Matrice de Maturité à T0','Matrice de Maturité à T1','Culture Sécurité à T2','Matrice de Maturité à T2'])) {
 				echo $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $mesure->id], ['class'=>'btn btn-warning','confirm' => __('Etes-vous sûr de vouloir supprimer ?')]); 
 			} 
 			?><br /><br/>
@@ -24,8 +24,8 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
     		<?= $this->Form->hidden('demarche_id',['value' => $mesure->demarche_id]);?>	
     		<?php 
 //Pb de non remontée du name quand le champ est en disabled
-    		if($mesure->name == 'Matrice de Maturité à T0'){
-    			echo $this->Form->hidden('name',['value' => $mesure->name]);
+    		if(in_array($mesure->name,['Matrice de Maturité à T0','Matrice de Maturité à T1','Culture Sécurité à T2','Matrice de Maturité à T2'])){
+    			echo $this->Form->hidden('name',['id'=>'name','value' => $mesure->name]);
     		}
     		?>		    
 			<div class="col-md-8">     
@@ -33,7 +33,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
                 	<label class="col-md-4 control-label" for="name">Libellé <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8">
                     <?php 
-                    if($mesure->name != 'Matrice de Maturité à T0' ) {
+                    if(!in_array($mesure->name,['Matrice de Maturité à T0','Matrice de Maturité à T1','Culture Sécurité à T2','Matrice de Maturité à T2'])) {
                     	echo $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false,
 															'class' => 'form-control', 

@@ -20,26 +20,17 @@ if(strlen($MessageRestructuration) > 1 )  { ?>
 					<?= $messageTitreValidation->valeur ?>
 				</div><br />
 				<div  class="row">		
-					<div class="col-md-1"></div>
-					<label class="col-md-3 control-label" for="score">Noter le score obtenu </label>
+					<div class="col-md-2"></div>
+					<label class="col-md-4 control-label" for="score">Noter le score obtenu </label>
 					<div class="col-md-2">
 						<?= $this->Form->input('score', ['label' => false,'id'=>'score',
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 
-                    										'value' => $score,
+                    										'value' => $score."/12",
                     										'disabled' => 'disabled']); ?>
-                    </div>	
-                    <label class="col-md-3 control-label" for="nbOui">Nombre de 'Oui' que vous enregistrez </label>	
-					<div class="col-md-2">
-						<?= $this->Form->input('nbOui', ['label' => false,'id'=>'nbOui',
-														   	'div' => false,
-															'class' => 'form-control', 
-                    										'type' => 'text', 
-                    										'value' => $nbOui."/10",
-                    										'disabled' => 'disabled']); ?>
-                    </div>	                    
-					<div class="col-md-1"></div>
+                    </div>                
+					<div class="col-md-2"></div>
 				</div><br /><br />
 				<div  class="row">
 					<div class="alert alert-info">

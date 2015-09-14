@@ -138,10 +138,9 @@ class MesuresController extends AppController
         
         if ($this->request->is(['patch', 'post', 'put'])) {
         	
-        	//debug($this->request->data);die();
-        	
         	$d = $this->request->data;        	
-        	 
+        	//debug($d);die();
+        	
         	//Test de la presence d'un fichier
         	if(isset($d['file']) && $d['file']['name'] === '' ) {
         		$this->Flash->error('Merci d\'ajouter un fichier.');
@@ -216,7 +215,7 @@ class MesuresController extends AppController
 	        if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$fichier) && strlen($fichier)>0) {
 	        	unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$fichier);
 	        }
-            $this->Flash->success('La mesure a bien été sauvegardée.');
+            $this->Flash->success('La mesure a bien été supprimée.');
         } else {
             $this->Flash->error('Erreur dans la suppression de la mesure.');
         }

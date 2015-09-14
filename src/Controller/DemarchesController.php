@@ -24,11 +24,15 @@ class DemarchesController extends AppController
 		$session = $this->request->session();
 		if( $session->read('Auth.User.role') === 'equipe') {	
 			//Demarche terminée
-			if($session->read('Equipe.DemarcheEtat') == 1) return false;
+			if($session->read('Equipe.DemarcheEtat') == 1) {
+				return false;
+			}
 			
 			// Droits de tous les utilisateurs connectes sur les actions
-			if(in_array($this->request->action, ['add','delete','view','edit','terminateDemarche'])){
+			if(in_array($this->request->action, ['terminateDemarche','cloturerDemarche'])){
 				return true;
+			} else {
+				return false;
 			}
 		}
 		return parent::isAuthorized($user);
@@ -45,14 +49,14 @@ class DemarchesController extends AppController
      *
      * @return void
      */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Equipes']
-        ];
-        $this->set('demarches', $this->paginate($this->Demarches));
-        $this->set('_serialize', ['demarches']);
-    }
+//     public function index()
+//     {
+//         $this->paginate = [
+//             'contain' => ['Equipes']
+//         ];
+//         $this->set('demarches', $this->paginate($this->Demarches));
+//         $this->set('_serialize', ['demarches']);
+//     }
 
     /**
      * View method
@@ -61,14 +65,14 @@ class DemarchesController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
-        $demarch = $this->Demarches->get($id, [
-            'contain' => ['Equipes']
-        ]);
-        $this->set('demarch', $demarch);
-        $this->set('_serialize', ['demarch']);
-    }
+//     public function view($id = null)
+//     {
+//         $demarch = $this->Demarches->get($id, [
+//             'contain' => ['Equipes']
+//         ]);
+//         $this->set('demarch', $demarch);
+//         $this->set('_serialize', ['demarch']);
+//     }
 
     /**
      * Add method
@@ -205,6 +209,7 @@ class DemarchesController extends AppController
     			$idequipe = $session->read('Equipe.Identifiant');
     		
     			//Recuperation des infos de l'equipe / etablissement
+    			$this->loadModel('Equipes');
     			$equipe = $this->Equipes->find('all',['contain'=>'Etablissements'])->where(['Equipes.id'=>$idequipe])->first();
     			 
     			//informations sur le user de l'equipe

@@ -59,42 +59,42 @@ if($session->check('Auth.User.role')) {
 /**
  * EQUIPE
  */
-		echo "<p>".$message."</p>";
+		echo "<p>".$message."</p><br />";
 		
 		if($session->read('Equipe.DemarcheEtat') == 0){			
 			//Démarche en COURS
 			//Bouton suivant la phase
 			if($session->read('Equipe.Engagement') == 0 ){
 				//Accueil de la phase d'engagement
-				echo $this->Html->link('Poursuivre l\'engagement', ['controller'=>'membres', 'action' => 'index/0/1'],['class' => 'btn btn-info']);
+				echo "<p align='center'>".$this->Html->link('Poursuivre l\'engagement', ['controller'=>'membres', 'action' => 'index/0/1'],['class' => 'btn btn-info'])."</p>";
 			}else if($session->read('Equipe.Diagnostic') == 0 ){
 				//Accueil de la phase de diagnostic
-				echo $this->Html->link('Poursuivre dans la phase de diagnostic', ['controller'=>'projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info']);
+				echo "<p align='center'>".$this->Html->link('Poursuivre dans la phase de diagnostic', ['controller'=>'projets', 'action' => 'diagnostic_index'],['class' => 'btn btn-info'])."</p>";
 			} else if($session->read('Equipe.MiseEnOeuvre') == 0 ){
 				//Accueil de la phase de mise en oeuvre
 ?>				
 				
 				<div class="row">
 				 	<div class="col-md-1"></div>
-                	<label class="col-md-5 control-label">Vous souhaitez effectuer le suivi de votre plan d'action, cliquez sur le boutopn ci-contre : </label>
-                    <div class="col-md-6">
+                	<label class="col-md-7"><h5>Vous souhaitez effectuer le suivi de votre plan d'action, cliquez sur le bouton ci-contre : </h5></label>
+                    <div class="col-md-4">
                     <?= $this->Html->link('Suivi du plan d\'action', ['controller'=>'PlanActions', 'action' => 'index'],['class' => 'btn btn-default']) ?>
                     </div>                          
 				</div><br />  
 				<div class="row">
 				 	<div class="col-md-1"></div>
-                	<label class="col-md-5 control-label">Evaluation à T1 ..... </label>
-                    <div class="col-md-6">
+                	<label class="col-md-7"><h5>Vous souhaitez réaliser une évaluation à T1, cliquez sur le bouton ci-contre : </h5></label>
+                    <div class="col-md-4">
                     <?= $this->Html->link('Evaluation à T1', ['controller'=>'Mesures', 'action' => 'index'],['class' => 'btn btn-default']) ?>
                     </div>                          
 				</div><br /> 
 				<div class="row">
 				 	<div class="col-md-1"></div>
-                	<label class="col-md-5 control-label">Enquête de satisfaction ..... </label>
-                    <div class="col-md-6">
+                	<label class="col-md-7"><h5>Vous souhaitez réaliser une enquête de satisfaction, cliquez sur le bouton ci-contre : </h5></label>
+                    <div class="col-md-4">
                     <?= $this->Html->link('Enquête de satisfaction', ['controller'=>'Enquetes', 'action' => 'index'],['class' => 'btn btn-default']) ?>
                     </div>                          
-				</div><br />				
+				</div><br /><br />				
 <?php
 				
 				$dateSource = substr($datePhase, 6,4)."-".substr($datePhase, 3,2)."-".substr($datePhase, 0,2);
@@ -104,7 +104,7 @@ if($session->check('Auth.User.role')) {
 ?>
 				<div class='row'>
 					<div class='col-md-1'></div>
-					<div class='col-md-9'>
+					<div class='col-md-10'>
 						<p class='alert alert-info' align='center'>
 						Nous avons constaté qu'une durée de 12 mois est appropriée pour terminer cette phase de Mise en oeuvre.</br >
 						Vous avez commencé la phase de mise en oeuvre le <?= substr($datePhase,0,10) ?>, c'est à dire il y a <?= $interval->format('%m') ?> mois<br /><br />
@@ -113,33 +113,33 @@ if($session->check('Auth.User.role')) {
 							
 						</p>
 					</div>
-					<div class='col-md-2'></div>
-				</div>
+					<div class='col-md-1'></div>
+				</div><br />
 <?php 		
 			} else if($session->read('Equipe.Evaluation') == 0 ) {
 				//Accueil de la phase d'evaluation
 ?>			
 				<div class="row">
 				 	<div class="col-md-1"></div>
-                	<label class="col-md-5 control-label">Vous souhaitez effectuer le suivi de votre plan d'action, cliquez sur le boutopn ci-contre : </label>
-                    <div class="col-md-6">
+                	<label class="col-md-7 control-label"><h5>Vous souhaitez effectuer le suivi de votre plan d'action, cliquez sur le bouton ci-contre : </h5></label>
+                    <div class="col-md-4">
                     <?= $this->Html->link('Suivi du plan d\'action', ['controller'=>'PlanActions', 'action' => 'index'],['class' => 'btn btn-default']) ?>
                     </div>                          
 				</div><br />  
 				<div class="row">
 				 	<div class="col-md-1"></div>
-                	<label class="col-md-5 control-label">Evaluation à T2 ..... </label>
-                    <div class="col-md-6">
+                	<label class="col-md-7 control-label"><h5>Vous souhaitez réaliser une évaluation à T2, cliquez sur le bouton ci-contre : </h5></label>
+                    <div class="col-md-4">
                     <?= $this->Html->link('Evaluation à T2', ['controller'=>'Mesures', 'action' => 'index'],['class' => 'btn btn-default']) ?>
                     </div>                          
 				</div><br /> 
 				<div class="row">
 				 	<div class="col-md-1"></div>
-                	<label class="col-md-5 control-label">Enquête de satisfaction ..... </label>
-                    <div class="col-md-6">
+                	<label class="col-md-7 control-label"><h5>Vous souhaitez réaliser une enquête de satisfaction, cliquez sur le bouton ci-contre : </h5></label>
+                    <div class="col-md-4">
                     <?= $this->Html->link('Enquête de satisfaction', ['controller'=>'Enquetes', 'action' => 'index'],['class' => 'btn btn-default']) ?>
                     </div>                          
-				</div><br />
+				</div><br /><br />
 <?php 
 				$dateSource = substr($datePhase, 6,4)."-".substr($datePhase, 3,2)."-".substr($datePhase, 0,2);
 				$datetime1 = new DateTime($dateSource);
@@ -148,7 +148,7 @@ if($session->check('Auth.User.role')) {
 ?>				
 				<div class='row'>
 					<div class='col-md-1'></div>
-					<div class='col-md-9'>
+					<div class='col-md-10'>
 						<p class='alert alert-info' align='center'>
 						Nous avons constaté qu'une durée de 6 mois est appropriée pour terminer cette phase d'évaluation et ainsi clôturer la démarche Pacte.</br >
 						Vous avez commencé la phase d'évaluation le <?= substr($datePhase,0,10) ?>, c'est à dire il y a <?= $interval->format('%m') ?> mois<br /><br />
@@ -157,8 +157,8 @@ if($session->check('Auth.User.role')) {
 							
 						</p>
 					</div>
-					<div class='col-md-2'></div>
-				</div>
+					<div class='col-md-1'></div>
+				</div><br />
 				
 <?php 
 			}
@@ -166,7 +166,7 @@ if($session->check('Auth.User.role')) {
 			//Demarche TERMINEE		
 			if($interval < 182) {
 				echo "<p>Votre démarche est terminée : vous pourrez la consulter jusqu'au ".substr($dateMax,0,10)."</p>";
-				echo $this->Html->link('Voir la démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$equipe],['class' => 'btn btn-default']);
+				echo "<p align='center' >".$this->Html->link('Voir la démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$equipe],['class' => 'btn btn-default'])."</p>";
 				
 			} else {
 				echo "<p class='alert alert-warning'>Votre démarche n'est plus consultable, pour toute question merci de contacter la HAS</p>";

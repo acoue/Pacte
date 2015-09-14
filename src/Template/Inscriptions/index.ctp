@@ -31,14 +31,14 @@ else $numero_demarche = "";
 				</div><br /> 
 		 		<div class="row">
                 	<label class="col-md-5 control-label" for="numero_demarche">Numéro de démarche <span class="obligatoire"><sup> *</sup></span><br /> 
-                    <span class="text-muted">4 Chiffres référencés sur votre dossier de certification</span>                	
+                    <span class="text-muted">Chiffres référencés sur votre dossier de certification</span>                	
                 	</label> 
                     <div class="col-md-5"><?= $this->Form->input('numero_demarche', ['label' => false,
 														   	'div' => false,
 															'class' => 'form-control', 
 															'placeholder' => 'N° démarche',
                     										'type' => 'text', 
-															'required' =>'required', 'maxlength'=>'4',
+															'required' =>'required', 'maxlength'=>'5',
                     										'value' => $numero_demarche,
                     										'data-validation'=>'length number', 
                     										'data-validation-length'=>'min4']); ?>

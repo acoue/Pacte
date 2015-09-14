@@ -126,14 +126,14 @@ class EvaluationsController extends AppController
         $evaluation = $this->Evaluations->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
         	$d = $this->request->data;
-        	
+        	//debug($d);die();        	
         	
         	//Test de la presence d'un fichier
         	if(isset($d['file']) && $d['file']['name'] === '' ) {
         		$this->Flash->error('Merci d\'ajouter un fichier.');
         		return $this->redirect(['action' => 'edit/'.$id]);
         	} 
-        	//debug($d);die();
+
         	//Cas d'un nouveau fichier : CRM et Culture securite
         	if(isset($d['file']) && $d['file']['tmp_name'] != '') { 
         		// Il s'agit d'un nouveau fichier
@@ -175,7 +175,12 @@ class EvaluationsController extends AppController
         }
         //Message
         $this->loadModel('Parametres');
-        $message = $this->Parametres->find('all')->where(['name' => 'MessageAideSyntheseFonctionnement'])->first();
+        if($evaluation->name == 'CRM Santé') {
+        	$message = $this->Parametres->find('all')->where(['name' => 'MessageAideSyntheseFonctionnementCRM'])->first();
+        } else {
+        	$message = $this->Parametres->find('all')->where(['name' => 'MessageAideSyntheseFonctionnementCulture'])->first();
+        }
+        
         
         $this->set(compact('evaluation','message'));
         $this->set('_serialize', ['evaluation']);

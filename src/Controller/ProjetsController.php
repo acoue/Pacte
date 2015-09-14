@@ -553,7 +553,7 @@ class ProjetsController extends AppController
 	    	//Mise à jour de la session :
 	    	$session->write('Equipe.Evaluation',0);
 	    	
-	    	$this->Flash->success('Phase terminée');
+	    	$this->Flash->success('Phase de Mise en Oeuvre terminée');
 	    	return $this->redirect(['controller'=>'Pages', 'action' => 'home']);  
     	}  	
     }

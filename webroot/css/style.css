@@ -8,13 +8,13 @@
 
 
 /* Police pour captcha */
-@import url(http://fonts.googleapis.com/css?family=Lobster);
+/*@import url(http://fonts.googleapis.com/css?family=Lobster);*/
 
 body, html{height:100%;}
 
 
 .table > thead > tr > th {
-    font-size: 17px;	
+    font-size: 15px;	
 /*     font-weight: b; */
 }
 
@@ -79,7 +79,7 @@ body, html{height:100%;}
 .header_titre {
     color: #fff;
     padding: 10px 50px 10px 10px;
-    font-size: 35px;
+    font-size: 30px;
     float: right ;
 }
 
@@ -101,7 +101,7 @@ body, html{height:100%;}
 
 .bloc_connected {
     color: #fff;
-    font-size: 16px;
+    font-size: 13px;
     background-color: #8699BA;
     float: right ;
     min-width: 350px;
@@ -130,11 +130,16 @@ body, html{height:100%;}
 .boiteOutil {
     border-left: 7px solid #6D7B86;
     color: #E17012;
-    font-size: 1.4em;
+    font-size: 1.1em;
     font-weight: 400;
     line-height: 1.1em;
     margin: 10px 0 15px 10px;
     padding-left: 9px;
+}
+
+.titre {
+	text-align: left;
+	font-size: 10px;
 }
 
 .texteCentre {
@@ -144,7 +149,7 @@ body, html{height:100%;}
 .table > caption {
     color: #953b39;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
     border-left: 7px solid #953b39;
 }
 
@@ -161,7 +166,7 @@ body, html{height:100%;}
 	width: 100%;
     margin-top: 1px;
     margin-bottom: 5px;
-    font-size: 17px;
+    font-size: 15px;
     line-height: 24px;
     color: #000000;
     text-align: center;  

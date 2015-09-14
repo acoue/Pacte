@@ -6,7 +6,7 @@ if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) { ?
 <?php 
 	if(isset($listeOutilsPeda)) {
 		foreach ($listeOutilsPeda as $outilP):
-			echo h($outilP->name)."&nbsp;&nbsp;".$this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/'.h($outilP->name), ['class' => 'titre','target' => '_blank','escape' => false]);
+			echo $this->Html->link(h($outilP->name), '/files/outil/'.h($outilP->name), ['class' => 'titre','target' => '_blank','escape' => false]);
 		                   
 		endforeach;
 	}
@@ -16,13 +16,14 @@ if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) { ?
 	
 	if(isset($listeOutilsCle)) {
 		foreach ($listeOutilsCle as $outilC):
-			echo h($outilC->name)."&nbsp;&nbsp;".$this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/'.h($outilC->name), ['class' => 'titre','target' => '_blank','escape' => false]);
+			echo $this->Html->link(h($outilC->name), '/files/outil/'.h($outilC->name), ['class' => 'titre','target' => '_blank','escape' => false]);
 		endforeach;
 	}
 	
 	//Bouton génération PDF
-	echo "<br /><br />";
+	echo "<br /><p align='left' >";
 	echo $this->Html->link('Voir l\'état de sa démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$session->read('Equipe.Identifiant')],['class' => 'btn btn-default']);
+	echo "</p>";
 	
 		
 } else { 

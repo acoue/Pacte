@@ -1,32 +1,35 @@
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
 @font-face {
-    font-family: 'YanoneKaffeesatz';
-    src: url('../font/YanoneKaffeesatz-Thin-webfont.eot');
-    src: url('../font/YanoneKaffeesatz-Thin-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../font/YanoneKaffeesatz-Thin-webfont.woff') format('woff'),
-         url('../font/YanoneKaffeesatz-Thin-webfont.ttf') format('truetype');
+		font-family : Verdana;
+/*     font-family: 'YanoneKaffeesatz'; */
+/*     src: url('../font/YanoneKaffeesatz-Thin-webfont.eot'); */
+/*     src: url('../font/YanoneKaffeesatz-Thin-webfont.eot?#iefix') format('embedded-opentype'), */
+/*          url('../font/YanoneKaffeesatz-Thin-webfont.woff') format('woff'), */
+/*          url('../font/YanoneKaffeesatz-Thin-webfont.ttf') format('truetype'); */
     font-weight: 200;
     font-style: normal;
 
 }
 
 @font-face {
-    font-family: 'YanoneKaffeesatz';
-    src: url('../font/YanoneKaffeesatz-Light-webfont.eot');
-    src: url('../font/YanoneKaffeesatz-Light-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../font/YanoneKaffeesatz-Light-webfont.woff') format('woff'),
-         url('../font/YanoneKaffeesatz-Light-webfont.ttf') format('truetype');
+	font-family : Verdana;
+/*     font-family: 'YanoneKaffeesatz'; */
+/*     src: url('../font/YanoneKaffeesatz-Light-webfont.eot'); */
+/*     src: url('../font/YanoneKaffeesatz-Light-webfont.eot?#iefix') format('embedded-opentype'), */
+/*          url('../font/YanoneKaffeesatz-Light-webfont.woff') format('woff'), */
+/*          url('../font/YanoneKaffeesatz-Light-webfont.ttf') format('truetype'); */
     font-weight: 300;
     font-style: normal;
 
 }
 
 @font-face {
-    font-family: 'YanoneKaffeesatz';
-    src: url('../font/YanoneKaffeesatz-Regular-webfont.eot');
-    src: url('../font/YanoneKaffeesatz-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../font/YanoneKaffeesatz-Regular-webfont.woff') format('woff'),
-         url('../font/YanoneKaffeesatz-Regular-webfont.ttf') format('truetype');
+/*     font-family: 'YanoneKaffeesatz'; */
+/*     src: url('../font/YanoneKaffeesatz-Regular-webfont.eot'); */
+/*     src: url('../font/YanoneKaffeesatz-Regular-webfont.eot?#iefix') format('embedded-opentype'), */
+/*          url('../font/YanoneKaffeesatz-Regular-webfont.woff') format('woff'), */
+/*          url('../font/YanoneKaffeesatz-Regular-webfont.ttf') format('truetype'); */
+font-family : verdana;
     font-weight: 400;
     font-style: normal;
 
@@ -89,7 +92,8 @@
 
 
 html {
-  font-family: 'YanoneKaffeesatz';
+/*   font-family: 'YanoneKaffeesatz'; */
+  font-family: 'Verdana';
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
@@ -376,8 +380,9 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 body {
-  font-family: YanoneKaffeesatz;
-  font-size: 14px;
+/*   font-family: YanoneKaffeesatz; */
+  font-family: verdana;
+  font-size: 13px;
   line-height: 1.428571429;
   color: #333333;
 }
@@ -385,7 +390,8 @@ input,
 button,
 select,
 textarea {
-  font-family: YanoneKaffeesatz;
+/*   font-family: YanoneKaffeesatz; */
+  font-family: verdana;
   font-size: inherit;
   line-height: inherit;
 }
@@ -602,6 +608,7 @@ cite {
 }
 .text-muted {
   color: #999999;
+  font-size: 12px;
 }
 .text-primary {
   color: #002878;
@@ -2104,7 +2111,7 @@ select[multiple].input-lg {
   border: 1px solid transparent;
   white-space: nowrap;
   padding: 6px 12px;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.428571429;
   border-radius: 4px;
   -webkit-user-select: none;
@@ -2112,7 +2119,7 @@ select[multiple].input-lg {
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
-    min-width: 80px;
+  min-width: 120px;
 }
 .btn:focus {
   outline: thin dotted;
@@ -3549,7 +3556,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-bottom: 0;
   padding-left: 0;
   list-style: none;
-  font-size: 17px;
+  font-size: 16px;
 }
 .nav > li {
   position: relative;

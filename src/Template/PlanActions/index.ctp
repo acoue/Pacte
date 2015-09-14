@@ -35,7 +35,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				?>					
 				<div class="row">			
 					<div class="form-group">
-						<label class="col-md-4 control-label" >Plan d'action</label>
+						<label class="col-md-4 control-label" ></label>
 					  	<div class="col-md-8">
 					      	<div class="radio">
 					    		<label for="is_has-1">

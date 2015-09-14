@@ -16,9 +16,10 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			<div class="col-md-12"> 
 				<div class="row"> 
 					<div class="col-md-1"></div>
-					<div class="col-md-11">
+					<div class="col-md-10">
 					<?= $message->valeur ?>
 					</div>
+					<div class="col-md-1"></div>
 				</div><br />
 				<p align="center">
 					<?= $this->Html->link(__('Ajouter un objectif'),['action'=>'add'],['class'=>'btn btn-info'])?>	

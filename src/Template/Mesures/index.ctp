@@ -64,6 +64,9 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 									echo "&nbsp;&nbsp;";
 									echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]);
 								}	
+							} else if(in_array($mesure->name,['Culture Sécurité à T2','Matrice de Maturité à T2'])) { 
+								echo "&nbsp;&nbsp;";
+								echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]);
 							} else {
 									echo "&nbsp;&nbsp;";
 									echo $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['action' => 'edit', $mesure->id], ['title'=>'Editer','escape' => false]);

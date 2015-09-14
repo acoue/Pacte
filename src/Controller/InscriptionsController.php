@@ -491,15 +491,16 @@ class InscriptionsController extends AppController
 		    	} else $MessageRestructuration="";
 		    	
 		    	//Message lié au score
+		    	$messageScore = "";
 		    	if($score < 5 ) $reqMessageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreInferieur'])->first();
 		    	else $reqMessageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreSupérieur'])->first();		    	
 		    	$messageScore = $reqMessageScore->valeur;
 		    	
 		    	//Ajout au message du message lié au nombre de oui
-		    	if($nbOui < 5 ) $reqMessageNbOui = $this->Parametres->find('all')->where(['name' => 'MessageNbOuiInferieur'])->first();
+		    	/*if($nbOui < 5 ) $reqMessageNbOui = $this->Parametres->find('all')->where(['name' => 'MessageNbOuiInferieur'])->first();
 		    	else $reqMessageNbOui = $this->Parametres->find('all')->where(['name' => 'MessageNbOuiSuperieur'])->first();
 		    	$messageScore .= "<br /><br />".$reqMessageNbOui->valeur; 
-		    			    	
+		    			   */ 	
 		    	//Renvoi à la vue
 		    	$this->set(compact('score','messageAvertissement','messageScore','messageTitreValidation','nbOui','MessageSituationcrise','MessageRestructuration'));
     			$this->render('validate');
