@@ -132,7 +132,7 @@ if($session->read('Auth.User.role') === 'admin') {
 															   	'div' => false,
 																'class' => 'form-control', 
 	                    										'type' => 'text',
-	                											'value'=> $demarche->score,
+	                											'value'=> $demarche->score."/12",
 	                											'disabled'=>'disabled']); ?>
 					</div>
 				</div><br />
@@ -142,8 +142,8 @@ if($session->read('Auth.User.role') === 'admin') {
 					foreach ($reponses as $rep) { 
 						$i++;
 						($rep['libelle'] == 'N') ? $repLib = "Non" : $repLib = 'Oui' ;?>
-						<label class="col-md-10 control-label"><?= $rep['question']['texte'] ?></label>
-						<div class="col-md-2 control-label"><?= $this->Form->input('q'.$i, ['label' => false,
+						<label class="col-md-10"><hr /><h5><?= $rep['question']['texte'] ?></h5></label>
+						<div class="col-md-2"><hr /><?= $this->Form->input('q'.$i, ['label' => false,
 																	   	'div' => false,
 																		'class' => 'form-control', 
 			                    										'type' => 'text',

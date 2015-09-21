@@ -27,7 +27,11 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				        <tr align='center'>
 				            <th width='5%'></th>
 				            <th width='20%'>Outils</th>
+<?php if($session->read('Equipe.Diagnostic') == 0) { ?>				            
+				            <th width='40%'>Points forts et axes d'amélioration identifiés</th>
+<?php } else {?>
 				            <th width='40%'>Evolution des résultats<br />Points forts et axes d'amélioration identifiés</th>
+<?php } ?>
 				            <th width='25%'>Vos documents</th>
 				            <th  width='10%'  class="actions"><?= __('Actions') ?></th>
 				        </tr>

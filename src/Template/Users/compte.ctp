@@ -5,9 +5,8 @@ $session = $this->request->session();
 	<h2>Edition de son compte utilisateur</h2>
 	<div class="blocblancContent">
 		<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-2"><?= $this->Html->link('Changer son mot de passe', ['controller'=>'users', 'action'=>'changePwd/'.$user->id], ['class' => 'btn btn-warning']);?>			
-			</div>
+			<div class="col-md-1"></div>	
+			<div class="col-md-2"></div>		
 			<?= $this->Form->create($user, ['id'=>'compte_form', 'action' => 'compte']) ?>
 			<div class="col-md-8"> 
 			
@@ -75,6 +74,7 @@ if($session->read("Auth.User.role") == "equipe") {
 		<p align="center">
 			<?= $this->Form->button('Valider', ['type' => 'submit','class' => 'btn btn-info']) ?>
 			<?= $this->Form->end() ?>
+			<?= "<br /><br />".$this->Html->link('Changer son mot de passe', ['controller'=>'users', 'action'=>'changePwd/'.$user->id], ['class' => 'btn btn-warning']);?>
 		</p>
 <?php } ?>
 		

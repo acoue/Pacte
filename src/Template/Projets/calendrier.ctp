@@ -28,8 +28,8 @@
 						    <?php foreach ($calendriers as $calendrierProjet): ?>
 						        <tr>            
 						            <td><?= $calendrierProjet->libelle ?></td>
-						            <td><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_debut) ?></td>	
-						            <td><?= $calendrierProjet->mois_fin." ".$this->Number->format($calendrierProjet->annee_fin) ?></td>						            
+						            <td><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_debut,['pattern' => '####']) ?></td>	
+						            <td><?= $calendrierProjet->mois_fin." ".$this->Number->format($calendrierProjet->annee_fin,['pattern' => '####']) ?></td>						            
 						            <td class="actions">
 						            <?= $this->Html->link('<span><i class="glyphicon glyphicon-edit"></i></span>', ['controller'=>'CalendrierProjets','action' => 'edit', $calendrierProjet->id], ['title'=>'Editer','escape' => false]); ?>&nbsp;&nbsp;     
 									<?= $this->Form->postLink('<span><i class="glyphicon glyphicon-trash"></i></span>',
