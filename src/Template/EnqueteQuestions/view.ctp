@@ -28,21 +28,11 @@
                     										'value' => h($enqueteQuestion->ordre),
                     										'disabled' => 'disabled']); ?>
                     </div>                          
-				</div><br />   
-				<div class="row">
-                	<label class="col-md-4 control-label" for="groupe">Groupe </label>
-                    <div class="col-md-8"><?= $this->Form->input('groupe', ['label' => false,'id'=>'groupe',
-														   	'div' => false,
-															'class' => 'form-control', 
-                    										'type' => 'text', 
-                    										'value' => h($enqueteQuestion->groupe),
-                    										'disabled' => 'disabled']); ?>
-                    </div>                          
-				</div><br />  
+				</div><br /> 
 				<div class="row">
                 	<label class="col-md-4 control-label" for="texte">Texte </label>
                     <div class="col-md-8"><?= $this->Form->input('texte', ['label' => false,'id'=>'texte',
-														   	'div' => false,'type' => 'text', 
+														   	'div' => false,'type' => 'textarea', 'escape' => false,
 															'class' => 'form-control', 
                     										'value' => h($enqueteQuestion->name),
                     										'disabled' => 'disabled']); ?>

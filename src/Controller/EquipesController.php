@@ -217,7 +217,7 @@ class EquipesController extends AppController
     		
     		$this->autoRender = false;
     		$this->response->type('application/pdf');
-    		$this->response->file(DATA . 'pdf' . DS . $filename, ['download' => true, 'name' => date('Y-m-d').'_Pacte_Récapitulatif.pdf']);
+    		$this->response->file(DATA . 'pdf' . DS . $filename, ['download' => true, 'name' => date('Y-m-d').'_Pacte_Recapitulatif.pdf']);
     		return $this->response;
     		
     	} 
@@ -227,5 +227,107 @@ class EquipesController extends AppController
     		 
     }
     
-    
+    public function visualisationEnquete($idequipe)
+    {    	    
+    	//Informations sur l'équipe
+    	$equipe = $this->Equipes->find('all',['contain'=>'Etablissements'])->where(['Equipes.id'=>$idequipe])->first();
+    	
+    	//informations sur la démarches
+    	$this->loadModel('Demarches');
+    	$demarche = $this->Demarches->find('all')->where(['Demarches.equipe_id'=>$idequipe])->first();
+    	
+		//Traitement des répones de type non numérique
+    	$this->loadModel('EnqueteReponses');
+    	$enquetes = $this->EnqueteReponses->find()
+    										->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur'])
+    										->contain(['Enquetes','EnqueteQuestions'])
+    										->where(['Enquetes.demarche_id'=>$demarche->id,'EnqueteQuestions.type'=>'1'])
+    										->order('1,2');
+    	//Libellés
+    	$labelYGaucheG1 = "%";
+        $labelXG1 = "Questions";
+    	$legende1G1 = "Tout à fait d'accord";
+    	$legende2G1 = "Plutôt d'accord";
+    	$legende3G1 = "Plutôt pas d'accord";
+    	$legende4G1 = "Pas du tout d'accord";
+    	$legende5G1 = "NSP";
+    	$iNbRep = 0;
+    	$label = "";
+    	$labelTmp="";
+    	$elt1=0;
+    	$elt2=0;
+    	$elt3=0;
+    	$elt4=0;
+    	$elt5=0;
+    	
+    	$sortie = "";
+    	//Ajout aux tableau final de résultats 
+    	$tabG1 = [[$labelXG1, $legende1G1, $legende2G1,	$legende3G1,$legende4G1,$legende5G1]];
+    	foreach ($enquetes as $elt) {
+    		
+    		$sortie .= $elt->enquete->campagne;
+    		$sortie .= " - ".$elt->enquete_question->name;
+    		$sortie .= "->".$elt->valeur."\n";
+    		
+     		$iNbRep++;
+     		//Recuperation du abel de la question
+     		$label = $elt->enquete_question->name;
+     		if($labelTmp === "") { //Premier tour
+     			switch ($elt->valeur) {
+     				case 1:
+     					$elt1++;
+     					break;
+     				case 2:
+     					$elt2++;
+     					break;
+     				case 3:
+     					$elt3++;
+     					break;
+     				case 4:
+     					$elt4++;
+     					break;
+     				case 5:
+     					$elt5++;
+     					break;
+     			}
+     		} else {
+     			if($label !== $labelTmp) {
+     				switch ($elt->valeur) {
+     					case 1:
+     						$elt1++;
+     						break;
+     					case 2:
+     						$elt2++;
+     						break;
+     					case 3:
+     						$elt3++;
+     						break;
+     					case 4:
+     						$elt4++;
+     						break;
+     					case 5:
+     						$elt5++;
+     						break;
+     				}
+     			} else {
+     				//Ajout au tableau
+     				//array_push($tabG1,[$labelTmp,(100*($elt1/$iNbRep)),100*($elt2/$iNbRep),100*($elt3/$iNbRep),100*($elt4/$iNbRep),100*($elt5/$iNbRep)]);
+     				array_push($tabG1,[$labelTmp,$elt1,$elt2,$elt3,$elt4,$elt5]);
+     			}
+     			$labelTmp = $label;
+     			$elt1=0;
+     			$elt2=0;
+     			$elt3=0;
+     			$elt4=0;
+     			$elt5=0;
+     		}  		
+    	}
+    	debug($sortie);
+    	//debug($tabG1);
+    	die();
+    	
+    	
+    	$this->set(compact('equipe','enquetes','labelYGaucheG1','tabG1'));
+    	
+    }
 }

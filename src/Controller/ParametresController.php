@@ -127,7 +127,8 @@ class ParametresController extends AppController
     		$parametres = $this->Parametres
     		->find('all')
     		->limit(20)
-    		->where(['description like '=>'%'.$libelle.'%']);
+    		->where(['description like '=>'%'.$libelle.'%'])
+    		->orWhere(['valeur like '=>'%'.$libelle.'%']);
     		$this->set('parametres', $parametres);
     		
     		//% or name like %% or description like %%

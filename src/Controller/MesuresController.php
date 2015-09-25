@@ -52,10 +52,6 @@ class MesuresController extends AppController
     	$plan = $this->PlanActions->find('all')
     	->where(['PlanActions.demarche_id'=>$id_demarche])->first();
     	
-    	
-    	
-    	
-    	
     	//Obligatoire libelle et file pour Plan d'action propre A l'equipe    	
     	if($plan->is_has == '0') {
     		if(strlen($plan->name) < 1) {
@@ -74,9 +70,17 @@ class MesuresController extends AppController
     	->where(['demarche_id' => $id_demarche,'phase_id'=>'2'])->first();    	
     	
     	//Message
-    	$this->loadModel('Parametres');
-    	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEvaluation'])->first();    	    	 
+    	$this->loadModel('Parametres');   	    
+
+    	if($session->read('Equipe.Diagnostic') == 0) { 
+    		$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEvaluationT0'])->first();    		
+    	} else if($session->read('Equipe.MiseEnOeuvre') == 0) { 
+    		$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEvaluationT1'])->first();    	
+    	} else if($session->read('Equipe.Evaluation') == 0) { 
+    		$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEvaluationT2'])->first();
+    	} 
     	
+ 
     	$query = $this->Mesures->find('all')
     	->contain(['Demarches'])
     	->where(['Mesures.demarche_id' => $id_demarche]);    	

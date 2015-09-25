@@ -16,7 +16,7 @@
                     </div>
 				</div><br /> 				
 		 		<div class="row">
-                	<label class="col-md-5 control-label" for="destinataire">Email destinataire(s) - Séparés par des ";" <span class="obligatoire"><sup> *</sup></span></label> 
+                	<label class="col-md-5 control-label" for="destinataire">Email(s) destinataire(s)<br />Séparés par des ";" <span class="obligatoire"><sup> *</sup></span></label> 
                     <div class="col-md-7"><?= $this->Form->input('destinataire', ['label' => false,
 														   	'div' => false,
 															'class' => 'form-control', 

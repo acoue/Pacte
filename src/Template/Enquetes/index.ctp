@@ -26,8 +26,8 @@ if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>
 						<?php 
 						//Affichage du nombre d'enquete
 							if ($nbEnquete == 0) echo "<p>Votre équipe n'a répondu à aucune enquête.</p>"; 
-							else if ($nbEnquete == 1) echo "<p>Votre équipe a répondu à une enquête.</p>";
-							else echo "<p>Votre équipe a répondu à ".$nbEnquete." enquêtes.</p>";
+							else if ($nbEnquete == 1) echo "<p>Sur la campgane n°".$campagne.", votre équipe a répondu à une enquête.</p>";
+							else echo "<p>Sur la campgane n°".$campagne.", votre équipe a répondu à ".$nbEnquete." enquêtes.</p>";
 						
 						//affichage de la date de l'enquete max
 							if($dateMax->count()>0){
@@ -38,7 +38,7 @@ if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>
 									$dateAffiche = strftime('%d/%m/%y', strtotime($dm->max));
 									//$diffDate =  date_diff(DateTime($dm->max), date('Y-m-d'));
 									if($interval->format('%a') < 365) {
-										echo "<p class='alert alert-info'>Date de la dernière enquête pour l'équipe ".$dm->service." : ".$dateAffiche." - ".$interval->format('%a')." jour(s)</p>";
+										echo "<p class='alert alert-info'>Date de la dernière enquête pour l'équipe sur la campagne n°".$campagne." ".$dm->service." : ".$dateAffiche." - ".$interval->format('%a')." jour(s)</p>";
 									} else {
 										echo "<p class='alert alert-warning'>Attention : la date de la dernière enquête pour l'équipe ".$dm->service." : ".$dateAffiche." - ".$interval->format('%a')." jours</p>";
 									}
@@ -52,9 +52,9 @@ if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>
 				<table cellpadding="0" cellspacing="0" class="table table-striped">
 				    <thead>
 				        <tr align='center'>
-				            <th width='10%'><?= $this->Paginator->sort('Campagne', 'Campagne n°') ?></th>
-				            <th width='50%'><?= $this->Paginator->sort('Service') ?></th>
-				            <th width='20%'><?= $this->Paginator->sort('Créée le') ?></th>
+				            <th width='20%'><?= $this->Paginator->sort('Campagne', 'Campagne n°') ?></th>
+				            <th width='40%'><?= $this->Paginator->sort('Service') ?></th>
+				            <th width='20%'><?= $this->Paginator->sort('Créée le','Créée le') ?></th>
 				            <th  width='20%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
 				    </thead>

@@ -16,7 +16,6 @@ class EnqueteQuestion extends Entity
      */
     protected $_accessible = [
         'name' => true,
-        'groupe' => true,
         'ordre' => true,
         'aide' => true,
         'type' => true,

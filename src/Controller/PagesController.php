@@ -162,20 +162,7 @@ class PagesController extends AppController
         		
         		$this->set(compact('equipeUsers','message'));
         	}
-/*
- * 
-'La sécurité de la prise en charge du patient en équipe a progressé'
-'Le fonctionnement de l'équipe est amélioré'
-'Le partenariat avec le patient et/ou de son entourage a progressé'
-'Ma contribution au sein de l'équipe est renforcée'
-'Ma pratique professionnelle, mon travail sont facilités'
-'Mon travail est reconnu'
-'Ma fonction est valorisée'
-'Pacte répond à mes attentes '
-'Vous recommanderiez ce projet à d’autres équipes'
-'Niveau de satisfaction global concernant le projet PACTE'
-
- */        	
+      	
         	//Graphique
         	$titre = "titre";
         	$sousTitre = "Sous titre";

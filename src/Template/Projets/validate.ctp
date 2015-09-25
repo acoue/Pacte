@@ -29,12 +29,26 @@
 				<div class="row">
 				
 					<label class="col-md-4 control-label" for="etablissement">Etablissement de santé </label>
-					<div class="col-md-6"><?= $this->Form->input('etablissement', ['label' => false,
+					<div class="col-md-8">
+					<?php 
+					$libelleEtablissement = $equipe->etablissement->libelle;
+					if(strlen($libelleEtablissement) > 50) {
+						echo $this->Form->input('etablissement', ['label' => false,
+															   	'div' => false,
+																'class' => 'form-control', 
+	                    										'type' => 'textarea', 'escape' => false,
+	                											'value'=> $libelleEtablissement,
+	                											'disabled'=>'disabled']);
+					} else {
+						echo $this->Form->input('etablissement', ['label' => false,
 															   	'div' => false,
 																'class' => 'form-control', 
 	                    										'type' => 'text',
-	                											'value'=> $equipe->etablissement->libelle,
-	                											'disabled'=>'disabled']); ?>
+	                											'value'=> $libelleEtablissement,
+	                											'disabled'=>'disabled']); 
+					}
+					
+					?>
 					</div>
 				</div><br />
 				<div class="row">
@@ -329,8 +343,8 @@
 					    <?php foreach ($calendriers as $calendrierProjet): ?>
 					        <tr>            
 					            <td><?= $calendrierProjet->libelle ?></td>
-					            <td><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_debut) ?></td>
-					            <td><?= $calendrierProjet->mois_fin." ".$this->Number->format($calendrierProjet->annee_fin) ?></td>
+					            <td><?= $calendrierProjet->mois_debut." ".$this->Number->format($calendrierProjet->annee_debut,['pattern' => '####']) ?></td>
+					            <td><?= $calendrierProjet->mois_fin." ".$this->Number->format($calendrierProjet->annee_fin,['pattern' => '####']) ?></td>
 					        </tr>					
 					    <?php endforeach; ?>
 					    </tbody>
@@ -349,7 +363,7 @@
     	
     	
     	echo "<p align='center'>";
-		echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'index'],['class'=>'btn btn-info']);
+		echo $this->Html->link(__('Retour'),['controller'=>'projets', 'action'=>'calendrier'],['class'=>'btn btn-info']);
 		echo "&nbsp;&nbsp;&nbsp;";
     	echo $this->Form->button('Valider', ['type'=>'submit', 'class' => 'btn btn-default']);
 		echo "</p>";

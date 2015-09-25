@@ -112,8 +112,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				</div>
 				<div class="col-md-4"></div>
 			</div>
-			</div>
-			<div class="col-md-1"></div>
-		</div>		
-	</div>
+		</div>
+		<div class="col-md-1"></div>
+	</div>		
 </div>

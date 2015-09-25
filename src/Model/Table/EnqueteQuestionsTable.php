@@ -43,10 +43,6 @@ class EnqueteQuestionsTable extends Table
             ->notEmpty('name');
             
         $validator
-            ->requirePresence('groupe', 'create')
-            ->notEmpty('groupe');
-            
-        $validator
             ->add('ordre', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('ordre');
             

@@ -46,15 +46,25 @@ class EnquetesController extends AppController
     	$session = $this->request->session();
     	$id_demarche = $session->read('Equipe.Demarche');
     	
+    	//Requete principale
     	$query = $this->Enquetes->find('all')
     	->contain(['Fonctions', 'Demarches'])
-    	->where(['Enquetes.demarche_id' => $id_demarche])
-    	->order('Enquetes.campagne, Enquetes.created DESC');
+    	->where(['Enquetes.demarche_id' => $id_demarche]);
+    	
+    	//Récupération de la campagne la plus élevée
+    	$campagne = "";
+    	if(! isset($query)) $campagne = $query->max('campagne')->campagne;
+//debug($campagne);die();
+
+    	$query = $this->Enquetes->find('all')
+    	->contain(['Fonctions', 'Demarches'])
+    	->where(['Enquetes.demarche_id' => $id_demarche,'campagne' => $campagne])
+    	->order('Enquetes.created DESC');
     	
     	$nbEnquete = $query->count();
     	
     	$queryMax = $this->Enquetes->find('all')
-    	->where(['Enquetes.demarche_id' => $id_demarche]);
+    	->where(['Enquetes.demarche_id' => $id_demarche,'campagne' => $campagne]);
     	
     	$dateMax = $queryMax->select(['max' => $query->func()->max('Enquetes.created')]);    	
 
@@ -65,8 +75,9 @@ class EnquetesController extends AppController
     	$this->set('enquetes', $this->paginate($query));
         $this->set('dateMax', $dateMax);
         $this->set('nbEnquete',$nbEnquete);
-        $this->set('_serialize', ['enquetes']); 
     	$this->set('message', $message);	
+        $this->set('campagne',$campagne);
+        $this->set('_serialize', ['enquetes']); 
     	
     }
 

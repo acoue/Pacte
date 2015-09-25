@@ -19,9 +19,10 @@ if($session->check('Auth.User.role')) {
 		    <?php foreach ($equipes as $equipe): ?>
 		        <tr>
 		            <td width='35%'><?= $equipe->etablissement->libelle ?></td>
-		            <td width='30%'><?= $equipe->name ?></td>
-		            <td width='15%'><?= $this->Html->link('Etat de la démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$equipe->id],['class' => 'btn btn-default']) ?></td>	
-		            <td width='15%'><?= $this->Html->link('Générer un PDF', ['controller'=>'Equipes', 'action' => 'visualisation/1/'.$equipe->id],['class' => 'btn btn-info']) ?></td>	            
+		            <td width='35%'><?= $equipe->name ?></td>
+		            <td width='10%'><?= $this->Html->link('Etat de la démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$equipe->id],['class' => 'btn btn-default']) ?></td>	
+		            <td width='10%'><?= $this->Html->link('Générer un PDF', ['controller'=>'Equipes', 'action' => 'visualisation/1/'.$equipe->id],['class' => 'btn btn-info']) ?></td>	            
+		            <td width='10%'><?= $this->Html->link('Enquêtes', ['controller'=>'Equipes', 'action' => 'visualisationEnquete/'.$equipe->id],['class' => 'btn btn-primary']) ?></td>
 		        </tr>		
 		    <?php endforeach; ?>
 		    </tbody>
@@ -46,9 +47,10 @@ if($session->check('Auth.User.role')) {
 		    <?php foreach ($equipeUsers as $eqUse): ?>
 		        <tr>
 		            <td width='35%'><?= $eqUse->equipe->etablissement->libelle ?></td>
-		            <td width='30%'><?= $eqUse->equipe->name ?></td>
-		            <td width='15%'><?= $this->Html->link('Etat de la démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$eqUse->equipe->id],['class' => 'btn btn-default']) ?></td>	
-		            <td width='15%'><?= $this->Html->link('Générer un PDF', ['controller'=>'Equipes', 'action' => 'visualisation/1/'.$eqUse->equipe->id],['class' => 'btn btn-info']) ?></td>	            
+		            <td width='35%'><?= $eqUse->equipe->name ?></td>
+		            <td width='10%'><?= $this->Html->link('Etat de la démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$eqUse->equipe->id],['class' => 'btn btn-default']) ?></td>	
+		            <td width='10%'><?= $this->Html->link('Générer un PDF', ['controller'=>'Equipes', 'action' => 'visualisation/1/'.$eqUse->equipe->id],['class' => 'btn btn-info']) ?></td>
+		            <td width='10%'><?= $this->Html->link('Enquêtes', ['controller'=>'Equipes', 'action' => 'visualisationEnquete/'.$eqUse->equipe->id],['class' => 'btn btn-info']) ?></td>	            	            
 		        </tr>		
 		    <?php endforeach; ?>
 		    </tbody>
@@ -217,7 +219,7 @@ if($role === 'admin') {
     };
 </script>
 <br /><br />
-<div id="dual_y_div" style="width: 500px; height: 300px;"></div>
+<div id="dual_y_div" style="width: 500px; height: 300px;"></div><br /><br />
 <?php }?>
 
 

@@ -75,15 +75,13 @@
 				 <?php 
 				 if($question->type == 1 ) {?>	
 				<div class="row">
-					<div class="col-md-1"></div>
-					<div class="col-md-10"> 
-				    	<label class="radio-inline" for="q_<?= $question->id ?>-1"><input name="<?= $question->id ?>" id="q_<?= $question->id ?>-1" value="1" type="radio" required="required">Tout à fait d’accord</label>
-				    	<label class="radio-inline" for="q_<?= $question->id ?>-2"><input name="<?= $question->id ?>" id="q_<?= $question->id ?>-2" value="2" type="radio" required="required">Plutôt d’accord</label> 
-				    	<label class="radio-inline" for="q_<?= $question->id ?>-3"><input name="<?= $question->id ?>" id="q_<?= $question->id ?>-3" value="3" type="radio" required="required">Plutôt pas d’accord</label> 
-				    	<label class="radio-inline" for="q_<?= $question->id ?>-4"><input name="<?= $question->id ?>" id="q_<?= $question->id ?>-4" value="4" type="radio" required="required">Pas du tout d’accord</label>
-				    	<label class="radio-inline" for="q_<?= $question->id ?>-5"><input name="<?= $question->id ?>" id="q_<?= $question->id ?>-5" value="5" type="radio" required="required">Ne se prononce pas</label>
+					<div class="col-md-12"> 
+				    	<label class="radio-inline col-md-3" for="q_<?= $question->id ?>-1"><input name="<?= $question->id ?>" id="q_<?= $question->id ?>-1" value="1" type="radio" required="required">Tout à fait d’accord</label>
+				    	<label class="radio-inline col-md-2" for="q_<?= $question->id ?>-2"><input name="<?= $question->id ?>" id="q_<?= $question->id ?>-2" value="2" type="radio" required="required">Plutôt d’accord</label> 
+				    	<label class="radio-inline col-md-2" for="q_<?= $question->id ?>-3"><input name="<?= $question->id ?>" id="q_<?= $question->id ?>-3" value="3" type="radio" required="required">Plutôt pas d’accord</label> 
+				    	<label class="radio-inline col-md-2" for="q_<?= $question->id ?>-4"><input name="<?= $question->id ?>" id="q_<?= $question->id ?>-4" value="4" type="radio" required="required">Pas du tout d’accord</label>
+				    	<label class="radio-inline col-md-2" for="q_<?= $question->id ?>-5"><input name="<?= $question->id ?>" id="q_<?= $question->id ?>-5" value="5" type="radio" required="required">Ne se prononce pas</label>
 				  	</div>
-					<div class="col-md-1"></div>
 				</div><br />
    			<?php 
 			} else if($question->type == 2 ) { ?>	
@@ -91,7 +89,7 @@
 					<div class="col-md-1"></div>
 					<div class="col-md-10"> 
 					<?php for ($i=1; $i<= 10 ; $i++) { ?>
-				    	<label class="radio-inline" for="<?= "q_".$question->id."-".$i ?>"><input name="<?= $question->id ?>" id="<?= "q_".$question->id."-".$i ?>" value="<?=$i?>" type="radio" required="required"><?= $i?></label>
+				    	<label class="radio-inline col-md-1" for="<?= "q_".$question->id."-".$i ?>"><input name="<?= $question->id ?>" id="<?= "q_".$question->id."-".$i ?>" value="<?=$i?>" type="radio" required="required"><?= $i?></label>
 				     <?php }?> 
 				     </div>
 					<div class="col-md-1"></div>

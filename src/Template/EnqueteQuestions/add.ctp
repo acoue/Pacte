@@ -18,20 +18,11 @@
                     										'data-validation'=>'length number', 
                     										'data-validation-length'=>'max2']); ?>
                     </div>                          
-				</div><br />   
-				<div class="row">
-                	<label class="col-md-4 control-label" for="groupe">Groupe <span class="obligatoire"><sup> *</sup></span></label>
-                    <div class="col-md-8"><?= $this->Form->input('groupe', ['label' => false,'id'=>'groupe',
-														   	'div' => false,
-															'class' => 'form-control', 
-                    										'type' => 'text', 
-															'required' =>'required']); ?>
-                    </div>                          
-				</div><br />  
+				</div><br />     
 				<div class="row">
                 	<label class="col-md-4 control-label" for="name">Texte <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
-														   	'div' => false,'type' => 'text',
+														   	'div' => false,'type' => 'textarea', 'escape' => false,
 															'class' => 'form-control', 
 															'required' =>'required']); ?>
                     </div>                          

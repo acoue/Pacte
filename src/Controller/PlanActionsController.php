@@ -229,7 +229,11 @@ class PlanActionsController extends AppController
 
         //suppression du fichier
         if($planAction->is_has == 0) {
-        	if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file)) unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file);        	
+        	if(strlen($planAction->file) > 0) {
+        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file)) {
+        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file);
+        		}
+        	}        	
         }
         
         if ($this->PlanActions->delete($planAction)) {

@@ -9,8 +9,7 @@
 				    <thead>
 				        <tr align='center'>
 				            <th width='10%'><?= $this->Paginator->sort('identifiant') ?></th>
-				            <th width='30%'><?= $this->Paginator->sort('Groupe') ?></th>
-				            <th width='30%'><?= $this->Paginator->sort('Texte') ?></th>
+				            <th width='60%'><?= $this->Paginator->sort('Texte') ?></th>
 				            <th width='10%'><?= $this->Paginator->sort('Ordre') ?></th>
 				            <th  width='20%' class="actions"><?= __('Actions') ?></th>
 				        </tr>
@@ -19,14 +18,13 @@
 				    <?php foreach ($enqueteQuestions as $question): ?>
 				        <tr>
 				            <td><?= $this->Number->format($question->id) ?></td>
-				            <td><?= h($question->groupe) ?></td>
 				            <?php 
 				            $msg = h($question->name);
 				            $tab_message = explode(" ", $msg);
 				            
-				            if(count($tab_message) >= 15) {
+				            if(count($tab_message) >= 20) {
 								$msg="";
-								for($i=0;$i<15;$i++) $msg .= $tab_message[$i]." ";
+								for($i=0;$i<20;$i++) $msg .= $tab_message[$i]." ";
 				            } 
 				            ?>
 				            <td><?= htmlspecialchars($msg) ?></td>
