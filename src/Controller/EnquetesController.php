@@ -53,7 +53,7 @@ class EnquetesController extends AppController
     	
     	//Récupération de la campagne la plus élevée
     	$campagne = "";
-    	if(! isset($query)) $campagne = $query->max('campagne')->campagne;
+    	if($query->count()) $campagne = $query->max('campagne')->campagne;
 //debug($campagne);die();
 
     	$query = $this->Enquetes->find('all')
