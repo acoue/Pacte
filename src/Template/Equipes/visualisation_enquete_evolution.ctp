@@ -59,8 +59,7 @@ if($nbCampagne >0) {
 							</tr>		
 				<?php } ?>						
 						</tbody>
-					</table>	    
-					                       
+					</table>				                       
 				</div><br />
 				<?php for($i=0;$i<10;$i++) { ?>
 				<div id="div_graphiqueQ<?= $i+1?>" style="width: 60%; height: 400px;"></div><br />	
