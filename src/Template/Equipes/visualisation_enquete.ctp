@@ -77,8 +77,6 @@
     }
     
 </script>
-<?php } ?>
-
 <div class="blocblanc">
 	<h2>Administration</h2>
     <h3>Visualisation des enquêtes de satisfactions</h3>
@@ -92,7 +90,6 @@
 				</p>
 				<p align='center'>
 <?php 
-if($nbCampagne >0) {
 	for($i=1;$i<=$nbCampagne;$i++){
 		if($i != $campagne) {
 			echo $this->Html->link(__('Campagne n°'.$i), ['controller'=>'Equipes', 'action' => 'visualisationEnquete/'.$equipe->id.'/'.$i],['class' => 'btn btn-primary'])."&nbsp;&nbsp;";
@@ -105,13 +102,17 @@ if($nbCampagne >0) {
 	} else {
 		echo $this->Html->link(__('Evolution'), ['controller'=>'Equipes', 'action' => 'visualisationEnqueteEvolution/'.$equipe->id],['class' => 'btn btn-info','disabled'=>'disabled'])."&nbsp;&nbsp;";
 	}
+	
+	echo "<br /><br />".$this->Html->link(__('Imprimer'), ['controller'=>'Equipes', 'action' => 'imprimerEnquete/'.$equipe->id.'/'.$campagne],['class' => 'btn btn-warning']);
+	
+	
 ?>		
 				</p><br />
 				<div class="row">
 					<table cellpadding="0" cellspacing="0" class="table table-striped">
 						<thead>
 							<tr>
-								<th width='50%'>Q°</th>
+								<th width='50%'><b>Questions</b></th>
 								<th width='10%'>Tout à fait d'accord</th>
 								<th width='10%'>Plutôt d'accord</th>
 								<th width='10%'>Plutôt pas d'accord</th>

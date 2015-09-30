@@ -284,7 +284,7 @@ class EquipesController extends AppController
 	     	$tabReponseType2 = $this->EnqueteSatisfaction->getEnqueteParCampagneReponseType2($enquetes2);
 	     	
 	     	
-	    	$this->set(compact('equipe','nbCampagne','campagne','tabReponse','tabReponseType2','tabPosNeg','graphique1','graphique2','graphique3'));
+	    	$this->set(compact('equipe','nbCampagne','campagne','tabReponse','tabReponseType2','graphique1','graphique2','graphique3'));
     	    		
     	} else {
     		$this->set(compact('equipe','nbCampagne'));
@@ -335,4 +335,116 @@ class EquipesController extends AppController
     	}
     	
     }
+
+	public function imprimerEnquete($idequipe,$campagne) {
+		//Informations sur l'équipe
+		$equipe = $this->Equipes->find('all',['contain'=>'Etablissements'])->where(['Equipes.id'=>$idequipe])->first();
+		 
+		//informations sur la démarches
+		$this->loadModel('Demarches');
+		$demarche = $this->Demarches->find('all')->where(['Demarches.equipe_id'=>$idequipe])->first();
+		
+		$this->loadModel('EnqueteReponses');
+		$enquetes = $this->EnqueteReponses->find()
+		->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur'])
+		->contain(['Enquetes','EnqueteQuestions'])
+		->where(['Enquetes.demarche_id'=>$demarche->id,'EnqueteQuestions.type'=>'1','campagne'=>$campagne])
+		->order('1,2');
+		
+		$tabReponse = $this->EnqueteSatisfaction->getEnqueteParCampagneReponseGraphique1($enquetes);
+		$graphique1 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique1($enquetes);
+		$graphique2 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique2($enquetes);
+		
+		//Traitement des répones de type non numérique
+		$this->loadModel('EnqueteReponses');
+		$enquetes2 = $this->EnqueteReponses->find()
+		->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur'])
+		->contain(['Enquetes','EnqueteQuestions'])
+		->where(['Enquetes.demarche_id'=>$demarche->id,'EnqueteQuestions.type'=>'2','campagne'=>$campagne])
+		->order('1,2');
+		
+		$graphique3 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique3($enquetes2);
+		$tabReponseType2 = $this->EnqueteSatisfaction->getEnqueteParCampagneReponseType2($enquetes2);
+		
+		
+		//generation d'un PDF avec les infos
+		//Conception PDF
+		$CakePdf = new \CakePdf\Pdf\CakePdf();
+		$CakePdf->template('recapitulatif', 'enquete');
+		$CakePdf->title("Pacte - Enquete Equipe");
+		$CakePdf->viewVars([
+				'equipe' => $equipe,	
+				'campagne' => $campagne,
+				'tabReponse' => $tabReponse,
+				'tabReponseType2' => $tabReponseType2,
+				'graphique1' => $graphique1,
+				'graphique2' => $graphique2,
+				'graphique3' => $graphique3
+		]);
+		
+		 
+		//Write it to file directly
+		$filename = '__AC_'.date('Ymd_His').''.mt_rand().'.pdf';
+		$CakePdf = $CakePdf->write(DATA . 'pdf' . DS . $filename);
+		
+		$this->autoRender = false;
+		$this->response->type('application/pdf');
+		$this->response->file(DATA . 'pdf' . DS . $filename, ['download' => true, 'name' => date('Y-m-d').'_Pacte_impressionEnquete.pdf']);
+		return $this->response;
+	}
+	
+	public function imprimerEnqueteEvolution($idequipe) {
+		//Informations sur l'équipe
+		$equipe = $this->Equipes->find('all',['contain'=>'Etablissements'])->where(['Equipes.id'=>$idequipe])->first();
+		
+		//informations sur la démarches
+		$this->loadModel('Demarches');
+		$demarche = $this->Demarches->find('all')->where(['Demarches.equipe_id'=>$idequipe])->first();
+		//Recherche du nombre de campagne
+		$this->loadModel('Enquetes');
+		$query = $this->Enquetes->find('all')
+		->where(['Enquetes.demarche_id' => $demarche->id]);
+		
+		//Récupération de la campagne la plus élevée
+		$nbCampagne = 0;
+		$nbCampagne = $query->max('campagne')->campagne;
+		
+		//Traitement des répones de type non numérique
+		$this->loadModel('EnqueteReponses');
+		$enquetes = $this->EnqueteReponses->find()
+		->select(['Enquetes.campagne','EnqueteQuestions.type','EnqueteQuestions.name','EnqueteReponses.valeur'])
+		->contain(['Enquetes','EnqueteQuestions'])
+		->where(['Enquetes.demarche_id'=>$demarche->id])
+		->order('Enquetes.campagne,EnqueteQuestions.ordre');
+		
+		$tabReponse=array();
+		$tabReponse = $this->EnqueteSatisfaction->getEnqueteEvolutionTableauReponse($enquetes,$nbCampagne) ;
+		$tabSortie = array();
+		$tabSortie = $this->EnqueteSatisfaction->getEnqueteEvolutionTableauSortie($tabReponse,$nbCampagne);
+		$graphiques=array();
+		$graphiques = $this->EnqueteSatisfaction->getEnqueteEvolution($tabReponse,$nbCampagne);
+		
+		//generation d'un PDF avec les infos
+		//Conception PDF
+		$CakePdf = new \CakePdf\Pdf\CakePdf();
+		$CakePdf->template('recapitulatif', 'enqueteEvolution');
+		$CakePdf->title("Pacte - Enquete Equipe - Evolution");
+		$CakePdf->viewVars([
+				'equipe' => $equipe,
+				'tabSortie' => $tabSortie,
+				'graphiques' =>$graphiques
+		]);
+		
+			
+		//Write it to file directly
+		$filename = '__AC_'.date('Ymd_His').''.mt_rand().'.pdf';
+		$CakePdf = $CakePdf->write(DATA . 'pdf' . DS . $filename);
+		
+		$this->autoRender = false;
+		$this->response->type('application/pdf');
+		$this->response->file(DATA . 'pdf' . DS . $filename, ['download' => true, 'name' => date('Y-m-d').'_Pacte_impressionEnqueteEvolution.pdf']);
+		return $this->response;
+		
+		
+	}
 }
