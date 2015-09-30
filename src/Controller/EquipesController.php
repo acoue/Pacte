@@ -14,6 +14,7 @@ use PhpParser\Node\Expr\Array_;
 class EquipesController extends AppController
 {
 	public function initialize() {
+		$this->loadComponent('EnqueteSatisfaction');
 		parent::initialize();		
 	}
 	
@@ -261,157 +262,14 @@ class EquipesController extends AppController
 	    										->contain(['Enquetes','EnqueteQuestions'])
 	    										->where(['Enquetes.demarche_id'=>$demarche->id,'EnqueteQuestions.type'=>'1','campagne'=>$campagne])
 	    										->order('1,2');
-	    	/*
-	    	 * 
-	    	 * GRAPHIQUE N°1
-	    	 * 
-	    	 */
 	    	
-	    	$graphique1 = array();
-	    	$graphique1['titre']='% de réponses';
-	    	$graphique1['labelYGauche']='%';
+	    	$tabReponse = $this->EnqueteSatisfaction->getEnqueteParCampagneReponseGraphique1($enquetes);
+	    	$graphique1 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique1($enquetes);
+	    	$graphique2 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique2($enquetes); 	
 	    	
-	    	$labelXG1 ='Questions';
-	    	$legende1G1 = "Tout à fait d'accord";
-	    	$legende2G1 = "Plutôt d'accord";
-	    	$legende3G1 = "Plutôt pas d'accord";
-	    	$legende4G1 = "Pas du tout d'accord";
-	    	$legende5G1 = "NSP";
-	    	$iNbRep = -1;
-	    	$label = "";
-	    	$labelTmp="";
-	    	$elt1=0;
-	    	$elt2=0;
-	    	$elt3=0;
-	    	$elt4=0;
-	    	$elt5=0;
-	    	
-	
-	    	/*
-	    	 * 
-	    	 * Tableau des reponses concaténées
-	    	 * 
-	    	 */
-	    	$tabReponse=array();
-	    	
-	    	/*
-	    	 * 
-	    	 * GRAPHIQUE N°2
-	    	 * 
-	    	 */
-	    	$graphique2 = array();
-	    	$graphique2['titre']='% de réponses positives';
-	    	$graphique2['labelX']='%';
-	    	
-	    	
-	    	$tabPosNeg = [['Question','% positif','% négatif']]; 
-	    	$repPos =0;
-	    	$repNeg =0;    	
-	    	
-	    	//Ajout aux tableau final de résultats pour le graphique
-	    	$tabG1 = [[$labelXG1, $legende1G1, $legende2G1,	$legende3G1,$legende4G1,$legende5G1]];
-	    	foreach ($enquetes as $elt) {
-	
-	    		$graphique1['sousTitre']="Campagne n°".$elt->enquete->campagne;
-	    		$graphique2['sousTitre']="Campagne n°".$elt->enquete->campagne;    		
-	     		$iNbRep++;
-	     		//Recuperation du label de la question
-	     		$label = $elt->enquete_question->name;
-	     		$valeur = $elt->valeur;
-	     		
-	     		if($labelTmp === "") { //Premier tour
-	     			switch ($valeur) {
-	     				case 1:
-	     					$elt1 = $elt1+1;
-	     					$repPos = $repPos+1;
-	     					break;
-	     				case 2:
-	     					$elt2 = $elt2+1;
-	     					$repPos = $repPos+1;
-	     					break;
-	     				case 3:
-	     					$elt3 = $elt3+1;
-	     					$repNeg = $repNeg + 1;
-	     					break;
-	     				case 4:
-	     					$elt4 = $elt4+1;
-	     					$repNeg = $repNeg + 1;
-	     					break;
-	     				case 5:
-	     					$elt5 = $elt5+1;
-	     					break;
-	     			}
-	     		} else if($label == $labelTmp) {
-	     			switch ($valeur) {
-	     				case 1:
-	     					$elt1 = $elt1+1;
-	     					$repPos = $repPos+1;
-	     					break;
-	     				case 2:
-	     					$elt2 = $elt2+1;
-	     					$repPos = $repPos+1;
-	     					break;
-	     				case 3:
-	     					$elt3 = $elt3+1;
-	     					$repNeg = $repNeg + 1;
-	     					break;
-	     				case 4:
-	     					$elt4 = $elt4+1;
-	     					$repNeg = $repNeg + 1;
-	     					break;
-	     				case 5:
-	     					$elt5 = $elt5+1;
-	     					break;
-	     			}
-	     		} else {
-	     			//Ajout au tableau
-	     			array_push($tabG1,[substr($labelTmp,0,10),(100*($elt1/$iNbRep)),100*($elt2/$iNbRep),100*($elt3/$iNbRep),100*($elt4/$iNbRep),100*($elt5/$iNbRep)]);
-	     			array_push($tabPosNeg,[$labelTmp,(100*($repPos/$iNbRep)),100*($repNeg/$iNbRep)]);
-	     			array_push($tabReponse,[$labelTmp,(100*($elt1/$iNbRep)),100*($elt2/$iNbRep),100*($elt3/$iNbRep),100*($elt4/$iNbRep),100*($elt5/$iNbRep)]);
-	     			//array_push($tabG1,[$labelTmp,$elt1,$elt2,$elt3,$elt4,$elt5]);
-	     			$iNbRep = 0; 
-	     			$elt1=0;
-	     			$elt2=0;
-	     			$elt3=0;
-	     			$elt4=0;
-	     			$elt5=0;
-	     			$repPos = $repNeg = 0;
-	     			switch ($valeur) {
-	     				case 1:
-	     					$elt1 = $elt1+1;
-	     					$repPos = $repPos+1;
-	     					break;
-	     				case 2:
-	     					$elt2 = $elt2+1;
-	     					$repPos = $repPos+1;
-	     					break;
-	     				case 3:
-	     					$elt3 = $elt3+1;
-	     					$repNeg = $repNeg + 1;
-	     					break;
-	     				case 4:
-	     					$elt4 = $elt4+1;
-	     					$repNeg = $repNeg + 1;
-	     					break;
-	     				case 5:
-	     					$elt5 = $elt5+1;
-	     					break;
-	     			}     			
-	     		}
-	     		$labelTmp = $label;
-	     		 		
-	    	}
-	    	//dernier tour
-	    	array_push($tabG1,[substr($labelTmp,0,10),(100*($elt1/$iNbRep)),100*($elt2/$iNbRep),100*($elt3/$iNbRep),100*($elt4/$iNbRep),100*($elt5/$iNbRep)]);
-	    	array_push($tabPosNeg,[$labelTmp,(100*($repPos/$iNbRep)),100*($repNeg/$iNbRep)]);
-	     	array_push($tabReponse,[$labelTmp,(100*($elt1/$iNbRep)),100*($elt2/$iNbRep),100*($elt3/$iNbRep),100*($elt4/$iNbRep),100*($elt5/$iNbRep)]);
-	
-	     	$graphique1['tabGraphique'] = $tabG1;
-	     	$graphique2['tabGraphique'] = $tabPosNeg;
-	     	
 	     	/*
 	     	 *
-	     	 * REQUETE pour le Graphique n°3 (TYPE 2)
+	     	 * REQUETE pour le Graphique n°3 (TYPE 2) et le tableau de resultats
 	     	 *
 	     	 */
 	     	//Traitement des répones de type non numérique
@@ -421,74 +279,10 @@ class EquipesController extends AppController
 	     	->contain(['Enquetes','EnqueteQuestions'])
 	     	->where(['Enquetes.demarche_id'=>$demarche->id,'EnqueteQuestions.type'=>'2','campagne'=>$campagne])
 	     	->order('1,2');
+
+	     	$graphique3 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique3($enquetes2);
+	     	$tabReponseType2 = $this->EnqueteSatisfaction->getEnqueteParCampagneReponseType2($enquetes2);
 	     	
-	     	/*
-	     	 *
-	     	 * GRAPHIQUE N°3
-	     	 *
-	     	 */
-	     	$graphique3 = array();
-	     	$tabType2 = array();
-	     	$graphique3['titre']='Niveau de satisfaction global';
-	     	$graphique3['labelYDroit']='Question';
-	     	$graphique3['labelX']='Note';
-	    	$iNbRep = 0;
-	     	$elt1=$elt2=$elt3=$elt4=$elt5=$elt6=$elt7=$elt8=$elt9=0;
-	     	
-	     	$tabType2 = [['Question', 'Note']];
-	     	foreach ($enquetes2 as $elt) {
-	     	
-	     		$graphique3['sousTitre']="Campagne n°".$elt->enquete->campagne;
-	     		$valeur = $elt->valeur;
-	     		$iNbRep++;
-	     		switch ($valeur) {
-	     			case 1:
-	     				$elt1+=1;
-	     				break;
-	     			case 2:
-	     				$elt2+=1;
-	     				break;
-	     			case 3:
-	     				$elt3+=1;
-	     				break;
-	     			case 4:
-	     				$elt4+=1;
-	     				break;
-	     			case 5:
-	     				$elt5+=1;
-	     				break;
-	     			case 6:
-	     				$elt6+=1;
-	     				break;
-	     			case 7:
-	     				$elt7+=1;
-	     				break;
-	     			case 8:
-	     				$elt8+=1;
-	     				break;
-	     			case 9:
-	     				$elt9+=1;
-	     		}
-	     	}
-	     	//array_push($tabG1,[substr($labelTmp,0,10),(100*($elt1/$iNbRep)),100*($elt2/$iNbRep),100*($elt3/$iNbRep),100*($elt4/$iNbRep),100*($elt5/$iNbRep)]);
-	     	array_push($tabType2,['1',100*($elt1/$iNbRep)]);
-	     	array_push($tabType2,['2',100*($elt2/$iNbRep)]);
-	     	array_push($tabType2,['3',100*($elt3/$iNbRep)]);
-	     	array_push($tabType2,['4',100*($elt4/$iNbRep)]);
-	     	array_push($tabType2,['5',100*($elt5/$iNbRep)]);
-	     	array_push($tabType2,['6',100*($elt6/$iNbRep)]);
-	     	array_push($tabType2,['7',100*($elt7/$iNbRep)]);
-	     	array_push($tabType2,['8',100*($elt8/$iNbRep)]);
-	     	array_push($tabType2,['9',100*($elt9/$iNbRep)]); 	
-	     	$graphique3['tabGraphique'] = $tabType2;
-	     	/*
-	     	 *
-	     	 * Tableau des reponses concaténées
-	     	 *
-	     	 */
-	     	$tabReponseType2=array(['Niveau de satisfaction global concernant le projet PACTE','1','2','3','4','5','6','7','8','9']);
-	     	array_push($tabReponseType2,['%',100*($elt1/$iNbRep),100*($elt2/$iNbRep),100*($elt3/$iNbRep),100*($elt4/$iNbRep),100*($elt5/$iNbRep),100*($elt6/$iNbRep),100*($elt7/$iNbRep),100*($elt8/$iNbRep),100*($elt9/$iNbRep)]);
-	     	//debug($tabReponseType2);die();
 	     	
 	    	$this->set(compact('equipe','nbCampagne','campagne','tabReponse','tabReponseType2','tabPosNeg','graphique1','graphique2','graphique3'));
     	    		
@@ -527,96 +321,14 @@ class EquipesController extends AppController
 	    	->where(['Enquetes.demarche_id'=>$demarche->id])
 	    	->order('Enquetes.campagne,EnqueteQuestions.ordre');
 	    	
-	    	$tabReponse=array();
-	    	$label=$labelTmp=$typeTmp=$campagneTmp="";
-	    	$valeur=0;
-	    	$eltPos=0;
-	    	$iNbRep=-1;
-	    	$noteType2 = 0;
-	    	foreach ($enquetes as $rep) {
-	    		$label = $rep->enquete_question->name;
-	     		$valeur = $rep->valeur;
-	     		$type = $rep->enquete_question->type;
-	     		$campagne = $rep->enquete->campagne;
-	     		
-	     		$iNbRep++;
-	    		if($labelTmp == "") {
-	    			if($type == 2) {
-	    				$noteType2=$valeur;
-	    			} else {
-	    				if( in_array($valeur, ['1','2'])) {
-	    					$eltPos+=1;
-	    				}
-	    			}    
-	    		} else {
-	    			if($labelTmp==$label) {
-	    				if($type == 2) {
-	    					$noteType2+=$valeur;
-	    				} else {
-	    					if( in_array($valeur, ['1','2'])) {
-	    						$eltPos+=1;
-	    					}
-	    				}
-	    			} else {    	
-	    				if($typeTmp == 2) array_push($tabReponse,[$campagneTmp,$labelTmp,($noteType2/$iNbRep)]);
-	    				else array_push($tabReponse,[$campagneTmp,$labelTmp,(100*($eltPos/$iNbRep))]);
-	    				
-	    				$eltPos=$iNbRep=$noteType2=0;
-	    				if($type == 2) {
-	    					$noteType2+=$valeur;
-	    				} else {
-	    					if( in_array($valeur, ['1','2'])) {
-	    						$eltPos+=1;
-	    					}
-	    				}    				
-	    			}
-	    		}
-	    		$labelTmp=$label;
-	    		$typeTmp=$type;
-	    		$campagneTmp=$campagne;  	
-	    	}
-	    	//dernier tour
-	    	$iNbRep+=1;
-	    	if($typeTmp == 2) array_push($tabReponse,[$campagne,$labelTmp,($noteType2/$iNbRep)]);
-	    	else array_push($tabReponse,[$campagne,$labelTmp,(100*($eltPos/$iNbRep))]);
+	    	$tabReponse=array();	    	
+	    	$tabReponse = $this->EnqueteSatisfaction->getEnqueteEvolutionTableauReponse($enquetes,$nbCampagne) ;	    	
+	     	$tabSortie = array();
+	     	$tabSortie = $this->EnqueteSatisfaction->getEnqueteEvolutionTableauSortie($tabReponse,$nbCampagne);
+	     	$graphiques=array();	    	
+	    	$graphiques = $this->EnqueteSatisfaction->getEnqueteEvolution($tabReponse,$nbCampagne);
 	    	
-	    	//Traitement de sortie    	
-	    	$tabSortie = array();
-	    	$tabRepTmp = array();
-	    	$nbQuestion=10;
-	    	array_push($tabRepTmp, 'Pourcentage de "Tout à fait d\'accord" + "plutôt d\'accord"');
-	    	for($j=1;$j<=$nbCampagne;$j++) {
-	    		array_push($tabRepTmp,"Campagne ".$j);
-	    	}
-	    	
-	    	array_push($tabSortie,$tabRepTmp);
-	    	$tabRepTmp = array();
-	     	for($i=0;$i<$nbQuestion;$i++) {
-	     		array_push($tabRepTmp,$tabReponse[$i][1]);
-	     		for($j=0;$j<$nbCampagne;$j++){
-	     			array_push($tabRepTmp,round($tabReponse[$i+($j*$nbQuestion)][2],1));
-	     		}
-	     		array_push($tabSortie,$tabRepTmp);
-	     		$tabRepTmp = array();    		
-	     	}
-	    	//debug($tabSortie);die();
-	    	
-	     	// Graphique
-	     	$graphiques = array();
-	     	
-	     	for($i=1;$i<=$nbQuestion;$i++) {
-	     		$graphiqueTmp = [['Campagne', 'Note']];
-	     		$tabGraphiqueTmp['titre']=$tabSortie[$i][0];
-	     		for($j=1;$j<=$nbCampagne;$j++){
-	     			array_push($graphiqueTmp,["n°$j",$tabSortie[$i][$j]]);
-	     		}
-	     		$tabGraphiqueTmp['tabGraphique'] = $graphiqueTmp;
-	     		array_push($graphiques,$tabGraphiqueTmp);
-	     	}
-	     	
-	     	    	
-	    	
-	    	$this->set(compact('equipe','nbCampagne','tabSortie','graphiqueQ1','graphiques'));
+	    	$this->set(compact('equipe','nbCampagne','tabSortie','graphiques'));
     	} else {
     		$this->set(compact('equipe','nbCampagne'));
     		$this->Flash->error('Auncune enquête pour cette démarche');
