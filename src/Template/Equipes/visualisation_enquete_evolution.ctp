@@ -21,7 +21,10 @@
       	chart.draw(data, options);
     };
 
-	<?php } ?>
+	<?php } 
+
+	$session = $this->request->session();	
+?>
 </script>
 <div class="blocblanc">
 	<h2>Administration</h2>
@@ -32,10 +35,18 @@
 			<div class='col-md-1'></div>
 			<div class='col-md-10'>				
 				<p align='center'>
-				<?= $this->Html->link('Retour', ['controller'=>'pages','action' => 'home'], ['class' => 'btn btn-default']) ?>
+				<?php 
+					if($session->read('Aut.User.Role')) {
+						echo $this->Html->link('Retour', ['controller'=>'pages','action' => 'home'], ['class' => 'btn btn-default']);
+					} else {
+						echo $this->Html->link('Retour', ['controller'=>'enquetes','action' => 'index'], ['class' => 'btn btn-default']);
+					} 
+				?>
 				</p>
 				<p align='center'>
 <?php 
+
+if($session->read('Aut.User.Role')) {
 	for($i=1;$i<=$nbCampagne;$i++){
 		
 			echo $this->Html->link(__('Campagne n°'.$i), ['controller'=>'Equipes', 'action' => 'visualisationEnquete/'.$equipe->id.'/'.$i],['class' => 'btn btn-primary'])."&nbsp;&nbsp;";
@@ -43,18 +54,20 @@
 	}
 	echo $this->Html->link(__('Evolution'), ['controller'=>'Equipes', 'action' => 'visualisationEnqueteEvolution/'.$equipe->id],['class' => 'btn btn-info','disabled'=>'disabled'])."&nbsp;&nbsp;";
 	echo "<br /><br />".$this->Html->link(__('Imprimer'), ['controller'=>'Equipes', 'action' => 'imprimerEnqueteEvolution/'.$equipe->id],['class' => 'btn btn-warning']);
-	
+} 
 ?>		
 				</p><br />
 				<div class="row">
 					<table  cellpadding="0" cellspacing="0" class="table">						
 						<tbody>
-				<?php foreach ($tabSortie as $rep) { ?>
+				<?php 
+					//debug($tabSortie);die();
+					foreach ($tabSortie as $rep) { ?>
 							<tr>
-								<td width='55%'><h5><?= $rep[0]?></h5></td>
-								<td><h5><?= $rep[1]?></h5></td>
-								<td><h5><?= $rep[2]?></h5></td>
-								<td><h5><?= $rep[3]?></h5></td>							
+							<?php for($h=0;$h<count($rep);$h++) { 
+									echo "<td><h5>".$rep[$h]."</h5></td>";
+								}
+							?>			
 							</tr>		
 				<?php } ?>						
 						</tbody>

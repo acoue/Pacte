@@ -13,6 +13,7 @@ class EnquetesController extends AppController
 {
 
 	public function initialize() {
+		$this->loadComponent('EnqueteSatisfaction');
 		parent::initialize();
 		//Menu et sous-menu
 // 		$session = $this->request->session();
@@ -61,7 +62,8 @@ class EnquetesController extends AppController
     	->where(['Enquetes.demarche_id' => $id_demarche,'campagne' => $campagne])
     	->order('Enquetes.created DESC');
     	
-    	$nbEnquete = $query->count();
+    	if($query->count()) $nbEnquete = $query->count();
+    	else $nbEnquete = 0;
     	
     	$queryMax = $this->Enquetes->find('all')
     	->where(['Enquetes.demarche_id' => $id_demarche,'campagne' => $campagne]);
@@ -71,6 +73,33 @@ class EnquetesController extends AppController
     	//Message
     	$this->loadModel('Parametres');
     	$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilEnqueteSatisfaction'])->first();
+    	
+    	if($nbEnquete > 0){
+	    	//Graphique 1 et 2
+	    	$this->loadModel('EnqueteReponses');
+	    	$enquetes = $this->EnqueteReponses->find()
+	    	->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur'])
+	    	->contain(['Enquetes','EnqueteQuestions'])
+	    	->where(['Enquetes.demarche_id'=>$id_demarche,'EnqueteQuestions.type'=>'1','campagne'=>$campagne])
+	    	->order('1,2');
+	    	
+	    	$tabReponse = $this->EnqueteSatisfaction->getEnqueteParCampagneReponseGraphique1($enquetes);
+	    	$graphique1 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique1($enquetes);
+	    	$graphique2 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique2($enquetes);
+	    	
+	    	// Graphique n°3 (TYPE 2) et le tableau de resultats
+	    	$enquetes2 = $this->EnqueteReponses->find()
+	    	->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur'])
+	    	->contain(['Enquetes','EnqueteQuestions'])
+	    	->where(['Enquetes.demarche_id'=>$id_demarche,'EnqueteQuestions.type'=>'2','campagne'=>$campagne])
+	    	->order('1,2');
+	    	
+	    	$graphique3 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique3($enquetes2);
+	    	$tabReponseType2 = $this->EnqueteSatisfaction->getEnqueteParCampagneReponseType2($enquetes2);
+	    	 
+	    	 
+	    	$this->set(compact('tabReponse','tabReponseType2','graphique1','graphique2','graphique3'));
+    	}
     	
     	$this->set('enquetes', $this->paginate($query));
         $this->set('dateMax', $dateMax);

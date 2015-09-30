@@ -44,10 +44,10 @@ function drawGraphique<?=$i+1?>() {
 			<tbody>
 	<?php foreach ($tabSortie as $rep) { ?>
 				<tr>
-					<td width='55%'><?= $rep[0]?></td>
-					<td><?= $rep[1]?></td>
-					<td><?= $rep[2]?></td>
-					<td><?= $rep[3]?></td>							
+				<?php for($h=0;$h<count($rep);$h++) { 
+						echo "<td><h5>".$rep[$h]."</h5></td>";
+					}
+				?>							
 				</tr>		
 	<?php } ?>						
 			</tbody>
