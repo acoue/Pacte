@@ -79,5 +79,7 @@ if($session->read("Auth.User.role") == "equipe") {
 <?php } ?>
 		
 	</div>
+<?php if($session->read("Auth.User.role") != "equipe") { ?>
 	<p><span class="obligatoire">&nbsp;&nbsp;&nbsp;&nbsp;<sup>*</sup></span> Champ obligatoire</p>
+<?php } ?>
 </div>

@@ -12,6 +12,9 @@
 
 body, html{height:100%;}
 
+.sautPage {
+	page-break-after: always;
+}
 
 .table > thead > tr > th {
     font-size: 15px;	

@@ -258,10 +258,10 @@ class EquipesController extends AppController
 			//Traitement des répones de type non numérique
 	    	$this->loadModel('EnqueteReponses');
 	    	$enquetes = $this->EnqueteReponses->find()
-	    										->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur'])
+	    										->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur','EnqueteQuestions.libelle'])
 	    										->contain(['Enquetes','EnqueteQuestions'])
 	    										->where(['Enquetes.demarche_id'=>$demarche->id,'EnqueteQuestions.type'=>'1','campagne'=>$campagne])
-	    										->order('1,2');
+	    										->order('1,EnqueteQuestions.ordre');
 	    	
 	    	$tabReponse = $this->EnqueteSatisfaction->getEnqueteParCampagneReponseGraphique1($enquetes);
 	    	$graphique1 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique1($enquetes);
@@ -275,10 +275,10 @@ class EquipesController extends AppController
 	     	//Traitement des répones de type non numérique
 	     	$this->loadModel('EnqueteReponses');
 	     	$enquetes2 = $this->EnqueteReponses->find()
-	     	->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur'])
+	     	->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur','EnqueteQuestions.libelle'])
 	     	->contain(['Enquetes','EnqueteQuestions'])
 	     	->where(['Enquetes.demarche_id'=>$demarche->id,'EnqueteQuestions.type'=>'2','campagne'=>$campagne])
-	     	->order('1,2');
+	     	->order('1,EnqueteQuestions.ordre');
 
 	     	$graphique3 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique3($enquetes2);
 	     	$tabReponseType2 = $this->EnqueteSatisfaction->getEnqueteParCampagneReponseType2($enquetes2);
@@ -316,7 +316,7 @@ class EquipesController extends AppController
 	    	//Traitement des répones de type non numérique
 	    	$this->loadModel('EnqueteReponses');
 	    	$enquetes = $this->EnqueteReponses->find()
-	    	->select(['Enquetes.campagne','EnqueteQuestions.type','EnqueteQuestions.name','EnqueteReponses.valeur'])
+	    	->select(['Enquetes.campagne','EnqueteQuestions.type','EnqueteQuestions.name','EnqueteReponses.valeur','EnqueteQuestions.libelle'])
 	    	->contain(['Enquetes','EnqueteQuestions'])
 	    	->where(['Enquetes.demarche_id'=>$demarche->id])
 	    	->order('Enquetes.campagne,EnqueteQuestions.ordre');
@@ -346,10 +346,10 @@ class EquipesController extends AppController
 		
 		$this->loadModel('EnqueteReponses');
 		$enquetes = $this->EnqueteReponses->find()
-		->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur'])
+		->select(['Enquetes.campagne','EnqueteQuestions.name','EnqueteReponses.valeur','EnqueteQuestions.libelle'])
 		->contain(['Enquetes','EnqueteQuestions'])
 		->where(['Enquetes.demarche_id'=>$demarche->id,'EnqueteQuestions.type'=>'1','campagne'=>$campagne])
-		->order('1,2');
+		->order('1,EnqueteQuestions.ordre');
 		
 		$tabReponse = $this->EnqueteSatisfaction->getEnqueteParCampagneReponseGraphique1($enquetes);
 		$graphique1 = $this->EnqueteSatisfaction->getEnqueteParCampagneGraphique1($enquetes);
@@ -412,7 +412,7 @@ class EquipesController extends AppController
 		//Traitement des répones de type non numérique
 		$this->loadModel('EnqueteReponses');
 		$enquetes = $this->EnqueteReponses->find()
-		->select(['Enquetes.campagne','EnqueteQuestions.type','EnqueteQuestions.name','EnqueteReponses.valeur'])
+		->select(['Enquetes.campagne','EnqueteQuestions.type','EnqueteQuestions.name','EnqueteReponses.valeur','EnqueteQuestions.libelle'])
 		->contain(['Enquetes','EnqueteQuestions'])
 		->where(['Enquetes.demarche_id'=>$demarche->id])
 		->order('Enquetes.campagne,EnqueteQuestions.ordre');

@@ -12,14 +12,19 @@ google.setOnLoadCallback(drawGraphique<?=$i+1?>);
 	
 function drawGraphique<?=$i+1?>() {
     var data = new google.visualization.arrayToDataTable(GRAPHIQUE_Q<?=$i+1?>);
-    var options = {                
-            width: '50%',
-            legend: { position: 'none' },
-            chart: { title: '<?= $graphiques[$i]['titre'] ?>'},                
-            bar: { groupWidth: "90%" }
-          };        
-  	var chart = new google.charts.Bar(document.getElementById('div_graphiqueQ<?=$i+1?>'));
-  	chart.draw(data, options);
+
+
+	var options = {
+			title: '<?= $graphiques[$i]['titre'] ?>',
+            width: 800,  
+			height: 600,           
+           	bar: {groupWidth: '95%'},
+       	    legend: { position: 'none' },
+		};
+    		
+    	
+        var chart = new google.visualization.ColumnChart(document.getElementById('div_graphiqueQ<?=$i+1?>'));
+        chart.draw(data, options);
 };
 
 <?php } ?>
@@ -54,7 +59,8 @@ function drawGraphique<?=$i+1?>() {
 		</table>				                       
 	</div><br />
 	<?php for($i=0;$i<10;$i++) { ?>
-	<div id="div_graphiqueQ<?= $i+1?>" style="width: 60%; height: 400px;"></div><br /><br />	
+	<div id="div_graphiqueQ<?= $i+1?>" style="height: 600px;"></div><br /><div class="sautPage"></div>
+		
 	<?php } ?>
 	
 	

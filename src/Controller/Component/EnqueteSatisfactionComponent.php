@@ -12,6 +12,7 @@ class EnqueteSatisfactionComponent extends Component {
     	$graphique1 = array();
     	$graphique1['titre']='% de réponses';
     	$graphique1['labelYGauche']='%';
+    	$graphique1['labelX']='Questions';
 
     	$labelXG1 ='Questions';
     	$legende1G1 = "Tout à fait d'accord";
@@ -36,7 +37,7 @@ class EnqueteSatisfactionComponent extends Component {
     		$graphique1['sousTitre']="Campagne n°".$elt->enquete->campagne;
      		$iNbRep++;
      		//Recuperation du label de la question
-     		$label = $elt->enquete_question->name;
+     		$label = $elt->enquete_question->libelle;
      		$valeur = $elt->valeur;
 
      		if($labelTmp === "") { //Premier tour
@@ -77,7 +78,13 @@ class EnqueteSatisfactionComponent extends Component {
      			}
      		} else {
      			//Ajout au tableau
-     			array_push($tabG1,[substr($labelTmp,0,10),(100*($elt1/$iNbRep)),100*($elt2/$iNbRep),100*($elt3/$iNbRep),100*($elt4/$iNbRep),100*($elt5/$iNbRep)]);
+     			//array_push($tabG1,[substr($labelTmp,0,20),(100*($elt1/$iNbRep)),100*($elt2/$iNbRep),100*($elt3/$iNbRep),100*($elt4/$iNbRep),100*($elt5/$iNbRep)]);
+     			array_push($tabG1,[$labelTmp,
+     								round(100*($elt1/$iNbRep),1),
+     								round(100*($elt2/$iNbRep),1),
+     								round(100*($elt3/$iNbRep),1),
+     								round(100*($elt4/$iNbRep),1),
+     								round(100*($elt5/$iNbRep),1)]);
      			$iNbRep = 0;
      			$elt1=$elt2=$elt3=$elt4=$elt5=0;
      			
@@ -194,9 +201,9 @@ class EnqueteSatisfactionComponent extends Component {
 		$iNbRep = -1;
 		$label = $labelTmp="";
 		$graphique2 = array();
-		$graphique2['titre']='% de réponses positives';
+		$graphique2['titre']='% de réponses positives / négatives';
 		$graphique2['labelX']='%';
-		$tabPosNeg = [['Question','% positif','% négatif']];
+		$tabPosNeg = [['Question','% Pos','% Neg']];
 		$repPos = $repNeg = 0;
 		
 		//Ajout aux tableau final de résultats pour le graphique
@@ -204,7 +211,7 @@ class EnqueteSatisfactionComponent extends Component {
 			$graphique2['sousTitre']="Campagne n°".$elt->enquete->campagne;
 			$iNbRep++;
 			//Recuperation du label de la question
-			$label = $elt->enquete_question->name;
+			$label = $elt->enquete_question->libelle;
 			$valeur = $elt->valeur;
 		
 			if($labelTmp === "") { //Premier tour
@@ -310,15 +317,15 @@ class EnqueteSatisfactionComponent extends Component {
 					$elt9+=1;
 			}
 		}
-		array_push($tabType2,['1',100*($elt1/$iNbRep)]);
-		array_push($tabType2,['2',100*($elt2/$iNbRep)]);
-		array_push($tabType2,['3',100*($elt3/$iNbRep)]);
-		array_push($tabType2,['4',100*($elt4/$iNbRep)]);
-		array_push($tabType2,['5',100*($elt5/$iNbRep)]);
-		array_push($tabType2,['6',100*($elt6/$iNbRep)]);
-		array_push($tabType2,['7',100*($elt7/$iNbRep)]);
-		array_push($tabType2,['8',100*($elt8/$iNbRep)]);
-		array_push($tabType2,['9',100*($elt9/$iNbRep)]);
+		array_push($tabType2,['1',round(100*($elt1/$iNbRep),1)]);
+		array_push($tabType2,['2',round(100*($elt2/$iNbRep),1)]);
+		array_push($tabType2,['3',round(100*($elt3/$iNbRep),1)]);
+		array_push($tabType2,['4',round(100*($elt4/$iNbRep),1)]);
+		array_push($tabType2,['5',round(100*($elt5/$iNbRep),1)]);
+		array_push($tabType2,['6',round(100*($elt6/$iNbRep),1)]);
+		array_push($tabType2,['7',round(100*($elt7/$iNbRep),1)]);
+		array_push($tabType2,['8',round(100*($elt8/$iNbRep),1)]);
+		array_push($tabType2,['9',round(100*($elt9/$iNbRep),1)]);
 		$graphique3['tabGraphique'] = $tabType2;
 		
 		return $graphique3;
@@ -390,7 +397,7 @@ class EnqueteSatisfactionComponent extends Component {
 		$graphiques = array();
 		 
 		for($i=1;$i<=$nbQuestion;$i++) {
-			$graphiqueTmp = [['Campagne', 'Note']];
+			$graphiqueTmp = [['Campagne', '% de réponses positives']];
 			$tabGraphiqueTmp['titre']=$tabSortie[$i][0];
 			for($j=1;$j<=$nbCampagne;$j++){
 				array_push($graphiqueTmp,["n°$j",$tabSortie[$i][$j]]);
@@ -445,7 +452,7 @@ class EnqueteSatisfactionComponent extends Component {
 		$iNbRep=0;
 		$noteType2 = 0;
 		foreach ($enquetes as $rep) {
-			$label = $rep->enquete_question->name;
+			$label = $rep->enquete_question->libelle;
 			$valeur = $rep->valeur;
 			$type = $rep->enquete_question->type;
 			$campagne = $rep->enquete->campagne;

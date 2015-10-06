@@ -15,46 +15,42 @@
 	google.setOnLoadCallback(drawGraphique1);
 	google.setOnLoadCallback(drawGraphique2);
 	google.setOnLoadCallback(drawGraphique3);
-	
+
 	function drawGraphique1() {
         var data = new google.visualization.arrayToDataTable(GRAPHIQUE_1);
-        var options = {
-          width: '100%', height: 500,           
-          chart: {
-            title: '<?= $graphique1['titre'] ?>',
-            subtitle: '<?= $graphique1['sousTitre'] ?>'
-          },          
-          axes: {
-            y: {
-            	valeur1: {label: '<?=  $graphique1['labelYGauche'] ?>'}
-            }
-          }
-        };
 
-      var chart = new google.charts.Bar(document.getElementById('div_graphique1'));
-      chart.draw(data, options);
+	    var options = {
+		    	title: '<?= $graphique1['titre'] ?>',
+	            subtitle: '<?= $graphique1['sousTitre'] ?>',
+	            legend: { position: 'top', maxLines: 3 },
+	            width: '100%',
+	            height: 500,
+		        vAxis: {
+		          title: '<?= $graphique1['labelYGauche'] ?>'
+		        }
+		      };
+
+		      var chart = new google.visualization.ColumnChart(document.getElementById('div_graphique1'));
+		      chart.draw(data, options);
     };
 
 
     function drawGraphique2() {
     	var data = new google.visualization.arrayToDataTable(GRAPHIQUE_2);
 
-        var options = {
-            width: '100%', height: 500,
-			chart: {
-            	title: '<?= $graphique2['titre'] ?>',
-                subtitle: '<?= $graphique2['sousTitre'] ?>',
-            }, 
-            chartArea: {              
-                width: '50%' 
-            },                   
-			hAxis: {
-            	title: '<?= $graphique2['labelX'] ?>',
-          	}
-        };
+		var options = {    			
+    			width: '90%', 
+    			height: 500,
+    	        chart: {
+    	            title: '<?= $graphique2['titre'] ?>',
+    	            subtitle: '<?= $graphique2['sousTitre'] ?>',groupWidth: '95%',
+    	         },
+    	         bars: 'horizontal' // Required for Material Bar Charts.
+    	};
 
-        var chart = new google.visualization.BarChart(document.getElementById('div_graphique2'));
-        chart.draw(data, options);
+        var chart = new google.charts.Bar(document.getElementById('div_graphique2'));
+        chart.draw(data, options);  
+    	      
       }
 
     function drawGraphique3() {
@@ -63,10 +59,8 @@
     	var options = {
 			title: '<?= $graphique3['titre'] ?>',
             subtitle: '<?= $graphique3['sousTitre'] ?>',
-            width: '100%', 
-           
-
-           
+            width: '100%',  
+			height: 500,           
            	bar: {groupWidth: '95%'},
        	    legend: { position: 'none' },
 		};
@@ -97,12 +91,8 @@
 			echo $this->Html->link(__('Campagne n°'.$i), ['controller'=>'Equipes', 'action' => 'visualisationEnquete/'.$equipe->id.'/'.$i],['class' => 'btn btn-primary','disabled'=>'disabled'])."&nbsp;&nbsp;";
 		}		
 	}
-	if($nbCampagne != 99) {
-		echo $this->Html->link(__('Evolution'), ['controller'=>'Equipes', 'action' => 'visualisationEnqueteEvolution/'.$equipe->id],['class' => 'btn btn-info'])."&nbsp;&nbsp;";
-	} else {
-		echo $this->Html->link(__('Evolution'), ['controller'=>'Equipes', 'action' => 'visualisationEnqueteEvolution/'.$equipe->id],['class' => 'btn btn-info','disabled'=>'disabled'])."&nbsp;&nbsp;";
-	}
 	
+	echo $this->Html->link(__('Evolution'), ['controller'=>'Equipes', 'action' => 'visualisationEnqueteEvolution/'.$equipe->id],['class' => 'btn btn-info'])."&nbsp;&nbsp;";
 	echo "<br /><br />".$this->Html->link(__('Imprimer'), ['controller'=>'Equipes', 'action' => 'imprimerEnquete/'.$equipe->id.'/'.$campagne],['class' => 'btn btn-warning']);
 	
 	
@@ -133,9 +123,11 @@
 				<?php } ?>						
 						</tbody>
 					</table>	                       
-				</div><br />			
+				</div><br />
+				<div class="row">
 				<div id="div_graphique1" ></div><br /><br />
 				<div id="div_graphique2" ></div><br /><br />
+				</div>
 				<div class="row">
 					<table cellpadding="0" cellspacing="0" class="table table-striped">						
 						<tbody>
@@ -156,10 +148,14 @@
 						</tbody>
 					</table>	                       
 				</div><br />
-				<div id="div_graphique3" style="width: 100%; height: 400px; "></div>		
-<?php } ?>	
+				<div id="div_graphique3""></div>
 			</div>		
 			<div class='col-md-1'></div>
 		</div>
 	</div>
-</div>
+</div>		
+<?php } else {
+	echo "<p align='center'>";
+	echo $this->Html->link('Retour', ['controller'=>'pages','action' => 'home'], ['class' => 'btn btn-default']);
+	echo "</p>";	
+}?>	

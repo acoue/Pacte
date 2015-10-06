@@ -160,7 +160,7 @@ class DemarchesController extends AppController
     		if($eval->name == 'Culture Sécurité à T2') {
     			if(strlen($eval->resultat) <1) {
     				$boolOk = false;
-    				$message = "Le résultat de la Culture Securite à T2 doit être complété.";
+    				$message = "Le résultat de la Culture Securite à T2 doit être complété. Veuillez cliquer sur le bouton 'Evaluation à T2'.";
     				break;
     			}
     			if(strlen($eval->file) <1) {
@@ -171,7 +171,7 @@ class DemarchesController extends AppController
     		} if($eval->name == 'Matrice de Maturité à T2') {
     			if(strlen($eval->resultat) <1) {
     				$boolOk = false;
-    				$message = "Le résultat de la Matrice de Maturité à T2 doit être complété.";
+    				$message = "Le résultat de la Matrice de Maturité à T2 doit être complété. Veuillez cliquer sur le bouton 'Evaluation à T2'";
     				break;
     			}
     			if(strlen($eval->file) <1) {

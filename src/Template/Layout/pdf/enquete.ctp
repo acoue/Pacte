@@ -16,45 +16,40 @@
 	google.setOnLoadCallback(drawGraphique2);
 	google.setOnLoadCallback(drawGraphique3);
 	
+
 	function drawGraphique1() {
         var data = new google.visualization.arrayToDataTable(GRAPHIQUE_1);
-        var options = {
-          width: '100%', height: 500,           
-          chart: {
-            title: '<?= $graphique1['titre'] ?>',
-            subtitle: '<?= $graphique1['sousTitre'] ?>'
-          },          
-          axes: {
-            y: {
-            	valeur1: {label: '<?=  $graphique1['labelYGauche'] ?>'}
-            }
-          }
-        };
 
-      var chart = new google.charts.BarChart(document.getElementById('div_graphique1'));
-      chart.draw(data, options);
+	    var options = {
+		    	title: '<?= $graphique1['titre'] ?>',
+	            subtitle: '<?= $graphique1['sousTitre'] ?>',
+	            legend: { position: 'top', maxLines: 3 },
+	            width: 1000,
+	            height: 800,
+		        vAxis: {
+		          title: '<?= $graphique1['labelYGauche'] ?>'
+		        }
+		      };
+
+		      var chart = new google.visualization.ColumnChart(document.getElementById('div_graphique1'));
+		      chart.draw(data, options);
     };
 
 
     function drawGraphique2() {
     	var data = new google.visualization.arrayToDataTable(GRAPHIQUE_2);
 
-        var options = {
-            width: '100%', height: 500,
-			chart: {
-            	title: '<?= $graphique2['titre'] ?>',
-                subtitle: '<?= $graphique2['sousTitre'] ?>',
-            }, 
-            chartArea: {              
-                width: '50%' 
-            },                   
-			hAxis: {
-            	title: '<?= $graphique2['labelX'] ?>',
-          	}
-        };
+		var options = {    			
+    		width: 1000, 
+    		height: 800,
+    	    title: '<?= $graphique2['titre'] ?>',
+            chartArea: {width: '50%'}
+    	            
+    	};
 
-        var chart = new google.visualization.BarChart(document.getElementById('div_graphique2'));
-        chart.draw(data, options);
+
+              var chart = new google.visualization.BarChart(document.getElementById('div_graphique2'));
+              chart.draw(data, options);
       }
 
     function drawGraphique3() {
@@ -63,7 +58,8 @@
     	var options = {
 			title: '<?= $graphique3['titre'] ?>',
             subtitle: '<?= $graphique3['sousTitre'] ?>',
-            width: '100%',
+            width: 1000,  
+			height: 800,           
            	bar: {groupWidth: '95%'},
        	    legend: { position: 'none' },
 		};
@@ -113,9 +109,8 @@
 			</tr>		
 <?php } ?>						
 		</tbody>
-	</table><br /><br />	
-	<div id="div_graphique1"></div><br /><br />
-	<div id="div_graphique2"></div><br /><br />
+	</table>
+	<br /><br />
 	<table cellpadding="0" cellspacing="0" class="table table-striped">						
 		<tbody>
 <?php foreach ($tabReponseType2 as $rep2) { ?>
@@ -133,6 +128,13 @@
 			</tr>		
 <?php } ?>						
 		</tbody>
-	</table><br /><br />         
-	<div id="div_graphique3" style="width: 100%; height: 400px; "></div>
+	</table>
+
+	<div class="sautPage"></div>	
+	<div id="div_graphique1"></div>
+	<div class="sautPage"></div>
+	<div id="div_graphique2"></div>
+	<div class="sautPage"></div>
+	<div id="div_graphique3"></div>
 </div>
+

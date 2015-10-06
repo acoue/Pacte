@@ -41,7 +41,11 @@ class EnqueteQuestionsTable extends Table
         $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
-            
+
+        $validator
+        ->requirePresence('libelle', 'create')
+        ->notEmpty('libelle');
+        
         $validator
             ->add('ordre', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('ordre');

@@ -173,54 +173,10 @@ if($session->check('Auth.User.role')) {
 			} else {
 				echo "<p class='alert alert-warning'>Votre démarche n'est plus consultable, pour toute question merci de contacter la HAS</p>";
 			}
-			
-			
-			
-			
-			
-			
-			
-			
 		}
 	}
 }
-
-if($role === 'admin') {
 ?>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-	var GLOBALES_PHP = <?= isset($tab_globales)? json_encode($tab_globales) : 'undefined'; ?>;
-	google.load("visualization", "1.1", {packages:["bar"]});
-	google.setOnLoadCallback(drawStuff);
-
-	function drawStuff() {
-        var data = new google.visualization.arrayToDataTable(GLOBALES_PHP);
-        var options = {
-          width: 900,
-          chart: {
-            title: '<?= $titre ?>',
-            subtitle: '<?= $sousTitre ?>'
-          },
-          series: {
-            0: { axis: 'valeur1' }, // Bind series 0 to an axis named 'distance'.
-            1: { axis: 'valeur2' }, // Bind series 1 to an axis named 'brightness'.
-            2: { axis: 'valeur3' } // Bind series 1 to an axis named 'brightness'.
-          },
-          axes: {
-            y: {
-            	valeur1: {label: '<?= $labelYGauche ?>'}, // Left y-axis.
-            	valeur2: {side: 'right', label: '<?= $labelYDroit ?>'} // Right y-axis.
-            }
-          }
-        };
-
-      var chart = new google.charts.Bar(document.getElementById('dual_y_div'));
-      chart.draw(data, options);
-    };
-</script>
-<br /><br />
-<div id="dual_y_div" style="width: 500px; height: 300px;"></div><br /><br />
-<?php }?>
 
 
 

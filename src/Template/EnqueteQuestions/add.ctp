@@ -26,7 +26,15 @@
 															'class' => 'form-control', 
 															'required' =>'required']); ?>
                     </div>                          
-				</div><br />  
+				</div><br />    
+				<div class="row">
+                	<label class="col-md-4 control-label" for="libelle">Libellé court  <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
+														   	'div' => false,'type' => 'textarea', 'escape' => false,
+															'class' => 'form-control', 
+															'required' =>'required']); ?>
+                    </div>                          
+				</div><br />   
 				<div class="row">
                 	<label class="col-md-4 control-label" for="aide">Texte d'aide </label>
                     <div class="col-md-8"><?= $this->Form->input('aide', ['label' => false,'id'=>'aide',
