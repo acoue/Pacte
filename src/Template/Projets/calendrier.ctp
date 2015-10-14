@@ -19,8 +19,8 @@
 						    <thead>
 						        <tr>
 						            <th width='40%'>Libellé</th>
-						            <th width='20%'>Date de début</th>
-						            <th width='20%'>Date de fin</th>
+						            <th width='25%'>Date de début</th>
+						            <th width='25%'>Date de fin</th>
 						            <th class="actions"><?= __('Actions') ?></th>
 						        </tr>
 						    </thead>

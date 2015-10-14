@@ -165,7 +165,6 @@ class UsersController extends AppController
 				$usersTable->save($modif_user);				
 				$this->Auth->setUser($user);
 				
-
 				//$this->set('demarche', $demarche);
 				if(isset($dateCloture)) $this->set('dateCloture', $dateCloture);
 				//$this->set('_serialize', ['demarche']);
@@ -174,6 +173,13 @@ class UsersController extends AppController
 								
 			} else $this->Flash->error(__("Nom d'utilisateur ou mot de passe incorrect, essayez à nouveau."));
 		}
+		$messageCnil = "";
+		//Message
+		$this->loadModel('Parametres');
+		$message = $this->Parametres->find('all')->where(['name' => 'DeclarationCNIL'])->first();
+		$messageCnil = $message->valeur;
+		$this->set('messageCnil', $messageCnil);
+		
 	}
 	
 	public function logout()

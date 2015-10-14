@@ -20,8 +20,10 @@
 		<p align="center">
 			<?= $this->Html->link('Pas encore inscrit','/Inscriptions/index',['class' => 'btn btn-default', 'title' => 'Démarrez la procédure d\'inscription']) ?>
 		</p>		
-		</div>
-
+		</div><br /><br />
+		<div class="row">
+        	<?= $messageCnil ?>    
+        </div><br /><br />
 	</div>
 	<div class="col-md-4"></div>
 </div>

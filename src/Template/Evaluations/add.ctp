@@ -27,6 +27,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
                     										'required' =>'required']); ?>
                     </div>                          
 				</div><br />  
+<?php if($message) {?>
 				<div class="row">
 					<label class="col-md-2 control-label" for="synthese">Synthèse <span class="obligatoire"><sup> *</sup></span></label>
                 	<div class="col-md-3 BoutonAide">
@@ -41,6 +42,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
                     										'required' =>'required']); ?>
                     </div>                
 				</div><br /> 
+<?php }?>
 				<div class="row">
 					<label class="col-md-5 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-7"><?= $this->Form->input('file', ['label' => false,'id'=>'file',

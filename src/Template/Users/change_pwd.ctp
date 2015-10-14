@@ -20,7 +20,7 @@
 					</div>			
 				</div>			
 				<div  class="row">		
-					<label class="col-md-4 control-label" for="pass1">Mot de passe (minimun : 8 caractères)</label>
+					<label class="col-md-4 control-label" for="pass1">Mot de passe <br />(8 caractères minimun)</label>
 					<div class="col-md-5">
 						<?= $this->Form->input('pass1', ['label' => false,'id'=>'pass1',
 															'class' => 'form-control', 

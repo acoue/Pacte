@@ -8,7 +8,7 @@ use Cake\ORM\TableRegistry;
 class EnqueteSatisfactionComponent extends Component {
 	
 	public function getEnqueteParCampagneGraphique1($enquetes){
-
+		
     	$graphique1 = array();
     	$graphique1['titre']='% de réponses';
     	$graphique1['labelYGauche']='%';
@@ -33,11 +33,11 @@ class EnqueteSatisfactionComponent extends Component {
     	$tabG1 = [[$labelXG1, $legende1G1, $legende2G1,	$legende3G1,$legende4G1,$legende5G1]];
 	    	
 	    foreach ($enquetes as $elt) {
-
+	    	//debug($elt);
     		$graphique1['sousTitre']="Campagne n°".$elt->enquete->campagne;
      		$iNbRep++;
      		//Recuperation du label de la question
-     		$label = $elt->enquete_question->libelle;
+     		$label = $elt->enquete_question->name;
      		$valeur = $elt->valeur;
 
      		if($labelTmp === "") { //Premier tour
@@ -110,7 +110,9 @@ class EnqueteSatisfactionComponent extends Component {
     	}
     	
     	$graphique1['tabGraphique'] = $tabG1;
-	    
+//    	debug($graphique1); 
+//    	die();
+    	
 		return $graphique1;
 	}
 	
@@ -211,7 +213,7 @@ class EnqueteSatisfactionComponent extends Component {
 			$graphique2['sousTitre']="Campagne n°".$elt->enquete->campagne;
 			$iNbRep++;
 			//Recuperation du label de la question
-			$label = $elt->enquete_question->libelle;
+			$label = $elt->enquete_question->name;
 			$valeur = $elt->valeur;
 		
 			if($labelTmp === "") { //Premier tour

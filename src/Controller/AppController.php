@@ -82,7 +82,15 @@ class AppController extends Controller
     	}
     	
     	
-	
+    	$version = "";
+    	$dateVersion="";
+    	//Message
+    	$this->loadModel('Parametres');
+    	$message = $this->Parametres->find('all')->where(['name' => 'Version'])->first();
+    	$version = $message->valeur;
+    	$message1 = $this->Parametres->find('all')->where(['name' => 'DateVersion'])->first();
+    	$dateVersion = $message1->valeur;    	
+    	$this->set(compact('version', 'dateVersion'));
     	
     	$phase = $session->read('Progress.Menu');
 		$this->loadModel('Outils');

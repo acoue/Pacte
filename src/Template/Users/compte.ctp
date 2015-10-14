@@ -70,13 +70,15 @@ if($session->read("Auth.User.role") == "equipe") {
 			</div><br />						
 			<div class="col-md-1"></div>
 		</div><br />
-	
+
 		<p align="center">
 			<?= $this->Form->button('Valider', ['type' => 'submit','class' => 'btn btn-info']) ?>
 			<?= $this->Form->end() ?>
-			<?= "<br /><br />".$this->Html->link('Changer son mot de passe', ['controller'=>'users', 'action'=>'changePwd/'.$user->id], ['class' => 'btn btn-warning']);?>
-		</p>
-<?php } ?>
+			</p>
+<?php } 
+	echo "<p align='center'>".$this->Html->link('Changer son mot de passe', ['controller'=>'users', 'action'=>'changePwd/'.$user->id], ['class' => 'btn btn-warning'])."</p>";
+	
+?>	
 		
 	</div>
 <?php if($session->read("Auth.User.role") != "equipe") { ?>

@@ -103,8 +103,11 @@ $cakeDescription = 'Pacte ';
         <footer class="footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-5 text-footer-left">&copy; Haute Autorité de Sante</div>
-                    <div class="col-md-5 text-footer-right">Version 1.0</div>
+                    <div class="col-md-5 text-footer-left">
+                    <?= $this->Html->link( $this->Html->image('footer-logo-has.png', ['height' => '40px', 'title' => 'Haute Autorité de Santé']),
+                    						"http://has-sante.fr", ['target' => '_blank', 'escape' => false]) ?>
+                    &copy; Haute Autorité de Sante 2015</div>
+                    <div class="col-md-5 text-footer-right">Version <?= $version ?><br /><?= $dateVersion ?></div>                    
                     <div class="col-md-2 text-footer-right">
                     <?= $this->Html->link('Mentions légales','/users/mentions')?>
                     </div>
