@@ -139,6 +139,7 @@ class MesuresController extends AppController
     {
 		$session = $this->request->session();
         $mesure = $this->Mesures->get($id);
+        $boolSupp= false;
         
         if ($this->request->is(['patch', 'post', 'put'])) {
         	
@@ -156,7 +157,7 @@ class MesuresController extends AppController
         		// Il s'agit d'un nouveau fichier
         		//Vérification de la présence
         		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name'])) {
-        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
+        			$boolSupp = unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
         		}
         		//Deplacement du nouveau
         		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);  
@@ -166,7 +167,7 @@ class MesuresController extends AppController
         		//Cas d'une modification
         		//Suppression de l'ancien
         		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$mesure->file) && strlen($mesure->file)>0) {
-        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$mesure->file);
+        			$boolSupp = unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$mesure->file);
         		}
         		//Deplacement du nouveau
         		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']); 
@@ -175,20 +176,24 @@ class MesuresController extends AppController
         	} else {
         		//Pas de nouveau fichier et pas de modification de fichier : modification des autres champs textes du formulaire
         		$nomFichier = $mesure->file ;
+        		$boolSupp = true;
         	}
+        	if($boolSupp) {
+        		//mise a jour des donnees
+        		$mesure->demarche_id = $d['demarche_id'];
+        		
+        		if(! in_array($d['name'], ["Matrice de Maturité à T0","Matrice de Maturité à T1","Matrice de Maturité à T2"])) $mesure->name = $d['name'];
+        		$mesure->resultat = $d['resultat'];
+        		$mesure->file = $nomFichier;
+        		 
+        		if ($this->Mesures->save($mesure)) {
+        			$this->Flash->success('La mesure a bien été sauvegardée.');
+        			return $this->redirect(['action' => 'index']);
+        		} else {
+        			$this->Flash->error('Erreur dans la sauvegarde de la mesure.');
+        		}
+        	} else $this->Flash->error('Erreur dans la sauvegarde de la mesure.');
         	
-        	// mise a jour des donnees
-        	$mesure->demarche_id = $d['demarche_id'];
-        	$mesure->name = $d['name'];
-        	$mesure->resultat = $d['resultat'];
-        	$mesure->file = $nomFichier;
-        	
-            if ($this->Mesures->save($mesure)) {
-                $this->Flash->success('La mesure a bien été sauvegardée.');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error('Erreur dans la sauvegarde de la mesure.');
-            }
         }
         $this->set(compact('mesure'));
         $this->set('_serialize', ['mesure']);

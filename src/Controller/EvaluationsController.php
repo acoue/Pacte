@@ -124,6 +124,8 @@ class EvaluationsController extends AppController
     {    	
 		$session = $this->request->session();
         $evaluation = $this->Evaluations->get($id);
+        $boolSupp= false;
+        
         if ($this->request->is(['patch', 'post', 'put'])) {
         	$d = $this->request->data;
         	//debug($d);die();        	
@@ -139,7 +141,7 @@ class EvaluationsController extends AppController
         		// Il s'agit d'un nouveau fichier
 	        	//Vérification de la présence
 	        	if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name'])) {
-	        		unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
+	        		$boolSupp= unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
 	        	}
 	        	//Deplacement du nouveau 
 	        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);
@@ -149,7 +151,7 @@ class EvaluationsController extends AppController
 	        	//Cas d'une modification
         		//Suppression de l'ancien
         		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file) && strlen($evaluation->file)>0) {
-        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file);
+        			$boolSupp= unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file);
         		}
         		//Deplacement du nouveau
         		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']);
@@ -158,20 +160,24 @@ class EvaluationsController extends AppController
         	} else {
         		//Pas de nouveau fichier et pas de modification de fichier : modification des autres champs textes du formulaire 
         		$nomFichier = $evaluation->file ;
+        		$boolSupp=true;
         	} 
-        	// mise a jour des donnees
-        	$evaluation->demarche_id = $d['demarche_id'];
-        	$evaluation->name = $d['name'];
-        	$evaluation->synthese = $d['synthese'];
-        	$evaluation->file = $nomFichier;
         	
-        	
-            if ($this->Evaluations->save($evaluation)) {
-                $this->Flash->success('L\'évaluation a bien été sauvegardée.');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error('Erreur dans la sauvegarde de l\'évaluation.');
-            }
+        	if($boolSupp) {
+	        	// mise a jour des donnees
+	        	$evaluation->demarche_id = $d['demarche_id'];
+	        	if(! in_array($d['name'], ["CRM Santé","Culture Sécurité"])) $evaluation->name = $d['name'];
+	        	$evaluation->synthese = $d['synthese'];
+	        	$evaluation->file = $nomFichier;
+	        	
+	        	
+	            if ($this->Evaluations->save($evaluation)) {
+	                $this->Flash->success('L\'évaluation a bien été sauvegardée.');
+	                return $this->redirect(['action' => 'index']);
+	            } else {
+	                $this->Flash->error('Erreur dans la sauvegarde de l\'évaluation.');
+	            }        		
+        	} else $this->Flash->error('Erreur dans la sauvegarde de l\'évaluation.');
         }
         //Message
         $this->loadModel('Parametres');
