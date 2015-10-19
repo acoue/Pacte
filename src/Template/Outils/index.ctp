@@ -17,7 +17,7 @@
 				    <tbody>
     				<?php foreach ($outils as $outil): ?>
 				        <tr>
-				            <td><?= h($outil->name) ?></td>
+				            <td><?= h($outil->libelle) ?></td>
 				            <td><?= h($outil->phase->name) ?></td>
 				            <td><?php if(h($outil->type) == "cle") echo "Outils clé en main";
 				            		 else echo "Outils pédagogiques"; ?></td>

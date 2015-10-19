@@ -20,6 +20,14 @@
                     <div class="col-md-1">
                     <?= $this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/'.h($outil->name), ['class' => 'titre','target' => '_blank','escape' => false]);?>
                     </div> 
+				</div><br /> 	
+				<div class="row">
+					<label class="col-md-4 control-label" for="libelle">Libellé <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
+														   	'div' => false, 'value' => h($outil->libelle),
+															'class' => 'form-control',
+                    										'type' => 'text', 'required' =>'required']); ?>
+                    </div>                     
 				</div><br /> 			    
 				<div class="row">
                 	<label class="col-md-4 control-label" for="texte">Description <span class="obligatoire"> *</span></label>
@@ -39,7 +47,16 @@
                     										'value'=> $outil->phase,
                     										'required' =>'required']); ?>
                     </div>                          
-				</div><br />   
+				</div><br />  		    
+				<div class="row">
+                	<label class="col-md-4 control-label" for="ordre">Ordre <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('ordre', ['label' => false,'id'=>'ordre',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'value'=> $outil->ordre,
+                    										'required' =>'required']); ?>
+                    </div>                          
+				</div><br />    
 				<div class="row">
                 	<label class="col-md-4 control-label" for="type">Type <span class="obligatoire"> *</span></label>
                 	<div class="col-md-8"><?= $this->Form->input('type', ['label' => false,

@@ -42,8 +42,12 @@ class OutilsTable extends Table
             ->allowEmpty('id', 'create')
             ->requirePresence('name', 'create')
             ->notEmpty('name')
+            ->requirePresence('libelle', 'create')
+            ->notEmpty('libelle')
             ->requirePresence('texte', 'create')
             ->notEmpty('texte')
+            ->requirePresence('ordre', 'create')
+            ->notEmpty('ordre')
             ->requirePresence('type', 'create')
             ->notEmpty('type');
 

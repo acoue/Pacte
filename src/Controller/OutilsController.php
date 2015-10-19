@@ -75,6 +75,7 @@ class OutilsController extends AppController
         	$result = $query->insert(['name', 'texte', 'type','phase_id'])
 				        	->values([
 				        			'name' => $nomFichier,
+				        			'libelle' => $d['libelle'],
 				        			'texte' => $d['texte'],
 				        			'type' => $d['type'],
 				        			'phase_id' => $d['phase_id' ] 
@@ -102,9 +103,7 @@ class OutilsController extends AppController
      */
     public function edit($id = null)
     {
-        $outil = $this->Outils->get($id, [
-            'contain' => []
-        ]);
+        $outil = $this->Outils->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $outil = $this->Outils->patchEntity($outil, $this->request->data);
             if ($this->Outils->save($outil)) {

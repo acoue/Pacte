@@ -1,3 +1,4 @@
+  	
 <?php
 /**
  * @copyright     Copyright (c) Haute Autorité de Santé. (http://www.has-sante.fr)
@@ -34,7 +35,8 @@ $cakeDescription = 'Pacte ';
     <?= $this->CKEditor->loadJs() ?>
 </head>
 <body>
-    <div id="main">    
+    <div id="main">
+    
     	<div style="background-color:#FA8258;width:100%;text-align:center;font: bold 20px verdana;">Environnement de QUALIFICATION</div>
         <!-- navbar -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
@@ -48,9 +50,9 @@ $cakeDescription = 'Pacte ';
                     </button>
                     
                     <span class="header_logo">
-                    <?=	$this->Html->image('logo.jpg', ['height' => '60px', 'title' => 'Programme Pacte']); ?>
+                    <?=	$this->Html->image('logo.png', ['height' => '60px', 'title' => 'Programme Pacte']); ?>
                     </span>
-                    <span class="header_titre">Pacte</span>
+<!--                     <span class="header_titre">Pacte</span> -->
                 </div>
                 <!-- Menu -->
                 <?php 
@@ -65,39 +67,63 @@ $cakeDescription = 'Pacte ';
         </nav>    
         <!-- /.navbar -->
         
+<!--  Div pour les Outils - Pas pour les admins-->
+<?php if(! in_array($role,['has','expert','admin'])) { //Affichage Admin ?>
+        	<div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+	              <div id="divImagePlus" class="divMontre">
+	              		<?php echo $this->Html->link( $this->Html->image('div_montre.png', ['height' => '30px', 'title' => 'Montrer les outils']),
+	                    						'javascript:ChangeVisibilityOutil("divOutil","divImagePlus")', 
+	              								['escape' => false])."<span class='divOutil'>Vos outils</span><br />"; ?>
+	              </div>
+	              
+	              <div id="divOutil" class="divCache">
+              			<?php echo $this->Html->link( $this->Html->image('div_cache.png', ['height' => '30px', 'title' => 'Cacher les outils']),
+                    						'javascript:ChangeVisibilityOutil("divOutil","divImagePlus")', 
+              								['escape' => false])."<span class='divOutil'>Vos outils</span><br />"; ?>
+              
+					<?= $this->element('outil', ['menu' => '1', 'sous_menu' => '1']) ?>
+				</div> 
+              </div>
+              <div class="col-md-1"></div>
+            </div><br />
+<?php }?>
+        
         <!-- Barre de progression des phases et sous-phases -->
         <?= $this->element('progress'); ?>
         <!-- /.Barre de progression des phases et sous-phases -->
         
         
         <!-- Contenu -->     
-        <div class="container">
+        <div class="container">      
             <!-- Div pour les message -->
             <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-6">
+				<div class="col-md-3"></div>
+              	<div class="col-md-6">
 					<?= $this->Flash->render('auth') ?>
                   	<?= $this->Flash->render() ?>
-              </div>
-              <div class="col-md-3"></div>
+              	</div>
+              	<div class="col-md-3"></div>
             </div>
-<?php if(in_array($role,['has','expert','admin'])) { //Affichage Admin ?>
+            <!--  Div Contenu  -->
             <div class="row">                
                 <div class="col-md-12"><?= $this->fetch('content') ?> </div>
-            </div>
-<?php } else { //Affichage Equipe CP HAS et Expert => barre d'outils ?>
-            <div class="row">
-                <div class="col-md-2">
-                	<?= $this->element('outil', ['menu' => '1', 'sous_menu' => '1']); ?>
-                </div>
-                <div class="col-md-10"><?= $this->fetch('content') ?> </div>
-            </div>
-<?php }?>           
-            
-            
-            <br /><br />
-        </div>
-        <!-- /.contenu -->
+            </div><br />        
+
+        
+			<!-- Visualisation de sa démarche -->        
+			<?php if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) { ?>
+			<div class="row">
+				<div class="col-md-1"></div>
+			    <div class="col-md-10"><p align='center' >
+				<?= $this->Html->link('Voir l\'état de sa démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$session->read('Equipe.Identifiant')],['class' => 'btn btn-default']) ?>
+				</p></div>
+				<div class="col-md-1"></div>
+			</div><br />
+			<?php } ?>  
+		</div><br /><br />             
+        <!-- /.contenu -->     
                 
         <!-- Footer -->
         <footer class="footer">
@@ -123,9 +149,10 @@ $cakeDescription = 'Pacte ';
       
     <?= $this->Html->script('jquery-ui.js') ?>
     <?= $this->Html->script('bootstrap.min.js') ?>
-    <?= $this->Html->script('userScript.js') ?>      
+    <?= $this->Html->script('userScript.js') ?>    
+    <?= $this->Html->script('userFunction.js') ?>    
     
     <?= $this->fetch('script') ?>
 </body>
 </html>
-    
+    	

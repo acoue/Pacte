@@ -16,7 +16,15 @@
 															'class' => 'form-control', 'required' =>'required',
                     										'type' => 'file']); ?>
                     </div>
-				</div><br /> 			    
+				</div><br /> 	
+				<div class="row">
+					<label class="col-md-4 control-label" for="libelle">Libellé <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
+														   	'div' => false, 'value' => h($outil->libelle),
+															'class' => 'form-control',
+                    										'type' => 'text', 'required' =>'required']); ?>
+                    </div>                     
+				</div><br />  			    
 				<div class="row">
                 	<label class="col-md-4 control-label" for="texte">Description <span class="obligatoire"><sup> *</sup></span></label>
                     <div class="col-md-8"><?= $this->Form->input('texte', ['label' => false,'id'=>'texte',
@@ -38,12 +46,20 @@
 				<div class="row">
                 	<label class="col-md-4 control-label" for="type">Type <span class="obligatoire"> *</span></label>
                 	<div class="col-md-8"><?= $this->Form->input('type', ['label' => false,
-                											'options' => ['' => 'Sélectionner', 'pedagogiques' => 'Outils pédagogiques', 'cle' => 'Outils clé en main'],
+                											'options' => ['' => 'Sélectionner', 'sans'=>'Aucun','pedagogiques' => 'Outils pédagogiques', 'cle' => 'Outils clé en main'],
                 											'div' => false,
 															'class' => 'form-control', 
                     										'required' =>'required']) ?>    
                 	</div>                 
-				</div>
+				</div>  <br /> 		    
+				<div class="row">
+                	<label class="col-md-4 control-label" for="ordre">Ordre <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('ordre', ['label' => false,'id'=>'ordre',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'required' =>'required']); ?>
+                    </div>                          
+				</div><br /> 
 			</div>						
 			<div class="col-md-1"></div>			
 		</div><br /><br />
