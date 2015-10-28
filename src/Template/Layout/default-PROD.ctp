@@ -35,7 +35,7 @@ $cakeDescription = 'Pacte ';
 </head>
 <body>
     <div id="main">
-     <!-- navbar -->
+        <!-- navbar -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -67,23 +67,25 @@ $cakeDescription = 'Pacte ';
 <!--  Div pour les Outils - Pas pour les admins-->
 <?php if(! in_array($role,['has','expert','admin'])) { //Affichage Admin ?>
         	<div class="row">
-              <div class="col-md-1"></div>
-              <div class="col-md-10">
-	              <div id="divImagePlus" class="divMontre">
-	              		<?php echo $this->Html->link( $this->Html->image('div_montre.png', ['height' => '30px', 'title' => 'Montrer les outils']),
+              	<div class="col-md-1"></div>
+            	<div class="col-md-10">
+					<div class="divContainOutil">
+		            	<div id="divImagePlus" class="divMontre">
+		              		<?php echo $this->Html->link( $this->Html->image('div_montre.png', ['height' => '30px', 'title' => 'Montrer les outils']),
+		                    						'javascript:ChangeVisibilityOutil("divOutil","divImagePlus")', 
+		              								['escape' => false])."<span class='divOutil'>Vos outils</span><br />"; ?>
+		              	</div>
+		              
+		              	<div id="divOutil" class="divCache">
+	              			<?php echo $this->Html->link( $this->Html->image('div_cache.png', ['height' => '30px', 'title' => 'Cacher les outils']),
 	                    						'javascript:ChangeVisibilityOutil("divOutil","divImagePlus")', 
 	              								['escape' => false])."<span class='divOutil'>Vos outils</span><br />"; ?>
-	              </div>
 	              
-	              <div id="divOutil" class="divCache">
-              			<?php echo $this->Html->link( $this->Html->image('div_cache.png', ['height' => '30px', 'title' => 'Cacher les outils']),
-                    						'javascript:ChangeVisibilityOutil("divOutil","divImagePlus")', 
-              								['escape' => false])."<span class='divOutil'>Vos outils</span><br />"; ?>
-              
-					<?= $this->element('outil', ['menu' => '1', 'sous_menu' => '1']) ?>
-				</div> 
-              </div>
-              <div class="col-md-1"></div>
+						<?= $this->element('outil', ['menu' => '1', 'sous_menu' => '1']) ?>
+						</div> 
+					</div>
+              	</div>
+              	<div class="col-md-1"></div>
             </div><br />
 <?php }?>
         

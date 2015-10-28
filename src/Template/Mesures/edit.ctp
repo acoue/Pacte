@@ -69,7 +69,7 @@ Evolution des résultats intermédiares<br />Points forts et axes d'amélioratio
 				</div><br /> 
 <?php if(empty($mesure->file)) { ?>
 				<div class="row">
-					<label class="col-md-4 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+					<label class="col-md-4 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup> (Taille max : 10 Mo)</span></label>
                     <div class="col-md-8"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
 														   	'div' => false, 
 															'class' => 'form-control', 'required' =>'required',
@@ -78,7 +78,7 @@ Evolution des résultats intermédiares<br />Points forts et axes d'amélioratio
 				</div><br /> 
 <?php } else {?>				
 				<div class="row">
-					<label class="col-md-4 control-label" for="file_exist">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+					<label class="col-md-4 control-label" for="file_exist">Votre document <span class="obligatoire"><sup> *</sup> (Taille max : 10 Mo)</span></label>
                     <div class="col-md-6"><?= $this->Form->input('file_exist', ['label' => false,'id'=>'file_exist',
 														   	'div' => false,'value'=>$mesure->file ,
 															'class' => 'form-control', 'disabled' =>'disabled',
@@ -91,7 +91,7 @@ Evolution des résultats intermédiares<br />Points forts et axes d'amélioratio
 <div id="divDocument" class="divCache"><br /><br />
 	<div class="row">
 		<div class="col-md-2"></div>
-		<label class="col-md-3 control-label" for="file_new">Nouveau document</label>
+		<label class="col-md-3 control-label" for="file_new">Nouveau document<span class="obligatoire"> (Taille max : 10 Mo)</span></label>
         <div class="col-md-6"><?= $this->Form->input('file_new', ['label' => false,'id'=>'file_new',
 														   	'div' => false,
 															'class' => 'form-control',

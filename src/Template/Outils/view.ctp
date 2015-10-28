@@ -21,10 +21,26 @@
                     </div> 
 				</div><br /> 	
 				<div class="row">
-					<label class="col-md-4 control-label" for="libelle">Libellé <span class="obligatoire"><sup> *</sup></span></label>
+					<label class="col-md-4 control-label" for="libelle">Libellé</label>
                     <div class="col-md-8"><?= $this->Form->input('libelle', ['label' => false,'id'=>'libelle',
 														   	'div' => false, 'value' => h($outil->libelle),
 															'class' => 'form-control',
+                    										'type' => 'text', 'disabled' =>'disabled']); ?>
+                    </div>                     
+				</div><br /> 	 	
+				<div class="row">
+					<label class="col-md-4 control-label" for="thematique">Thématique <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('thematique', ['label' => false,'id'=>'thematique',
+														   	'div' => false, 'value' => h($outil->thematique),
+															'class' => 'form-control',
+                    										'type' => 'text', 'disabled' =>'disabled']); ?>
+                    </div>                     
+				</div><br /> 	 	
+				<div class="row">
+					<label class="col-md-4 control-label" for="couleur">Couleur de la thématique <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('couleur', ['label' => false,'id'=>'couleur',
+														   	'div' => false, 'value' => h($outil->couleur),
+															'class' => 'form-control colorTexte',
                     										'type' => 'text', 'disabled' =>'disabled']); ?>
                     </div>                     
 				</div><br />		    
@@ -46,7 +62,7 @@
                     </div>                          
 				</div><br />    		    
 				<div class="row">
-                	<label class="col-md-4 control-label" for="ordre">Ordre <span class="obligatoire"><sup> *</sup></span></label>
+                	<label class="col-md-4 control-label" for="ordre">Ordre</label>
                     <div class="col-md-8"><?= $this->Form->input('ordre', ['label' => false,'id'=>'ordre',
 														   	'div' => false,
 															'class' => 'form-control', 

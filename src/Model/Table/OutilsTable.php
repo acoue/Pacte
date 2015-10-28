@@ -49,7 +49,11 @@ class OutilsTable extends Table
             ->requirePresence('ordre', 'create')
             ->notEmpty('ordre')
             ->requirePresence('type', 'create')
-            ->notEmpty('type');
+            ->notEmpty('type')
+            ->requirePresence('thematique', 'create')
+            ->notEmpty('thematique')
+            ->requirePresence('couleur', 'create')
+            ->notEmpty('couleur');
 
         return $validator;
     }

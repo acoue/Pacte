@@ -19,6 +19,8 @@ class Outil extends Entity
         'texte' => true,
         'libelle' => true,
         'type' => true,
+    	'thematique'=>true,
+    	'couleur'=>true,
     	'ordre' => true,
         'phase_id' => true,
         'phase' => true,

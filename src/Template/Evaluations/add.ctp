@@ -44,7 +44,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				</div><br /> 
 <?php }?>
 				<div class="row">
-					<label class="col-md-5 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+					<label class="col-md-5 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup> (Taille max : 10 Mo)</span></label>
                     <div class="col-md-7"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
 														   	'div' => false,
 															'class' => 'form-control', 'required' =>'required',

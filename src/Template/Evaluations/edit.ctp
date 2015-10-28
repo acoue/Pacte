@@ -70,7 +70,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 				</div><br /> 
 <?php if(empty($evaluation->file)) { ?>
 				<div class="row">
-					<label class="col-md-5 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+					<label class="col-md-5 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup> (Taille max : 10 Mo)</span></label>
                     <div class="col-md-7"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
 														   	'div' => false, 
 															'class' => 'form-control', 'required' =>'required',
@@ -92,7 +92,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 <div id="divDocument" class="divCache"><br /><br />
 	<div class="row">
 		<div class="col-md-2"></div>
-		<label class="col-md-3 control-label" for="file_new">Nouveau document</label>
+		<label class="col-md-3 control-label" for="file_new">Nouveau document <span class="obligatoire"> (Taille max : 10 Mo)</span></label>
         <div class="col-md-6"><?= $this->Form->input('file_new', ['label' => false,'id'=>'file_new',
 														   	'div' => false,
 															'class' => 'form-control',

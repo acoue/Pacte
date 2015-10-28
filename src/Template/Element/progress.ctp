@@ -21,7 +21,7 @@ if($session->read('Equipe.Evaluation')) {
 }
 
 if($menu > 0 ){
-
+	echo "<br />";
 //libellé
 $libMenu1 = "Phase d'engagement";
 $libMenu2 = "Phase de diagnostic";

@@ -58,37 +58,46 @@ class OutilsController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {    	
+    public function add() {    	
         $outil = $this->Outils->newEntity();
         if ($this->request->is('post')) {
-			//debug($this->request->data); die();
         	//déplacement du fichier
-        	$d = $this->request->data;
-        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['fichier']['name']);  
-        	$destination = DATA.'outil'.DS.$nomFichier;
-        	move_uploaded_file($d['fichier']['tmp_name'], $destination);
+        	$d = $this->request->data;       	
         	
-        	//insertion en base
-        	$outils = TableRegistry::get('Outils');
-        	$query = $outils->query();
-        	$result = $query->insert(['name', 'texte', 'type','phase_id'])
-				        	->values([
-				        			'name' => $nomFichier,
-				        			'libelle' => $d['libelle'],
-				        			'texte' => $d['texte'],
-				        			'type' => $d['type'],
-				        			'phase_id' => $d['phase_id' ] 
-				        	])
-				        	->execute();
-        	//debug($result); die();
-        	if($result) {
-        		$this->Flash->success('L\'outil a bien été créé.');
-        		return $this->redirect(['action' => 'index']);        		
+        	//Quand la taille du fichier est trop importante 
+        	// c'est à dire les paramètres du php.ini (upload_max_filesize et post_max_size) => formulaire vide
+        	if(empty($d)) {
+        		$this->Flash->error('La taille du fichier dépasse la limite des 10 Mo.');
         	} else {
-                $this->Flash->error('Erreur dans la création de l\'outil.');        		
-        	}        	
-        }
+        	
+	        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['fichier']['name']);  
+	        	$destination = DATA.'outil'.DS.$nomFichier;
+	        	move_uploaded_file($d['fichier']['tmp_name'], $destination);
+	        	
+	        	//insertion en base
+	        	$outils = TableRegistry::get('Outils');
+	        	$query = $outils->query();
+	        	$result = $query->insert(['name', 'libelle','texte', 'type','ordre','phase_id'])
+					        	->values([
+					        			'name' => $nomFichier,
+					        			'libelle' => $d['libelle'],
+					        			'thematique' => $d['thematique'],
+					        			'couleur' => $d['couleur'],
+					        			'texte' => $d['texte'],
+					        			'type' => $d['type'],
+					        			'ordre' => $d['ordre'],
+					        			'phase_id' => $d['phase_id' ] 
+					        	])
+					        	->execute();
+	        	//debug($result); die();
+	        	if($result) {
+	        		$this->Flash->success('L\'outil a bien été créé.');
+	        		return $this->redirect(['action' => 'index']);        		
+	        	} else {
+	                $this->Flash->error('Erreur dans la création de l\'outil.');        		
+	        	}        	
+	        }
+	    }
         $phases = $this->Outils->Phases->find('list', ['limit' => 200]);
         $this->set(compact('outil', 'phases'));
         $this->set('_serialize', ['outil']);
@@ -107,10 +116,10 @@ class OutilsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $outil = $this->Outils->patchEntity($outil, $this->request->data);
             if ($this->Outils->save($outil)) {
-                $this->Flash->success('The outil has been saved.');
+                $this->Flash->success('L\'outil a bien été sauvegardé.');
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The outil could not be saved. Please, try again.');
+                $this->Flash->error('Erreur ans la sauvegarde de l\'outil.');
             }
         }
         $phases = $this->Outils->Phases->find('list', ['limit' => 200]);

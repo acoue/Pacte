@@ -87,22 +87,30 @@ class EvaluationsController extends AppController
         	
         	//debug($this->request->data);die();
         	$d = $this->request->data;
-        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);        	
-        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;        	
-        	move_uploaded_file($d['file']['tmp_name'], $destination);
-        	 
-        	$evaluation->id = null;
-        	$evaluation->demarche_id = $d['demarche_id'];
-        	$evaluation->name = $d['name'];
-        	$evaluation->synthese = $d['synthese'];
-        	$evaluation->file = $nomFichier;        	
+        	//Quand la taille du fichier est trop importante 
+        	// c'est à dire les paramètres du php.ini (upload_max_filesize et post_max_size) => formulaire vide
         	
-            if ($this->Evaluations->save($evaluation)) {
-                $this->Flash->success('L\'évaluation a bien été sauvegardée.');
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error('Erreur dans la sauvegarde de l\'évaluation.');
-            }
+        	if(empty($d)) {
+        		$this->Flash->error('La taille du fichier dépasse la limite des 10 Mo.');
+        	} else {
+        	
+	        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);        	
+	        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;        	
+	        	move_uploaded_file($d['file']['tmp_name'], $destination);
+	        	 
+	        	$evaluation->id = null;
+	        	$evaluation->demarche_id = $d['demarche_id'];
+	        	$evaluation->name = $d['name'];
+	        	$evaluation->synthese = $d['synthese'];
+	        	$evaluation->file = $nomFichier;        	
+	        	
+	            if ($this->Evaluations->save($evaluation)) {
+	                $this->Flash->success('L\'évaluation a bien été sauvegardée.');
+	                return $this->redirect(['action' => 'index']);
+	            } else {
+	                $this->Flash->error('Erreur dans la sauvegarde de l\'évaluation.');
+	            }
+        	}
         }
         
         //Message
@@ -137,26 +145,40 @@ class EvaluationsController extends AppController
         	} 
 
         	//Cas d'un nouveau fichier : CRM et Culture securite
-        	if(isset($d['file']) && $d['file']['tmp_name'] != '') { 
-        		// Il s'agit d'un nouveau fichier
-	        	//Vérification de la présence
-	        	if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name'])) {
-	        		$boolSupp= unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
-	        	}
-	        	//Deplacement du nouveau 
-	        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);
-	        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
-	        	move_uploaded_file($d['file']['tmp_name'], $destination);      	
-        	} else if(isset($d['file_new']) && $d['file_new']['tmp_name'] != '') {        	
-	        	//Cas d'une modification
-        		//Suppression de l'ancien
-        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file) && strlen($evaluation->file)>0) {
-        			$boolSupp= unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file);
+        	if(isset($d['file']) && $d['file']['tmp_name'] != '') {         		
+
+        		//Quand la taille du fichier est trop importante
+        		// c'est à dire les paramètres du php.ini (upload_max_filesize et post_max_size) => formulaire vide        		 
+        		if(empty($d)) {
+        			$this->Flash->error('La taille du fichier dépasse la limite des 10 Mo.');
+        		} else {
+	        		// Il s'agit d'un nouveau fichier
+		        	//Vérification de la présence
+		        	if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name'])) {
+		        		$boolSupp= unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
+		        	}
+		        	//Deplacement du nouveau 
+		        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);
+		        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
+		        	move_uploaded_file($d['file']['tmp_name'], $destination);
+        		}      	
+        	} else if(isset($d['file_new']) && $d['file_new']['tmp_name'] != '') {    
+
+        		//Quand la taille du fichier est trop importante
+        		// c'est à dire les paramètres du php.ini (upload_max_filesize et post_max_size) => formulaire vide
+        		if(empty($d)) {
+        			$this->Flash->error('La taille du fichier dépasse la limite des 10 Mo.');
+        		} else {   	
+		        	//Cas d'une modification
+	        		//Suppression de l'ancien
+	        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file) && strlen($evaluation->file)>0) {
+	        			$boolSupp= unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file);
+	        		}
+	        		//Deplacement du nouveau
+	        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']);
+	        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
+	        		move_uploaded_file($d['file_new']['tmp_name'], $destination);
         		}
-        		//Deplacement du nouveau
-        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']);
-        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
-        		move_uploaded_file($d['file_new']['tmp_name'], $destination);
         	} else {
         		//Pas de nouveau fichier et pas de modification de fichier : modification des autres champs textes du formulaire 
         		$nomFichier = $evaluation->file ;

@@ -11,7 +11,7 @@
 			<div class="col-md-8">			
     		<?= $this->Form->create($outil, ['id'=>'edit_outil_form']); ?>
 				<div class="row">
-					<label class="col-md-4 control-label" for="name">Fichier</label>
+					<label class="col-md-4 control-label" for="name">Fichier<span class="obligatoire"> (Taille max : 10 Mo)</span></label>
                     <div class="col-md-7"><?= $this->Form->input('name', ['label' => false,'id'=>'name',
 														   	'div' => false, 'value' => h($outil->name),
 															'class' => 'form-control',
@@ -28,7 +28,23 @@
 															'class' => 'form-control',
                     										'type' => 'text', 'required' =>'required']); ?>
                     </div>                     
-				</div><br /> 			    
+				</div><br /> 	 	
+				<div class="row">
+					<label class="col-md-4 control-label" for="thematique">Thématique <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('thematique', ['label' => false,'id'=>'thematique',
+														   	'div' => false, 'value' => h($outil->thematique),
+															'class' => 'form-control',
+                    										'type' => 'text', 'required' =>'required']); ?>
+                    </div>                     
+				</div><br /> 	 	
+				<div class="row">
+					<label class="col-md-4 control-label" for="couleur">Couleur de la thématique <span class="obligatoire"><sup> *</sup></span></label>
+                    <div class="col-md-8"><?= $this->Form->input('couleur', ['label' => false,'id'=>'couleur',
+														   	'div' => false, 'value' => h($outil->couleur),
+															'class' => 'form-control colorTexte',
+                    										'type' => 'text', 'required' =>'required']); ?>
+                    </div>                     
+				</div><br />		    
 				<div class="row">
                 	<label class="col-md-4 control-label" for="texte">Description <span class="obligatoire"> *</span></label>
                     <div class="col-md-8"><?= $this->Form->input('texte', ['label' => false,
@@ -60,9 +76,9 @@
 				<div class="row">
                 	<label class="col-md-4 control-label" for="type">Type <span class="obligatoire"> *</span></label>
                 	<div class="col-md-8"><?= $this->Form->input('type', ['label' => false,
-                											'options' => ['' => 'Sélectionner', 'pedagogiques' => 'Outils pédagogiques', 'cle' => 'Outils clé en main'],
+                											'options' => ['' => 'Sélectionner', 'sans'=>'Aucun' ,'pedagogiques' => 'Outils pédagogiques', 'cle' => 'Outils clé en main'],
                 											'div' => false,
-															'class' => 'form-control', 
+															'class' => 'form-control', 'value'=> $outil->type,
                     										'required' =>'required']) ?>    
                 	</div>                
 				</div>

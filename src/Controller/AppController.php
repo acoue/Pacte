@@ -94,9 +94,19 @@ class AppController extends Controller
     	
     	$phase = $session->read('Progress.Menu');
 		$this->loadModel('Outils');
-    	$outilsPeda = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'pedagogiques']);
-    	$outilsCle = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'cle']);   	
-    	$this->set(['listeOutilsPeda' => $outilsPeda,'listeOutilsCle' => $outilsCle]);
+//     	$outilsPeda = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'pedagogiques'])->order('ordre')->toArray();
+//     	$outilsCle = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'cle'])->order('ordre')->toArray(); 
+//     	$outilsDivers = $this->Outils->find('all')->where(['phase_id'=>'99'])->order('ordre')->toArray(); //Outils sans phase
+//     	$outilsToutes = $this->Outils->find('all')->where(['phase_id'=>'98'])->order('ordre')->toArray(); //Outils toutes phases    	   
+//     	$this->set(['listeOutilsPeda' => $outilsPeda,'listeOutilsCle' => $outilsCle, 'listeOutilsDivers' => $outilsDivers,'listeOutilsToutes' => $outilsToutes]);
+
+		$outilsPhase = $this->Outils->find('all')->where(['phase_id'=>$phase])->order('thematique,ordre')->toArray();
+     	$outilsDivers = $this->Outils->find('all')->where(['phase_id'=>'99'])->order('thematique,ordre')->toArray(); //Outils sans phase
+     	$outilsToutes = $this->Outils->find('all')->where(['phase_id'=>'98'])->order('thematique,ordre')->toArray(); //Outils toutes phases 
+     	$outils = array_merge($outilsPhase,$outilsToutes);
+     	    	
+    	
+    	$this->set(['listeOutilsPhase' => $outils,'listeOutilsDivers' => $outilsDivers]);
     	
     }
     

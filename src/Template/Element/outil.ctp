@@ -2,30 +2,61 @@
 $session = $this->request->session();
 
 //Outil quand utilisateur connecté
+echo "<p>";
 if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) { 
-	if(!empty($listeOutilsPeda)) {
-		echo "<p class='boiteOutil'>Outils pédagogiques</p>";
-		foreach ($listeOutilsPeda as $outilP):
-			echo $this->Html->link(h($outilP->name), '/files/outil/'.h($outilP->name), ['class' => 'titre','target' => '_blank','escape' => false]);
-		                   
+
+	if(count($listeOutilsPhase) > 0 ) {	
+		echo "<table cellpadding='0' cellspacing='0' class='table table-condensed' width='80%'>";
+// 		echo "<thead>";
+// 		echo "<tr>";
+// 		echo "<th colspan='2' width='50%'><span class='boiteOutil' >Outils pédagogiques</span></th>";
+// 		echo "<th colspan='2' width='50%'><span class='boiteOutil' >Outils clé en main</span></th>";
+// 		echo "</tr>";
+// 		echo "</thead>";
+		echo "<tbody>";
+		
+		foreach ($listeOutilsPhase as $outilP):
+			echo "<tr style='background-color:".$outilP['couleur'].";' >";
+			echo "	<td width='20%'>".$outilP['thematique']."</td>";
+			echo "	<td width='20%'><span><i class='glyphicon glyphicon-file'></i></span>   ";
+			echo $this->Html->link($outilP['libelle'], '/files/outil/'.$outilP['name'], ['class' => 'titre','target' => '_blank','escape' => false])."</td>";				
+			echo "	<td width='50%'>".$outilP['texte']."</td>";
+			
+			if($outilP['type']== "pedagogiques") echo "	<td width='10%' align='center'>".$this->Html->image('peda.png',['height' => '16px','title' => 'Outil pédagogique'])."</td>";
+			else if ($outilP['type']== "cle") echo "	<td width='10%' align='center'>".$this->Html->image('cle.png',['height' => '16px','title' => 'Outil clé en main'])."</td>";
+			else echo "	<td width='10%'></td>";		
+			
+			echo "</tr>";
 		endforeach;
-	}
-	
-	if(isset($listeOutilsCle)) {
-		echo "<p class='boiteOutil'>Outils clé en main</p>";
-		foreach ($listeOutilsCle as $outilC):
-			echo $this->Html->link(h($outilC->name), '/files/outil/'.h($outilC->name), ['class' => 'titre','target' => '_blank','escape' => false]);
-		endforeach;
-	}
+
+		echo "</tbody>";
+		echo "</table>";
+	} 
 	
 } else { 
 	//Outil quand utilisateur non connecté	
-	//if($session->check('Progress.Menu')) {
+ 	if(count($listeOutilsDivers) >0) {
+
+ 		echo"<table cellpadding='0' cellspacing='0' class='table table-condensed' width='80%'>";
+// 		echo "<thead><tr><th width='40%'>Fichier</th><th width='60%'>Description</th></tr>";
+ 		echo "<tbody>";
 		
-		//Inscription
-		//echo "<p class='boiteOutil'>Outils</p>";
-		echo "Volet d’engagement &nbsp;&nbsp;".$this->Html->link('<span><i class="glyphicon glyphicon-open"></i></span>', '/files/outil/2015 01 25_ENGAGEMENT_DIRECTION_V1.docx', ['class' => 'titre','target' => '_blank','escape' => false]);
-	//}
-	
+ 		foreach ($listeOutilsDivers as $outilD):
+ 		echo "<tr style='background-color:".$outilD['couleur'].";' >";
+		echo "	<td width='20%'>".$outilD['thematique']."</td>";
+			echo "	<td width='20%'><span><i class='glyphicon glyphicon-file'></i></span>   ";
+			echo $this->Html->link($outilD['libelle'], '/files/outil/'.$outilD['name'], ['class' => 'titre','target' => '_blank','escape' => false])."</td>";				
+			echo "	<td width='50%'>".$outilD['texte']."</td>";
+			
+			if($outilD['type']== "pedagogiques") echo "	<td width='10%' align='center'>".$this->Html->image('peda.png',['height' => '16px','title' => 'Outil pédagogique'])."</td>";
+			else if ($outilD['type']== "cle") echo "	<td width='10%' align='center'>".$this->Html->image('cle.png',['height' => '16px','title' => 'Outil clé en main'])."</td>";
+			else echo "	<td width='10%'></td>";		
+			
+			echo "</tr>";
+ 		endforeach;
+
+ 		echo "</tbody></table>";
+	}	
 }
+echo "</p>";
 ?>        

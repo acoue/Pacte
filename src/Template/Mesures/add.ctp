@@ -44,7 +44,7 @@ Evolution des résultats intermédiares<br />Points forts et axes d'amélioratio
                     </div>                          
 				</div><br /> 
 				<div class="row">
-					<label class="col-md-4 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup></span></label>
+					<label class="col-md-4 control-label" for="file">Votre document <span class="obligatoire"><sup> *</sup> (Taille max : 10 Mo)</span></label>
                     <div class="col-md-8"><?= $this->Form->input('file', ['label' => false,'id'=>'file',
 														   	'div' => false,
 															'class' => 'form-control', 'required' =>'required',
