@@ -73,7 +73,9 @@
 				<div class="row">
                 	<label class="col-md-4 control-label" for="type">Type</label>
                 	<div class="col-md-8"><?= $this->Form->input('type', ['label' => false,
-                												'div' => false, 'value'=> h($outil->type),
+                												'div' => false, 
+                												'options' => ['' => 'Sélectionner', 'sans'=>'Aucun' ,'pedagogiques' => 'Outils pédagogiques', 'cle' => 'Outils clé en main'],
+                												'value'=> h($outil->type),
 																'class' => 'form-control', 
                     											'disabled' =>'disabled']) ?>    
                 	</div>                 

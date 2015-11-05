@@ -1,40 +1,36 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Ce fichier fait partie du projet Pacte.
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
+ * Cette classe est le controlelur principale de l'application, passage obligé
  *
- * @copyright Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link      http://cakephp.org CakePHP(tm) Project
- * @since     0.2.9
- * @license   http://www.opensource.org/licenses/mit-license.php MIT License
+ * @package Controlleur
+ * @copyright 2015 Haute Autorité de Santé (HAS)
  */
+
 namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 
 /**
- * Application Controller
+ * La classe AppController est le controlleur principal de l'application
  *
- * Add your application-wide methods in the class below, your controllers
- * will inherit them.
- *
- * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
+ * @author Anthony COUE <a.coue[@]has-sante.fr>
  */
+
 class AppController extends Controller
 {
 	
 	public $components = array('RequestHandler');
 	public $helpers = ['AkkaCKEditor.CKEditor'];
+	
     /**
-     * Initialization hook method.
+     * Méthode d'initialisation du controlleur
      *
-     * Use this method to add common initialization code like loading components.
-     *
+     * Permet d'appeler les helper et de charger les composants utiles à l'application
+     * Renseigne l'objet Session et récupère les outils à afficher
+     * 
      * @return void
      */
 	public function initialize()
@@ -58,12 +54,9 @@ class AppController extends Controller
     			]
     	]);
     	
-
+		//Chargement de l'objet session
     	$session = $this->request->session();
-
-    	
-    	
-    	
+    	//Mise en session de la valeur des menus en fonction de la phase de l'utilisateur connecté
     	if($session->check('Equipe.Engagement') && $session->read('Equipe.Engagement') == 0 ) {
     		$session->write('Progress.Menu','1');
     		$session->write('Progress.SousMenu','0');
@@ -81,7 +74,7 @@ class AppController extends Controller
     		$session->write('Progress.SousMenu','0');
     	}
     	
-    	
+    	//information de la version de l'application => affichage en footer
     	$version = "";
     	$dateVersion="";
     	//Message
@@ -94,22 +87,21 @@ class AppController extends Controller
     	
     	$phase = $session->read('Progress.Menu');
 		$this->loadModel('Outils');
-//     	$outilsPeda = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'pedagogiques'])->order('ordre')->toArray();
-//     	$outilsCle = $this->Outils->find('all')->where(['phase_id'=>$phase, 'type'=>'cle'])->order('ordre')->toArray(); 
-//     	$outilsDivers = $this->Outils->find('all')->where(['phase_id'=>'99'])->order('ordre')->toArray(); //Outils sans phase
-//     	$outilsToutes = $this->Outils->find('all')->where(['phase_id'=>'98'])->order('ordre')->toArray(); //Outils toutes phases    	   
-//     	$this->set(['listeOutilsPeda' => $outilsPeda,'listeOutilsCle' => $outilsCle, 'listeOutilsDivers' => $outilsDivers,'listeOutilsToutes' => $outilsToutes]);
-
+		
+		//Récupération des outils suivant la phase
 		$outilsPhase = $this->Outils->find('all')->where(['phase_id'=>$phase])->order('thematique,ordre')->toArray();
      	$outilsDivers = $this->Outils->find('all')->where(['phase_id'=>'99'])->order('thematique,ordre')->toArray(); //Outils sans phase
      	$outilsToutes = $this->Outils->find('all')->where(['phase_id'=>'98'])->order('thematique,ordre')->toArray(); //Outils toutes phases 
      	$outils = array_merge($outilsPhase,$outilsToutes);
      	    	
-    	
+    	//Envoi des objet retuor à la page
     	$this->set(['listeOutilsPhase' => $outils,'listeOutilsDivers' => $outilsDivers]);
     	
     }
     
+    /* (non-PHPdoc)
+     * @see \Cake\Controller\Controller::beforeFilter()
+     */
     public function beforeFilter(Event $event)
     {
     	$this->Auth->deny();
@@ -121,6 +113,10 @@ class AppController extends Controller
     	$this->Auth->config('unauthorizedRedirect', $this->referer(['controller' => 'pages','action' => 'permission']));
     }
 
+    /**
+     * @param unknown $user
+     * @return boolean
+     */
     public function isAuthorized($user)
     {
     	$session = $this->request->session();

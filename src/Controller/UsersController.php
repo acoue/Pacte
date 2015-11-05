@@ -234,6 +234,9 @@ class UsersController extends AppController
  	{
  		$user = $this->Users->newEntity();
  		if ($this->request->is('post')) {
+ 			//debug($this->request->data);
+ 			//die();
+ 			
  			$user = $this->Users->patchEntity($user, $this->request->data);
  			if ($this->Users->save($user)) {
  				$this->Flash->success(__("L'utilisateur a été sauvegardé."));

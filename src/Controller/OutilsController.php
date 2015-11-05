@@ -26,7 +26,9 @@ class OutilsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Phases']
+            'contain' => ['Phases'],
+        	'order' => ['libelle' => 'asc']
+        		
         ];
         $this->set('outils', $this->paginate($this->Outils));
         $this->set('_serialize', ['outils']);
@@ -77,7 +79,7 @@ class OutilsController extends AppController
 	        	//insertion en base
 	        	$outils = TableRegistry::get('Outils');
 	        	$query = $outils->query();
-	        	$result = $query->insert(['name', 'libelle','texte', 'type','ordre','phase_id'])
+	        	$result = $query->insert(['name', 'libelle','thematique','couleur','texte', 'type','ordre','phase_id'])
 					        	->values([
 					        			'name' => $nomFichier,
 					        			'libelle' => $d['libelle'],

@@ -28,6 +28,7 @@ $cakeDescription = 'Pacte ';
     <?= $this->Html->css('bootstrap.css') ?>
     <?= $this->Html->css('style.css') ?>
     <?= $this->Html->css('jquery-ui.css') ?>
+    <?= $this->Html->css('jquery.minicolors.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>  
@@ -66,27 +67,29 @@ $cakeDescription = 'Pacte ';
         
 <!--  Div pour les Outils - Pas pour les admins-->
 <?php if(! in_array($role,['has','expert','admin'])) { //Affichage Admin ?>
-        	<div class="row">
-              	<div class="col-md-1"></div>
-            	<div class="col-md-10">
-					<div class="divContainOutil">
-		            	<div id="divImagePlus" class="divMontre">
-		              		<?php echo $this->Html->link( $this->Html->image('div_montre.png', ['height' => '30px', 'title' => 'Montrer les outils']),
+        	<div class="container">   
+				 <div class="row">
+	              	<div class="col-md-1"></div>
+	            	<div class="col-md-10">
+						<div class="divContainOutil">
+			            	<div id="divImagePlus" class="divMontre">
+			              		<?php echo $this->Html->link( $this->Html->image('div_montre.png', ['height' => '30px', 'title' => 'Montrer les outils']),
+			                    						'javascript:ChangeVisibilityOutil("divOutil","divImagePlus")', 
+			              								['escape' => false])."<span class='divOutil'>Vos outils</span><br />"; ?>
+			              	</div>
+			              
+			              	<div id="divOutil" class="divCache">
+		              			<?php echo $this->Html->link( $this->Html->image('div_cache.png', ['height' => '30px', 'title' => 'Cacher les outils']),
 		                    						'javascript:ChangeVisibilityOutil("divOutil","divImagePlus")', 
 		              								['escape' => false])."<span class='divOutil'>Vos outils</span><br />"; ?>
-		              	</div>
 		              
-		              	<div id="divOutil" class="divCache">
-	              			<?php echo $this->Html->link( $this->Html->image('div_cache.png', ['height' => '30px', 'title' => 'Cacher les outils']),
-	                    						'javascript:ChangeVisibilityOutil("divOutil","divImagePlus")', 
-	              								['escape' => false])."<span class='divOutil'>Vos outils</span><br />"; ?>
-	              
-						<?= $this->element('outil', ['menu' => '1', 'sous_menu' => '1']) ?>
-						</div> 
-					</div>
-              	</div>
-              	<div class="col-md-1"></div>
-            </div><br />
+							<?= $this->element('outil', ['menu' => '1', 'sous_menu' => '1']) ?>
+							</div> 
+						</div>
+	              	</div>
+	              	<div class="col-md-1"></div>
+	            </div>
+			</div><br />
 <?php }?>
         
         <!-- Barre de progression des phases et sous-phases -->
@@ -150,6 +153,9 @@ $cakeDescription = 'Pacte ';
     <?= $this->Html->script('bootstrap.min.js') ?>
     <?= $this->Html->script('userScript.js') ?>    
     <?= $this->Html->script('userFunction.js') ?>    
+    
+    <?= $this->Html->script('jquery.minicolors.js') ?>
+    <?= $this->Html->script('jquery.minicolors.min.js') ?>
     
     <?= $this->fetch('script') ?>
 </body>

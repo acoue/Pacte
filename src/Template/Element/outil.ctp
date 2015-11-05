@@ -7,12 +7,6 @@ if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) {
 
 	if(count($listeOutilsPhase) > 0 ) {	
 		echo "<table cellpadding='0' cellspacing='0' class='table table-condensed' width='80%'>";
-// 		echo "<thead>";
-// 		echo "<tr>";
-// 		echo "<th colspan='2' width='50%'><span class='boiteOutil' >Outils pédagogiques</span></th>";
-// 		echo "<th colspan='2' width='50%'><span class='boiteOutil' >Outils clé en main</span></th>";
-// 		echo "</tr>";
-// 		echo "</thead>";
 		echo "<tbody>";
 		
 		foreach ($listeOutilsPhase as $outilP):

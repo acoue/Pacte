@@ -1,9 +1,15 @@
 <?php
-
 namespace App\Controller\Component;
-
 use Cake\Controller\Component;
 use Cake\ORM\TableRegistry;
+
+/**
+ * Enquete
+ *
+ * @author Edwige Berteaux <edwige.berteaux@[mail].com>
+ * @copyright 2014 Edwige Berteaux
+ * @version 3.1
+ */
 
 class EnqueteSatisfactionComponent extends Component {
 	
