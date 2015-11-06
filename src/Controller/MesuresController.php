@@ -211,9 +211,9 @@ class MesuresController extends AppController
         			$this->Flash->success('La mesure a bien été sauvegardée.');
         			return $this->redirect(['action' => 'index']);
         		} else {
-        			$this->Flash->error('Erreur dans la sauvegarde de la mesure.');
+        			$this->Flash->error('Erreur dans l\'enregistrement des données de la mesure.');
         		}
-        	} else $this->Flash->error('Erreur dans la sauvegarde de la mesure.');
+        	} else $this->Flash->error('Erreur, suppression impossible de l\'ancien document.');
         	
         }
         $this->set(compact('mesure'));

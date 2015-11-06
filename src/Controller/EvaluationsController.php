@@ -199,7 +199,7 @@ class EvaluationsController extends AppController
 	            } else {
 	                $this->Flash->error('Erreur dans l\'enregistrement des données de l\'évaluation');
 	            }        		
-        	} else $this->Flash->error('Erreur dans la suppression impossible de l\'ancien document');
+        	} else $this->Flash->error('Erreur, suppression impossible de l\'ancien document.');
         }
         //Message
         $this->loadModel('Parametres');
