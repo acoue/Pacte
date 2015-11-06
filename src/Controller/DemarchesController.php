@@ -338,8 +338,8 @@ class DemarchesController extends AppController
     			$email = new Email('default');
     			$email->template('default')
     			->emailFormat('html')
-    			->to($to)
-    			->cc($cc)
+    			->to(trim(rtrim(strip_tags($to))))
+    			->cc(trim(rtrim(strip_tags($cc))))
     			->from(trim($from->valeur))
     			->subject($sujet)
     			->viewVars(['content' => $content['valeur']])

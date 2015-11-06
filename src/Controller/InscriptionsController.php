@@ -318,8 +318,8 @@ class InscriptionsController extends AppController
     			$email = new Email('default');
     			$email->template('inscription')
     			->emailFormat('html')
-    			->to($to)
-    			->from(trim($from->valeur))
+    			->to(trim(rtrim(strip_tags($to))))
+    			->from(trim(rtrim(strip_tags($from->valeur))))
     			->subject($sujet)
     			->viewVars(['login'=>$username,'mdp'=>$password,'link'=>$link])
     			->send();

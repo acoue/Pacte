@@ -343,8 +343,8 @@ class UsersController extends AppController
 	    		$email = new Email('default');
 	    		$email->template('mdp')
 	    		->emailFormat('html')
-	    		->to($d['email'])
-	    		->from(trim($from->valeur))
+	    		->to(trim(rtrim(strip_tags($d['email']))))
+	    		->from(trim(rtrim(strip_tags($from->valeur))))
 	    		->subject('[Pacte] Regénération de votre mot de passe')
 	    		->viewVars(['link'=>$link])
 	    		->send();
@@ -431,8 +431,8 @@ class UsersController extends AppController
 			$email = new Email('default');
 			$email->template('default')
 			->emailFormat('html')
-			->from(EMAIL_ADMIN)
-			->to($userDestinataires)
+			->from(trim(rtrim(strip_tags(EMAIL_ADMIN))))
+			->to(trim(rtrim(strip_tags($userDestinataires))))
 			->subject('[Pacte]'.$d['sujet'])
     		->viewVars(['content' => $d['body']])
 			->send();

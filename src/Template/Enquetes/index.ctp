@@ -106,8 +106,8 @@ if($session->read('Equipe.MiseEnOeuvre') == 0) { ?>
 						<p>
 						<?php 
 						//Affichage du nombre d'enquete
-							if ($nbEnquete == 0) echo "<p>Votre équipe n'a répondu à aucune enquête.</p>"; 
-							else if ($nbEnquete == 1) echo "<p>Sur la campgane n°".$campagne.", votre équipe a répondu à une enquête.</p>";
+							if ($nbEnquete == 0) echo "<p>A ce jour, votre équipe n'a pas encore réalisé d'enquête.</p>"; 
+							else if ($nbEnquete == 1) echo "<p>Sur la campgane n°".$campagne.", votre équipe a réalisé une enquête.</p>";
 							else echo "<p>Sur la campgane n°".$campagne.", votre équipe a répondu à ".$nbEnquete." enquêtes.</p>";
 						
 							//affichage de la date de l'enquete max

@@ -5,7 +5,8 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<?= $this->Form->create('Inscription', ['id'=>'validate_inscription_form', 'action' => 'validate']) ?>
-			<div class="col-md-10"> <?php 
+			<div class="col-md-10"> 
+<?php 
 if(strlen($MessageSituationcrise) > 1 )  { ?>		
 				<div  class="row">
 					<?= $MessageSituationcrise ?>
@@ -17,8 +18,10 @@ if(strlen($MessageRestructuration) > 1 )  { ?>
 				</div><br />
 <?php } ?>
 				<div  class="row">
-					<?= $messageTitreValidation->valeur ?>
-				</div><br />
+					<?php 
+					//echo $messageTitreValidation->valeur 
+					?>
+				</div><br />				
 				<div  class="row">		
 					<div class="col-md-2"></div>
 					<label class="col-md-4 control-label" for="score">Noter le score obtenu </label>

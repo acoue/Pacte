@@ -108,7 +108,7 @@ if($session->check('Auth.User.role')) {
 					<div class='col-md-1'></div>
 					<div class='col-md-10'>
 						<p class='alert alert-info' align='center'>
-						Nous avons constaté qu'une durée de 12 mois est appropriée pour terminer cette phase de Mise en oeuvre.</br >
+						Nous avons constaté qu'une durée de 12 mois est appropriée pour terminer cette phase de mise en oeuvre.</br >
 						Vous avez commencé la phase de mise en oeuvre le <?= substr($datePhase,0,10) ?>, c'est à dire il y a <?= $interval->format('%m') ?> mois<br /><br />
 						Pour clôturer votre phase de mise en oeuvre, cliquez sur le bouton ci-dessous. <br /><br />
 						<?= $this->Html->link('Terminer la phase de mise en oeuvre', ['controller'=>'Projets', 'action' => 'terminateMEO'],['class' => 'btn btn-info','confirm' => __('Etes-vous sûr de vouloir terminer la phase de "Mise en Oeuvre" ?')])?>

@@ -70,7 +70,7 @@ class ProjetsController extends AppController
         $nbFacilitateur = $this->Membres->find()->where(['responsabilite_id' => '3','demarche_id' => $id_demarche,'comite'=>0])->count();
         
         if($nbReferent < 2) {
-        	$this->Flash->error('Erreur, pour poursuivre, le nombre de membres référent doit être supérieur ou égal à 2');        	
+        	$this->Flash->error('Erreur, pour poursuivre, le nombre de binôme doit être supérieur ou égal à 2');        	
         	return $this->redirect(['controller'=>'membres', 'action' => 'index/0/1']);        	
         } 
         if($nbFacilitateur < 1) {
@@ -415,8 +415,8 @@ class ProjetsController extends AppController
     	$email = new Email('default');
     	$email->template('default')
     	->emailFormat('html')
-    	->to($to)
-    	->cc($cc)
+    	->to(trim(rtrim(strip_tags($to))))
+    	->cc(trim(rtrim(strip_tags($cc))))
     	->from(trim($from->valeur))
     	->subject($sujet)
     	->viewVars(['content' => $content['valeur']])
@@ -553,7 +553,7 @@ class ProjetsController extends AppController
 	    	//Mise à jour de la session :
 	    	$session->write('Equipe.Evaluation',0);
 	    	
-	    	$this->Flash->success('Phase de Mise en Oeuvre terminée');
+	    	$this->Flash->success('Phase de mise en oeuvre terminée');
 	    	return $this->redirect(['controller'=>'Pages', 'action' => 'home']);  
     	}  	
     }

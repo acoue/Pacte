@@ -43,7 +43,7 @@
 			<div class="col-md-1"></div>
 		</div>
 		<p align="center">
-			<?= $this->Html->link(__('Créer une question'), ['action' => 'add'], ['class'=>'btn btn-default']) ?>
+			<?= $this->Html->link(__('Créer une fonction'), ['action' => 'add'], ['class'=>'btn btn-default']) ?>
 		</p>
 	</div>
 </div>

@@ -136,7 +136,7 @@ class EtapePlanActionsController extends AppController
         	
             $etapePlanAction = $this->EtapePlanActions->patchEntity($etapePlanAction, $this->request->data);
             if ($this->EtapePlanActions->save($etapePlanAction)) {
-                $this->Flash->success('L\'étape du plan d\'action a bien, été sauvegardée.');
+                $this->Flash->success('L\'étape du plan d\'action a bien été sauvegardée.');
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error('Erreur lors de la sauvegarde de l\'étape du plan d\'action.');
