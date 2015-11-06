@@ -1,80 +1,55 @@
 <?php
 /**
- * @copyright     Copyright (c) Haute Autorité de Santé. (http://www.has-sante.fr)
- * @link          http://www.has-sante.fr
- * @since         1.0
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         0.10.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-$session = $this->request->session();
-if($session->check('Auth.User.role')) $role = $session->read('Auth.User.role');
-else $role='equipe';
 
-$cakeDescription = 'Pacte ';
+$cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
     <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">        
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Programme d'Amélioration Continue du Travail en Equipe">
-    <meta name="author" content="Haute Autorité de Santé">
     <title>
-        <?= $cakeDescription ?>
+        <?= $cakeDescription ?>:
+        <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
-    
-    <!-- Bootstrap core CSS -->
-    <?= $this->Html->css('bootstrap.css') ?>
-    <?= $this->Html->css('style.css') ?>
-    <?= $this->Html->css('jquery-ui.css') ?>
-    <?= $this->Html->css('jquery.minicolors.css') ?>
+
+    <?= $this->Html->css('base.css') ?>
+    <?= $this->Html->css('cake.css') ?>
 
     <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>  
-    <?= $this->CKEditor->loadJs() ?>
+    <?= $this->fetch('css') ?>
+    <?= $this->fetch('script') ?>
 </head>
 <body>
-    <div id="main">   
-       	<!-- Contenu -->    
-       	<div id="container">
-        	<div id="content">
+    <div id="container">
+        <div id="header">
+            <h1><?= $this->Html->link($cakeDescription, 'http://cakephp.org') ?></h1>
+        </div>
+        <div id="content">
             <?= $this->Flash->render() ?>
 
             <?= $this->fetch('content') ?>
-        	</div>
-	    </div> <br /><br />             
-	    <!-- /.contenu -->     
-                
-	        <!-- Footer -->
-	        <footer class="footer">
-	            <div class="container">
-	                <div class="row">
-	                    <div class="col-md-5 text-footer-left">
-	                    <?= $this->Html->link( $this->Html->image('footer-logo-has.png', ['height' => '40px', 'title' => 'Haute Autorité de Santé']),
-	                    						"http://has-sante.fr", ['target' => '_blank', 'escape' => false]) ?>
-	                    &copy; Haute Autorité de Sante 2015</div>
-	                    <div class="col-md-5 text-footer-right">Version <?= $version ?><br /><?= $dateVersion ?></div>                    
-	                    <div class="col-md-2 text-footer-right"></div>
-	                </div>
-	            </div>
-	        </footer><!-- /.footer -->
-	    </div>
-    <?= $this->Html->script('jquery.js') ?>
-    <?= $this->Html->script('validatr.js') ?>
-    
-    <?= $this->Html->script('form-validator/jquery.form-validator.js') ?>
- 	<?= $this->Html->script('form-validator/messages_fr.js') ?>
-      
-    <?= $this->Html->script('jquery-ui.js') ?>
-    <?= $this->Html->script('bootstrap.min.js') ?>
-    <?= $this->Html->script('userScript.js') ?>    
-    <?= $this->Html->script('userFunction.js') ?>  
-    
-    <?= $this->Html->script('jquery.minicolors.js') ?>
-    <?= $this->Html->script('jquery.minicolors.min.js') ?>
-    
-    <?= $this->fetch('script') ?>
+        </div>
+        <div id="footer">
+            <?= $this->Html->link(
+                    $this->Html->image('cake.power.gif', ['alt' => $cakeDescription, 'border' => '0']),
+                    'http://www.cakephp.org/',
+                    ['target' => '_blank', 'escape' => false]
+                )
+            ?>
+        </div>
+    </div>
 </body>
 </html>
-
