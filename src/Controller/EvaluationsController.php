@@ -156,7 +156,7 @@ class EvaluationsController extends AppController
 		        	//Vérification de la présence
 		        	if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name'])) {
 		        		$boolSupp= unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
-		        	}
+		        	} 
 		        	//Deplacement du nouveau 
 		        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);
 		        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
@@ -173,7 +173,7 @@ class EvaluationsController extends AppController
 	        		//Suppression de l'ancien
 	        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file) && strlen($evaluation->file)>0) {
 	        			$boolSupp= unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file);
-	        		}
+	        		} else $boolSupp=true;
 	        		//Deplacement du nouveau
 	        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']);
 	        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;

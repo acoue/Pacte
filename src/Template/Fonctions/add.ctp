@@ -1,7 +1,7 @@
 
 <div class="blocblanc">
 	<h2>Administration</h2>
-	<h3>Ajout Outil</h3>
+	<h3>Ajout d'une fonction</h3>
 	<div class="blocblancContent">
 		<div class="row">
 			<div class="col-md-1"></div>

@@ -188,7 +188,7 @@ class MesuresController extends AppController
 	        		//Suppression de l'ancien
 	        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$mesure->file) && strlen($mesure->file)>0) {
 	        			$boolSupp = unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$mesure->file);
-	        		}
+	        		} else $boolSupp=true;
 	        		//Deplacement du nouveau
 	        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']); 
 	        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
@@ -198,7 +198,7 @@ class MesuresController extends AppController
         		//Pas de nouveau fichier et pas de modification de fichier : modification des autres champs textes du formulaire
         		$nomFichier = $mesure->file ;
         		$boolSupp = true;
-        	}
+        	} 
         	if($boolSupp) {
         		//mise a jour des donnees
         		$mesure->demarche_id = $d['demarche_id'];
