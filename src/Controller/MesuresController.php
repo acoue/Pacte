@@ -171,7 +171,7 @@ class MesuresController extends AppController
 	        		//Vérification de la présence
 	        		if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name'])) {
 	        			$boolSupp = unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
-	        		}
+	        		} else $boolSupp=true;
 	        		//Deplacement du nouveau
 	        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);  
 	        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;

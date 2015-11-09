@@ -406,6 +406,14 @@ class ProjetsController extends AppController
 	    if (ENV_APPLI === 'QUAL') {
 	    	$to = EMAIL_ADMIN;
 	    	//$cc = $to;
+    	    $email->template('default')
+    	    	->emailFormat('html')
+    	    	->to(trim(rtrim(strip_tags($to))))    	    	
+    	    	->from(trim(rtrim(strip_tags($from->valeur))))
+    	    	->subject($sujet)
+    	    	->viewVars(['content' => $content['valeur']])
+    	    	->attachments(DATA . 'pdf' . DS . $filename)
+    	    	->send();
 	    } else {
 		    $to = "";
 		    //On récupere les email des membres referents (TO )+ du facilitateur (CC)	    
@@ -416,7 +424,7 @@ class ProjetsController extends AppController
 			    	$email->template('default')
 			    	->emailFormat('html')
 			    	->to(trim(rtrim(strip_tags($to))))
-			    	->from(trim($from->valeur))
+			    	->from(trim(rtrim(strip_tags($from->valeur))))
 			    	->subject($sujet)
 			    	->viewVars(['content' => $content['valeur']])
 			    	->attachments(DATA . 'pdf' . DS . $filename)

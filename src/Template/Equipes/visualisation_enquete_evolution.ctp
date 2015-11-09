@@ -18,14 +18,14 @@
 	                chart: { title: '<?= $graphiques[$i]['titre'] ?>'},                
 	                bar: { groupWidth: "90%" }
 	              };        
-	      	var chart = new google.charts.Bar(document.getElementById('div_graphiqueQ<?=$i+1?>'));
+	      	var chart = new google.visualization.ColumnChart(document.getElementById('div_graphiqueQ<?=$i+1?>'));
 	      	chart.draw(data, options);
 	    };
 
 <?php } ?>
 google.setOnLoadCallback(drawGraphiqueTotal);
 function drawGraphiqueTotal() {
-    var data = google.visualization.arrayToDataTable(GRAPHIQUE_TOTAL);
+    var data = new google.visualization.arrayToDataTable(GRAPHIQUE_TOTAL);
 
     var options = {
 		width: '100%', 

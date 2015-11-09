@@ -523,5 +523,8 @@ if(h($mesure->file)) echo $this->Html->link('<span><i class="glyphicon glyphicon
 			<div class="col-md-1"></div>
 		</div>
 	</div>
+	<p align="center">	
+	<?= $this->Html->link('Retour', '/pages/home', ['class' => 'btn btn-info']);?>
+	</p>
 </div>
 

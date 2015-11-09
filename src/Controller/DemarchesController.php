@@ -315,18 +315,6 @@ class DemarchesController extends AppController
     			$filename = 'Recapitulatif_'.date('Ymd_His').''.mt_rand().'.pdf';
     			$CakePdf = $CakePdf->write(DATA . 'pdf' . DS . $filename);
     		
-    		
-    			if (ENV_APPLI === 'QUAL') {
-    				$to = EMAIL_ADMIN;
-    				$cc = $to;
-    			} else {
-    				$to = $cc = "";
-    				//On récupere les email des membres referents (TO )+ du facilitateur (CC)
-    				foreach ($membres_referents as $mr) {
-    					if($mr->responsabilite_id == 2) $to.=$mr->email.";";
-    					else if($mr->responsabilite_id == 3) $cc.=$mr->email.";";
-    				}
-    			}
     			//Envoie du mail
     			$this->loadModel('Parametres');
     			$from = $this->Parametres->find('all')->where(['name' => 'EmailContact'])->first();
@@ -334,18 +322,39 @@ class DemarchesController extends AppController
     			$content = $this->Parametres->find()->where(['name' => 'MessageRecapitulatifEngagement'])->first();
     			if(empty($sujet)) $sujet = "[PACTE] ";
     			else  $sujet = strip_tags($sujet['valeur']);
-    		
+    			
     			$email = new Email('default');
-    			$email->template('default')
-    			->emailFormat('html')
-    			->to(trim(rtrim(strip_tags($to))))
-    			->cc(trim(rtrim(strip_tags($cc))))
-    			->from(trim($from->valeur))
-    			->subject($sujet)
-    			->viewVars(['content' => $content['valeur']])
-    			->attachments(DATA . 'pdf' . DS . $filename)
-    			->send();
-    		
+    			 
+    			if (ENV_APPLI === 'QUAL') {
+    				$to = EMAIL_ADMIN;
+    				//$cc = $to;
+    				$email->template('default')
+    				->emailFormat('html')
+    				->to(trim(rtrim(strip_tags($to))))
+    				->from(trim(rtrim(strip_tags($from->valeur))))
+    				->subject($sujet)
+    				->viewVars(['content' => $content['valeur']])
+    				->attachments(DATA . 'pdf' . DS . $filename)
+    				->send();
+    			} else {
+    				$to = "";
+    				//On récupere les email des membres referents (TO )+ du facilitateur (CC)
+    				foreach ($membres_referents as $mr) {
+    					if($mr->responsabilite_id == 2 || $mr->responsabilite_id == 3) {
+    			
+    						$to = $mr->email;
+    						$email->template('default')
+    						->emailFormat('html')
+    						->to(trim(rtrim(strip_tags($to))))
+    						->from(trim(rtrim(strip_tags($from->valeur))))
+    						->subject($sujet)
+    						->viewVars(['content' => $content['valeur']])
+    						->attachments(DATA . 'pdf' . DS . $filename)
+    						->send();
+    					}
+    				}
+    			}    			
+    			
     			//Suppression de la pj
     			if(file_exists(DATA . 'pdf' . DS . $filename))  unlink(DATA . 'pdf' . DS . $filename);
     		
