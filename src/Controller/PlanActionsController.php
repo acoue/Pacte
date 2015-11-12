@@ -223,6 +223,12 @@ class PlanActionsController extends AppController
         		$this->Flash->error('Erreur dans la sauvegarde du plan d\'action.');
         	}
         }
+        
+        //Message
+        $this->loadModel('Parametres');
+        $message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilPlanActionEquipe'])->first();
+        $this->set('message', $message);        
+        
         $this->set(compact('planAction'));
         $this->set('_serialize', ['planAction']);
     }

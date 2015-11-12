@@ -114,7 +114,7 @@
         <thead>
         	<tr>
             	<th><h5>Prénom</h5></th>
-            	<th><h5>Noms</h5></th>
+            	<th><h5>Nom</h5></th>
             	<th><h5>Fonction</h5></th>
             	<th><h5>Service</h5></th>
         	</tr>
@@ -135,7 +135,7 @@
         <thead>
         	<tr>
             	<th><h5>Prénom</h5></th>
-            	<th><h5>Noms</h5></th>
+            	<th><h5>Nom</h5></th>
             	<th><h5>Fonction</h5></th>
             	<th><h5>Service</h5></th>
         	</tr>

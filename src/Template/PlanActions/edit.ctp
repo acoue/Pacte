@@ -16,7 +16,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 			<div class="col-md-10"> 
 				<div class="row">
 					<div class="col-md-1"></div>
-					<div class="col-md-10">Vous avez choisis d'utiliser votre propre plan d'action ...... </div>
+					<div class="col-md-10"><?= $message->valeur ?></div>
 					<div class="col-md-1"></div>
 				</div><br />	    
 				<div class="row">

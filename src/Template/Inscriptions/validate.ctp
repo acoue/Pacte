@@ -9,12 +9,12 @@
 <?php 
 if(strlen($MessageSituationcrise) > 1 )  { ?>		
 				<div  class="row">
-					<?= $MessageSituationcrise ?>
+					<?php //echo $MessageSituationcrise; ?>
 				</div><br />
 <?php }
 if(strlen($MessageRestructuration) > 1 )  { ?>	
 				<div  class="row">
-					<?= $MessageRestructuration ?>
+					<?php //echo $MessageRestructuration; ?>
 				</div><br />
 <?php } ?>
 				<div  class="row">

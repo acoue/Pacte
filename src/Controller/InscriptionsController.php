@@ -492,7 +492,7 @@ class InscriptionsController extends AppController
 		    	
 		    	//Message lié au score
 		    	$messageScore = "";
-		    	if($score < 5 ) $reqMessageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreInferieur'])->first();
+		    	if($score < 6 ) $reqMessageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreInferieur'])->first();
 		    	else $reqMessageScore = $this->Parametres->find('all')->where(['name' => 'MessageScoreSupérieur'])->first();		    	
 		    	$messageScore = $reqMessageScore->valeur;
 		    	

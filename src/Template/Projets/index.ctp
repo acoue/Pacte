@@ -53,7 +53,7 @@
 						        	<tr>
 						        		<th width='15%'>Rôle</th>
 						            	<th width='20%'>Prénom</th>
-						            	<th width='20%'>Noms</th>
+						            	<th width='20%'>Nom</th>
 						            	<th width='15%'>Fonction</th>
 						            	<th width='15%'>Service</th>
 				            			<th width='15%' class="actions"><?= __('Actions') ?></th>
