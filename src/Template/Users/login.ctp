@@ -24,8 +24,14 @@
 		</div><br /><br />
 		<div class="row">
         	<?= $messageCnil ?>    
-        </div><br /><br />
+        </div><br />
 	</div>
 	<div class="col-md-3"></div>
 </div>
+       
+<p class="text-muted" align='center'> 
+<?=	$this->Html->image('info.png', ['height' => '24px']); ?>    
+<u><b>Compatibilité des navigateurs :</b></u> Ce site est testé sur les navigateurs Internet Explorer (version supérieur à 8), Mozilla Firefox et Chrome. <br />
+Ce site utilise JavaScript pour certaines fonctionnalités. Il est donc obligatoire d'activer la fonction JavaScript de votre navigateur. 
+</p>
 		
