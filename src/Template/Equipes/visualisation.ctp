@@ -17,7 +17,7 @@ if($session->read('Auth.User.role') === 'admin') {
 		echo "<p align='center' class='alert-mdp-warning'>La demande est clôturée</p>";
 	}
 } else {
-	if($demarche->statut == 1 ) echo "<p align='center' class='alert-mdp-warning'>La demande est clôturée</p>";
+	if($demarche->statut == 1 ) echo "<p align='center' class='alert-mdp-warning'>La démarche est clôturée</p>";
 }
 ?>
 	</p>

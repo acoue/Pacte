@@ -35,6 +35,9 @@ $cakeDescription = 'Pacte ';
     <?= $this->CKEditor->loadJs() ?>
 </head>
 <body>
+<noscript>
+Votre navigateur ne supporte pas Javascript. L'application peut ne pas fonctionner correctement. 
+</noscript>
     <div id="main">
         <!-- navbar -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation">

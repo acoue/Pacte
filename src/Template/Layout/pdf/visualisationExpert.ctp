@@ -40,7 +40,7 @@
 		</tr>
 		<tr>
 			<td width='30%'><h5>Score obtenu : </h5></td>
-			<td><h5><?= $demarche->score ?></h5></td>
+			<td><h5><?= $demarche->score . "/12"?></h5></td>
 		</tr>
 	</table>
 	<table  cellpadding="0" cellspacing="0" class="table" width='100%'>

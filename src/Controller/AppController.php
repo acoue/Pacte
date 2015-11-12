@@ -90,7 +90,7 @@ class AppController extends Controller
 		
 		//Récupération des outils suivant la phase
 		$outilsPhase = $this->Outils->find('all')->where(['phase_id'=>$phase])->order('thematique,ordre')->toArray();
-     	$outilsDivers = $this->Outils->find('all')->where(['phase_id'=>'99'])->order('thematique,ordre')->toArray(); //Outils sans phase
+     	$outilsDivers = $this->Outils->find('all')->where(['phase_id'=>'99'])->order('thematique,ordre')->toArray(); //Outils accueil
      	$outilsToutes = $this->Outils->find('all')->where(['phase_id'=>'98'])->order('thematique,ordre')->toArray(); //Outils toutes phases 
      	$outils = array_merge($outilsPhase,$outilsToutes);
      	    	

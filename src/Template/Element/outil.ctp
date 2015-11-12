@@ -3,7 +3,8 @@ $session = $this->request->session();
 
 //Outil quand utilisateur connecté
 echo "<p>";
-if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) { 
+//if($session->check('Auth.User.role') && $session->read('Progress.Menu') > 0) {
+if($session->check('Auth.User.role')) {
 
 	if(count($listeOutilsPhase) > 0 ) {	
 		echo "<table cellpadding='0' cellspacing='0' class='table table-condensed' width='80%'>";
