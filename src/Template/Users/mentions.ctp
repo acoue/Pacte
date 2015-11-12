@@ -22,7 +22,7 @@ N° SIRET : 110 000 445 00012 – code APE : 751A<br /><br />
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
-			Les informations recueillies font l'objet d'un traitement informatique destiné au stockage des données non sensibles concernant les membres composant les équipes des établissements de soin qui souhaitent entrer dans le programme Pacte. Les destinataires des données sont la HAS, les experts visiteurs et les équipes elles-même.
+			Les informations recueillies font l'objet d'un traitement informatique destiné au stockage des données non sensibles concernant les membres composant les équipes des établissements de soins qui souhaitent entrer dans le programme Pacte. Les destinataires des données sont la HAS, les experts visiteurs et les équipes elles-mêmes.
 			<br />Conformément à la loi « informatique et libertés » du 6 janvier 1978, vous bénéficiez d'un droit d'accès et de rectification aux informations qui vous concernent. Si vous souhaitez exercer ce droit et obtenir communication des informations vous concernant, veuillez vous adresser à la :
 			<br />Haute Autorité de santé - Service Mission Sécurité du Patient
 			<br />Adresse électronique : contact.equipe@has-sante.fr
