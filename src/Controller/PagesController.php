@@ -86,7 +86,7 @@ class PagesController extends AppController
         		$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilAdministrateur'])->first();
         		//récuperation des équipes : 1 démarches actives par démarche
         		$this->loadModel('Equipes');
-        		$equipes = $this->Equipes->find('All',['contain'=>'Etablissements']);  
+        		$equipes = $this->Equipes->find('All',['contain'=>'Etablissements'])->where(['Etablissements.numero_demarche != '=>'99999']);  
         		$this->set(compact('equipes','message'));      	
         	} else {
         		$idUser = $session->read('Auth.User.id');

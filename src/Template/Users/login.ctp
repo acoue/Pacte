@@ -31,7 +31,7 @@
        
 <p class="text-muted" align='center'> 
 <?=	$this->Html->image('info.png', ['height' => '24px']); ?>    
-<u><b>Compatibilité des navigateurs :</b></u> Ce site est testé sur les navigateurs Internet Explorer (version supérieur à 8), Mozilla Firefox et Chrome. <br />
+<u><b>Compatibilité des navigateurs :</b></u> Ce site est testé sur les navigateurs Internet Explorer (version supérieur à 9), Mozilla Firefox et Google Chrome. <br />
 Ce site utilise JavaScript pour certaines fonctionnalités. Il est donc obligatoire d'activer la fonction JavaScript de votre navigateur. 
 </p>
 		
