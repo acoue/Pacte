@@ -315,14 +315,26 @@ class InscriptionsController extends AppController
     			//(ENV_APPLI === 'QUAL') ? $to = EMAIL_ADMIN : $to = $this->request->data('mail');
     			$to = $this->request->data('mail');
     			
+    			//Mail de l'identifiant + lien d'activation
     			$email = new Email('default');
     			$email->template('inscription')
     			->emailFormat('html')
     			->to(trim(rtrim(strip_tags($to))))
     			->from(trim(rtrim(strip_tags($from->valeur))))
     			->subject($sujet)
-    			->viewVars(['login'=>$username,'mdp'=>$password,'link'=>$link])
+    			->viewVars(['login'=>$username,'link'=>$link])
     			->send();
+    			
+    			//Mail du mot de passe
+    			$email2 = new Email('default');
+    			$email2->template('inscriptionPassword')
+    			->emailFormat('html')
+    			->to(trim(rtrim(strip_tags($to))))
+    			->from(trim(rtrim(strip_tags($from->valeur))))
+    			->subject($sujet)
+    			->viewVars(['login'=>$username,'mdp'=>$password])
+    			->send();
+    			
     			
 	    		//Recuperation du message en base (parametres)
     			//$this->loadModel('Parametres');

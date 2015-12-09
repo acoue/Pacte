@@ -12,6 +12,8 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 /**
  * La classe AppController est le controlleur principal de l'application
@@ -73,6 +75,15 @@ class AppController extends Controller
     		$session->write('Progress.Menu','0');
     		$session->write('Progress.SousMenu','0');
     	}
+    	
+
+
+    	//Droit sur les répertoires et fichiers
+    	$dir = new Folder();
+    	$dir->chmod(DATA, 0555, true);
+    	
+    	
+    	
     	
     	//information de la version de l'application => affichage en footer
     	$version = "";
