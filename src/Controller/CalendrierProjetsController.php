@@ -1,47 +1,61 @@
 <?php
+/**
+ * Ce fichier fait partie du projet Pacte.
+ *
+ * Cette classe est le controlelur du macro-planning
+ *
+ * @author Anthony COUE <a.coue[@]has-sante.fr>
+ * @package Controlleur
+ * @property \App\Model\Table\CalendrierProjetsTable $CalendrierProjets
+ * @copyright 2015 Haute Autorité de Santé (HAS)
+ */
+
 namespace App\Controller;
 
 use App\Controller\AppController;
 
-/**
- * CalendrierProjets Controller
- *
- * @property \App\Model\Table\CalendrierProjetsTable $CalendrierProjets
- */
 class CalendrierProjetsController extends AppController
 {
 	/**
-	 * isAuthorized method
+	 * Méthode controllant l'autorisationd e l'utilisateur
+	 * 
 	 * @see \App\Controller\AppController::isAuthorized()
-	 * @return True si les droits sont accordés ou false sinon 
+	 * @return boolean : True si les droits sont accordés ou false sinon 
 	 */
 	public function isAuthorized($user)
 	{
 		$session = $this->request->session();
+		// Si l'utilisateir est de profil equipe
 		if( $session->read('Auth.User.role') === 'equipe') {	
 			//Demarche terminée
-			if($session->read('Equipe.DemarcheEtat') == 1) return false;
-			
+			if($session->read('Equipe.DemarcheEtat') == 1) return false;			
 			// Droits de tous les utilisateurs connectes sur les actions
 			if(in_array($this->request->action, ['edit','add','delete'])){
 				return true;
 			}
 		}
+		// Application des droit de la méthode parent
 		return parent::isAuthorized($user);
 	}    
 
+	/**
+	 * Méthode d'initialisation du controlleur
+	 *
+	 * @see \App\Controller\AppController::initialize()
+	 * @return void
+	 */
 	
 	public function initialize() {
 		parent::initialize();		
 	}
 	
     /**
-     * Add method : Ajout une étape dans le macro planning
+     * Methode d'ajout d'une étape dans le macro planning
      *
-     * @return void Redirects on successful add, renders view otherwise.
+     * @param $projet|null Objet projet, null par défaut
+     * @return void Redirection vers la vue Add une fois l'ajout effectué, ou vue erreur si echec.
      */
-    public function add($projet = null)
-    {	 	
+    public function add($projet = null) {	 	
 
     	//Menu et sous-menu
     	$session = $this->request->session();
@@ -50,10 +64,7 @@ class CalendrierProjetsController extends AppController
     	
         $calendrierProjet = $this->CalendrierProjets->newEntity();
         if ($this->request->is('post')) {
-    	//debug($this->request->data);die();
             $calendrierProjet = $this->CalendrierProjets->patchEntity($calendrierProjet, $this->request->data);
-            
-            //debug($calendrierProjet);die();
             
             if ($this->CalendrierProjets->save($calendrierProjet)) {
             	$projet = $calendrierProjet->projet_id;
@@ -62,9 +73,7 @@ class CalendrierProjetsController extends AppController
             } else {
                 $this->Flash->error('Erreur lors de la sauvegarde de l\'étape');
             }
-        }
-
-		
+        }		
         //On retrouve les infos du projet
         $this->loadModel('Projets');
         $projet = $this->Projets->find('all')
@@ -72,15 +81,15 @@ class CalendrierProjetsController extends AppController
         $this->set(compact('projet'));
     }
 
+
     /**
-     * Edit method
+     * Methode d'édition d'une étape dans le macro planning
      *
-     * @param string|null $id Calendrier Projet id.
-     * @return void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @param string|null $id id d'un Calendrier Projet
+     * @return void Redirection vers la vue Edit une fois la modification effectuée, ou vue erreur si echec.
+     * @throws \Cake\Network\Exception\NotFoundException Quand enregistrement n'est pas trouvé.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
     	//Menu et sous-menu
     	$session = $this->request->session();
     	
@@ -101,14 +110,13 @@ class CalendrierProjetsController extends AppController
     }
 
     /**
-     * Delete method
+     * Methode de suppression d'une étape dans le macro planning
      *
      * @param string|null $id Calendrier Projet id.
-     * @return void Redirects to index.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     * @return void Redirection vers la vue index.
+     * @throws \Cake\Network\Exception\NotFoundException Quand enregistrement n'est pas trouvé.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
     	$session = $this->request->session();
         $this->request->allowMethod(['post', 'delete']);
         $calendrierProjet = $this->CalendrierProjets->get($id);

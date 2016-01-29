@@ -146,7 +146,7 @@ if($session->read('Auth.User.role') === 'admin') {
 															   	'div' => false,
 																'class' => 'form-control', 
 	                    										'type' => 'text',
-	                											'value'=> $demarche->score."/12",
+	                											'value'=> $demarche->score."/10",
 	                											'disabled'=>'disabled']); ?>
 					</div>
 				</div><br />
@@ -188,6 +188,7 @@ if($session->read('Auth.User.role') === 'admin') {
 				            <th><?= $this->Paginator->sort('nom') ?></th>
 				            <th><?= $this->Paginator->sort('fonction') ?></th>
 				            <th><?= $this->Paginator->sort('service') ?></th>
+<?php if($session->read('Auth.User.role') === 'admin') echo "<th></th>"; ?>				       
 				        </tr>
 				    </thead>
 				    <tbody>    
@@ -198,6 +199,7 @@ if($session->read('Auth.User.role') === 'admin') {
 				            <td><?= h($referent->nom) ?></td>
 				            <td><?= h($referent->fonction) ?></td>
 				            <td><?= h($referent->service) ?></td>
+<?php if($session->read('Auth.User.role') === 'admin') echo "<td>".$this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view', $referent->id], ['escape' => false,'title'=>'Visualisation du membre référent'])."</td>"; ?>		
 				        </tr>
 				    <?php endforeach; ?>
                  	</tbody>
@@ -245,8 +247,7 @@ if($session->read('Auth.User.role') === 'admin') {
 							    		<td><?= h($description->fonction->name) ?></td>
 			            				<td><?= h($description->nb_etp) ?></td>
 			            				<td><?= h($description->service) ?></td>
-							    	</tr>						    
-						    		<?php endforeach; ?>							
+			            			<?php endforeach; ?>							
 								</tbody>							
 							</table>
 						</div>
@@ -260,7 +261,8 @@ if($session->read('Auth.User.role') === 'admin') {
 						            	<th>Prénom</th>
 						            	<th>Noms</th>
 						            	<th>Fonction</th>
-						            	<th>Service</th>
+						            	<th>Service</th>		
+<?php if($session->read('Auth.User.role') === 'admin') echo "<th></th>"; ?>	
 						        	</tr>
 						        <thead>
 						        <tbody>    
@@ -269,7 +271,8 @@ if($session->read('Auth.User.role') === 'admin') {
 							            <td><?= h($membre->prenom) ?></td>
 							            <td><?= h($membre->nom) ?></td>
 							            <td><?= h($membre->fonction) ?></td>
-							            <td><?= h($membre->service) ?></td>			            
+							            <td><?= h($membre->service) ?></td>		
+<?php if($session->read('Auth.User.role') === 'admin') echo "<td>".$this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view', $membre->id], ['escape' => false,'title'=>'Visualisation du membre'])."</td>"; ?>			            
 							        </tr>
 							    <?php endforeach; ?>  
 						        </tbody>
@@ -285,7 +288,8 @@ if($session->read('Auth.User.role') === 'admin') {
 						            	<th>Prénom</th>
 						            	<th>Noms</th>
 						            	<th>Fonction</th>
-						            	<th>Service</th>
+						            	<th>Service</th>		
+<?php if($session->read('Auth.User.role') === 'admin') echo "<th></th>"; ?>	
 						        	</tr>
 						        <thead>
 						        <tbody>    
@@ -294,7 +298,8 @@ if($session->read('Auth.User.role') === 'admin') {
 							            <td><?= h($comite->prenom) ?></td>
 							            <td><?= h($comite->nom) ?></td>
 							            <td><?= h($comite->fonction) ?></td>
-							            <td><?= h($comite->service) ?></td>			           
+							            <td><?= h($comite->service) ?></td>	
+<?php if($session->read('Auth.User.role') === 'admin') echo "<td>".$this->Html->link('<span><i class="glyphicon glyphicon-eye-open"></i></span>', ['controller'=>'membres','action' => 'view', $comite->id], ['escape' => false,'title'=>'Visualisation du membre du comité'])."</td>"; ?>			           
 							        </tr>
 							    <?php endforeach; ?>          
 						        </tbody>

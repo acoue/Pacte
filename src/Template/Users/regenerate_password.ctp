@@ -33,7 +33,25 @@
 	                    <div class="col-md-3">
 	                    	<div class="" id="messagePwd"></div>
 	                    </div>
+					</div><br />					
+					<div  class="row">		
+						<div class="col-md-1"></div>
+						<label class="col-md-4 control-label" for="mail">Email</label>
+						<div class="col-md-6">
+							<?= $this->Form->input('mail', ['label' => false,'id'=>'mail',
+															   	'div' => false,
+																'class' => 'form-control', 
+	                    										'type' => 'text',
+	                    										'data-location' => 'bottom',
+	                    										'data-validation'=>'email',
+																'required' =>'required']); ?>
+	                    </div>		
+						<div class="col-md-1"></div>
 					</div><br />
+					
+					
+					
+					
 					<div class="" id="messagePwd"></div>
 				</div> 					
 			<div class="col-md-1"></div>

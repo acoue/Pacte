@@ -4,6 +4,7 @@
  *
  * Cette classe est le controlelur principale de l'application, passage obligé
  *
+ * @author Anthony COUE <a.coue[@]has-sante.fr>
  * @package Controlleur
  * @copyright 2015 Haute Autorité de Santé (HAS)
  */
@@ -32,8 +33,9 @@ class AppController extends Controller
      *
      * Permet d'appeler les helper et de charger les composants utiles à l'application
      * Renseigne l'objet Session et récupère les outils à afficher
+     * Plaxce en session les paramètres : date de version / version / le menu et sous-menu. 
      * 
-     * @return void
+     * @return void Redirection.
      */
 	public function initialize()
     {
@@ -76,14 +78,11 @@ class AppController extends Controller
     		$session->write('Progress.SousMenu','0');
     	}
     	
-
-
-    	//Droit sur les répertoires et fichiers
+    	//Droits sur les répertoires et fichiers
+    	// 0555 => Lecture + execution
+    	// 0444 => Lecture
     	$dir = new Folder();
-    	$dir->chmod(DATA, 0555, true);
-    	
-    	
-    	
+    	$dir->chmod(DATA, 0444, true);    	
     	
     	//information de la version de l'application => affichage en footer
     	$version = "";
@@ -109,38 +108,39 @@ class AppController extends Controller
     	$this->set(['listeOutilsPhase' => $outils,'listeOutilsDivers' => $outilsDivers]);
     	
     }
-    
-    /* (non-PHPdoc)
-     * @see \Cake\Controller\Controller::beforeFilter()
+	
+    /**
+     * Méthode executée définissant le type d'autorisation d'execution des fonctions
+     *
+     * @param Event $event évenement appelé
+     * @return void
      */
-    public function beforeFilter(Event $event)
-    {
+    
+    public function beforeFilter(Event $event) {
     	$this->Auth->deny();
     	$this->Auth->config('authorize', ['Controller']);
-    	//$this->Auth->config('authorize', ['Actions','Controller']);
-    	
-    	
     	$this->Auth->config('authError', 'Vous ne disposez pas des droits nécessaires.');
     	$this->Auth->config('unauthorizedRedirect', $this->referer(['controller' => 'pages','action' => 'permission']));
     }
 
     /**
-     * @param unknown $user
-     * @return boolean
+     * Méthode définissant si l'utilisateur est autorisé à utiliser la fonction
+     *
+     * @param $user utilisateur
+     * @return boolean droit ou non d'utiliser la fonction
      */
-    public function isAuthorized($user)
-    {
+    
+    public function isAuthorized($user) {
     	$session = $this->request->session();
+    	// Il s'agit d'une équipe
 		if( $session->read('Auth.User.role') === 'equipe') {
     		//Demarche terminée
     		if($session->read('Equipe.DemarcheEtat') == 1) return false;
-		}	
-		
+		}		
     	// Admin peuvent acceder a chaque action
     	if (isset($user['role']) && $user['role'] === 'admin') {
     		return true;
     	}
-
         // Par defaut refuser
     	return false;
     }

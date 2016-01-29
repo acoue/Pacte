@@ -59,7 +59,37 @@
                     										'value' => h($user->role),
                     										'disabled' => 'disabled']); ?>
                     </div>                          
-				</div><br />
+				</div><br />   
+				<div class="row">
+                	<label class="col-md-4 control-label" for="email">Email </label>
+                    <div class="col-md-8"><?= $this->Form->input('email', ['label' => false,'id'=>'email',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => h($user->email),
+                    										'disabled' => 'disabled']); ?>
+                    </div>                          
+				</div><br />    
+				<div class="row">
+                	<label class="col-md-4 control-label" for="actif">Compte actif </label>
+                    <div class="col-md-8"><?= $this->Form->input('actif', ['label' => false,'id'=>'actif',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => (h($user->active)==1) ? "Oui" : "Non",
+                    										'disabled' => 'disabled']); ?>
+                    </div>                          
+				</div><br />    
+				<div class="row">
+                	<label class="col-md-4 control-label" for="dateLogin">Date de dernière connexion</label>
+                    <div class="col-md-8"><?= $this->Form->input('dateLogin', ['label' => false,'id'=>'dateLogin',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => h($user->lastlogin),
+                    										'disabled' => 'disabled']); ?>
+                    </div>                          
+				</div><br /> 
 			</div>						
 			<div class="col-md-1"></div>
 		</div>

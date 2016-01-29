@@ -72,7 +72,7 @@ class OutilsController extends AppController
         		$this->Flash->error('La taille du fichier dépasse la limite des 10 Mo.');
         	} else {
         	
-	        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['fichier']['name']);  
+	        	$nomFichier = date('YmdHis').$this->Utilitaire->replaceCaracterespeciaux($d['fichier']['name']);  
 	        	$destination = DATA.'outil'.DS.$nomFichier;
 	        	move_uploaded_file($d['fichier']['tmp_name'], $destination);
 	        	

@@ -30,7 +30,16 @@ if($session->read("Auth.User.role") == "equipe") {
                     										'type' => 'texte', 'value'=>$user->username ,'disabled'=>'disabled',
 															'required' =>'required']); ?>
                     </div>                          
-				</div><br />   
+				</div><br />     
+				<div class="row">
+                	<label class="col-md-4 control-label" for="email">Email </label>
+                    <div class="col-md-8"><?= $this->Form->input('email', ['label' => false,'id'=>'email',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => h($user->email)]); ?>
+                    </div>                          
+				</div><br />  
 			</div>						
 			<div class="col-md-1"></div>
 		</div><br />
@@ -66,7 +75,16 @@ if($session->read("Auth.User.role") == "equipe") {
                     										'type' => 'texte', 'value'=>$user->username ,
 															'required' =>'required']); ?>
                     </div>                          
-				</div><br />
+				</div><br />   
+				<div class="row">
+                	<label class="col-md-4 control-label" for="email">Email </label>
+                    <div class="col-md-8"><?= $this->Form->input('email', ['label' => false,'id'=>'email',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text', 
+                    										'value' => h($user->email)); ?>
+                    </div>                          
+				</div><br /> 
 			</div><br />						
 			<div class="col-md-1"></div>
 		</div><br />

@@ -1384,6 +1384,9 @@
 
     /*
     * Validate domain name
+    * Modification A.Coué (04/01/2016) : 
+    * ligne 1367 avant : !(/[^a-zA-Z]/.test(val.substr(0,1))) &&
+    * Ligne 1367 après : !(/[^a-zA-Z0-9]/.test(val.substr(0,1))) && 
     */
     $.formUtils.addValidator({
         name : 'domain',
@@ -1391,7 +1394,7 @@
             return val.length > 0 &&
                     val.length <= 253 && // Including sub domains
                     !(/[^a-zA-Z0-9]/.test(val.substr(-2))) &&
-                    !(/[^a-zA-Z]/.test(val.substr(0,1))) &&
+                    !(/[^a-zA-Z0-9]/.test(val.substr(0,1))) &&
                     !(/[^a-zA-Z0-9\.\-]/.test(val)) &&
                     val.split('..').length == 1 &&
                     val.split('.').length > 1;

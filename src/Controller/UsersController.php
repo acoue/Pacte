@@ -198,9 +198,7 @@ class UsersController extends AppController
 
  	public function view($id)
  	{
- 		$user = $this->Users->get($id, [
- 				'contain' => []
- 				]);
+ 		$user = $this->Users->get($id);
  		$this->set('user', $user);
  		$this->set('_serialize', ['user']);
  	}
@@ -214,9 +212,7 @@ class UsersController extends AppController
  	 */
  	public function edit($id = null)
  	{
- 		$user = $this->Users->get($id, [
- 				'contain' => []
- 				]);
+ 		$user = $this->Users->get($id);
  		if ($this->request->is(['patch', 'post', 'put'])) {
  			$user = $this->Users->patchEntity($user, $this->request->data);
  			if ($this->Users->save($user)) {
@@ -386,11 +382,29 @@ class UsersController extends AppController
 		
 			
 		if ($this->request->is(['post'])) {
-			$user = $this->Users->get($this->request->data['id']);
-			$user->id = $this->request->data['id'];
-			$user->password = $this->request->data['password'];
+
+			//Recuperation des parametres
+			$this->loadModel('Parametres');
+			$from = $this->Parametres->find('all')->where(['name' => 'EmailContact'])->first();
+			$id = $to = $this->request->data['id'];
+			$password = $this->request->data['password'];
+			$to = $this->request->data['mail'];
+			
+			$user = $this->Users->get($id);
+			$user->id = $id;
+			$user->password = $password;
 			if ($this->Users->save($user)) {
-				$this->Flash->success('Le mot de passe dl\'utilisateur a bien été modifié.');
+				
+				$email = new Email('inscriptionPassword');
+				$email->template('mdp')
+				->emailFormat('html')
+				->to(trim(rtrim(strip_tags($to))))
+				->from(trim(rtrim(strip_tags($from->valeur))))
+				->subject('[Pacte] Regénération de votre mot de passe')
+    			->viewVars(['login'=>$user->username,'mdp'=>$password])
+				->send();				
+				
+				$this->Flash->success('Le mot de passe dl\'utilisateur a bien été modifié. Un email a été envoyé à l\'adresse : '.$to);
 				return $this->redirect(['action' => 'index']);
 			} else {
 				$this->Flash->error('Erreur lors de la modification du mot de passe de l\'utilisateur.');

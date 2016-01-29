@@ -57,7 +57,15 @@
 															'class' => 'form-control', 
                     										'required' =>'required']) ?>    
                 	</div>                 
-				</div>
+				</div><br />   
+				<div class="row">
+                	<label class="col-md-4 control-label" for="email">Email </label>
+                    <div class="col-md-8"><?= $this->Form->input('email', ['label' => false,'id'=>'email',
+														   	'div' => false,
+															'class' => 'form-control', 
+                    										'type' => 'text']); ?>
+                    </div>                          
+				</div><br /> 
 			</div>						
 			<div class="col-md-1"></div>			
 		</div><br /><br />		

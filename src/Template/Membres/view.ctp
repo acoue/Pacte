@@ -1,6 +1,7 @@
 <div class="blocblanc">
 	<h2>Administration - Membres </h2>
 <?php 
+$session = $this->request->session();
 if($comite == 1) echo "<h3 class='modal-title'>Visualisation d'un membre du comité de pilotage</h3>";
 else if ($comite == 0) echo "<h3 class='modal-title'>Visualisation d'un membre de l'équipe</h3>";
 else echo "<h3 class='modal-title'>Visualisation d'un membre</h3>";
@@ -24,7 +25,9 @@ else echo "<h3 class='modal-title'>Visualisation d'un membre</h3>";
 					echo $this->Form->postLink(__('Supprimer'), ['action' => 'delete/'.$membre->id.'/'.$comite.'/'.$type], ['class'=>'btn btn-warning','confirm' => 'Etes-vous sûr de vouloir supprimer le membre ?']);
 					echo "<br /><br/>";
 					echo $this->Html->link(__('Retour'), ['action' => 'index/'.$comite.'/'.$type],['class' => 'btn btn-info']);
-				}
+				} 
+				
+				if($session->read('Auth.User.role') === 'admin') echo "<br /><br/><button onclick='window.history.go(-1);' class='btn btn-info' >Visualisation démarche</button>";
 			?>
 			</div>
 			<div class="col-md-8">

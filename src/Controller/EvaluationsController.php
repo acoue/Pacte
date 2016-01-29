@@ -94,7 +94,7 @@ class EvaluationsController extends AppController
         		$this->Flash->error('La taille du fichier dépasse la limite des 10 Mo.');
         	} else {
         	
-	        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);        	
+	        	$nomFichier = date('YmdHis').$this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);        	
 	        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;        	
 	        	move_uploaded_file($d['file']['tmp_name'], $destination);
 	        	 
@@ -158,7 +158,7 @@ class EvaluationsController extends AppController
 		        		$boolSupp= unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
 		        	} else $boolSupp=true;
 		        	//Deplacement du nouveau 
-		        	$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);
+		        	$nomFichier = date('YmdHis').$this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);
 		        	$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
 		        	move_uploaded_file($d['file']['tmp_name'], $destination);
         		}      	
@@ -175,7 +175,7 @@ class EvaluationsController extends AppController
 	        			$boolSupp= unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$evaluation->file);
 	        		} else $boolSupp=true;
 	        		//Deplacement du nouveau
-	        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']);
+	        		$nomFichier = date('YmdHis').$this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']);
 	        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
 	        		move_uploaded_file($d['file_new']['tmp_name'], $destination);
         		}

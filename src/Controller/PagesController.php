@@ -83,11 +83,21 @@ class PagesController extends AppController
         	
         	//Recuperation 
         	if($session->read('Auth.User.role') === 'admin'){
+        		
+        		
+        		
         		$message = $this->Parametres->find('all')->where(['name' => 'MessageAccueilAdministrateur'])->first();
         		//récuperation des équipes : 1 démarches actives par démarche
         		$this->loadModel('Equipes');
-        		$equipes = $this->Equipes->find('All',['contain'=>'Etablissements'])->where(['Etablissements.numero_demarche != '=>'99999']);  
-        		$this->set(compact('equipes','message'));      	
+        		//$equipes = $this->Equipes->find('All',['contain'=>'Etablissements'])->where(['Etablissements.numero_demarche != '=>'99999']);  
+        		$equipes = $this->Equipes->find('All',['contain'=>['Users','Etablissements']])->where(['Etablissements.numero_demarche != '=>'99999']);  
+        		$this->set(compact('equipes','message'));     
+
+        		
+        		
+        		
+        		
+        		
         	} else {
         		$idUser = $session->read('Auth.User.id');
         		$this->loadModel('EquipesUsers');

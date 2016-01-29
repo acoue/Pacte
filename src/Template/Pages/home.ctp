@@ -18,8 +18,9 @@ if($session->check('Auth.User.role')) {
 		    <tbody>
 		    <?php foreach ($equipes as $equipe): ?>
 		        <tr>
-		            <td width='35%'><?= $equipe->etablissement->libelle ?></td>
-		            <td width='35%'><?= $equipe->name ?></td>
+		        	<td width='10%'><?= $equipe->user->username ?></td>
+		            <td width='30%'><?= $equipe->etablissement->libelle ?></td>
+		            <td width='30%'><?= $equipe->name ?></td>
 		            <td width='10%'><?= $this->Html->link('Etat de la démarche', ['controller'=>'Equipes', 'action' => 'visualisation/0/'.$equipe->id],['class' => 'btn btn-default']) ?></td>	
 		            <td width='10%'><?= $this->Html->link('Générer un PDF', ['controller'=>'Equipes', 'action' => 'visualisation/1/'.$equipe->id],['class' => 'btn btn-info']) ?></td>	            
 		            <td width='10%'><?= $this->Html->link('Enquêtes', ['controller'=>'Equipes', 'action' => 'visualisationEnquete/'.$equipe->id],['class' => 'btn btn-primary']) ?></td>

@@ -179,7 +179,7 @@ class PlanActionsController extends AppController
 	        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$d['file']['name']);
 	        		}
 	        		//Deplacement du nouveau
-	        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);  
+	        		$nomFichier = date('YmdHis').$this->Utilitaire->replaceCaracterespeciaux($d['file']['name']);  
 	        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
 	        		move_uploaded_file($d['file']['tmp_name'], $destination);
         		}

@@ -90,7 +90,7 @@
 															   	'div' => false,
 																'class' => 'form-control', 
 	                    										'type' => 'text',
-	                											'value'=> $demarche->score."/12",
+	                											'value'=> $demarche->score."/10",
 	                											'disabled'=>'disabled']); ?>
 					</div>
 				</div><br />
