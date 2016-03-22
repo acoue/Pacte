@@ -148,7 +148,7 @@
 						</tbody>
 					</table>	                       
 				</div><br />
-				<div id="div_graphique3""></div>
+				<div id="div_graphique3"></div>
 			</div>		
 			<div class='col-md-1'></div>
 		</div>

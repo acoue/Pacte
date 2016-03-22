@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 /**
  * Evaluations Controller
@@ -144,6 +146,10 @@ class EvaluationsController extends AppController
         		return $this->redirect(['action' => 'edit/'.$id]);
         	} 
 
+        	//Ajout des droits d'ecriture
+        	$dir = new Folder();
+        	$dir->chmod(DATA.'userDocument'.DS.$session->read('Auth.User.username'), 0666, true);
+        	
         	//Cas d'un nouveau fichier : CRM et Culture securite
         	if(isset($d['file']) && $d['file']['tmp_name'] != '') {         		
 
@@ -183,7 +189,10 @@ class EvaluationsController extends AppController
         		//Pas de nouveau fichier et pas de modification de fichier : modification des autres champs textes du formulaire 
         		$nomFichier = $evaluation->file ;
         		$boolSupp=true;
-        	} 
+        	}         	
+
+        	//Droit en lecture seule
+        	$dir->chmod(DATA.'userDocument'.DS.$session->read('Auth.User.username'), 0444, true);
         	
         	if($boolSupp) {
 	        	// mise a jour des donnees
@@ -234,11 +243,19 @@ class EvaluationsController extends AppController
         }
         $fichier = $evaluation->file;
         if ($this->Evaluations->delete($evaluation)) {
+
+        	//Ajout des droits d'ecriture
+        	$dir = new Folder();
+        	$dir->chmod(DATA.'userDocument'.DS.$session->read('Auth.User.username'), 0666, true);
+        	
         	//Suppression du fichier
         	if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$fichier) && strlen($fichier)>0) {
         		unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$fichier);
         	}
             $this->Flash->success('L\'évaluation a bien été supprimée.');
+
+            //Droit en lecture seule
+            $dir->chmod(DATA.'userDocument'.DS.$session->read('Auth.User.username'), 0444, true);
         } else {
             $this->Flash->error('Erreur dans la suppression de l\'évaluation.');
         }

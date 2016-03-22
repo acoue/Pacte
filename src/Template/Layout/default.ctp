@@ -64,6 +64,7 @@ Votre navigateur ne supporte pas Javascript. L'application peut ne pas fonctionn
 	                	else if($role == 'expert') echo $this->element('menuExpert');
 	                	else if($role == 'has') echo $this->element('menuHas');
 	                	else if($role == 'equipe') echo $this->element('menuEquipe');
+	                	else if($role == 'animateur') echo $this->element('menuAnimateur');
 	                } else echo $this->element('menu'); ?>    
 	                <!-- /.menu-->                
 	            </div>
@@ -71,7 +72,7 @@ Votre navigateur ne supporte pas Javascript. L'application peut ne pas fonctionn
 	        <!-- /.navbar -->
         
 <!--  Div pour les Outils - Pas pour les admins-->
-<?php if(! in_array($role,['has','expert','admin'])) { //Affichage Admin ?>
+<?php if(! in_array($role,['has','expert','admin','animateur'])) { //Affichage Admin ?>
 			 <div class="container">   
 				 <div class="row">
 	              	<div class="col-md-1"></div>

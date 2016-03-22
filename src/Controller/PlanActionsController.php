@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 /**
  * PlanActions Controller
@@ -153,6 +155,7 @@ class PlanActionsController extends AppController
      */
     public function edit($id = null)
     {
+    	
 		$session = $this->request->session();
         $planAction = $this->PlanActions->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -165,6 +168,11 @@ class PlanActionsController extends AppController
         		return $this->redirect(['action' => 'edit/'.$id]);
         	}
         	 
+
+        	//Ajout des droits d'ecriture
+        	$dir = new Folder();
+        	$dir->chmod(DATA.'userDocument'.DS.$session->read('Auth.User.username'), 0666, true);
+        	
         	//Cas d'un nouveau fichier : CRM et Culture securite
         	if(isset($d['file']) && $d['file']['tmp_name'] != '') {
 
@@ -196,7 +204,7 @@ class PlanActionsController extends AppController
 	        			unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$planAction->file);
 	        		}
 	        		//Deplacement du nouveau
-	        		$nomFichier = $this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']); 
+	        		$nomFichier = date('YmdHis').$this->Utilitaire->replaceCaracterespeciaux($d['file_new']['name']); 
 	        		$destination = DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$nomFichier;
 	        		move_uploaded_file($d['file_new']['tmp_name'], $destination);
         		}
@@ -204,6 +212,9 @@ class PlanActionsController extends AppController
         		//Pas de nouveau fichier et pas de modification de fichier : modification des autres champs textes du formulaire
         		$nomFichier = $planAction->file ;
         	}
+
+        	//Ajout des droits de lecture seule
+        	$dir->chmod(DATA.'userDocument'.DS.$session->read('Auth.User.username'), 0444, true);
         	
         	$planAction->name = $d['name'];
         	$planAction->file = $nomFichier;

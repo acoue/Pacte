@@ -58,7 +58,7 @@ if($session->read('Equipe.Diagnostic') == 0) { ?>
 if($session->read('Equipe.Diagnostic') == 0) { ?>
 Evolution des résultats initiaux<br />Points forts et axes d'amélioration identifiés <span class="obligatoire"><sup> *</sup></span>
 <?php } else { ?>
-Evolution des résultats intermédiares<br />Points forts et axes d'amélioration identifiés <span class="obligatoire"><sup> *</sup></span>
+Evolution des résultats intermédaires<br />Points forts et axes d'amélioration identifiés <span class="obligatoire"><sup> *</sup></span>
 <?php } ?>    		</label>
                 	<div class="col-md-8"><?= $this->Form->input('resultat', ['label' => false,'id'=>'resultat',
 														   	'div' => false,'type' => 'textarea', 'escape' => false,

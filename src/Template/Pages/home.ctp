@@ -29,6 +29,10 @@ if($session->check('Auth.User.role')) {
 		    </tbody>
 	    </table>	    
 <?php
+	} else if($role === 'animateur') {
+?>
+	<p>Bienvenue <?= $session->read('Auth.User.prenom')." ".$session->read('Auth.User.nom') ?></p>
+<?php		
 	} else if($role === 'has') {
 /**
  * CHEF DE PROJET HAS

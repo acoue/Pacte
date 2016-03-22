@@ -20,7 +20,15 @@
 		<legend>Engagez-vous</legend>
 		<p align="center">
 			<?= $this->Html->link('Pas encore inscrit','/Inscriptions/index',['class' => 'btn btn-default', 'title' => 'Démarrez la procédure d\'inscription']) ?>
-		</p>		
+		</p>
+		<br />
+		<legend>Animateur CRM</legend>
+		<p align="center">
+			<?= $this->Html->link('Obtenir un compte','/users/createCompteAnimateur',['class' => 'btn btn-default', 'title' => 'Création d\'un compte animateur CRM']) ?>
+		</p>
+		
+		
+				
 		</div><br /><br />
 		<div class="row">
         	<?= $messageCnil ?>    

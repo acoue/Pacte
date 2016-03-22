@@ -16,7 +16,7 @@ class UsersController extends AppController
   	public function beforeFilter(Event $event)
   	{
   		parent::beforeFilter($event);
-  		$this->Auth->allow(['activate', 'login', 'password','mentions','changePwd']);  		
+  		$this->Auth->allow(['activate', 'login', 'password','mentions','changePwd','createCompteAnimateur']);  		
   	}
 	
 	public function isAuthorized($user)
@@ -458,6 +458,10 @@ class UsersController extends AppController
 	}
 	
 	public function mentions() {
+		
+	}
+	
+	public function createCompteAnimateur() {
 		
 	}
 }

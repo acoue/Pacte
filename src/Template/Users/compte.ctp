@@ -82,7 +82,7 @@ if($session->read("Auth.User.role") == "equipe") {
 														   	'div' => false,
 															'class' => 'form-control', 
                     										'type' => 'text', 
-                    										'value' => h($user->email)); ?>
+                    										'value' => h($user->email)]); ?>
                     </div>                          
 				</div><br /> 
 			</div><br />						

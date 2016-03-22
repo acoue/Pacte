@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 /**
  * Mesures Controller
@@ -159,6 +161,11 @@ class MesuresController extends AppController
         		return $this->redirect(['action' => 'edit/'.$id]);
         	}
         	 
+
+        	//Ajout des droits d'ecriture
+        	$dir = new Folder();
+        	$dir->chmod(DATA.'userDocument'.DS.$session->read('Auth.User.username'), 0666, true);
+        	
         	//Cas d'un nouveau fichier : CRM et Culture securite
         	if(isset($d['file']) && $d['file']['tmp_name'] != '') {
 
@@ -199,6 +206,10 @@ class MesuresController extends AppController
         		$nomFichier = $mesure->file ;
         		$boolSupp = true;
         	} 
+
+        	//Droit en lecture seule
+        	$dir->chmod(DATA.'userDocument'.DS.$session->read('Auth.User.username'), 0444, true);
+        	
         	if($boolSupp) {
         		//mise a jour des donnees
         		$mesure->demarche_id = $d['demarche_id'];
@@ -243,7 +254,13 @@ class MesuresController extends AppController
         if ($this->Mesures->delete($mesure)) {
         	//Suppression du fichier
 	        if(file_exists(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$fichier) && strlen($fichier)>0) {
+	        	//Ajout des droits d'ecriture
+	        	$dir = new Folder();
+	        	$dir->chmod(DATA.'userDocument'.DS.$session->read('Auth.User.username'), 0666, true);	        	
 	        	unlink(DATA.'userDocument'.DS.$session->read('Auth.User.username').DS.$fichier);
+	        	//Droit en lecture seule
+	        	$dir->chmod(DATA.'userDocument'.DS.$session->read('Auth.User.username'), 0444, true);
+
 	        }
             $this->Flash->success('La mesure a bien été supprimée.');
         } else {

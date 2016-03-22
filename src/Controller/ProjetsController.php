@@ -5,6 +5,8 @@ use App\Controller\AppController;
 use CakePdf\Pdf\CakePdf;
 use Cake\Network\Email\Email;
 use Cake\ORM\TableRegistry;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 /**
  * Projets Controller
@@ -286,7 +288,16 @@ class ProjetsController extends AppController
 		    		
 		    		//Creation du repertoire pour le depot des document de l'equipe
 		    		$structure = DATA.'userDocument'.DS.$session->read('Auth.User.username');
-		    		if(file_exists($structure)) unlink($structure);
+		    		if(file_exists($structure)) {    			
+
+		    			//Ajout des droits d'ecriture
+		    			$dir = new Folder();
+		    			$dir->chmod($structure, 0666, true);
+		    			unlink($structure);		    			
+		    			//Droit en lecture seule
+		    			$dir->chmod($structure, 0444, true);
+		    			
+		    		}
 		    		mkdir($structure, 0777, true);	    			 
 		    				
 	    		} else {
@@ -447,7 +458,16 @@ class ProjetsController extends AppController
     	
     	//debug($sujet); die();
     	//Suppression de la pj
-    	if(file_exists(DATA . 'pdf' . DS . $filename)) unlink(DATA . 'pdf' . DS . $filename);
+    	if(file_exists(DATA . 'pdf' . DS . $filename)) {
+
+    		//Ajout des droits d'ecriture
+    		$dir = new Folder();
+    		$dir->chmod(DATA . 'pdf' . DS . $filename, 0666, true);
+    		unlink(DATA . 'pdf' . DS . $filename);
+    		//Droit en lecture seule
+    		$dir->chmod(DATA . 'pdf' . DS . $filename, 0444, true);  		
+    		
+    	}
 		//Retour vers la vue
     	$message = $this->Parametres->find('all')->where(['name' => 'MessageValidationEngagementTerminee'])->first();
 	    $this->set(compact('message'));	    

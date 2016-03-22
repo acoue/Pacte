@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 /**
  * Outils Controller
@@ -143,7 +145,14 @@ class OutilsController extends AppController
         
 		//suppression du dossier 
         $destination = DATA.'outil'.DS.$outil->name;
-		if(file_exists($destination)) unlink($destination);
+		if(file_exists($destination)) {
+    		//Ajout des droits d'ecriture
+    		$dir = new Folder();
+    		$dir->chmod(DATA.'outil', 0666, true);
+			unlink($destination);
+			//Droit en lecture seule
+			$dir->chmod(DATA.'outil', 0444, true);
+		}
         
 		//suppresion de la base 
         if ($this->Outils->delete($outil)) {

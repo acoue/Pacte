@@ -90,7 +90,7 @@ switch ($menu) {
 	        	echo "<tr>";
 	        	echo "<td width='25%' class='sousCelluleGaucheOk'>".$libSousMenu1."</td>";
 	        	echo "<td width='25%' class='sousCelluleOk'>".$libSousMenu2."</td>";
-	        	echo "<td width='25%' class='sousCelluleOk'>".$libSousMenu3."n</td>";
+	        	echo "<td width='25%' class='sousCelluleOk'>".$libSousMenu3."</td>";
 	        	echo "<td width='25%' class='sousCelluleDroiteEnCours'>".$libSousMenu4."</td>";
 	        	echo "</tr>";
 	        	break;

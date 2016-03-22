@@ -4,8 +4,10 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use CakePdf\Pdf\CakePdf;
-use Cake\Network\Email\Email;
+//use Cake\Network\Email\Email;
 use Cake\ORM\TableRegistry;
+use Cake\Filesystem\Folder;
+use Cake\Filesystem\File;
 
 /**
  * Demarches Controller
@@ -356,7 +358,12 @@ class DemarchesController extends AppController
     			}    			
     			
     			//Suppression de la pj
+    			//Ajout des droits d'ecriture
+    			$dir = new Folder();
+    			$dir->chmod(DATA.'pdf'.DS.$filename, 0666, true);
     			if(file_exists(DATA . 'pdf' . DS . $filename))  unlink(DATA . 'pdf' . DS . $filename);
+    			//Droit en lecture seule
+    			$dir->chmod(DATA.'pdf'.DS.$filename, 0444, true);
     		
     			$this->Flash->success('Votre démarche est désormais clôturée. Un email vient de vous être envoyé avec un récapitulatif.');
     		}else {
